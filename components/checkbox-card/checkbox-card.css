@@ -1,0 +1,110 @@
+/* ============================================================
+   Componente: CheckboxCard
+   Figma: node 1:965 (página AVATAR / estudo)
+   Props (Figma): box (bool), showTitle (bool), status Default|Check
+   Estrutura: [checkbox 16px] + [título bold + descrição]
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Container (nós 1:966 / 1:975 / 1:983 / 1:992) -----------
+   Figma: flex, gap lg (12px), items-start. No Figma w=375 fixo;
+   aqui fluido (100%). Base = sem box (bg branco, padding 0). */
+.checkbox-card {
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--lg);
+  align-items: flex-start;
+  width: 100%;
+  background: var(--background-bg-main);
+  padding: var(--xs);
+  cursor: pointer;
+}
+
+/* box = true: card cinza (bg-aux) com borda, padding xl (16px) */
+.checkbox-card--box {
+  background: var(--background-bg-aux);
+  border: var(--border-width) solid var(--border-default);
+  padding: var(--xl);
+}
+
+/* ---- Input real (acessível, visualmente oculto) -------------- */
+.checkbox-card__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+/* ---- Box do checkbox (nós ...968/977/985/994) ----------------
+   Figma: 16x16, radius-sm (6px). pt sm (4px) para alinhar com a
+   1ª linha do texto. Default: branco + borda + shadow-xs. */
+.checkbox-card__box {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin-top: var(--sm);              /* Figma: pt sm (4px) */
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+  box-shadow: var(--box-shadow-shadow-xs);
+}
+
+/* Estado Check: fundo primary, sem borda/shadow, mostra o check */
+.checkbox-card__input:checked + .checkbox-card__box {
+  background: var(--background-primary);
+  border-color: transparent;
+  box-shadow: none;
+}
+.checkbox-card__check {
+  width: 12px;
+  height: 12px;
+  color: var(--content-title-inverse);  /* check branco */
+  visibility: hidden;
+}
+.checkbox-card__check svg { display: block; width: 100%; height: 100%; }
+.checkbox-card__input:checked + .checkbox-card__box .checkbox-card__check {
+  visibility: visible;
+}
+
+/* Foco acessível */
+.checkbox-card__input:focus-visible + .checkbox-card__box {
+  outline: 2px solid var(--background-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Conteúdo (título + descrição) --------------------------
+   Figma: flex-col, gap sm (4px), flex 1. */
+.checkbox-card__content {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+
+/* Título — Text/Paragraph-Bold, Content/text */
+.checkbox-card__title {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+  color: var(--content-text);
+}
+
+/* Descrição — Text/Paragraph-Regular, Content/text */
+.checkbox-card__desc {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+  color: var(--content-text);
+}

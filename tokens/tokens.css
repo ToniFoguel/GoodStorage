@@ -1,0 +1,261 @@
+/* ============================================================
+   Design Tokens — estudo DS
+   Fonte: Figma Variables (arquivo "estudo", EPHZw7duAVSjyhosJfSSs8)
+   Os nomes das variáveis espelham 1:1 os nomes no Figma para
+   manter rastreabilidade (Figma "Grupo/nome" -> --grupo-nome).
+   ============================================================ */
+
+:root {
+  /* --- Dimensões / border width ------------------------------------
+     Figma: default=0, thin=1, border=1, border-width=1, stroke-2=2 */
+  --default: 0px;
+  --thin: 1px;
+  --border: 1px;
+  --border-width: 1px;
+  --stroke-2: 2px;
+
+  /* --- Spacing ------------------------------------------------------
+     Figma: xs=0, gap-1=4, sm=4, gap-1,5=6, md=8, xl=16, gap-4=16, p-5=20 */
+  --none: 0px;    /* Figma: none */
+  --xs: 0px;
+  --inner: 0px;   /* Figma: inner */
+  --gap-1: 4px;
+  --space-y-1: 4px;  /* Figma: space-y-1 */
+  --py-1-5: 6px;  /* Figma: py-1,5 */
+  --gap-2: 8px;   /* Figma: gap-2 */
+  --py-2: 8px;    /* Figma: py-2 */
+  --space-x-2: 8px;  /* Figma: space-x-2 */
+  --sm: 4px;
+  --gap-1-5: 6px;   /* Figma: gap-1,5 */
+  --md: 8px;
+  --px-2: 8px;    /* Figma: px-2 */
+  --lg: 12px;
+  --xl: 16px;
+  --gap-4: 16px;
+  --p-5: 20px;
+  --2xl: 24px;    /* Figma: 2xl */
+  --gap-6: 24px;  /* Figma: gap-6 */
+  --3xl: 32px;    /* Figma: 3xl */
+  --p-12: 48px;   /* Figma: p-12 */
+  /* spacings numéricos (DatePicker/Calendar) */
+  --gap-3: 12px;  /* Figma: gap-3 */
+  --px-3: 12px;   /* Figma: px-3 */
+  --py-1: 4px;    /* Figma: py-1 */
+  --pl-2: 8px;    /* Figma: pl-2 */
+  --pr-1: 4px;    /* Figma: pr-1 */
+  --mt-2: 8px;    /* Figma: mt-2 */
+  --p-3: 12px;    /* Figma: p-3 */
+
+  /* --- Stroke width ------------------------------------------------
+     Figma: stroke-1=1, stroke-2=2, stroke-width=2, thick=2 */
+  --stroke-1: 1px;
+  --stroke-width: 2px;
+  --thick: 2px;
+
+  /* --- Radius ------------------------------------------------------
+     Figma: rounded-sm=4, radius-sm=6, rounded-md=6, rounded-xl=12 */
+  --rounded-sm: 4px;
+  --radius-sm: 6px;
+  --rounded-md: 6px;
+  --radius-md: 8px;   /* Figma: radius-md (tooltip) */
+  --radius-lg: 10px;  /* Figma: radius-lg */
+  --rounded-xl: 12px;
+
+  /* --- Background --------------------------------------------------
+     Figma: Background/bg-main, bg-alt, primary, secondary, tertiary, yellow */
+  --background-bg-main: #ffffff;
+  --background-bg-alt: #313131;
+  --background-primary: #ff8400;
+  --background-secondary: #c3d600;
+  --background-tertiary: #6c6cff;
+  --background-yellow: #f29900;
+  --background-warning: #fef3e0;   /* Figma: Background/warning */
+  --background-info: #e8f0fe;      /* Figma: Background/info */
+  --background-bg-aux: #fafafa;    /* Figma: Background/bg-aux */
+  --background-neutral: #d9d9d9;   /* Figma: Background/neutral (item ativo) */
+  /* Obs.: o Banner Error usa o hex cru #ffcfcc no Figma (sem variável). */
+
+  /* --- Action (botões) --------------------------------------------
+     Figma: coleção "Acction" (grafia mantida igual ao Figma).
+     Cada botão tem estados default / hover / active / disable. */
+  --acction-button-primary-default: #ff8400;
+  --acction-button-primary-hover: #ed7a00;
+  --acction-button-primary-active: #ff9f38;
+  --acction-button-primary-disable: #f2f2f2;
+
+  --acction-button-secondary-default: #c3d600;
+  --acction-button-secondary-active: #d5e52e;
+  --acction-button-secondary-disable: #f2f2f2;
+
+  --acction-button-destructive-default: #d93025;
+  --acction-button-destructive-hover: #bf2a21;
+  --acction-button-destructive-active: #f2483d;
+  --acction-button-destructive-disable: #f2f2f2;
+
+  --acction-button-tertiary-default: #6c6cff;
+  --acction-button-ghost-hover: #f2f2f2;
+
+  /* --- Superfícies auxiliares -------------------------------------
+     Figma: muted */
+  --muted: #f5f5f5;
+
+  /* --- Border -----------------------------------------------------
+     Figma: Border/default, Border/icon, Border/error, Border/warnigh, Border/info */
+  --border-default: #f2f2f2;
+  --border-icon: #1a1a1a;
+  --border-error: #d93025;
+  --border-warnigh: #f29900;   /* Figma: Border/warnigh (grafia mantida) */
+  --border-info: #1a73e8;
+  --border-disable: #d9d9d9;   /* Figma: Border/disable */
+
+  /* --- Content (texto / ícones) -----------------------------------
+     Figma: Content/text, Content/text-inverse, Content/title-inverse,
+     Content/primary */
+  --content-text: #313131;
+  --content-text-inverse: #d9d9d9;
+  --content-title: #1a1a1a;          /* Figma: Content/title */
+  --content-title-inverse: #ffffff;
+  --content-primary: #ff8400;
+  --content-disable: #d9d9d9;        /* Figma: Content/disable */
+  --content-label-error: #d93025;    /* Figma: Content/label-error */
+  --content-label-warning: #f29900;  /* Figma: Content/label-warning */
+  --content-label-info: #1a73e8;     /* Figma: Content/label-info */
+
+  /* --- Sombras ----------------------------------------------------
+     Figma: Shadows/default, Shadows/button, Box Shadow/shadow-xs.
+     "button" é a cor de sombra = #31313126 (rgba(49,49,49,.15)). */
+  --button: rgba(49, 49, 49, 0.15);
+  --error: #f2483d;   /* Figma: cor de sombra "error" */
+  --shadows-default: 4px 4px 4px 0 rgba(49, 49, 49, 0.15);
+  /* Shadows/error: DROP_SHADOW 0 0 spread 3 (anel de erro) */
+  --shadows-error: 0 0 0 3px var(--error);
+  /* Shadows/button: no Figma é radius 4 / spread 2 (halo forte).
+     Deixada bem mínima a pedido — quase imperceptível. */
+  --shadows-button: 0 1px 1px 0 rgba(49, 49, 49, 0.05);
+  --box-shadow-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+
+  /* --- Tipografia: famílias / pesos / tamanhos --------------------- */
+  --font-family-title-text: "Halvar Mittelschrift", sans-serif; /* Figma: Font-Family/title&text */
+  --font-weight-regular: 400;  /* Figma: Font-Weight/regular */
+  --font-weight-medium: 500;   /* Figma: Font-Weight/medium */
+  --font-weight-bold: 700;     /* Figma: Font-Weight/bold */
+
+  --font-size-label: 12px;       /* Figma: Font-Size/label */
+  --line-hight-label: 15px;      /* Figma: Line-Hight/label (grafia mantida) */
+  --font-size-paragraph: 16px;   /* Figma: Font-Size/paragraph */
+  --line-hight-paragraph: 24px;  /* Figma: Line-Hight/paragraph (grafia mantida) */
+  --font-size-h3: 18px;          /* Figma: Font-Size/H3 */
+  --line-hight-h3: 22px;         /* Figma: Line-Hight/h3 (grafia mantida) */
+  --font-size-h1: 24px;          /* Figma: Font-Size/h1 */
+  --line-hight-h1: 28px;         /* Figma: Line-Hight/h1 (grafia mantida) */
+
+  /* --- Escala Inter (Calendar/DatePicker) --------------------------
+     Figma: family/sans=Inter, size/xs=12, size/sm=14, leading/4=16,
+     leading/5=20, weight/normal=400, weight/medium=500, tracking/normal=0 */
+  --family-sans: "Inter", sans-serif;
+  --size-xs: 12px;
+  --size-sm: 14px;
+  --size-base: 16px;
+  --size-lg: 18px;
+  --leading-4: 16px;
+  --leading-5: 20px;
+  --leading-6: 24px;
+  --leading-7: 28px;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --tracking-normal: 0;
+}
+
+/* ------------------------------------------------------------------
+   Text styles compostos do Figma
+   ------------------------------------------------------------------ */
+
+/* Figma: Text/Label-Regular */
+.text-label-regular {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  letter-spacing: 0;
+}
+
+/* Figma: Text-xs/Regular (Inter) */
+.text-xs-regular {
+  font-family: var(--family-sans);
+  font-weight: var(--weight-normal);
+  font-size: var(--size-xs);
+  line-height: var(--leading-4);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Figma: Text-sm/Regular (Inter) */
+.text-sm-regular {
+  font-family: var(--family-sans);
+  font-weight: var(--weight-normal);
+  font-size: var(--size-sm);
+  line-height: var(--leading-5);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Figma: Text-sm/Medium (Inter) */
+.text-sm-medium {
+  font-family: var(--family-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--size-sm);
+  line-height: var(--leading-5);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Figma: Text-lg/Medium (Inter) */
+.text-lg-medium {
+  font-family: var(--family-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--size-lg);
+  line-height: var(--leading-7);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Figma: Title/H1 */
+.title-h1 {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-hight-h1);
+  letter-spacing: 0;
+}
+
+/* Figma: Title/H3 */
+.title-h3 {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-hight-h3);
+  letter-spacing: 0;
+}
+
+/* Figma: Text/Label-Bold */
+.text-label-bold {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  letter-spacing: 0;
+}
+
+/* Figma: Text/Paragraph-Regular */
+.text-paragraph-regular {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+}
+
+/* Figma: Text/Paragraph-Bold */
+.text-paragraph-bold {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+}

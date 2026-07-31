@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banner — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="banner.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; max-width: 934px; }
+    .stack { display:flex; flex-direction:column; gap:24px; }
+    .stack > small { color:#999; font-size:11px; margin-bottom:-16px; }
+  </style>
+</head>
+<body>
+  <h2>Banner</h2>
+
+  <!-- Ícones remix definidos uma vez -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-close-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"/></symbol>
+    <symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM4.207 19h15.586L12 5.5 4.207 19zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
+    <symbol id="ico-information" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+  </svg>
+
+  <div class="stack">
+    <small>type = Error</small>
+    <div class="banner banner--error" data-node-id="1:596" role="alert">
+      <span class="banner__icon" data-node-id="1:597"><svg><use href="#ico-close-circle"/></svg></span>
+      <div class="banner__content" data-node-id="1:598">
+        <h3 class="banner__title" data-node-id="1:599">Campos não preenchidos</h3>
+        <p class="banner__text" data-node-id="1:600">Um ou mais campos obrigatórios não foram preenchidos.</p>
+      </div>
+    </div>
+
+    <small>type = Warning</small>
+    <div class="banner banner--warning" data-node-id="1:601" role="alert">
+      <span class="banner__icon" data-node-id="1:602"><svg><use href="#ico-alert"/></svg></span>
+      <div class="banner__content" data-node-id="1:603">
+        <h3 class="banner__title" data-node-id="1:604">Campos não preenchidos</h3>
+        <p class="banner__text" data-node-id="1:605">Um ou mais campos obrigatórios não foram preenchidos.</p>
+      </div>
+    </div>
+
+    <small>type = Info</small>
+    <div class="banner banner--info" data-node-id="1:606" role="status">
+      <span class="banner__icon" data-node-id="1:607"><svg><use href="#ico-information"/></svg></span>
+      <div class="banner__content" data-node-id="1:608">
+        <h3 class="banner__title" data-node-id="1:609">Campos não preenchidos</h3>
+        <p class="banner__text" data-node-id="1:610">Um ou mais campos obrigatórios não foram preenchidos.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* ============================================================
+   Componente: Pagination (Figma "TableFooter")
+   Figma: node 1:1348 (+ _PaginationItem 1:1246/1:1252/1:1255)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* TableFooter — flex, gap md (8), items-center, py xl (16) */
+.pagination {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--xl) 0;
+}
+
+/* Lado esquerdo: select de tamanho + "1-20 de 700" */
+.pagination__info {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding-right: var(--md);
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+
+/* Select (page size) — Figma node I1:1350;63:1013 */
+.pagination__select {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xl);
+  height: 36px;
+  padding: var(--sm) var(--lg);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  cursor: pointer;
+}
+.pagination__select-icon { width: 16px; height: 16px; color: var(--border-icon); flex-shrink: 0; }
+.pagination__select-icon svg { display:block; width:100%; height:100%; }
+
+/* Lado direito: navegação */
+.pagination__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex-shrink: 0;
+}
+
+/* Botão de navegação (« ‹ › ») — ícone 24, área 36 */
+.pagination__navbtn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.pagination__navbtn svg { display: block; width: 24px; height: 24px; }
+.pagination__navbtn:disabled { color: var(--content-disable); cursor: not-allowed; }
+
+/* _PaginationItem — 36x36, p md (8), flex center */
+.pagination__item {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+/* Hover — bg bg-aux (node 1:5804) */
+.pagination__item:hover:not(.pagination__item--active):not(.pagination__item--more),
+.pagination__item--hover {
+  background: var(--background-bg-aux);
+}
+/* Active — bg white, borda thin, sombra button */
+.pagination__item--active {
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  box-shadow: var(--shadows-button);
+}
+/* More — ícone ellipsis 16 */
+.pagination__item--more { color: var(--border-icon); }
+.pagination__item--more svg { display: block; width: 16px; height: 16px; }

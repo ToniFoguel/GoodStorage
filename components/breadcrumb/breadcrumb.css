@@ -1,0 +1,147 @@
+/* ============================================================
+   Componente: BreadCrumb
+   Figma: node 1:340 (página AVATAR / estudo)
+   Variantes (Figma "type"): link_component | collapsed
+   Flags: colapsed (dropdown aberto), showStep1 (passo "Produto")
+   Sub-componentes: _BreadCrumbItem (1:373), _SelectItem (1:324/1:328)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Container (node 1:341 / 1:349 / 1:364) --------------------
+   Figma: flex, gap-1,5 (6px), items center */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-1-5);
+  position: relative;
+}
+
+/* ---- _BreadCrumbItem (node 1:372) — 3 estados -----------------
+   Figma "status":
+     Default (1:373/1:374) = Text/Label-Regular, Content/text-inverse (#d9d9d9)
+     Active  (1:375/1:376) = Text/Label-Regular, Content/text (#313131)
+     Houver  (1:377/1:378) = Text/Label-Bold,    Content/primary (#ff8400)
+   ("Houver" é hover — mapeado para :hover/:focus nos links.) */
+.breadcrumb__item {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  letter-spacing: 0;
+  color: var(--content-text-inverse);      /* Default */
+  white-space: nowrap;
+  text-decoration: none;
+}
+/* Active — item atual/selecionado */
+.breadcrumb__item--current,
+.breadcrumb__item--active {
+  color: var(--content-text);
+}
+/* Houver — hover/focus (só em itens navegáveis) */
+a.breadcrumb__item:hover,
+a.breadcrumb__item:focus-visible {
+  color: var(--content-primary);
+  font-weight: var(--font-weight-bold);
+}
+/* Reserva a largura do texto em bold para não deslocar no hover.
+   Uma cópia invisível em bold (data-label) define a largura do item;
+   o texto visível fica empilhado sem alterar a altura. */
+a.breadcrumb__item {
+  display: inline-flex;
+  flex-direction: column;
+}
+a.breadcrumb__item::after {
+  content: attr(data-label);
+  font-weight: var(--font-weight-bold);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---- Separador: lucide/chevron-right (14px) ------------------- */
+.breadcrumb__sep {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--content-text-inverse);
+}
+
+/* ---- Ellipsis: lucide/ellipsis (14px) + dropdown ------------- */
+.breadcrumb__ellipsis {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.breadcrumb__ellipsis-btn {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--content-text);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+}
+.breadcrumb__sep svg,
+.breadcrumb__ellipsis-btn svg,
+.select-item__check svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Dropdown (node 1:354) -----------------------------------
+   Figma: absolute, left -54px / top 18px, w 212px, bg bg-main,
+   border 1px Border/default, padding sm (4px), Shadows/default */
+.breadcrumb__dropdown {
+  position: absolute;
+  top: 18px;
+  left: -54px;
+  width: 212px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--sm);
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  z-index: 10;
+}
+.breadcrumb__dropdown[hidden] { display: none; }
+
+/* ---- _SelectItem (node 1:324 Active / 1:328 Default) ---------
+   Figma: flex items-center, padding md (8px), radius-sm (6px),
+   width full. Texto = Content/text, Paragraph 16/24.
+   Default = regular; Active = bold + ícone remix/check à direita. */
+.select-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--md);
+  border-radius: var(--radius-sm);
+}
+.select-item__text {
+  flex: 1 0 0;
+  min-width: 0;
+  color: var(--content-text);
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+  font-weight: var(--font-weight-regular);   /* Default: Paragraph-Regular */
+}
+.select-item--active { justify-content: space-between; }
+.select-item--active .select-item__text {
+  font-weight: var(--font-weight-bold);      /* Active: Paragraph-Bold */
+}
+.select-item__check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--content-text);
+}

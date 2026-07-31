@@ -1,0 +1,228 @@
+/* ============================================================
+   Componente: DatePicker (+ Calendar)
+   Figma: node 1:3392
+   Estados (Figma "state"): Default, Open, Read-Only, Fill, Disabled, Erro
+   Flags: required, showDescription
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Container (nós 1:3393 / 1:3402 / 1:3411 / 1:3421 / 1:3430 / 1:3547)
+   Figma: flex-col, gap gap-3 (12px), w 192 (250 quando Open). */
+.datepicker {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3);
+  align-items: flex-start;
+  width: 192px;
+  position: relative;
+}
+.datepicker--open { width: 250px; }
+
+/* ---- Label — Text/Label-Regular (12/15), gap sm (4) ---------- */
+.datepicker__label {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+  white-space: nowrap;
+}
+.datepicker__label p { margin: 0; }
+.datepicker__req { color: var(--content-label-error); }             /* asterisco */
+.datepicker--disabled .datepicker__label { color: var(--content-disable); }
+.datepicker--error .datepicker__label { color: var(--content-label-error); }
+
+/* ---- Input (nós 1:3397 / 1:3406 / 1:3415 / 1:3425 / 1:3551) --
+   Figma: h36, borda 1px, px lg (12) / py sm (4), overflow hidden. */
+.datepicker__input {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  height: 36px;
+  padding: var(--sm) var(--lg);
+  overflow: hidden;
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+  cursor: pointer;
+}
+.datepicker--readonly .datepicker__input { background: var(--background-bg-aux); }
+.datepicker--disabled .datepicker__input {
+  background: var(--background-bg-aux);
+  border-color: var(--border-disable);
+  cursor: not-allowed;
+}
+.datepicker--error .datepicker__input { box-shadow: var(--shadows-error); }
+
+/* Valor / placeholder — Paragraph-Regular (16/24), ellipsis */
+.datepicker__value {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--content-text-inverse);   /* placeholder */
+}
+.datepicker__value--filled { color: var(--content-text); }
+.datepicker--disabled .datepicker__value { color: var(--content-disable); }
+
+/* trilho do valor: empurra ícone(s) para a direita */
+.datepicker__field {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+}
+
+/* Ícones do input (calendar-event / close), 16px */
+.datepicker__icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--border-icon);
+}
+.datepicker--disabled .datepicker__icon { color: var(--content-disable); }
+.datepicker__icon svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Descrição — Text/Label-Regular (12) -------------------- */
+.datepicker__desc {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+}
+.datepicker--disabled .datepicker__desc { color: var(--content-disable); }
+.datepicker--error .datepicker__desc { color: var(--content-label-error); }
+
+/* ============================================================
+   CALENDAR (popover — nó 1:3439)
+   Figma: absolute right0 top40, w250, bg white, borda 1px,
+   Shadows/default, flex-col gap gap-4 (16), p p-3 (12).
+   ============================================================ */
+.calendar {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 250px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4);
+  padding: var(--p-3);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  z-index: 10;
+}
+
+/* Header: prev | selects | next */
+.calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.calendar__nav {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0 var(--px-3);
+  border-radius: var(--rounded-md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.calendar__nav svg { display: block; width: 16px; height: 16px; }
+
+.calendar__selects {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-1-5);
+  width: 160px;
+}
+/* Dropdown mês / ano — Inter Medium 14 */
+.calendar__dropdown {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-1);
+  height: 32px;
+  padding-left: var(--pl-2);
+  padding-right: var(--pr-1);
+  border-radius: var(--rounded-md);
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-family: var(--family-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--size-sm);
+  line-height: var(--leading-5);
+  color: var(--content-text);
+}
+.calendar__dropdown--month { width: 53px; }
+.calendar__dropdown--year { width: 63px; }
+.calendar__dropdown span { flex: 1 0 0; min-width: 0; text-align: center; }
+.calendar__dropdown-icon { flex-shrink: 0; width: 12px; height: 12px; color: var(--border-icon); }
+.calendar__dropdown-icon svg { display: block; width: 100%; height: 100%; }
+
+/* Semana (Su..Sa) — Inter Regular 12 */
+.calendar__weekdays { display: flex; width: 100%; }
+.calendar__weekday {
+  width: 32px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--family-sans);
+  font-weight: var(--weight-normal);
+  font-size: var(--size-xs);
+  line-height: var(--leading-4);
+  color: var(--content-text);
+}
+
+/* Grade de dias */
+.calendar__grid { display: flex; flex-direction: column; width: 100%; }
+.calendar__week { display: flex; padding-top: var(--mt-2); }
+.calendar__day {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rounded-md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--family-sans);
+  font-weight: var(--weight-normal);
+  font-size: var(--size-sm);
+  line-height: var(--leading-5);
+  color: var(--content-text);
+}
+.calendar__day--selected {
+  background: var(--background-bg-alt);
+  color: var(--content-title-inverse);
+}
+.calendar__day--muted { opacity: 0.5; }   /* dias de outro mês */

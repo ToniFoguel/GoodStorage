@@ -1,0 +1,211 @@
+/* ============================================================
+   Componente: Table (sistema)
+   Figma: 1:1354 (Table), 1:1376 (Header), 1:1412 (Rows),
+          1:1447 (HeaderItem), 1:1384 (Cells), 1:1429 (página)
+   Peças: toolbar · header · header-item · row · cell (text/badge/
+          progress/action) · empty state
+   Depende de: ../../tokens/tokens.css  (+ badge.css, button.css,
+               progress.css, pagination.css nos demos)
+   ============================================================ */
+
+/* ---- Container ------------------------------------------------ */
+.table {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--background-bg-main);
+}
+
+/* ============================================================
+   HEADER (1:1376) — linha de TableHeaderItem, com borda inferior
+   ============================================================ */
+.table__header {
+  display: flex;
+  width: 100%;
+  border-bottom: var(--thin) solid var(--border-default);
+}
+
+/* HeaderItem (1:1447): h40, px lg(12) / py md(8), gap sm(4).
+   Fill = flex:1 ; Fixed = 120px. */
+.table__th {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex: 1 0 0;
+  min-width: 0;
+  height: 40px;
+  padding: var(--md) var(--lg);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  text-align: left;
+}
+.table__th--fixed { flex: 0 0 120px; width: 120px; }
+/* Coluna de ação (kebab): largura fixa alinhada à célula de ação */
+.table__th--action { flex: 0 0 56px; width: 56px; }
+
+/* Label do header — Paragraph-Regular, Content/text */
+.table__th-label {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  white-space: nowrap;
+}
+/* Ícone de sort (remix arrow-up = crescente / arrow-down = decrescente), 16 */
+.table__sort { width: 16px; height: 16px; color: var(--border-icon); flex-shrink: 0; }
+.table__sort svg { display: block; width: 100%; height: 100%; }
+
+/* Checkbox opcional (Box) — 16x16, radius rounded-sm(4), borda */
+.table__check {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: var(--rounded-sm);
+  border: var(--border) solid var(--border-default);
+  background: var(--background-bg-main);
+}
+
+/* ============================================================
+   ROWS (1:1412) — cada linha com borda inferior; zebra opcional
+   ============================================================ */
+.table__row {
+  display: flex;
+  width: 100%;
+  border-bottom: var(--thin) solid var(--border-default);
+}
+/* Zebra: variante bg-aux (Figma alterna com Background/bg-aux) */
+.table__row--alt { background: var(--background-bg-aux); }
+
+/* ---- Cell (1:1384 TableRowItem) ------------------------------
+   Text/Badge/Progress: px lg(12) / py xl(16). Fill = flex:1;
+   Fixed = 120. Action (kebab): h56, px md(8), justify-center. */
+.table__cell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex: 1 0 0;
+  min-width: 0;
+  padding: var(--xl) var(--lg);
+}
+.table__cell--fixed { flex: 0 0 120px; width: 120px; max-width: 120px; }
+
+/* Célula de texto — Paragraph-Regular, ellipsis */
+.table__cell-text {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Célula de badges — permite múltiplas tags (flex-wrap) */
+.table__cell--badge { flex-wrap: wrap; align-content: center; }
+
+/* Célula de ação (kebab) — largura de conteúdo, alinhada à direita */
+.table__cell--action {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  padding: var(--xs) var(--md);
+  justify-content: center;
+}
+/* Botão kebab (ghost, remix/more-2 vertical) */
+.table__kebab {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.table__kebab svg { display: block; width: 24px; height: 24px; }
+
+/* Célula de progresso — "240/120 ... 90%" + barra */
+.table__progress { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; gap: var(--sm); justify-content: center; }
+.table__progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-title);
+}
+.table__progress-head p { margin: 0; }
+
+/* ============================================================
+   TOOLBAR (1:1429) — busca + Pesquisar + Filtros
+   ============================================================ */
+.table__toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--md) 0;
+}
+.table__search {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  flex: 1 0 0;
+  min-width: 0;
+  height: 40px;
+  padding: var(--md) var(--lg);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+}
+.table__search-icon { width: 20px; height: 20px; color: var(--content-text-inverse); flex-shrink: 0; }
+.table__search-icon svg { display: block; width: 100%; height: 100%; }
+.table__search input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+.table__search input::placeholder { color: var(--content-text-inverse); }
+
+/* ============================================================
+   EMPTY STATE (1:1429) — sem resultados
+   ============================================================ */
+.table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--xl);
+  padding: 56px var(--xl);
+  text-align: center;
+}
+.table__empty-icon { width: 32px; height: 32px; color: var(--content-text); }
+.table__empty-icon svg { display: block; width: 100%; height: 100%; }
+.table__empty-text {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}

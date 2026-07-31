@@ -1,0 +1,232 @@
+/* ============================================================
+   Componente: Select (Figma "LockupSelect" / "LockupSearch")
+   Figma: node 1:6664 (+ SelectItem, ScrollBar)
+   Estados (Figma "status"): Default, Fill, Open, Disable, Error, Ready-Only
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Container — flex-col, gap lg (12). w320 no Figma; aqui fluido. */
+.select {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lg);
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ---- Label — Text/Label-Regular (12/15), Content/title -------- */
+.select__label {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-title);
+  white-space: nowrap;
+}
+.select__label p { margin: 0; }
+.select__req { color: var(--content-label-error); }
+.select--readonly .select__label { color: var(--content-text); }
+.select--disable  .select__label { color: var(--content-disable); }
+.select--error    .select__label { color: var(--content-label-error); }
+
+/* ---- Campo (Select) — h36, borda 1px, px lg / py sm, gap xl --- */
+.select__field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  width: 100%;
+  height: 36px;
+  padding: var(--sm) var(--lg);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  cursor: pointer;
+  overflow: hidden;
+}
+.select--readonly .select__field { background: var(--background-bg-aux); cursor: default; }
+.select--disable  .select__field { background: var(--background-bg-aux); border-color: var(--border-disable); cursor: not-allowed; }
+.select--error    .select__field { border-color: var(--border-error); box-shadow: var(--shadows-error); }
+
+/* Valor / placeholder — Paragraph-Regular (16/24), ellipsis */
+.select__value {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text-inverse);   /* placeholder */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.select__value--filled { color: var(--content-text); }
+.select--disable .select__value { color: var(--content-disable); }
+
+.select__icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
+.select--disable .select__icon { color: var(--content-disable); }
+.select__icon svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Descrição — Text/Label-Regular (12) -------------------- */
+.select__desc {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+}
+.select--readonly .select__desc,
+.select--disable  .select__desc { color: var(--content-disable); }
+.select--error    .select__desc { color: var(--content-label-error); }
+
+/* ============================================================
+   Dropdown (Open) — node 1:6725
+   absolute, white, borda 1px, Shadows/default, p sm (4).
+   top 67 (com título) / 40 (sem título).
+   ============================================================ */
+.select__dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 67px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--sm);
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  z-index: 10;
+}
+.select__dropdown--no-title { top: 40px; }
+.select__list { display: flex; flex-direction: column; flex: 1 0 0; min-width: 0; }
+
+/* SelectItem — p md (8), rounded radius-sm, w-full */
+.select__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  height: 40px;
+  padding: var(--md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.select__item-text {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+.select__item--active { justify-content: space-between; }
+.select__item--active .select__item-text { font-weight: var(--font-weight-bold); }
+.select__item-check { flex-shrink: 0; width: 16px; height: 16px; color: var(--content-text); }
+.select__item-check svg { display: block; width: 100%; height: 100%; }
+
+/* ScrollBar (vertical) — node 4:2. Trilho com borda; barra bg-alt 4px. */
+.select__scrollbar {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  border: var(--border) solid var(--border-default);
+  overflow: hidden;
+}
+.select__scrollbar-bar { width: 4px; height: 65%; background: var(--background-bg-alt); }
+
+/* ============================================================
+   Select com busca (typeahead) — node 1:6763
+   O valor vira <input> editável; o dropdown filtra os itens e
+   mostra empty state quando não há resultado.
+   ============================================================ */
+.select__search {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0; outline: 0; background: none; padding: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+.select__search::placeholder { color: var(--content-text-inverse); }
+
+/* Empty state dentro do dropdown */
+.select__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--md);
+}
+.select__empty-text {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  text-align: center;
+}
+.select__empty .btn { width: 100%; }
+
+/* ============================================================
+   MultiSelect — node 1:6859 — itens como Badges removíveis
+   ============================================================ */
+.select__field--tags {
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 36px;
+  gap: var(--sm);
+  padding: var(--sm) var(--lg);
+}
+.select__tags {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sm);
+}
+/* Tag = Badge primary + botão fechar (✕) */
+.select__tag {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sm);
+  height: 22px;
+  padding: var(--xs) var(--md);
+  background: var(--background-primary);
+  color: var(--content-title-inverse);
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  white-space: nowrap;
+}
+.select__tag-close {
+  display: inline-flex;
+  width: 12px;
+  height: 12px;
+  border: 0; background: none; padding: 0;
+  cursor: pointer;
+  color: var(--content-title-inverse);
+}
+.select__tag-close svg { display: block; width: 100%; height: 100%; }
+/* ✕ para limpar tudo + seta */
+.select__clear { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); cursor: pointer; }
+.select__clear svg { display: block; width: 100%; height: 100%; }

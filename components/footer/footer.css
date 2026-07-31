@@ -1,0 +1,28 @@
+/* ============================================================
+   Componente: Footer
+   Figma: node 1:4118
+   Variantes (Figma "displayport"): Desktop/Tablet | Mobile
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Figma: bg bg-main, borda superior thin (1px) Border/default,
+   flex-col center, overflow hidden, px 3xl (32) / py md (8).
+   w887 fixo no Figma; aqui fluido (100%). */
+.footer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--md) var(--3xl);
+  background: var(--background-bg-main);
+  border-top: var(--thin) solid var(--border-default);
+  overflow: hidden;
+}
+
+/* Logo (slot) — Desktop 108x20.25 / Mobile 72x13.5.
+   Substituir pelo SVG oficial da marca. */
+.footer__logo { height: 20.25px; display: flex; align-items: center; }
+.footer__logo svg { display: block; height: 100%; width: auto; }
+.footer--mobile .footer__logo { height: 13.5px; }

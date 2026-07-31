@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../avatar/avatar.css" />
+  <link rel="stylesheet" href="sidebar.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:40px; align-items:flex-start; }
+    small { display:block; font-size:11px; color:#999; margin-bottom:12px; }
+    /* logo mark (g) no header */
+    .brandmark { box-sizing:border-box; width:32px; height:32px; flex-shrink:0; border:1px solid var(--border-default);
+      background:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--content-primary); font-size:18px; }
+    .sidebar { height: 860px; }
+    .sidebar__nav { overflow:visible; }
+  </style>
+</head>
+<body>
+  <h2>Sidebar</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <symbol id="s-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="s-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4"/></symbol>
+    <symbol id="s-store" viewBox="0 0 24 24"><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3 9l1.5-5h15L21 9M9 21v-6h6v6"/></symbol>
+    <symbol id="s-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="s-archive" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8M10 12h4"/></symbol>
+    <symbol id="s-package" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></symbol>
+    <symbol id="s-fileplus" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5M12 11v6M9 14h6"/></symbol>
+    <symbol id="s-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+    <symbol id="s-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/></symbol>
+    <symbol id="s-filetext" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5M16 13H8M16 17H8M10 9H8"/></symbol>
+    <symbol id="s-tag" viewBox="0 0 24 24"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+    <symbol id="s-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+    <symbol id="s-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.1 10.4A6 6 0 1 1 10.3 18M7 6h1v4M16.7 13.9l.7.7-2.8 2.8"/></symbol>
+    <symbol id="s-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4"/></symbol>
+    <symbol id="s-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></symbol>
+    <symbol id="s-network" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+    <symbol id="s-branch" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+    <symbol id="s-checkcheck" viewBox="0 0 24 24"><path d="M18 6 7 17l-5-5M22 10l-7.5 7.5L13 16"/></symbol>
+    <symbol id="s-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.1a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="s-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v2M16 2v2M17 18a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="s-chevdown" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="s-chevup" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="s-collapse" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></symbol>
+  </svg>
+
+  <div class="row">
+    <!-- Sidebar expandido -->
+    <div>
+      <small>Desktop — expandido (node 1:7404)</small>
+      <div class="sidebar" data-node-id="1:7404">
+        <div class="sidebar__header">
+          <span class="brandmark">g</span>
+          <p class="sidebar__brand">GoodStorage</p>
+          <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#s-collapse"/></svg></button>
+        </div>
+
+        <nav class="sidebar__nav">
+          <!-- Dados mestre -->
+          <div class="sidebar__group">
+            <button class="sidebar__group-head"><span class="sidebar__item-icon"><svg><use href="#s-folder"/></svg></span><span class="sidebar__group-title">Dados mestre</span><span class="sidebar__chevron"><svg><use href="#s-chevup"/></svg></span></button>
+            <div class="sidebar__items">
+              <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#s-building"/></svg></span><span class="sidebar__item-label">Empresas</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-store"/></svg></span><span class="sidebar__item-label">Unidades de negócio</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-pin"/></svg></span><span class="sidebar__item-label">Endereços</span></a>
+            </div>
+          </div>
+          <!-- Produto -->
+          <div class="sidebar__group">
+            <button class="sidebar__group-head"><span class="sidebar__item-icon"><svg><use href="#s-archive"/></svg></span><span class="sidebar__group-title">Produto</span><span class="sidebar__chevron"><svg><use href="#s-chevup"/></svg></span></button>
+            <div class="sidebar__items">
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-package"/></svg></span><span class="sidebar__item-label">Produtos</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-fileplus"/></svg></span><span class="sidebar__item-label">Cadastro em lote</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-image"/></svg></span><span class="sidebar__item-label">Imagem em lote</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-shield"/></svg></span><span class="sidebar__item-label">Seguradora e coberturas</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-filetext"/></svg></span><span class="sidebar__item-label">Apólices</span></a>
+            </div>
+          </div>
+          <!-- Precificação -->
+          <div class="sidebar__group">
+            <button class="sidebar__group-head"><span class="sidebar__item-icon"><svg><use href="#s-tag"/></svg></span><span class="sidebar__group-title">Precificação</span><span class="sidebar__chevron"><svg><use href="#s-chevup"/></svg></span></button>
+            <div class="sidebar__items">
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-dollar"/></svg></span><span class="sidebar__item-label">Tarifário</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-coins"/></svg></span><span class="sidebar__item-label">Edição de preço em lote</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-sliders"/></svg></span><span class="sidebar__item-label">Range de desconto</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-ticket"/></svg></span><span class="sidebar__item-label">Cupom e campanhas</span></a>
+            </div>
+          </div>
+          <!-- Workflow -->
+          <div class="sidebar__group">
+            <button class="sidebar__group-head"><span class="sidebar__item-icon"><svg><use href="#s-network"/></svg></span><span class="sidebar__group-title">Workflow</span><span class="sidebar__chevron"><svg><use href="#s-chevup"/></svg></span></button>
+            <div class="sidebar__items">
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-branch"/></svg></span><span class="sidebar__item-label">Workflows</span></a>
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-checkcheck"/></svg></span><span class="sidebar__item-label">Aprovação</span></a>
+            </div>
+          </div>
+          <!-- Lead -->
+          <div class="sidebar__group">
+            <button class="sidebar__group-head"><span class="sidebar__item-icon"><svg><use href="#s-users"/></svg></span><span class="sidebar__group-title">Lead</span><span class="sidebar__chevron"><svg><use href="#s-chevup"/></svg></span></button>
+            <div class="sidebar__items">
+              <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-contact"/></svg></span><span class="sidebar__item-label">Gestão de lead</span></a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AT</p></div>
+          <div class="sidebar__user">
+            <p class="sidebar__user-name">André</p>
+            <p class="sidebar__user-mail">andre@goodstorage.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar rail colapsado -->
+    <div>
+      <small>Desktop — rail colapsado (node 1:7391)</small>
+      <div class="sidebar sidebar--rail" data-node-id="1:7391" style="height:auto;">
+        <div class="sidebar__header"><span class="brandmark">g</span></div>
+        <nav class="sidebar__nav">
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#s-folder"/></svg></span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-archive"/></svg></span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-tag"/></svg></span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-network"/></svg></span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#s-users"/></svg></span></a>
+        </nav>
+        <div class="sidebar__footer">
+          <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AT</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

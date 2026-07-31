@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modal — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="modal.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#eee; }
+    .stage { max-width: 440px; }
+    .slot-demo { border:1px dashed #000; min-height:106px; width:100%; box-sizing:border-box; }
+  </style>
+</head>
+<body>
+  <h2 style="color:#111;">Modal</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+    <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  </svg>
+
+  <div class="stage">
+    <div class="modal" data-node-id="1:5697">
+      <div class="modal__header">
+        <h3 class="modal__title">Titulo</h3>
+        <button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button>
+      </div>
+      <div class="modal__content">
+        <div class="modal__slot"><div class="slot-demo"></div></div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost">Ghost<span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button>
+        <button class="btn btn--destructive">Destructive</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

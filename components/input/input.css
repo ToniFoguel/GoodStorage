@@ -1,0 +1,145 @@
+/* ============================================================
+   Componente: Input (campo de formulário)
+   Figma: 1:4681 (InputText) e 1:4982 (InputUnitFixed) — mesmo componente,
+   variando label/máscara/helper. Também cobre CNPJ, Telefone, CEP,
+   Conta, Agência, Número (nodes 4737/4784/5099/4831/4878/4925).
+   Estados (Figma "state"): Default, Active, Read-Only, Desabled, Error
+   Opções: required, showComplementText, right icon, addon de unidade (Select)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Container — flex-col, gap lg (12). w320 no Figma; aqui fluido. */
+.input {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lg);
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ---- Label — Text/Label-Regular (12/15), gap sm (4) ----------
+   Default/Active: Content/title. Read-Only: Content/text.
+   Disabled: Content/disable. Error: Content/label-error. */
+.input__label {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-title);
+  white-space: nowrap;
+}
+.input__label p { margin: 0; }
+.input__req { color: var(--content-label-error); }              /* asterisco */
+.input--readonly .input__label { color: var(--content-text); }
+.input--disabled .input__label { color: var(--content-disable); }
+.input--error    .input__label { color: var(--content-label-error); }
+
+/* ---- Campo (Input) — h36, borda 1px, px lg (12) / py sm (4) -- */
+.input__field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  height: 36px;
+  padding: var(--sm) var(--lg);
+  overflow: hidden;
+  background: var(--background-bg-main);
+  border: var(--border-width) solid var(--border-default);
+}
+.input--readonly .input__field { background: var(--background-bg-aux); }
+.input--disabled .input__field {
+  background: var(--background-bg-aux);
+  border-color: var(--border-disable);
+}
+.input--error .input__field {
+  border-color: var(--border-error);
+  box-shadow: var(--shadows-error);   /* anel 0 0 0 3px #f2483d */
+}
+
+/* Controle (input real) — Paragraph-Regular (16/24) */
+.input__control {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  padding: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  text-overflow: ellipsis;
+}
+.input__control::placeholder { color: var(--content-text-inverse); }
+.input--disabled .input__control { color: var(--content-disable); }
+.input__control:disabled { cursor: not-allowed; }
+
+/* Ícone à direita (ex.: remix/pencil no Read-Only, ou % no unit) */
+.input__icon { flex-shrink: 0; color: var(--border-icon); }
+.input__icon--sm { width: 16px; height: 16px; }
+.input__icon--lg { width: 24px; height: 24px; }
+.input--disabled .input__icon { color: var(--content-disable); }
+.input__icon svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Helper / erro — Text/Label-Regular (12) ---------------- */
+.input__help {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+}
+.input--disabled .input__help { color: var(--content-disable); }
+.input--error    .input__help { color: var(--content-label-error); }
+
+/* ============================================================
+   Addon de unidade (InputUnitFixed) — Input + Select (m²)
+   ============================================================ */
+.input__group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+.input__group .input__field { flex: 1 0 0; }
+.input__group--left { flex-direction: row-reverse; }   /* Select à esquerda */
+
+/* Select de unidade — mesmo visual/estado do campo */
+.input__unit {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  height: 36px;
+  padding: var(--sm) var(--lg);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  white-space: nowrap;
+}
+.input__unit-icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
+.input__unit-icon svg { display: block; width: 100%; height: 100%; }
+.input--readonly .input__unit { background: var(--background-bg-aux); }
+.input--disabled .input__unit {
+  background: var(--background-bg-aux);
+  border-color: var(--border-disable);
+  color: var(--content-disable);
+}
+.input--disabled .input__unit-icon { color: var(--content-disable); }
+.input--error .input__unit {
+  border-color: var(--border-error);
+  box-shadow: var(--shadows-error);
+}

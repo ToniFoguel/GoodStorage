@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BreadCrumb — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="breadcrumb.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .case { margin-bottom: 56px; }
+    .case > span { display:block; font-size:12px; color:#999; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <h2>BreadCrumb</h2>
+
+  <!-- Ícones reutilizados (lucide/remix) definidos uma vez -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  </svg>
+
+  <!-- 1) type = link_component -->
+  <div class="case">
+    <span>type = link_component</span>
+    <nav class="breadcrumb" data-node-id="1:364" aria-label="breadcrumb">
+      <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <a href="#" class="breadcrumb__item" data-label="Components">Components</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Breadcrumb</span>
+    </nav>
+  </div>
+
+  <!-- 2) type = link_component + showStep1 -->
+  <div class="case">
+    <span>type = link_component &middot; showStep1 = true</span>
+    <nav class="breadcrumb" data-node-id="1:364" aria-label="breadcrumb">
+      <a href="#" class="breadcrumb__item" data-node-id="1:365" data-label="Produto">Produto</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <a href="#" class="breadcrumb__item" data-label="Components">Components</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Breadcrumb</span>
+    </nav>
+  </div>
+
+  <!-- 3) type = collapsed (colapsed = false) -->
+  <div class="case">
+    <span>type = collapsed &middot; colapsed = false</span>
+    <nav class="breadcrumb" data-node-id="1:341" aria-label="breadcrumb">
+      <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__ellipsis" data-node-id="1:344">
+        <button class="breadcrumb__ellipsis-btn" type="button" aria-label="Mostrar itens ocultos"><svg><use href="#ico-ellipsis"/></svg></button>
+      </span>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <a href="#" class="breadcrumb__item" data-label="Components">Components</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Breadcrumb</span>
+    </nav>
+  </div>
+
+  <!-- 4) type = collapsed (colapsed = true) — dropdown aberto -->
+  <div class="case">
+    <span>type = collapsed &middot; colapsed = true (dropdown aberto)</span>
+    <nav class="breadcrumb" data-node-id="1:349" aria-label="breadcrumb">
+      <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__ellipsis" data-node-id="1:352">
+        <button class="breadcrumb__ellipsis-btn" type="button" aria-expanded="true" aria-label="Itens ocultos"><svg><use href="#ico-ellipsis"/></svg></button>
+        <div class="breadcrumb__dropdown" data-node-id="1:354">
+          <div class="select-item select-item--active" data-node-id="1:355">
+            <span class="select-item__text">Apple</span>
+            <span class="select-item__check"><svg><use href="#ico-check"/></svg></span>
+          </div>
+          <div class="select-item" data-node-id="1:356"><span class="select-item__text">Banana</span></div>
+          <div class="select-item" data-node-id="1:357"><span class="select-item__text">Banana</span></div>
+          <div class="select-item" data-node-id="1:358"><span class="select-item__text">Banana</span></div>
+          <div class="select-item" data-node-id="1:359"><span class="select-item__text">Banana</span></div>
+        </div>
+      </span>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <a href="#" class="breadcrumb__item" data-label="Components">Components</a>
+      <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+      <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Breadcrumb</span>
+    </nav>
+  </div>
+
+  <script>
+    /* Toggle simples do dropdown ao clicar no ellipsis (comportamento da flag "colapsed") */
+    document.querySelectorAll('.breadcrumb__ellipsis').forEach(function (wrap) {
+      var btn = wrap.querySelector('.breadcrumb__ellipsis-btn');
+      var dd = wrap.querySelector('.breadcrumb__dropdown');
+      if (!dd) return;
+      btn.addEventListener('click', function () {
+        var open = dd.hasAttribute('hidden');
+        if (open) { dd.removeAttribute('hidden'); btn.setAttribute('aria-expanded', 'true'); }
+        else { dd.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false'); }
+      });
+    });
+  </script>
+</body>
+</html>

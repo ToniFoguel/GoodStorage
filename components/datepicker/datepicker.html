@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DatePicker — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="datepicker.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start; }
+    .cell > small { display:block; font-size:11px; color:#999; margin-bottom:10px; }
+    .cell { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h2>DatePicker</h2>
+
+  <!-- Ícones -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-calendar" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm3 7H4v9h16v-9zM7 5H4v3h16V5h-3v1h-2V5H9v1H7V5zm0 8h2v2H7v-2z"/></symbol>
+    <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+    <symbol id="ico-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="ico-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  </svg>
+
+  <div class="row">
+    <!-- coluna 1: estados simples -->
+    <div>
+      <div class="cell">
+        <small>Default</small>
+        <div class="datepicker" data-node-id="1:3393">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input">
+            <p class="datepicker__value">Select a date</p>
+            <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+          </div>
+          <p class="datepicker__desc">[Descrição]</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <small>Read-Only</small>
+        <div class="datepicker datepicker--readonly" data-node-id="1:3402">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input">
+            <p class="datepicker__value datepicker__value--filled">25/Jun/2025</p>
+            <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+          </div>
+          <p class="datepicker__desc">[Descrição]</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <small>Fill (clearable)</small>
+        <div class="datepicker" data-node-id="1:3411">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input">
+            <span class="datepicker__field">
+              <p class="datepicker__value datepicker__value--filled">25/Jun/2025</p>
+              <span class="datepicker__icon"><svg><use href="#ico-close"/></svg></span>
+              <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+            </span>
+          </div>
+          <p class="datepicker__desc">[Descrição]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- coluna 2: Open com Calendar -->
+    <div>
+      <div class="cell">
+        <small>Open (com Calendar)</small>
+        <div class="datepicker datepicker--open" id="dp-open" data-node-id="1:3430">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input" style="width:192px" id="dp-open-input">
+            <p class="datepicker__value">Select a date</p>
+            <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+          </div>
+
+          <div class="calendar" data-node-id="1:3439">
+            <div class="calendar__header">
+              <button class="calendar__nav" aria-label="Mês anterior"><svg><use href="#ico-chevron-left"/></svg></button>
+              <div class="calendar__selects">
+                <button class="calendar__dropdown calendar__dropdown--month"><span>Jun</span><span class="calendar__dropdown-icon"><svg><use href="#ico-chevron-down"/></svg></span></button>
+                <button class="calendar__dropdown calendar__dropdown--year"><span>2025</span><span class="calendar__dropdown-icon"><svg><use href="#ico-chevron-down"/></svg></span></button>
+              </div>
+              <button class="calendar__nav" aria-label="Próximo mês"><svg><use href="#ico-chevron-right"/></svg></button>
+            </div>
+
+            <div class="calendar__body">
+              <div class="calendar__weekdays">
+                <span class="calendar__weekday">Su</span><span class="calendar__weekday">Mo</span><span class="calendar__weekday">Tu</span><span class="calendar__weekday">We</span><span class="calendar__weekday">Th</span><span class="calendar__weekday">Fr</span><span class="calendar__weekday">Sa</span>
+              </div>
+              <div class="calendar__grid">
+                <div class="calendar__week">
+                  <button class="calendar__day">1</button><button class="calendar__day">2</button><button class="calendar__day">3</button><button class="calendar__day">4</button><button class="calendar__day">5</button><button class="calendar__day">6</button><button class="calendar__day">7</button>
+                </div>
+                <div class="calendar__week">
+                  <button class="calendar__day">8</button><button class="calendar__day">9</button><button class="calendar__day">10</button><button class="calendar__day">11</button><button class="calendar__day">12</button><button class="calendar__day">13</button><button class="calendar__day">14</button>
+                </div>
+                <div class="calendar__week">
+                  <button class="calendar__day">15</button><button class="calendar__day">16</button><button class="calendar__day">17</button><button class="calendar__day">18</button><button class="calendar__day">19</button><button class="calendar__day">20</button><button class="calendar__day">21</button>
+                </div>
+                <div class="calendar__week">
+                  <button class="calendar__day">22</button><button class="calendar__day">23</button><button class="calendar__day">24</button><button class="calendar__day calendar__day--selected" aria-current="date">25</button><button class="calendar__day">26</button><button class="calendar__day">27</button><button class="calendar__day">28</button>
+                </div>
+                <div class="calendar__week">
+                  <button class="calendar__day">29</button><button class="calendar__day">30</button><button class="calendar__day calendar__day--muted">1</button><button class="calendar__day calendar__day--muted">2</button><button class="calendar__day calendar__day--muted">3</button><button class="calendar__day calendar__day--muted">4</button><button class="calendar__day calendar__day--muted">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- coluna 3: disabled + erro -->
+    <div>
+      <div class="cell">
+        <small>Disabled</small>
+        <div class="datepicker datepicker--disabled" data-node-id="1:3421">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input">
+            <p class="datepicker__value">25/Jun/2025</p>
+            <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+          </div>
+          <p class="datepicker__desc">[Descrição]</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <small>Erro</small>
+        <div class="datepicker datepicker--error" data-node-id="1:3547">
+          <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+          <div class="datepicker__input">
+            <p class="datepicker__value">Select a date</p>
+            <span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span>
+          </div>
+          <p class="datepicker__desc">[Descrição]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* toggle simples do calendar no exemplo Open */
+    var openInput = document.getElementById('dp-open-input');
+    var openWrap = document.getElementById('dp-open');
+    if (openInput) openInput.addEventListener('click', function () {
+      openWrap.classList.toggle('datepicker--open');
+      var cal = openWrap.querySelector('.calendar');
+      if (cal) cal.style.display = openWrap.classList.contains('datepicker--open') ? '' : 'none';
+    });
+  </script>
+</body>
+</html>

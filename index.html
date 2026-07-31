@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System — estudo</title>
+<link rel="stylesheet" href="tokens/tokens.css" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-family-title-text);
+    background: var(--background-bg-aux);
+    color: var(--content-text);
+  }
+  header.hero {
+    padding: var(--3xl) var(--3xl) var(--xl);
+    background: var(--background-bg-main);
+    border-bottom: var(--thin) solid var(--border-default);
+  }
+  header.hero h1 {
+    margin: 0 0 var(--sm);
+    font-size: var(--font-size-h1);
+    line-height: var(--line-hight-h1);
+    font-weight: var(--font-weight-bold);
+    color: var(--content-title);
+  }
+  header.hero p {
+    margin: 0;
+    font-size: var(--font-size-paragraph);
+    line-height: var(--line-hight-paragraph);
+    color: var(--content-text);
+    max-width: 640px;
+  }
+  header.hero .meta {
+    margin-top: var(--md);
+    font-size: var(--font-size-label);
+    line-height: var(--line-hight-label);
+    color: var(--content-disable);
+  }
+  main {
+    padding: var(--xl) var(--3xl) var(--3xl);
+  }
+  .search-box {
+    max-width: 320px;
+    margin: 0 0 var(--xl);
+  }
+  .search-box input {
+    width: 100%;
+    height: 36px;
+    padding: 0 var(--lg);
+    border: var(--border) solid var(--border-default);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-title-text);
+    font-size: var(--font-size-paragraph);
+    color: var(--content-text);
+    background: var(--background-bg-main);
+  }
+  .search-box input:focus { outline: 2px solid var(--background-primary); outline-offset: -1px; }
+
+  section.group { margin-bottom: var(--3xl); }
+  section.group h2 {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-hight-h3);
+    font-weight: var(--font-weight-medium);
+    color: var(--content-title);
+    margin: 0 0 var(--lg);
+    padding-bottom: var(--sm);
+    border-bottom: var(--thick) solid var(--border-default);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--xl);
+  }
+  .card {
+    background: var(--background-bg-main);
+    border: var(--border) solid var(--border-default);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow .15s ease, transform .15s ease;
+  }
+  .card:hover { box-shadow: var(--shadows-default); transform: translateY(-1px); }
+  .card .preview {
+    height: 160px;
+    background: var(--background-bg-aux);
+    border-bottom: var(--border) solid var(--border-default);
+    overflow: hidden;
+    position: relative;
+  }
+  .card .preview iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 250%;
+    height: 250%;
+    border: 0;
+    transform: scale(0.4);
+    transform-origin: top left;
+    pointer-events: none;
+  }
+  .card .info { padding: var(--md) var(--lg); display: flex; flex-direction: column; gap: 2px; }
+  .card .info .name {
+    font-size: var(--font-size-paragraph);
+    line-height: var(--line-hight-paragraph);
+    font-weight: var(--font-weight-bold);
+    color: var(--content-title);
+  }
+  .card .info .desc {
+    font-size: var(--font-size-label);
+    line-height: var(--line-hight-label);
+    color: var(--content-disable);
+  }
+  .card .info .node {
+    margin-top: 4px;
+    font-size: 10px;
+    font-family: "SF Mono", Menlo, monospace;
+    color: var(--content-disable);
+  }
+  .empty-msg {
+    display: none;
+    padding: var(--3xl);
+    text-align: center;
+    color: var(--content-disable);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Design System — estudo</h1>
+  <p>Implementação fiel em HTML/CSS dos componentes do arquivo Figma "estudo" (GoodStorage/levva). Tokens, specs e composição espelhados 1:1, com rastreabilidade via <code>data-node-id</code>.</p>
+  <div class="meta">21 componentes · fonte: Figma <code>EPHZw7duAVSjyhosJfSSs8</code></div>
+</header>
+
+<main>
+  <div class="search-box">
+    <input type="text" id="filter" placeholder="Buscar componente..." />
+  </div>
+
+  <section class="group" data-group="fundacao">
+    <h2>Fundação</h2>
+    <div class="grid">
+      <a class="card" data-name="avatar" href="components/avatar/avatar.html" target="_blank">
+        <div class="preview"><iframe src="components/avatar/avatar.html"></iframe></div>
+        <div class="info"><span class="name">Avatar</span><span class="desc">Imagem ou iniciais, 32×32</span><span class="node">1:340</span></div>
+      </a>
+      <a class="card" data-name="badge" href="components/badge/badge.html" target="_blank">
+        <div class="preview"><iframe src="components/badge/badge.html"></iframe></div>
+        <div class="info"><span class="name">Badge</span><span class="desc">10 variantes de status/contagem</span><span class="node">1:595</span></div>
+      </a>
+      <a class="card" data-name="scrollbar" href="components/scrollbar/scrollbar.html" target="_blank">
+        <div class="preview"><iframe src="components/scrollbar/scrollbar.html"></iframe></div>
+        <div class="info"><span class="name">ScrollBar</span><span class="desc">Trilho vertical / horizontal</span><span class="node">1:8129</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-group="acoes">
+    <h2>Ações &amp; Navegação</h2>
+    <div class="grid">
+      <a class="card" data-name="button" href="components/button/button.html" target="_blank">
+        <div class="preview"><iframe src="components/button/button.html"></iframe></div>
+        <div class="info"><span class="name">Button</span><span class="desc">Primary/Outline/Secondary/Ghost/Destructive + Icon</span><span class="node">1:706</span></div>
+      </a>
+      <a class="card" data-name="breadcrumb" href="components/breadcrumb/breadcrumb.html" target="_blank">
+        <div class="preview"><iframe src="components/breadcrumb/breadcrumb.html"></iframe></div>
+        <div class="info"><span class="name">Breadcrumb</span><span class="desc">Trilha de navegação + dropdown colapsado</span><span class="node">1:372 / 1:485</span></div>
+      </a>
+      <a class="card" data-name="dropdown" href="components/dropdown/dropdown.html" target="_blank">
+        <div class="preview"><iframe src="components/dropdown/dropdown.html"></iframe></div>
+        <div class="info"><span class="name">Dropdown</span><span class="desc">Menu de navegação, filtro, tooltip</span><span class="node">1:4001</span></div>
+      </a>
+      <a class="card" data-name="pagination" href="components/table/table.html" target="_blank">
+        <div class="preview"><iframe src="components/table/table.html"></iframe></div>
+        <div class="info"><span class="name">Pagination</span><span class="desc">TableFooter — embutido na demo de Table</span><span class="node">1:1447</span></div>
+      </a>
+      <a class="card" data-name="sidebar" href="components/sidebar/sidebar.html" target="_blank">
+        <div class="preview"><iframe src="components/sidebar/sidebar.html"></iframe></div>
+        <div class="info"><span class="name">Sidebar</span><span class="desc">Nav lateral, expandida / rail / mobile</span><span class="node">1:7390</span></div>
+      </a>
+      <a class="card" data-name="header" href="components/header/header.html" target="_blank">
+        <div class="preview"><iframe src="components/header/header.html"></iframe></div>
+        <div class="info"><span class="name">Header</span><span class="desc">Page header, título + ações</span><span class="node">1:4737</span></div>
+      </a>
+      <a class="card" data-name="footer" href="components/footer/footer.html" target="_blank">
+        <div class="preview"><iframe src="components/footer/footer.html"></iframe></div>
+        <div class="info"><span class="name">Footer</span><span class="desc">Logo + assinatura</span><span class="node">1:4831</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-group="formularios">
+    <h2>Formulários</h2>
+    <div class="grid">
+      <a class="card" data-name="input" href="components/input/input.html" target="_blank">
+        <div class="preview"><iframe src="components/input/input.html"></iframe></div>
+        <div class="info"><span class="name">Input</span><span class="desc">Texto, addon de unidade, 5 estados</span><span class="node">1:5099</span></div>
+      </a>
+      <a class="card" data-name="select" href="components/select/select.html" target="_blank">
+        <div class="preview"><iframe src="components/select/select.html"></iframe></div>
+        <div class="info"><span class="name">Select</span><span class="desc">Padrão, busca (typeahead), múltipla escolha</span><span class="node">1:4118</span></div>
+      </a>
+      <a class="card" data-name="search" href="components/search/search.html" target="_blank">
+        <div class="preview"><iframe src="components/search/search.html"></iframe></div>
+        <div class="info"><span class="name">Search</span><span class="desc">SearchBar + GroupSearch (filtros)</span><span class="node">1:6664</span></div>
+      </a>
+      <a class="card" data-name="datepicker" href="components/datepicker/datepicker.html" target="_blank">
+        <div class="preview"><iframe src="components/datepicker/datepicker.html"></iframe></div>
+        <div class="info"><span class="name">DatePicker</span><span class="desc">6 estados + Calendar popover</span><span class="node">1:3392</span></div>
+      </a>
+      <a class="card" data-name="checkbox-card" href="components/checkbox-card/checkbox-card.html" target="_blank">
+        <div class="preview"><iframe src="components/checkbox-card/checkbox-card.html"></iframe></div>
+        <div class="info"><span class="name">CheckboxCard</span><span class="desc">Checkbox real, com/sem box</span><span class="node">1:965</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-group="feedback">
+    <h2>Feedback &amp; Estado</h2>
+    <div class="grid">
+      <a class="card" data-name="banner" href="components/banner/banner.html" target="_blank">
+        <div class="preview"><iframe src="components/banner/banner.html"></iframe></div>
+        <div class="info"><span class="name">Banner</span><span class="desc">Error / Warning / Info</span><span class="node">1:893</span></div>
+      </a>
+      <a class="card" data-name="empty-state" href="components/empty-state/empty-state.html" target="_blank">
+        <div class="preview"><iframe src="components/empty-state/empty-state.html"></iframe></div>
+        <div class="info"><span class="name">EmptyState</span><span class="desc">4 variantes de estado vazio</span><span class="node">1:6233</span></div>
+      </a>
+      <a class="card" data-name="progress" href="components/table/table.html" target="_blank">
+        <div class="preview"><iframe src="components/table/table.html"></iframe></div>
+        <div class="info"><span class="name">Progress</span><span class="desc">Barra de progresso — embutido na demo de Table</span><span class="node">1:1412</span></div>
+      </a>
+      <a class="card" data-name="modal" href="components/modal/modal.html" target="_blank">
+        <div class="preview"><iframe src="components/modal/modal.html"></iframe></div>
+        <div class="info"><span class="name">Modal</span><span class="desc">Header, conteúdo, footer de ações</span><span class="node">1:5697</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" data-group="dados">
+    <h2>Dados</h2>
+    <div class="grid">
+      <a class="card" data-name="table" href="components/table/table.html" target="_blank">
+        <div class="preview"><iframe src="components/table/table.html"></iframe></div>
+        <div class="info"><span class="name">Table</span><span class="desc">Header, linhas, células (texto/badge/progresso/ação)</span><span class="node">1:1354</span></div>
+      </a>
+      <a class="card" data-name="data-item" href="components/data-item/data-item.html" target="_blank">
+        <div class="preview"><iframe src="components/data-item/data-item.html"></iframe></div>
+        <div class="info"><span class="name">DataItem</span><span class="desc">Label + valor ou badge</span><span class="node">1:6763</span></div>
+      </a>
+      <a class="card" data-name="card" href="components/card/card.html" target="_blank">
+        <div class="preview"><iframe src="components/card/card.html"></iframe></div>
+        <div class="info"><span class="name">Card</span><span class="desc">Desktop / Mobile</span><span class="node">1:1069</span></div>
+      </a>
+      <a class="card" data-name="collapsible" href="components/collapsible/collapsible.html" target="_blank">
+        <div class="preview"><iframe src="components/collapsible/collapsible.html"></iframe></div>
+        <div class="info"><span class="name">Collapsible</span><span class="desc">Abrir/fechar funcional</span><span class="node">1:1348</span></div>
+      </a>
+    </div>
+  </section>
+
+  <p class="empty-msg" id="empty-msg">Nenhum componente encontrado.</p>
+</main>
+
+<script>
+  const input = document.getElementById('filter');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const groups = Array.from(document.querySelectorAll('section.group'));
+  const emptyMsg = document.getElementById('empty-msg');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let anyVisible = false;
+    groups.forEach(group => {
+      let groupHasVisible = false;
+      group.querySelectorAll('.card').forEach(card => {
+        const match = card.dataset.name.includes(q) || card.querySelector('.name').textContent.toLowerCase().includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) groupHasVisible = true;
+      });
+      group.style.display = groupHasVisible ? '' : 'none';
+      if (groupHasVisible) anyVisible = true;
+    });
+    emptyMsg.style.display = anyVisible ? 'none' : 'block';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Badge — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="badge.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .grid { display:flex; flex-wrap:wrap; gap:16px 24px; align-items:center; }
+    .cell { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+    .cell small { font-size:11px; color:#999; }
+  </style>
+</head>
+<body>
+  <h2>Badge</h2>
+
+  <!-- Ícones (lucide/remix) definidos uma vez -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+    <symbol id="ico-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  </svg>
+
+  <div class="grid">
+    <div class="cell">
+      <span class="badge badge--default" data-node-id="1:486">Badge</span>
+      <small>default</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--default" data-node-id="1:486">Badge<span class="badge__icon badge__icon--md"><svg><use href="#ico-close"/></svg></span></span>
+      <small>default &middot; showIconRight</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--secondary" data-node-id="1:490">Secondary</span>
+      <small>secondary</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--destructive" data-node-id="1:493">Destructive</span>
+      <small>destructive</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--success" data-node-id="1:496">Ativo</span>
+      <small>success</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--outline" data-node-id="1:499">Outline</span>
+      <small>outline</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--yellow" data-node-id="1:514">Yellow</span>
+      <small>yellow</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--secondary-icon" data-node-id="1:502"><span class="badge__icon badge__icon--sm"><svg><use href="#ico-circle-check"/></svg></span>Verified</span>
+      <small>secondary_icon</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--default-number" data-node-id="1:505">8</span>
+      <small>default_number</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--destructive-number" data-node-id="1:508">99</span>
+      <small>destructive_number</small>
+    </div>
+    <div class="cell">
+      <span class="badge badge--secondary-number" data-node-id="1:511">20+</span>
+      <small>secondary_number</small>
+    </div>
+  </div>
+</body>
+</html>

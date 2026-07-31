@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Header — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../breadcrumb/breadcrumb.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="header.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fafafa; }
+    small { display:block; font-size:11px; color:#999; margin:28px 0 8px; }
+    .frame { border:1px solid #eee; background:#fff; }
+    .frame.tablet { width:680px; } .frame.mobile { width:436px; }
+  </style>
+</head>
+<body>
+  <h2>Header</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+    <symbol id="ico-bars" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4h18v2H3zM3 11h12v2H3zM3 18h6v2H3z"/></symbol>
+    <symbol id="ico-back" viewBox="0 0 24 24" fill="currentColor"><path d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"/></symbol>
+    <symbol id="ico-download" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10h5l-6 6-6-6h5V3h2v7zM4 19h16v2H4v-2z"/></symbol>
+    <symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+  </svg>
+
+  <!-- Header — Desktop -->
+  <small>Header — Desktop (node 1:4299)</small>
+  <div class="frame">
+    <div class="page-header">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="#" class="breadcrumb__item" data-label="Empresas">Empresas</a>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Cadastro de empresa</span>
+      </nav>
+      <div class="page-header__bar">
+        <h1 class="page-header__title">Cadastro de empresa</h1>
+        <div class="page-header__actions">
+          <button class="btn btn--outline">Cancelar</button>
+          <button class="btn btn--primary">Criar empresa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header — Desktop com Ativar/Inativar -->
+  <small>Header — Desktop · showButtonActive + showButtonDeactivate</small>
+  <div class="frame">
+    <div class="page-header">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="#" class="breadcrumb__item" data-label="Empresas">Empresas</a>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Cadastro de empresa</span>
+      </nav>
+      <div class="page-header__bar">
+        <h1 class="page-header__title">Cadastro de empresa</h1>
+        <div class="page-header__actions">
+          <button class="btn btn--outline">Cancelar</button>
+          <button class="btn btn--secondary">Ativar</button>
+          <button class="btn btn--destructive">Inativar</button>
+          <button class="btn btn--primary">Criar empresa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header — Tablet -->
+  <small>Header — Tablet (node 1:4322)</small>
+  <div class="frame tablet">
+    <div class="page-header page-header--tablet">
+      <div class="page-header__top">
+        <button class="page-header__menu" aria-label="Menu"><svg><use href="#ico-bars"/></svg></button>
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="#" class="breadcrumb__item" data-label="Empresas">Empresas</a>
+          <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+          <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Cadastro de empresa</span>
+        </nav>
+      </div>
+      <div class="page-header__bar">
+        <h1 class="page-header__title">Cadastro de empresa</h1>
+        <div class="page-header__actions">
+          <button class="btn btn--outline">Cancelar</button>
+          <button class="btn btn--primary">Criar empresa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header — Mobile -->
+  <small>Header — Mobile (node 1:4310)</small>
+  <div class="frame mobile">
+    <div class="page-header page-header--mobile">
+      <button class="page-header__menu" aria-label="Menu"><svg><use href="#ico-bars"/></svg></button>
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="#" class="breadcrumb__item" data-label="Empresas">Empresas</a>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Cadastro de empresa</span>
+      </nav>
+      <h1 class="page-header__title">Cadastro de empresa</h1>
+      <div class="page-header__actions">
+        <button class="btn btn--outline">Cancelar</button>
+        <button class="btn btn--primary">Criar empresa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HeaderV2 — Desktop (breadcrumb colapsado) -->
+  <small>HeaderV2 — Desktop · breadcrumb colapsado (node 1:4335)</small>
+  <div class="frame">
+    <div class="page-header">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__ellipsis"><button class="breadcrumb__ellipsis-btn" aria-label="Itens ocultos"><svg><use href="#ico-ellipsis"/></svg></button></span>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Empresas</span>
+      </nav>
+      <div class="page-header__bar">
+        <h1 class="page-header__title">Cadastro de empresa</h1>
+        <div class="page-header__actions">
+          <button class="btn btn--outline">Cancelar</button>
+          <button class="btn btn--primary">Criar empresa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HeaderV2 — Mobile (ações de ícone) -->
+  <small>HeaderV2 — Mobile · ações de ícone (node 1:4346)</small>
+  <div class="frame mobile">
+    <div class="page-header page-header--mobile">
+      <button class="page-header__menu" aria-label="Menu"><svg><use href="#ico-bars"/></svg></button>
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="#" class="breadcrumb__item" data-label="Home">Home</a>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__ellipsis"><button class="breadcrumb__ellipsis-btn" aria-label="Itens ocultos"><svg><use href="#ico-ellipsis"/></svg></button></span>
+        <span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"/></svg></span>
+        <span class="breadcrumb__item breadcrumb__item--current" aria-current="page">Empresas</span>
+      </nav>
+      <div class="page-header__bar">
+        <h1 class="page-header__title">Cadastro de empresa</h1>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <button class="page-header__icon-btn" aria-label="Voltar"><svg><use href="#ico-back"/></svg></button>
+          <button class="page-header__icon-btn" aria-label="Baixar"><svg><use href="#ico-download"/></svg></button>
+          <button class="page-header__icon-btn page-header__icon-btn--primary" aria-label="Enviar"><svg><use href="#ico-upload"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="card.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start; }
+    .col { display:flex; flex-direction:column; gap:10px; }
+    .col > small { font-size:11px; color:#999; }
+    /* larguras só do demo, pra ilustrar (o componente é fluido) */
+    .demo-desktop { width:423px; }
+    .demo-mobile  { width:280px; }
+    .placeholder { color:#bbb; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h2>Card</h2>
+
+  <div class="row">
+    <div class="col demo-desktop">
+      <small>displayport = Desktop/Tablet (padding 16)</small>
+      <div class="card card--desktop" data-node-id="1:894">
+        <div class="card__slot" data-node-id="1:895">
+          <p class="placeholder">Slot — conteúdo do card</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col demo-mobile">
+      <small>displayport = Mobile (padding 8)</small>
+      <div class="card card--mobile" data-node-id="1:896">
+        <div class="card__slot" data-node-id="1:895">
+          <p class="placeholder">Slot — conteúdo do card</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

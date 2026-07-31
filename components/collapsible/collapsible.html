@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collapsible — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="collapsible.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start; }
+    .col { display:flex; flex-direction:column; gap:20px; width:420px; }
+    .col > small { font-size:11px; color:#999; }
+    .placeholder { color:#bbb; font-size:14px; }
+    .demo-h { min-height: 180px; }
+  </style>
+</head>
+<body>
+  <h2>Collapsible</h2>
+
+  <!-- Ícones remix -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+    <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  </svg>
+
+  <div class="row">
+    <!-- Desktop/Tablet -->
+    <div class="col">
+      <small>displayport = Desktop/Tablet</small>
+      <div class="collapsible is-open" data-node-id="1:1070">
+        <button class="collapsible__header" type="button" aria-expanded="true">
+          <h3 class="collapsible__title">Title 3</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content demo-h">
+          <div class="collapsible__slot"><p class="placeholder">Slot — conteúdo</p></div>
+        </div>
+      </div>
+
+      <div class="collapsible" data-node-id="1:1080">
+        <button class="collapsible__header" type="button" aria-expanded="false">
+          <h3 class="collapsible__title">Title 3</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content demo-h">
+          <div class="collapsible__slot"><p class="placeholder">Slot — conteúdo</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="col">
+      <small>displayport = Mobile</small>
+      <div class="collapsible collapsible--mobile is-open" data-node-id="1:1075">
+        <button class="collapsible__header" type="button" aria-expanded="true">
+          <h3 class="collapsible__title">Title 3</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content demo-h">
+          <div class="collapsible__slot"><p class="placeholder">Slot — conteúdo</p></div>
+        </div>
+      </div>
+
+      <div class="collapsible collapsible--mobile" data-node-id="1:1084">
+        <button class="collapsible__header" type="button" aria-expanded="false">
+          <h3 class="collapsible__title">Title 3</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content demo-h">
+          <div class="collapsible__slot"><p class="placeholder">Slot — conteúdo</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.collapsible__header').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var root = btn.closest('.collapsible');
+        var open = root.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  </script>
+</body>
+</html>

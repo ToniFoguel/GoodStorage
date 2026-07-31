@@ -1,0 +1,86 @@
+/* ============================================================
+   Componente: Collapsible
+   Figma: node 1:1069 (nome no Figma: "Callapsible" — typo mantido só
+   como referência; aqui uso "collapsible")
+   Props (Figma): open (bool), displayport Desktop/Tablet | Mobile
+   Estrutura: Header (título H3 + seta) + Card/Slot (quando aberto)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Container (nós 1:1070 / 1:1075 / 1:1080 / 1:1084) --------
+   Figma: bg bg-main, borda thin (1px) Border/default, flex-col,
+   gap xs (0). No Figma w=420 fixo; aqui fluido (100%). */
+.collapsible {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  width: 100%;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+}
+
+/* ---- Header / Wrapper (nós 1:1071 / 1:1076 / 1:1081 / 1:1085) -
+   Figma: flex, gap xl (16px), items-center, w-full.
+   Padding desktop = 16; quando aberto, sem padding-bottom
+   (o espaçamento inferior vem do padding do Card). */
+.collapsible__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  width: 100%;
+  padding: var(--xl);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.collapsible.is-open .collapsible__header { padding-bottom: 0; }
+
+/* Título — Title/H3 (medium 500, 18/22), Content/title */
+.collapsible__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-hight-h3);
+  letter-spacing: 0;
+  color: var(--content-title);
+}
+
+/* Seta (remix/arrow-up-s aberto | arrow-down-s fechado), 24px */
+.collapsible__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--border-icon);
+}
+.collapsible__icon svg { display: block; width: 100%; height: 100%; }
+/* troca de ícone conforme o estado */
+.collapsible__icon--up { display: none; }
+.collapsible.is-open .collapsible__icon--up { display: block; }
+.collapsible.is-open .collapsible__icon--down { display: none; }
+
+/* ---- Conteúdo: Card/Slot (nós 1:1074 / 1:1079) ---------------
+   Figma: flex-col, overflow hidden, padding xl (16). Altura no
+   Figma é 363 fixa; aqui é pelo conteúdo (auto). Some quando fechado. */
+.collapsible__content {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--xl);
+  overflow: hidden;
+}
+.collapsible:not(.is-open) .collapsible__content { display: none; }
+
+.collapsible__slot { flex: 1 0 0; min-height: 0; width: 100%; }
+
+/* ---- Variante Mobile: padding md (8px) ----------------------- */
+.collapsible--mobile .collapsible__header { padding: var(--md); }
+.collapsible--mobile.is-open .collapsible__header { padding-bottom: 0; }
+.collapsible--mobile .collapsible__content { padding: var(--md); }

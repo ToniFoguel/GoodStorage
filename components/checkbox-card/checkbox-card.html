@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CheckboxCard — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="checkbox-card.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start; }
+    .col { display:flex; flex-direction:column; gap:20px; width:375px; }
+    .col > small { font-size:11px; color:#999; }
+  </style>
+</head>
+<body>
+  <h2>CheckboxCard</h2>
+
+  <!-- Ícone check -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  </svg>
+
+  <div class="row">
+    <!-- box = true -->
+    <div class="col">
+      <small>box = true</small>
+      <label class="checkbox-card checkbox-card--box" data-node-id="1:966">
+        <input type="checkbox" class="checkbox-card__input" checked />
+        <span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span>
+        <span class="checkbox-card__content">
+          <span class="checkbox-card__title">Enable notifications</span>
+          <span class="checkbox-card__desc">You can enable or disable notifications at any time.</span>
+        </span>
+      </label>
+
+      <label class="checkbox-card checkbox-card--box" data-node-id="1:975">
+        <input type="checkbox" class="checkbox-card__input" />
+        <span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span>
+        <span class="checkbox-card__content">
+          <span class="checkbox-card__title">Enable notifications</span>
+          <span class="checkbox-card__desc">You can enable or disable notifications at any time.</span>
+        </span>
+      </label>
+    </div>
+
+    <!-- box = false -->
+    <div class="col">
+      <small>box = false</small>
+      <label class="checkbox-card" data-node-id="1:983">
+        <input type="checkbox" class="checkbox-card__input" checked />
+        <span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span>
+        <span class="checkbox-card__content">
+          <span class="checkbox-card__title">Enable notifications</span>
+          <span class="checkbox-card__desc">You can enable or disable notifications at any time.</span>
+        </span>
+      </label>
+
+      <label class="checkbox-card" data-node-id="1:992">
+        <input type="checkbox" class="checkbox-card__input" />
+        <span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span>
+        <span class="checkbox-card__content">
+          <span class="checkbox-card__title">Enable notifications</span>
+          <span class="checkbox-card__desc">You can enable or disable notifications at any time.</span>
+        </span>
+      </label>
+    </div>
+  </div>
+</body>
+</html>

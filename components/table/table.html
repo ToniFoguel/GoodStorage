@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../badge/badge.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="../progress/progress.css" />
+  <link rel="stylesheet" href="../pagination/pagination.css" />
+  <link rel="stylesheet" href="table.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .wrap { max-width: 900px; border:1px solid #f2f2f2; padding:16px; margin-bottom:48px; }
+    h3.section { font: 400 12px var(--font-family-title-text); color:#999; margin:0 0 8px; }
+  </style>
+</head>
+<body>
+  <h2>Table</h2>
+
+  <!-- Ícones -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+    <symbol id="ico-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+    <symbol id="ico-search" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+    <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+    <symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+    <symbol id="ico-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+    <symbol id="ico-arrow-left-s" viewBox="0 0 24 24" fill="currentColor"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+    <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+    <symbol id="ico-arrow-left-double" viewBox="0 0 24 24" fill="currentColor"><path d="M4.828 12l4.95 4.95-1.414 1.414L2 12l6.364-6.364 1.414 1.414zm7.071 0l4.95 4.95-1.414 1.414L9.9 12l6.364-6.364 1.414 1.414z"/></symbol>
+    <symbol id="ico-arrow-right-double" viewBox="0 0 24 24" fill="currentColor"><path d="M19.172 12l-4.95-4.95 1.414-1.414L22 12l-6.364 6.364-1.414-1.414zm-7.071 0l-4.95-4.95 1.414-1.414L14.1 12l-6.364 6.364-1.414-1.414z"/></symbol>
+    <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+  </svg>
+
+  <!-- ===== 1) Data table completa (toolbar + table + pagination) ===== -->
+  <div class="wrap">
+    <h3 class="section">DataTable — toolbar + table + pagination (node 1:1429 / 1:1354)</h3>
+
+    <div class="table__toolbar">
+      <label class="table__search">
+        <span class="table__search-icon"><svg><use href="#ico-search"/></svg></span>
+        <input type="text" placeholder="Pesquise o nome da empresa" />
+      </label>
+      <button class="btn btn--primary">Pesquisar</button>
+      <button class="btn btn--outline">Filtros<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button>
+    </div>
+
+    <div class="table" data-node-id="1:1354">
+      <div class="table__header" data-node-id="1:1376">
+        <button class="table__th"><span class="table__th-label">Empresa</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        <button class="table__th"><span class="table__th-label">Contato</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        <button class="table__th"><span class="table__th-label">Cidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        <button class="table__th"><span class="table__th-label">Plano</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        <span class="table__th table__th--action" aria-hidden="true"></span>
+      </div>
+
+      <!-- Rows (zebra) -->
+      <div class="table__row" data-node-id="1:1385">
+        <div class="table__cell"><p class="table__cell-text">Acme Ltda</p></div>
+        <div class="table__cell table__cell--badge"><span class="badge badge--outline">Outline</span></div>
+        <div class="table__cell"><p class="table__cell-text">maria@acme.com</p></div>
+        <div class="table__cell"><p class="table__cell-text">São Paulo</p></div>
+        <div class="table__cell"><p class="table__cell-text">Premium</p></div>
+        <div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div>
+      </div>
+      <div class="table__row table__row--alt">
+        <div class="table__cell"><p class="table__cell-text">Globex</p></div>
+        <div class="table__cell table__cell--badge"><span class="badge badge--outline">Outline</span></div>
+        <div class="table__cell"><p class="table__cell-text">joao@globex.com</p></div>
+        <div class="table__cell"><p class="table__cell-text">Rio de Janeiro</p></div>
+        <div class="table__cell"><p class="table__cell-text">Básico</p></div>
+        <div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell"><p class="table__cell-text">Initech</p></div>
+        <div class="table__cell table__cell--badge"><span class="badge badge--outline">Outline</span></div>
+        <div class="table__cell"><p class="table__cell-text">ana@initech.com</p></div>
+        <div class="table__cell"><p class="table__cell-text">Curitiba</p></div>
+        <div class="table__cell"><p class="table__cell-text">Premium</p></div>
+        <div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div>
+      </div>
+      <div class="table__row table__row--alt">
+        <div class="table__cell"><p class="table__cell-text">Umbrella</p></div>
+        <div class="table__cell table__cell--badge"><span class="badge badge--outline">Outline</span></div>
+        <div class="table__cell"><p class="table__cell-text">luis@umbrella.com</p></div>
+        <div class="table__cell"><p class="table__cell-text">Belo Horizonte</p></div>
+        <div class="table__cell"><p class="table__cell-text">Enterprise</p></div>
+        <div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div>
+      </div>
+    </div>
+
+    <!-- Pagination (TableFooter, node 1:1348) -->
+    <div class="pagination" data-node-id="1:1348">
+      <div class="pagination__info">
+        <span class="pagination__select">20 <span class="pagination__select-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>
+        <span>1 - 20 <span style="color:var(--content-text)">de 700</span></span>
+      </div>
+      <div class="pagination__nav">
+        <button class="pagination__navbtn" disabled aria-label="Primeira"><svg><use href="#ico-arrow-left-double"/></svg></button>
+        <button class="pagination__navbtn" disabled aria-label="Anterior"><svg><use href="#ico-arrow-left-s"/></svg></button>
+        <button class="pagination__item pagination__item--active" aria-current="page">1</button>
+        <button class="pagination__item">2</button>
+        <span class="pagination__item pagination__item--more"><svg><use href="#ico-ellipsis"/></svg></span>
+        <button class="pagination__item">20</button>
+        <button class="pagination__item">21</button>
+        <button class="pagination__navbtn" aria-label="Próxima"><svg><use href="#ico-arrow-right-s"/></svg></button>
+        <button class="pagination__navbtn" aria-label="Última"><svg><use href="#ico-arrow-right-double"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2) Empty state ===== -->
+  <div class="wrap">
+    <h3 class="section">Empty state — sem resultados (node 1:1429)</h3>
+    <div class="table__toolbar">
+      <label class="table__search">
+        <span class="table__search-icon"><svg><use href="#ico-search"/></svg></span>
+        <input type="text" value="Tatuapé" />
+      </label>
+      <button class="btn btn--primary">Pesquisar</button>
+      <button class="btn btn--outline">Filtros<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button>
+    </div>
+    <div class="table">
+      <div class="table__header">
+        <span class="table__th"><span class="table__th-label">Empresa</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></span>
+        <span class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></span>
+        <span class="table__th"><span class="table__th-label">Contato</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></span>
+      </div>
+      <div class="table__empty">
+        <span class="table__empty-icon"><svg><use href="#ico-inbox"/></svg></span>
+        <p class="table__empty-text">Nenhum resultado encontrado</p>
+        <button class="btn btn--primary"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"/></svg></span>Limpar filtros</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 3) Tipos de célula ===== -->
+  <div class="wrap">
+    <h3 class="section">Tipos de célula (node 1:1384)</h3>
+    <div class="table">
+      <div class="table__row">
+        <div class="table__cell"><p class="table__cell-text">Texto (ellipsis se estourar a largura da coluna)</p></div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell table__cell--badge"><span class="badge badge--outline">Outline</span><span class="badge badge--outline">Outline</span></div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell">
+          <div class="table__progress">
+            <div class="table__progress-head"><p>240/120</p><p>90%</p></div>
+            <div class="progress"><div class="progress__fill" style="--progress:90%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

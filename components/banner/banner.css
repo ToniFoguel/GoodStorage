@@ -1,0 +1,81 @@
+/* ============================================================
+   Componente: Banner
+   Figma: node 1:595 (página AVATAR / estudo)
+   Variantes (Figma "type"): Error | Warning | Info
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Base (node 1:596 / 1:601 / 1:606) -----------------------
+   Figma: borda esquerda thick (2px), flex gap md (8px), items-start,
+   overflow hidden, padding xl (16px). Largura no Figma = 902px fixo;
+   aqui uso 100% (fluido) — é o comportamento esperado de um banner. */
+.banner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--xl);
+  overflow: hidden;
+  border-left: var(--thick) solid;
+}
+
+/* ---- Variantes: cor de fundo + borda esquerda ---------------- */
+.banner--error {                                     /* 1:596 */
+  background: #ffcfcc;                                /* Figma: hex cru (sem token) */
+  border-left-color: var(--border-error);
+  color: var(--content-label-error);
+}
+.banner--warning {                                   /* 1:601 */
+  background: var(--background-warning);
+  border-left-color: var(--border-warnigh);
+  color: var(--content-label-warning);
+}
+.banner--info {                                      /* 1:606 */
+  background: var(--background-info);
+  border-left-color: var(--border-info);
+  color: var(--content-label-info);
+}
+
+/* ---- Ícone 24px (remix). Herda a cor do tipo via currentColor - */
+.banner__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+}
+.banner__icon svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Bloco de texto (node 1:598 / 1:603 / 1:608) -------------
+   Figma: flex-col, gap md (8px). Título e parágrafo herdam a cor
+   do tipo (label-error / label-warning / label-info). */
+.banner__content {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+  color: inherit;
+}
+
+/* Título — Title/H3 (medium 500, 18/22) */
+.banner__title {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-hight-h3);
+  letter-spacing: 0;
+  color: inherit;
+}
+
+/* Descrição — Text/Paragraph-Regular (400, 16/24) */
+.banner__text {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  letter-spacing: 0;
+  color: inherit;
+}

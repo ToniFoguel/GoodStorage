@@ -1,0 +1,74 @@
+/* ============================================================
+   Componente: EmptyState (Figma "Empty")
+   Figma: node 1:4001
+   Variantes (Figma "status"): Cadastrado, Cadastro em lote,
+     Edição em lote, Nenhum resultado encontrado
+   Depende de: ../../tokens/tokens.css  (+ button.css no demo)
+   ============================================================ */
+
+/* Container — flex-col, gap gap-6 (24), center, p p-12 (48). w520 fluido. */
+.empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-6);
+  width: 100%;
+  max-width: 520px;
+  padding: var(--p-12);
+  text-align: center;
+}
+
+/* Bloco interno — gap 2xl (24), w384 */
+.empty__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--2xl);
+  width: 100%;
+  max-width: 384px;
+}
+
+/* Heading — gap md (8) */
+.empty__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+}
+
+/* Badge do ícone — bg muted, rounded radius-lg (10), 40x40 */
+.empty__icon {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--muted);
+  color: var(--border-icon);
+}
+.empty__icon svg { display: block; width: 24px; height: 24px; }
+
+/* Título — Text-lg/Medium (Inter 18/28), Content/title, centralizado */
+.empty__title {
+  margin: 0;
+  width: 100%;
+  font-family: var(--family-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--size-lg);
+  line-height: var(--leading-7);
+  letter-spacing: var(--tracking-normal);
+  color: var(--content-title);
+  text-align: center;
+}
+
+/* Ações — gap gap-3 (12) */
+.empty__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-3);
+}

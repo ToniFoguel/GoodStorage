@@ -1,0 +1,164 @@
+/* ============================================================
+   Componente: Sidebar (SidebarV2)
+   Figma: node 1:7390
+   Estrutura: Header (logo + colapsar) · Nav (grupos + itens) · Footer (user)
+   Variantes: expandido (262px) · rail colapsado (48px) · Mobile/Tablet
+   Depende de: ../../tokens/tokens.css  (+ avatar.css no demo)
+   ============================================================ */
+
+.sidebar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 262px;
+  background: var(--background-bg-aux);
+  border: var(--border-width) solid var(--border-default);
+}
+.sidebar--mobile { width: 255px; }
+.sidebar--rail { width: 48px; }   /* colapsado: só ícones */
+
+/* ---- Header (logo + nome + colapsar) — borda inferior --------- */
+.sidebar__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2);
+  width: 100%;
+  padding: var(--xl);
+  border-bottom: var(--thin) solid var(--border-default);
+}
+.sidebar--rail .sidebar__header { padding: var(--md); justify-content: center; }
+.sidebar__brand {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+.sidebar__collapse { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); background:none; border:0; cursor:pointer; }
+.sidebar__collapse svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Nav ----------------------------------------------------- */
+.sidebar__nav {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+  padding: var(--md);
+  overflow-y: auto;
+}
+
+/* Grupo (seção expansível) */
+.sidebar__group { display: flex; flex-direction: column; gap: var(--sm); width: 100%; }
+.sidebar__group-head {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  height: 32px;
+  padding: var(--md);
+  width: 100%;
+  background: none; border: 0; cursor: pointer;
+  text-align: left;
+}
+.sidebar__group-title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);      /* Paragraph-Bold */
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-title);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sidebar__chevron { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
+.sidebar__chevron svg { display: block; width: 100%; height: 100%; }
+
+/* Lista de itens do grupo */
+.sidebar__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-y-1);
+  width: 100%;
+  padding: var(--sm) var(--md) var(--md);
+}
+
+/* Item (_MenuButton) — icon 16 + label */
+.sidebar__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  height: 32px;
+  padding: var(--md);
+  width: 100%;
+  background: none; border: 0; cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+}
+.sidebar__item--active { background: var(--background-neutral); }   /* Empresas ativo */
+.sidebar__item-icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
+.sidebar__item-icon svg { display: block; width: 100%; height: 100%; }
+.sidebar__item-label {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);    /* Paragraph-Regular */
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Rail colapsado: só o ícone, item vira 32x32 centralizado */
+.sidebar--rail .sidebar__item { width: 32px; justify-content: center; }
+.sidebar--rail .sidebar__item-label,
+.sidebar--rail .sidebar__group-title,
+.sidebar--rail .sidebar__chevron,
+.sidebar--rail .sidebar__brand { display: none; }
+
+/* ---- Footer (usuário) — borda superior ----------------------- */
+.sidebar__footer {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-x-2);
+  width: 100%;
+  padding: var(--xl);
+  border-top: var(--thin) solid var(--border-default);
+}
+.sidebar--rail .sidebar__footer { padding: var(--md); justify-content: center; }
+.sidebar__user {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: var(--line-hight-label);
+}
+.sidebar--rail .sidebar__user { display: none; }
+.sidebar__user-name {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sidebar__user-mail {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}

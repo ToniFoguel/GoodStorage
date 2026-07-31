@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Footer — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="footer.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fafafa; }
+    small { display:block; font-size:11px; color:#999; margin:24px 0 8px; }
+    /* wordmark placeholder — trocar pelo SVG oficial */
+    .logo-mark { font-family: var(--font-family-title-text); font-weight:700; letter-spacing:.5px; display:flex; flex-direction:column; align-items:center; line-height:1; }
+    .logo-mark b { font-size:16px; color:var(--content-title); }
+    .logo-mark b .g { color:var(--content-primary); }
+    .logo-mark span { font-size:7px; font-weight:400; letter-spacing:1.5px; color:var(--content-title); margin-top:2px; }
+  </style>
+</head>
+<body>
+  <h2>Footer</h2>
+
+  <small>displayport = Desktop/Tablet</small>
+  <div class="footer" data-node-id="1:4119">
+    <span class="footer__logo">
+      <img src="../../assets/logo-goodstorage.svg" alt="GoodStorage" />
+    </span>
+  </div>
+
+  <small>displayport = Mobile</small>
+  <div class="footer footer--mobile" data-node-id="1:4121">
+    <span class="footer__logo">
+      <img src="../../assets/logo-goodstorage.svg" alt="GoodStorage" />
+    </span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+/* ============================================================
+   Componente: Header (de página) — Header (1:4298) e HeaderV2 (1:4334)
+   Breadcrumb + Título H1 + Ações. Responsivo: Desktop | Tablet | Mobile.
+   HeaderV2 = breadcrumb colapsado (Home › … › Empresas) + ações de ícone no mobile.
+   Depende de: ../../tokens/tokens.css  (+ breadcrumb.css, button.css nos demos)
+   ============================================================ */
+
+/* Container — bg white, borda inferior, flex-col gap md (8), items-start.
+   Desktop: px 3xl (32) / py xl (16). Tablet/Mobile: p xl (16). Largura fluida. */
+.page-header {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--md);
+  width: 100%;
+  padding: var(--xl) var(--3xl);
+  background: var(--background-bg-main);
+  border-bottom: var(--thin) solid var(--border-default);
+}
+.page-header--tablet,
+.page-header--mobile { padding: var(--xl); }
+
+/* Botão de menu (bar-chart-horizontal) — tablet/mobile, 32x32 */
+.page-header__menu {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.page-header__menu svg { display: block; width: 24px; height: 24px; }
+
+/* Linha superior (tablet/mobile): menu + breadcrumb */
+.page-header__top { display: flex; align-items: center; gap: var(--xl); width: 100%; }
+
+/* Barra título + ações */
+.page-header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+}
+
+/* Título — Title/H1 (bold 24/28), Content/title */
+.page-header__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-hight-h1);
+  letter-spacing: 0;
+  color: var(--content-title);
+}
+
+/* Ações — flex gap xl (16), altura 36 */
+.page-header__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--xl);
+  height: 36px;
+  flex-shrink: 0;
+}
+/* No mobile as ações ocupam a largura toda (botões flex:1) */
+.page-header--mobile .page-header__actions { width: 100%; gap: var(--md); }
+.page-header--mobile .page-header__actions .btn { flex: 1 0 0; }
+
+/* Botão de ação só-ícone (mobile HeaderV2: voltar/baixar/enviar) — 36x36 */
+.page-header__icon-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: var(--md);
+  border: var(--border-width) solid var(--border-default);
+  background: var(--background-bg-main);
+  box-shadow: var(--shadows-button);
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.page-header__icon-btn--primary {
+  background: var(--acction-button-primary-default);
+  border-color: transparent;
+  color: var(--content-title-inverse);
+}
+.page-header__icon-btn svg { display: block; width: 16px; height: 16px; }

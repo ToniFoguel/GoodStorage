@@ -1,0 +1,26 @@
+/* ============================================================
+   Componente: Progress
+   Figma: node 1:1473 (Progress, 1:1474/1:1475)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Track — Figma: borda 1px Border/default, h9, overflow hidden.
+   Largura fixa no Figma (192.5); aqui fluida (100%). */
+.progress {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 9px;
+  border: var(--border) solid var(--border-default);
+  overflow: hidden;
+}
+
+/* Fill — Figma: bg primary, borda 1px, h9. Largura = valor (--progress). */
+.progress__fill {
+  box-sizing: border-box;
+  height: 9px;
+  width: var(--progress, 60%);
+  background: var(--background-primary);
+  border: var(--border) solid var(--border-default);
+}

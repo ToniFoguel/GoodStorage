@@ -1,0 +1,36 @@
+/* ============================================================
+   Componente: DataItem (Figma "Item") — par rótulo + valor
+   Figma: node 1:5627
+   Variantes (Figma "type"): Text | Badge
+   Depende de: ../../tokens/tokens.css  (+ badge.css no demo)
+   ============================================================ */
+
+/* Container — flex-col, gap sm (4), items-start.
+   Figma: Text w151 / Badge w136; aqui deixo por conteúdo. */
+.data-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sm);
+}
+
+/* Rótulo — Text/Paragraph-Bold, Content/text */
+.data-item__label {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+
+/* Valor (type=Text) — Text/Paragraph-Regular, Content/text */
+.data-item__value {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+/* type=Badge: usa o componente Badge (ex.: .badge--default "Matriz") */

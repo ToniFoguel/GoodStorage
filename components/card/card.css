@@ -1,0 +1,37 @@
+/* ============================================================
+   Componente: Card
+   Figma: node 1:893 (página AVATAR / estudo)
+   Variantes (Figma "displayport"): Desktop/Tablet | Mobile
+   Estrutura: Card > Slot (conteúdo livre / children)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Base (node 1:894 / 1:896) -------------------------------
+   Figma: bg bg-main, borda thin (1px) Border/default, flex-col,
+   items-start, overflow hidden. No Figma tem tamanho fixo
+   (423x363); aqui é fluido (largura 100%, altura pelo conteúdo),
+   que é o comportamento esperado de um card reutilizável. */
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  overflow: hidden;
+}
+
+/* Desktop/Tablet — padding xl (16px) [padrão] */
+.card--desktop { padding: var(--xl); }
+
+/* Mobile — padding md (8px) */
+.card--mobile { padding: var(--md); }
+
+/* ---- Slot (node 1:895): área de conteúdo ---------------------
+   Figma: flex 1, min-h 0, largura total. */
+.card__slot {
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+}

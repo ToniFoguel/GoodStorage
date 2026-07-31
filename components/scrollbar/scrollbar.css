@@ -1,0 +1,24 @@
+/* ============================================================
+   Componente: ScrollBar (decorativo)
+   Figma: node 1:8129
+   Variantes (Figma "position"): Vertical | Horizontal
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Trilho — borda 1px Border/default, overflow hidden. */
+.scrollbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  border: var(--border) solid var(--border-default);
+  overflow: hidden;
+}
+/* Vertical: h fluida (Figma 223), barra 4px de largura */
+.scrollbar--vertical { width: 4px; height: 100%; }
+.scrollbar--vertical .scrollbar__bar { width: 4px; height: 65%; }
+/* Horizontal: h 4px, barra ocupa parte da largura */
+.scrollbar--horizontal { height: 4px; width: 100%; }
+.scrollbar--horizontal .scrollbar__bar { height: 4px; width: 68%; }
+
+/* Barra — bg-alt (#313131) */
+.scrollbar__bar { background: var(--background-bg-alt); flex-shrink: 0; }

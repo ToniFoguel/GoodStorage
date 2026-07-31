@@ -1,0 +1,82 @@
+/* ============================================================
+   Componente: Badge
+   Figma: node 1:485 (página AVATAR / estudo)
+   Variantes (Figma "type"): default, secondary, destructive, success,
+     outline, yellow, default_number, destructive_number,
+     secondary_number, secondary_icon
+   Flag: showIconRight (ícone remix/close à direita — só no default)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* ---- Base (comum) --------------------------------------------
+   Figma: flex center, px md (8px) / py xs (0), Text/Label-Regular.
+   Altura padrão 22px (variantes "number" usam 20px). Sem radius. */
+.badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: var(--xs) var(--md);
+  gap: var(--sm);
+  /* Text/Label-Regular */
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--content-title-inverse); /* padrão: texto branco */
+}
+
+/* ---- Variantes sólidas (h22, texto branco) -------------------- */
+.badge--default      { background: var(--background-primary); }                     /* 1:486 */
+.badge--secondary    { background: var(--background-secondary); }                   /* 1:490 */
+.badge--destructive  { background: var(--acction-button-destructive-default); }     /* 1:493 */
+.badge--success      { background: var(--acction-button-tertiary-default); }        /* 1:496 */
+.badge--yellow       { background: var(--background-yellow); }                      /* 1:514 */
+
+/* ---- Outline (borda, texto escuro) --------------------------- */
+.badge--outline {                                                                   /* 1:499 */
+  background: transparent;
+  border: var(--thin) solid var(--border-default);
+  color: var(--content-text);
+}
+
+/* ---- secondary_icon: ícone lucide/circle-check + texto -------- */
+.badge--secondary-icon {                                                            /* 1:502 */
+  background: var(--background-bg-alt);
+  gap: var(--gap-1);
+  color: var(--content-text-inverse);
+}
+.badge__icon {
+  flex-shrink: 0;
+  display: block;
+  color: currentColor;
+}
+.badge__icon--sm { width: 12px; height: 12px; }   /* circle-check 12px */
+.badge__icon--md { width: 16px; height: 16px; }   /* remix/close 16px */
+.badge__icon svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Variantes "number" -------------------------------------- */
+/* default_number: quadrado 20x20, fundo bg-alt, texto text-inverse */
+.badge--default-number {                                                            /* 1:505 */
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: var(--background-bg-alt);
+  color: var(--content-text-inverse);
+}
+/* destructive_number: h20, fundo destructive, texto branco */
+.badge--destructive-number {                                                        /* 1:508 */
+  height: 20px;
+  background: var(--acction-button-destructive-default);
+}
+/* secondary_number: h20, borda, texto escuro */
+.badge--secondary-number {                                                          /* 1:511 */
+  height: 20px;
+  background: transparent;
+  border: var(--thin) solid var(--border-default);
+  color: var(--content-text);
+}

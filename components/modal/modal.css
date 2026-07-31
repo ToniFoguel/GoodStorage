@@ -1,0 +1,84 @@
+/* ============================================================
+   Componente: Modal (diálogo)
+   Figma: node 1:5697
+   Estrutura: Header (título + fechar) · Content (slot) · Footer (ações)
+   Depende de: ../../tokens/tokens.css  (+ button.css no demo)
+   ============================================================ */
+
+/* Container — bg white, borda 1px, flex-col, Shadows/default (4 4 4) */
+.modal {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--background-bg-main);
+  border: var(--border) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  width: 100%;
+}
+
+/* ---- Header — bg bg-aux, borda inferior thick (2px) ----------
+   Figma: gap xl (16), pt xl (16) / pb lg (12) / px xl (16). */
+.modal__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  width: 100%;
+  padding: var(--xl) var(--xl) var(--lg);
+  background: var(--background-bg-aux);
+  border-bottom: var(--thick) solid var(--border-default);
+  overflow: hidden;
+}
+/* Título — Title/H3 (medium 500, 18/22), Content/title */
+.modal__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-hight-h3);
+  letter-spacing: 0;
+  color: var(--content-title);
+}
+/* Botão fechar — 40x40, ícone remix/close 24 */
+.modal__close {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);
+  flex-shrink: 0;
+}
+.modal__close svg { display: block; width: 24px; height: 24px; }
+
+/* ---- Content — flex gap xl, items-start, p xl (16). Slot livre. */
+.modal__content {
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--xl);
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--xl);
+  overflow: hidden;
+}
+.modal__slot { flex: 1 0 0; min-width: 0; }
+
+/* ---- Footer — borda superior, gap 10, pt lg (12) / pb xl (16) / px xl */
+.modal__footer {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: var(--lg) var(--xl) var(--xl);
+  border-top: var(--thin) solid var(--border-default);
+  overflow: hidden;
+}

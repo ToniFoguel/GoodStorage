@@ -1,0 +1,59 @@
+/* ============================================================
+   Componente: Avatar
+   Figma: página "AVATAR" (node 1:188)
+   Variantes (Figma "type"): Image (1:189) | Text (1:191)
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+
+/* Base — comum às duas variantes
+   Figma: size 32x32, border thin (1px) solid Border/default, overflow clip */
+.avatar {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border: var(--thin) solid var(--border-default);
+  overflow: hidden;
+  position: relative;
+  display: block;
+}
+
+/* Variante Image (type=Image, node 1:189)
+   Figma: Background/bg-main + imagem preenchendo (avatar-image, 1:190) */
+.avatar--image {
+  background-color: var(--background-bg-main);
+}
+
+/* avatar-image (node 1:190): a imagem estoura 1px em todas as bordas
+   (inset -1px) e cobre a área via object-fit: cover */
+.avatar--image .avatar__img {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  object-fit: cover;
+  pointer-events: none;
+  display: block;
+}
+
+/* Variante Text (type=Text, node 1:191)
+   Figma: Background/tertiary + iniciais em Content/title-inverse */
+.avatar--text {
+  background-color: var(--background-tertiary);
+}
+
+/* Iniciais (node 1:192)
+   Figma: left 9px / top 8px, cor Content/title-inverse, style Text/Label-Regular.
+   Uso flex-center (equivalente visual ao posicionamento absoluto do Figma para
+   "AT") para ficar robusto com iniciais de larguras diferentes. */
+.avatar--text .avatar__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: var(--content-title-inverse);
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* tipografia herdada de .text-label-regular */
+}

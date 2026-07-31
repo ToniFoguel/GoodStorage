@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="search.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    small { display:block; font-size:11px; color:#999; margin:28px 0 10px; }
+    .w853 { max-width: 900px; }
+    .w377 { width: 377px; }
+  </style>
+</head>
+<body>
+  <h2>Search</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-search" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+    <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+    <symbol id="ico-calendar" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm3 7H4v9h16v-9zM7 5H4v3h16V5h-3v1h-2V5H9v1H7V5zm0 8h2v2H7v-2z"/></symbol>
+  </svg>
+
+  <!-- SearchBar A: com botão Pesquisar -->
+  <small>SearchBar — com "Pesquisar" (node 1:6234)</small>
+  <div class="w377">
+    <div class="searchbar" data-node-id="1:6234">
+      <span class="searchbar__icon"><svg><use href="#ico-search"/></svg></span>
+      <input class="searchbar__input" placeholder="Pesquise o nome da empresa" />
+      <button class="btn btn--primary">Pesquisar</button>
+    </div>
+  </div>
+
+  <!-- SearchBar B: com botão de ícone -->
+  <small>SearchBar — com botão de ícone (node 1:6261)</small>
+  <div class="w853">
+    <div class="searchbar searchbar--icon" data-node-id="1:6261">
+      <input class="searchbar__input" placeholder="Pesquise por quem solicitou" />
+      <button class="searchbar__iconbtn" aria-label="Buscar"><svg><use href="#ico-search"/></svg></button>
+    </div>
+  </div>
+
+  <!-- GroupSearch -->
+  <small>GroupSearch — busca + range De/Até + Filtros (node 1:6272)</small>
+  <div class="w853">
+    <div class="groupsearch" data-node-id="1:6272">
+      <div class="groupsearch__bar">
+        <div class="searchbar searchbar--icon" style="border-right:0;">
+          <input class="searchbar__input" placeholder="Pesquise por quem solicitou" />
+          <button class="searchbar__iconbtn" aria-label="Buscar"><svg><use href="#ico-search"/></svg></button>
+        </div>
+        <span class="groupsearch__date" data-node-id="1:6275">De<span class="groupsearch__date-icon"><svg><use href="#ico-calendar"/></svg></span></span>
+        <span class="groupsearch__date" data-node-id="1:6276">Até<span class="groupsearch__date-icon"><svg><use href="#ico-calendar"/></svg></span></span>
+      </div>
+      <button class="groupsearch__filter" aria-label="Filtros"><svg><use href="#ico-filter-3"/></svg></button>
+    </div>
+  </div>
+
+  <!-- GroupSearch com filtros aplicados (badge) -->
+  <small>GroupSearch — filtersApplied (badge "2", node 1:6350)</small>
+  <div class="w853">
+    <div class="groupsearch" data-node-id="1:6350">
+      <div class="groupsearch__bar">
+        <div class="searchbar searchbar--icon" style="border-right:0;">
+          <input class="searchbar__input" placeholder="Pesquise por quem solicitou" />
+          <button class="searchbar__iconbtn" aria-label="Buscar"><svg><use href="#ico-search"/></svg></button>
+        </div>
+        <span class="groupsearch__date">De<span class="groupsearch__date-icon"><svg><use href="#ico-calendar"/></svg></span></span>
+        <span class="groupsearch__date">Até<span class="groupsearch__date-icon"><svg><use href="#ico-calendar"/></svg></span></span>
+      </div>
+      <button class="groupsearch__filter" aria-label="Filtros">
+        <svg><use href="#ico-filter-3"/></svg>
+        <span class="groupsearch__count">2</span>
+      </button>
+    </div>
+  </div>
+</body>
+</html>

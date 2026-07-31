@@ -1,0 +1,141 @@
+/* ============================================================
+   Componente: Search — SearchBar (1:6233 / 1:6260) + GroupSearch (1:6271)
+   SearchBar: campo de busca (texto em Inter 14). Duas variantes:
+     A) com botão "Pesquisar" (primary)
+     B) com botão de ícone (lupa)
+   GroupSearch: SearchBar + range de datas (De/Até) + Filtros (+ badge)
+   Depende de: ../../tokens/tokens.css  (+ button.css no demo)
+   ============================================================ */
+
+/* ---- SearchBar base — borda 1px, pl lg (12) / pr xs (0) ------- */
+.searchbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  padding: var(--xs) var(--xs) var(--xs) var(--lg);
+  overflow: hidden;
+}
+.searchbar__icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--content-text-inverse); }
+.searchbar__icon svg { display: block; width: 100%; height: 100%; }
+
+/* Texto/input — Text-sm/Regular (Inter 14/20). Placeholder text-inverse. */
+.searchbar__input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: 0; outline: 0; background: none; padding: 0;
+  font-family: var(--family-sans);
+  font-weight: var(--weight-normal);
+  font-size: var(--size-sm);
+  line-height: var(--leading-5);
+  letter-spacing: var(--tracking-normal);
+  color: var(--content-text);
+  text-overflow: ellipsis;
+}
+.searchbar__input::placeholder { color: var(--content-text-inverse); }
+
+/* Variante B: botão de ícone (lupa) 40x40 com borda */
+.searchbar--icon { padding: var(--xs) var(--xs) var(--xs) var(--lg); }
+.searchbar__iconbtn {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--md);
+  border: var(--thin) solid var(--border-default);
+  background: var(--background-bg-main);
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.searchbar__iconbtn svg { display: block; width: 24px; height: 24px; }
+
+/* O botão "Pesquisar" (primary) encosta na borda direita: sem gap extra.
+   Usa .btn.btn--primary no demo. */
+.searchbar .btn { flex-shrink: 0; }
+
+/* ============================================================
+   GroupSearch — SearchBar + range de datas + Filtros
+   ============================================================ */
+.groupsearch {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  width: 100%;
+  padding: var(--xs) 0 var(--xl);
+  position: relative;
+}
+.groupsearch__bar {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  background: var(--background-bg-main);
+}
+.groupsearch__bar .searchbar { flex: 1 0 0; }
+
+/* Campo de data (De / Até) — h40, borda 1px, px lg / py sm */
+.groupsearch__date {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--md);
+  width: 164px;
+  height: 40px;
+  padding: var(--sm) var(--lg);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  border-left: 0;   /* encostam entre si / na searchbar */
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text-inverse);
+}
+.groupsearch__date-icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
+.groupsearch__date-icon svg { display: block; width: 100%; height: 100%; }
+
+/* Botão Filtros (ícone) — 40x40 com borda */
+.groupsearch__filter {
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--md);
+  border: var(--thin) solid var(--border-default);
+  background: var(--background-bg-main);
+  cursor: pointer;
+  color: var(--border-icon);
+}
+.groupsearch__filter svg { display: block; width: 24px; height: 24px; }
+
+/* Badge de filtros aplicados — círculo tertiary (#6c6cff) */
+.groupsearch__count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 19px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 100px;
+  background: var(--acction-button-tertiary-default);
+  color: var(--content-title-inverse);
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+}

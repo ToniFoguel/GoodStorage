@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buttons — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="button.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    table { border-collapse: separate; border-spacing: 24px 16px; }
+    th { font-size:12px; color:#999; font-weight:400; text-align:left; }
+    td { vertical-align: middle; }
+    caption { text-align:left; font-size:11px; color:#bbb; margin-bottom:8px; }
+  </style>
+</head>
+<body>
+  <h2>Buttons</h2>
+
+  <!-- Ícones remix -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+    <symbol id="ico-pencil" viewBox="0 0 24 24" fill="currentColor"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+    <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+  </svg>
+
+  <table>
+    <thead>
+      <tr><th></th><th>Default</th><th>Hover</th><th>Active</th><th>Disabled</th></tr>
+    </thead>
+    <tbody>
+      <!-- PRIMARY -->
+      <tr>
+        <th>Primary</th>
+        <td><button class="btn btn--primary" data-node-id="1:707">Button</button></td>
+        <td><button class="btn btn--primary is-hover" data-node-id="1:711">Button</button></td>
+        <td><button class="btn btn--primary is-active" data-node-id="1:749">Button</button></td>
+        <td><button class="btn btn--primary" disabled data-node-id="1:753">Button</button></td>
+      </tr>
+      <!-- OUTLINE (ícone direito: filter-3 16px) -->
+      <tr>
+        <th>Outline</th>
+        <td><button class="btn btn--outline" data-node-id="1:715">Outline<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button></td>
+        <td><button class="btn btn--outline is-hover" data-node-id="1:720">Outline<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button></td>
+        <td><button class="btn btn--outline is-active" data-node-id="1:788">Outline<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button></td>
+        <td><button class="btn btn--outline" disabled data-node-id="1:783">Outline<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span></button></td>
+      </tr>
+      <!-- SECONDARY -->
+      <tr>
+        <th>Secondary</th>
+        <td><button class="btn btn--secondary" data-node-id="1:725">Secondary</button></td>
+        <td><button class="btn btn--secondary is-hover" data-node-id="1:729">Secondary</button></td>
+        <td><button class="btn btn--secondary is-active" data-node-id="1:757">Secondary</button></td>
+        <td><button class="btn btn--secondary" disabled data-node-id="1:761">Secondary</button></td>
+      </tr>
+      <!-- GHOST (ícone direito: arrow-right-s 24px) -->
+      <tr>
+        <th>Ghost</th>
+        <td><button class="btn btn--ghost" data-node-id="1:733">Ghost<span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--ghost is-hover" data-node-id="1:773">Ghost<span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--ghost is-active" data-node-id="1:793">Ghost<span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--ghost" disabled data-node-id="1:778">Ghost<span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+      </tr>
+      <!-- DESTRUCTIVE -->
+      <tr>
+        <th>Destructive</th>
+        <td><button class="btn btn--destructive" data-node-id="1:738">Destructive</button></td>
+        <td><button class="btn btn--destructive is-hover" data-node-id="1:742">Destructive</button></td>
+        <td><button class="btn btn--destructive is-active" data-node-id="1:765">Destructive</button></td>
+        <td><button class="btn btn--destructive" disabled data-node-id="1:769">Destructive</button></td>
+      </tr>
+      <!-- ICON -->
+      <tr>
+        <th>Icon</th>
+        <td><button class="btn btn--icon" aria-label="Avançar" data-node-id="1:746"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon is-hover" aria-label="Avançar" data-node-id="1:798"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon is-active" aria-label="Avançar" data-node-id="1:801"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon" disabled aria-label="Avançar" data-node-id="1:804"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+      </tr>
+      <!-- ICONBORDER -->
+      <tr>
+        <th>IconBorder</th>
+        <td><button class="btn btn--icon-border" aria-label="Avançar" data-node-id="1:807"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon-border is-hover" aria-label="Avançar" data-node-id="1:810"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon-border is-active" aria-label="Avançar" data-node-id="1:813"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+        <td><button class="btn btn--icon-border" disabled aria-label="Avançar" data-node-id="1:816"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-arrow-right-s"/></svg></span></button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px;color:#999;margin-top:24px;">
+    As colunas Hover/Active usam classes forçadas (<code>.is-hover</code>, <code>.is-active</code>) só para exibir a matriz.
+    Em uso real, basta <code>.btn .btn--primary</code> etc. — os estados respondem sozinhos a <code>:hover</code>, <code>:active</code> e <code>:disabled</code>.
+  </p>
+</body>
+</html>

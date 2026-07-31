@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataItem — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../badge/badge.css" />
+  <link rel="stylesheet" href="data-item.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .row { display:flex; gap:48px; align-items:flex-start; }
+    small { display:block; font-size:11px; color:#999; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <h2>DataItem</h2>
+  <div class="row">
+    <div>
+      <small>type = Text</small>
+      <div class="data-item" data-node-id="1:5628">
+        <p class="data-item__label">CNPJ</p>
+        <p class="data-item__value">123.456.789/0001-00</p>
+      </div>
+    </div>
+    <div>
+      <small>type = Badge</small>
+      <div class="data-item" data-node-id="1:5631">
+        <p class="data-item__label">CNPJ</p>
+        <span class="badge badge--default" data-node-id="1:5633">Matriz</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

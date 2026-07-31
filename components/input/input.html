@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="input.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .grid { display:flex; flex-wrap:wrap; gap:40px 48px; }
+    .col { width:320px; display:flex; flex-direction:column; gap:20px; }
+    h3.sec { font:400 12px var(--font-family-title-text); color:#999; margin:24px 0 0; width:100%; }
+  </style>
+</head>
+<body>
+  <h2>Input</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-pencil" viewBox="0 0 24 24" fill="currentColor"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+    <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  </svg>
+
+  <h3 class="sec">Estados (base) — node 1:4681</h3>
+  <div class="grid">
+    <div class="col">
+      <!-- Default -->
+      <div class="input">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="Email" /></div>
+        <p class="input__help">[Descrição]</p>
+      </div>
+      <!-- Active/Filled -->
+      <div class="input">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" value="Email" /></div>
+        <p class="input__help">[Descrição]</p>
+      </div>
+      <!-- Read-Only -->
+      <div class="input input--readonly">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" value="Email" readonly /></div>
+        <p class="input__help">[Descrição]</p>
+      </div>
+      <!-- Disabled -->
+      <div class="input input--disabled">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="Email" disabled /></div>
+        <p class="input__help">[Descrição]</p>
+      </div>
+      <!-- Error -->
+      <div class="input input--error">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" value="Email" /></div>
+        <p class="input__help">[Texto de erro]</p>
+      </div>
+    </div>
+
+    <div class="col">
+      <!-- Read-Only com botão (pencil) -->
+      <div class="input input--readonly">
+        <div class="input__label"><p>Email</p><p class="input__req">*</p></div>
+        <div class="input__field">
+          <input class="input__control" value="Email" readonly />
+          <span class="input__icon input__icon--lg"><svg><use href="#ico-pencil"/></svg></span>
+        </div>
+        <p class="input__help">[Descrição]</p>
+      </div>
+
+      <!-- Máscaras (mesmo componente, labels/helper diferentes) -->
+      <div class="input">
+        <div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="123.456.789/0001-00" /></div>
+        <p class="input__help">Este campo contem 15 números.</p>
+      </div>
+      <div class="input">
+        <div class="input__label"><p>Telefone</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="(15) 99345-8956" /></div>
+        <p class="input__help">Este campo contem 11 números.</p>
+      </div>
+      <div class="input">
+        <div class="input__label"><p>CEP</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="12345-890" /></div>
+        <p class="input__help">Este campo contem 8 números.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">Input + unidade (m²) — node 1:4982</h3>
+  <div class="grid">
+    <div class="col">
+      <!-- Unidade à direita -->
+      <div class="input">
+        <div class="input__label"><p>Número</p><p class="input__req">*</p></div>
+        <div class="input__group">
+          <div class="input__field"><input class="input__control" value="22" /></div>
+          <span class="input__unit">m²<span class="input__unit-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>
+        </div>
+        <p class="input__help">Insira neste campo o número.</p>
+      </div>
+      <!-- Erro com unidade à direita -->
+      <div class="input input--error">
+        <div class="input__label"><p>Número</p><p class="input__req">*</p></div>
+        <div class="input__group">
+          <div class="input__field"><input class="input__control" value="22" /></div>
+          <span class="input__unit">m²<span class="input__unit-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>
+        </div>
+        <p class="input__help">[Texto de erro]</p>
+      </div>
+    </div>
+
+    <div class="col">
+      <!-- Unidade à esquerda -->
+      <div class="input">
+        <div class="input__label"><p>Número</p><p class="input__req">*</p></div>
+        <div class="input__group input__group--left">
+          <div class="input__field"><input class="input__control" value="22" /></div>
+          <span class="input__unit">m²<span class="input__unit-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>
+        </div>
+        <p class="input__help">Insira neste campo o número.</p>
+      </div>
+      <!-- Disabled com unidade à esquerda -->
+      <div class="input input--disabled">
+        <div class="input__label"><p>Número</p><p class="input__req">*</p></div>
+        <div class="input__group input__group--left">
+          <div class="input__field"><input class="input__control" value="22" disabled /></div>
+          <span class="input__unit">m²<span class="input__unit-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>
+        </div>
+        <p class="input__help">Insira neste campo o número.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

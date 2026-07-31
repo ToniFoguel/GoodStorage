@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmptyState — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="empty-state.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .grid { display:flex; flex-wrap:wrap; gap:24px; }
+    .box { border:1px solid #f2f2f2; }
+    .box > small { display:block; font-size:11px; color:#999; padding:8px 12px; border-bottom:1px solid #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h2>EmptyState</h2>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-inbox-2" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h16zm-1 2H5v14h14V5zm-2 9v2H7v-2h10zm0-4v2H7v-2h10z"/></symbol>
+    <symbol id="ico-search" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+    <symbol id="ico-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+    <symbol id="ico-pencil" viewBox="0 0 24 24" fill="currentColor"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+  </svg>
+
+  <div class="grid">
+    <div class="box">
+      <small>status = Cadastrado</small>
+      <div class="empty" data-node-id="1:4002">
+        <div class="empty__inner">
+          <div class="empty__heading">
+            <span class="empty__icon"><svg><use href="#ico-inbox-2"/></svg></span>
+            <p class="empty__title">Nenhuma [nome da entidade] cadastrada</p>
+          </div>
+          <div class="empty__actions">
+            <button class="btn btn--primary"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Cadastrar [nome da entidade]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <small>status = Cadastro em lote</small>
+      <div class="empty" data-node-id="1:4012">
+        <div class="empty__inner">
+          <div class="empty__heading">
+            <span class="empty__icon"><svg><use href="#ico-inbox-2"/></svg></span>
+            <p class="empty__title">Nenhum lote cadastrado</p>
+          </div>
+          <div class="empty__actions">
+            <button class="btn btn--primary"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Cadastrar lote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <small>status = Edição em lote</small>
+      <div class="empty" data-node-id="1:4022">
+        <div class="empty__inner">
+          <div class="empty__heading">
+            <span class="empty__icon"><svg><use href="#ico-inbox-2"/></svg></span>
+            <p class="empty__title">Nenhuma edição realizada</p>
+          </div>
+          <div class="empty__actions">
+            <button class="btn btn--primary"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"/></svg></span>Editar em lote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <small>status = Nenhum resultado encontrado</small>
+      <div class="empty" data-node-id="1:4032">
+        <div class="empty__inner">
+          <div class="empty__heading">
+            <span class="empty__icon"><svg><use href="#ico-search"/></svg></span>
+            <p class="empty__title">Nenhum resultado encontrado</p>
+          </div>
+          <div class="empty__actions" style="width:175px;">
+            <button class="btn btn--primary" style="flex:1 0 0;">Limpar filtros</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
