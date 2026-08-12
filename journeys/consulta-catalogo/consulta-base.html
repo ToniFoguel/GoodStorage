@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consulta de catálogo — Orçamento (layout base) · GoodStorage</title>
+
+<!-- Ordem de carregamento: tokens -> componentes -> ds.css -> (body) -> ds.js -->
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/card/card.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/pagination/pagination.css" />
+<link rel="stylesheet" href="../../components/data-item/data-item.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/lightbox/lightbox.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="consulta-base.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- ri-* (markup) -->
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM11.6113 4.22157L3.83316 11.9997L12.3184 20.485L20.0966 12.7069L19.036 5.28223L11.6113 4.22157ZM13.7327 10.5855C12.9516 9.80448 12.9516 8.53815 13.7327 7.7571C14.5137 6.97606 15.78 6.97606 16.5611 7.7571C17.3421 8.53815 17.3421 9.80448 16.5611 10.5855C15.78 11.3666 14.5137 11.3666 13.7327 10.5855Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM5.5 14C5.77885 14 6.05009 14.0326 6.3101 14.0942C6.14202 14.594 6.03873 15.122 6.00896 15.6693L6 16L6.0007 16.0856C5.88757 16.0456 5.76821 16.0187 5.64446 16.0069L5.5 16C4.7203 16 4.07955 16.5949 4.00687 17.3555L4 17.5V22H2V17.5C2 15.567 3.567 14 5.5 14ZM18.5 14C20.433 14 22 15.567 22 17.5V22H20V17.5C20 16.7203 19.4051 16.0796 18.6445 16.0069L18.5 16C18.3248 16 18.1566 16.03 18.0003 16.0852L18 16C18 15.3343 17.8916 14.694 17.6915 14.0956C17.9499 14.0326 18.2211 14 18.5 14ZM5.5 8C6.88071 8 8 9.11929 8 10.5C8 11.8807 6.88071 13 5.5 13C4.11929 13 3 11.8807 3 10.5C3 9.11929 4.11929 8 5.5 8ZM18.5 8C19.8807 8 21 9.11929 21 10.5C21 11.8807 19.8807 13 18.5 13C17.1193 13 16 11.8807 16 10.5C16 9.11929 17.1193 8 18.5 8ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ri-calendar" viewBox="0 0 24 24"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm3 7H4v9h16v-9zM7 5H4v3h16V5h-3v1h-2V5H9v1H7V5z"/></symbol>
+  <symbol id="ri-pencil" viewBox="0 0 24 24"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+  <symbol id="ri-add" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ri-arrow-right" viewBox="0 0 24 24"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></symbol>
+  <symbol id="ri-back" viewBox="0 0 24 24"><path d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"/></symbol>
+  <symbol id="ri-shield" viewBox="0 0 24 24"><path d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802c0-.469.326-.874.783-.976L12 1zm0 2.049L5 4.604v9.185a4 4 0 0 0 1.781 3.328L12 20.597l5.219-3.48A4 4 0 0 0 19 13.79V4.604L12 3.05z"/></symbol>
+  <symbol id="ri-delete-bin" viewBox="0 0 24 24"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+  <symbol id="ri-information" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/></symbol>
+
+  <!-- ico-* (runtime + galeria/lightbox) -->
+  <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ico-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="ico-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-arrow-left-s" viewBox="0 0 24 24" fill="currentColor"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-arrow-left-double" viewBox="0 0 24 24" fill="currentColor"><path d="M4.828 12l4.95 4.95-1.414 1.414L2 12l6.364-6.364 1.414 1.414zm7.071 0l4.95 4.95-1.414 1.414L9.9 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-double" viewBox="0 0 24 24" fill="currentColor"><path d="M19.172 12l-4.95-4.95 1.414-1.414L22 12l-6.364 6.364-1.414-1.414zm-7.071 0l-4.95-4.95 1.414-1.414L14.1 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+  <symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM4.207 19h15.586L12 5.5 4.207 19zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
+  <symbol id="ico-close-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"/></symbol>
+  <symbol id="ico-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+</svg>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Comercial</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-price-tag-3"/></svg></span><span class="sidebar__item-label">Precificação</span></a>
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Orçamentos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Leads</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Catálogo</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">André Foguel</p><p class="sidebar__user-mail">Comercial · Alçada 15%</p></div>
+    </div></div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Orçamentos</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item">Novo orçamento</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Consulta de catálogo</span>
+      </nav>
+      <span class="badge badge--perm"><span class="badge__dot"></span>Permissão para criar orçamentos</span>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Consulta de catálogo</h1>
+          <p class="pagehead__sub text-paragraph-regular">Identifique o lead, defina as datas do orçamento e consulte os produtos disponíveis com suas condições comerciais. Selecione os produtos que irão compor a proposta.</p>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--outline" href="../listagem/listagem-base.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-back"/></svg></span>Voltar</a>
+          <a class="btn btn--primary" href="../resumo/resumo-base.html">Continuar para o orçamento<span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-right"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="banner banner--warning stack-banner" role="status">
+        <span class="banner__icon"><svg><use href="#ri-shield"/></svg></span>
+        <div class="banner__content"><p class="banner__text">Um ou mais produtos têm desconto acima da sua alçada e seguirão para aprovação ao criar o orçamento.</p></div>
+      </div>
+      <div class="banner banner--error stack-banner" role="alert" hidden>
+        <span class="banner__icon"><svg><use href="#ico-close-circle"/></svg></span>
+        <div class="banner__content"><p class="banner__text">Selecione pelo menos um produto e vincule um lead para continuar.</p></div>
+      </div>
+
+      <!-- ETAPA 1 -->
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <div class="section__head">
+            <div class="section__headleft"><span class="section__num">1</span><h2 class="section__title text-paragraph-bold">Dados do orçamento</h2></div>
+          </div>
+          <div class="fields">
+            <div class="input" data-ds="input">
+              <div class="input__label"><p>Lead vinculado</p><p class="input__req">*</p></div>
+              <div class="input__field"><input class="input__control" placeholder="Buscar por ID ou nome do lead" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+              <p class="input__help">Busca por ID ou nome do lead.</p>
+            </div>
+            <div class="input" data-ds="input">
+              <div class="input__label"><p>Data de move in</p><p class="input__req">*</p></div>
+              <div class="input__field"><input class="input__control" placeholder="dd/mm/aaaa" inputmode="numeric" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div>
+              <p class="input__help">Data atual ou futura.</p>
+            </div>
+            <div class="input" data-ds="input">
+              <div class="input__label"><p>Prazo de validade</p><p class="input__req">*</p></div>
+              <div class="input__field"><input class="input__control" placeholder="dd/mm/aaaa" inputmode="numeric" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div>
+              <p class="input__help">D+3 por padrão, sem data retroativa.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 2 -->
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <div class="section__head">
+            <div class="section__headleft"><span class="section__num">2</span><h2 class="section__title text-paragraph-bold">Consulta de produtos</h2></div>
+            <span class="badge badge--outline selpill"><b>1</b>&nbsp;selecionado</span>
+          </div>
+
+          <div class="searchbar">
+            <div class="input searchbar__search" data-ds="input">
+              <div class="input__field"><input class="input__control" placeholder="Pesquise por ID do produto ou descrição" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+            </div>
+            <div class="select searchbar__f" data-ds="select">
+              <div class="select__field"><p class="select__value">Tipologia: todas</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+              <div class="select__dropdown"><div class="select__list">
+                <div class="select__item"><p class="select__item-text">Todas</p></div>
+                <div class="select__item"><p class="select__item-text">Selfstorage</p></div>
+                <div class="select__item"><p class="select__item-text">Flex</p></div>
+                <div class="select__item"><p class="select__item-text">Galpão UI</p></div>
+                <div class="select__item"><p class="select__item-text">Office UI</p></div>
+              </div></div>
+            </div>
+            <div class="select searchbar__f" data-ds="select">
+              <div class="select__field"><p class="select__value">Cluster: todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+              <div class="select__dropdown"><div class="select__list">
+                <div class="select__item"><p class="select__item-text">Todos</p></div>
+                <div class="select__item"><p class="select__item-text">Cluster Oeste SP</p></div>
+                <div class="select__item"><p class="select__item-text">Cluster Centro-Sul</p></div>
+                <div class="select__item"><p class="select__item-text">Cluster Grande SP</p></div>
+              </div></div>
+            </div>
+            <div class="select searchbar__f" data-ds="select">
+              <div class="select__field"><p class="select__value">Unidade: todas</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+              <div class="select__dropdown"><div class="select__list">
+                <div class="select__item"><p class="select__item-text">Todas</p></div>
+                <div class="select__item"><p class="select__item-text">Vila Leopoldina</p></div>
+                <div class="select__item"><p class="select__item-text">Barra Funda</p></div>
+                <div class="select__item"><p class="select__item-text">Guarulhos</p></div>
+                <div class="select__item"><p class="select__item-text">Faria Lima</p></div>
+              </div></div>
+            </div>
+            <div class="input searchbar__m" data-ds="input"><div class="input__group"><div class="input__field"><input class="input__control" placeholder="De" inputmode="numeric" /></div><span class="input__unit">m²</span></div></div>
+            <div class="input searchbar__m" data-ds="input"><div class="input__group"><div class="input__field"><input class="input__control" placeholder="Até" inputmode="numeric" /></div><span class="input__unit">m²</span></div></div>
+            <button class="btn btn--icon-border searchbar__clear" aria-label="Limpar filtros" title="Limpar filtros"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-delete-bin"/></svg></span></button>
+          </div>
+
+          <!-- Tabela: variante colunas fixas (checkbox + Produto fixos à esquerda) -->
+          <div class="table table--pinned catalog-table" data-ds="table">
+            <div class="table__header">
+              <span class="table__th table__th--pin-start" aria-hidden="true"><span class="table__check"></span></span>
+              <button class="table__th table__th--pin-start"><span class="table__th-label">Produto</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Unidade de negócio</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th table__th--num"><span class="table__th-label">Preço base</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th table__th--num"><span class="table__th-label">Preço m²</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <span class="table__th"><span class="table__th-label">Desconto / aumento</span></span>
+              <span class="table__th"><span class="table__th-label">Cupom de entrada</span></span>
+              <span class="table__th"><span class="table__th-label">Cupom promocional</span></span>
+              <span class="table__th"><span class="table__th-label">Campanha</span></span>
+            </div>
+
+            <div class="table__row table__row--selected">
+              <div class="table__cell table__cell--pin-start"><span class="table__check"></span></div>
+              <div class="table__cell table__cell--pin-start">
+                <div class="prod">
+                  <span class="prod__txt"><span class="prod__id text-label-regular">PRD-10245</span><span class="prod__desc text-paragraph-regular">Box 5 m² · climatizado</span></span>
+                  <button class="btn btn--icon-border" data-ds-open="m-detail" aria-label="Informações e imagens do produto"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-information"/></svg></span></button>
+                </div>
+              </div>
+              <div class="table__cell"><p class="table__cell-text">Vila Leopoldina</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 890,00</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 178,00</p></div>
+              <div class="table__cell"><button class="btn btn--outline" data-ds-open="m-adjust">Adicionar desconto<span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span></button></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar cupom…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">CUP-BEMVINDO10 · 10% no 1º mês</p></div><div class="select__item"><p class="select__item-text">CUP-PRIMEIRA · 5% nos 3 primeiros</p></div><div class="select__item"><p class="select__item-text">CUP-INDICA · R$ 50 no 1º mês</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar cupom…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">BF · Black Friday −15%</p></div><div class="select__item"><p class="select__item-text">PROMO-INVERNO · −8%</p></div><div class="select__item"><p class="select__item-text">VOLTA-AULAS · −10%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar campanha…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">Campanha SP · −5% fixo</p></div><div class="select__item"><p class="select__item-text">Verão Litoral · −7%</p></div><div class="select__item"><p class="select__item-text">Expansão Norte · −6%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+            </div>
+
+            <div class="table__row table__row--alt">
+              <div class="table__cell table__cell--pin-start"><span class="table__check"></span></div>
+              <div class="table__cell table__cell--pin-start">
+                <div class="prod">
+                  <span class="prod__txt"><span class="prod__id text-label-regular">PRD-10312</span><span class="prod__desc text-paragraph-regular">Box 10 m² · térreo</span></span>
+                  <button class="btn btn--icon-border" data-ds-open="m-detail" aria-label="Informações e imagens do produto"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-information"/></svg></span></button>
+                </div>
+              </div>
+              <div class="table__cell"><p class="table__cell-text">Barra Funda</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 1.540,00</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 154,00</p></div>
+              <div class="table__cell"><div class="adj-cell"><div class="adj-tags"><span class="badge badge--outline">20% · M1–M3</span></div><button class="btn btn--outline" data-ds-open="m-adjust">Editar descontos<span class="btn__icon btn__icon--sm"><svg><use href="#ri-pencil"/></svg></span></button><span class="approve-flag"><svg><use href="#ri-shield"/></svg>Aprovação</span></div></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar cupom…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">CUP-BEMVINDO10 · 10% no 1º mês</p></div><div class="select__item"><p class="select__item-text">CUP-PRIMEIRA · 5% nos 3 primeiros</p></div><div class="select__item"><p class="select__item-text">CUP-INDICA · R$ 50 no 1º mês</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select is-filled" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" value="BF · Black Friday −15%" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item select__item--active"><p class="select__item-text">BF · Black Friday −15%</p></div><div class="select__item"><p class="select__item-text">PROMO-INVERNO · −8%</p></div><div class="select__item"><p class="select__item-text">VOLTA-AULAS · −10%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar campanha…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">Campanha SP · −5% fixo</p></div><div class="select__item"><p class="select__item-text">Verão Litoral · −7%</p></div><div class="select__item"><p class="select__item-text">Expansão Norte · −6%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+            </div>
+
+            <div class="table__row">
+              <div class="table__cell table__cell--pin-start"><span class="table__check"></span></div>
+              <div class="table__cell table__cell--pin-start">
+                <div class="prod">
+                  <span class="prod__txt"><span class="prod__id text-label-regular">PRD-10488</span><span class="prod__desc text-paragraph-regular">Galpão 120 m² · doca</span></span>
+                  <button class="btn btn--icon-border" data-ds-open="m-detail" aria-label="Informações e imagens do produto"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-information"/></svg></span></button>
+                </div>
+              </div>
+              <div class="table__cell"><p class="table__cell-text">Guarulhos</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 9.200,00</p></div>
+              <div class="table__cell table__cell--num"><p class="table__cell-text">R$ 76,67</p></div>
+              <div class="table__cell"><button class="btn btn--outline" data-ds-open="m-adjust">Adicionar desconto<span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span></button></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar cupom…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">CUP-BEMVINDO10 · 10% no 1º mês</p></div><div class="select__item"><p class="select__item-text">CUP-PRIMEIRA · 5% nos 3 primeiros</p></div><div class="select__item"><p class="select__item-text">CUP-INDICA · R$ 50 no 1º mês</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" placeholder="Buscar cupom…" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">BF · Black Friday −15%</p></div><div class="select__item"><p class="select__item-text">PROMO-INVERNO · −8%</p></div><div class="select__item"><p class="select__item-text">VOLTA-AULAS · −10%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+              <div class="table__cell"><div class="select is-filled" data-ds="select" data-ds-search data-ds-float><div class="select__field"><input class="select__search" value="Campanha SP · −5% fixo" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item select__item--active"><p class="select__item-text">Campanha SP · −5% fixo</p></div><div class="select__item"><p class="select__item-text">Verão Litoral · −7%</p></div><div class="select__item"><p class="select__item-text">Expansão Norte · −6%</p></div></div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado</p></div></div></div></div>
+            </div>
+          </div>
+
+          <div class="pagination section__pager" data-ds="pagination" data-ds-total="42" data-ds-page-size="5" data-ds-page="1">
+            <div class="pagination__info"></div>
+            <div class="pagination__nav"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="brandfoot">
+        <img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Desconto / aumento -->
+<div class="modal adjust-modal" id="m-adjust" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h3 class="modal__title">Desconto / aumento</h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning" role="status">
+      <span class="banner__icon"><svg><use href="#ri-shield"/></svg></span>
+      <div class="banner__content"><p class="banner__text">A alçada de desconto <b>neste produto</b> é de <b>até 28%</b>. Você pode aplicar acima disso — ao finalizar, <b>apenas este produto</b> entra em aprovação.</p></div>
+    </div>
+
+    <p class="adj-prod">PRD-3389 · Galpão UI 200m²</p>
+    <div class="adj-line"><span>Preço base</span><b>R$ 15.200,00</b></div>
+
+    <p class="adj-sec">Descontos</p>
+    <div class="alc-bar">
+      <div class="alc-row"><span>Alçada do produto</span><span class="alc-row__v">28%</span></div>
+      <div class="alc-track"><div class="alc-fill"></div></div>
+      <div class="alc-row"><span>Aplicado (acumulado)</span><span class="alc-row__v">0%</span></div>
+      <div class="alc-row"><span>Disponível</span><span class="alc-row__v alc-row__v--avail">28%</span></div>
+    </div>
+
+    <div class="desc-tier">
+      <div class="desc-tier__head"><span class="desc-tier__n">Desconto 1</span><button class="desc-tier__rm" aria-label="Remover desconto"><svg><use href="#ico-close"/></svg></button></div>
+      <div class="desc-tier__grid">
+        <div>
+          <span class="desc-tier__lbl">Valor do desconto</span>
+          <div class="desc-tier__value">
+            <div class="input" data-ds="input"><div class="input__field"><input class="input__control" placeholder="0" inputmode="numeric" /></div></div>
+            <div class="select desc-tier__unit" data-ds="select" data-ds-float>
+              <div class="select__field"><p class="select__value select__value--filled">%</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+              <div class="select__dropdown"><div class="select__list">
+                <div class="select__item select__item--active"><p class="select__item-text">%</p></div>
+                <div class="select__item"><p class="select__item-text">R$</p></div>
+              </div></div>
+            </div>
+          </div>
+          <p class="desc-tier__hint">disponível: 28%</p>
+        </div>
+        <div>
+          <span class="desc-tier__lbl">Vigência <span class="desc-tier__months">(meses 1–6)</span></span>
+          <div class="desc-tier__vig">
+            <span class="desc-tier__vig-sep">de</span>
+            <div class="input" data-ds="input"><div class="input__field"><input class="input__control" value="03/08/2026" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div></div>
+            <span class="desc-tier__vig-sep">até</span>
+            <div class="input" data-ds="input"><div class="input__field"><input class="input__control" value="02/02/2027" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="adj-add"><svg><use href="#ri-add"/></svg>Adicionar desconto</button>
+
+    <p class="adj-sec">Aumento</p>
+    <div class="input" data-ds="input"><div class="input__group"><span class="input__unit">R$</span><div class="input__field"><input class="input__control" placeholder="0" inputmode="numeric" /></div></div></div>
+    <p class="adj-hint">Valor fixo em reais (números inteiros) somado à mensalidade em todos os meses.</p>
+
+    <div class="adj-line adj-line--total"><span>Preço final (1º mês)</span><b>R$ 15.200,00</b></div>
+  </div>
+  <div class="modal__footer">
+    <button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('m-adjust'))">Cancelar</button>
+    <button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('m-adjust'))">Aplicar</button>
+  </div>
+</div>
+
+<!-- MODAL: detalhe do produto (dados + galeria de imagens) -->
+<div class="modal detail-modal" id="m-detail" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h3 class="modal__title">PRD-10312 · Box 10 m² · térreo</h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <dl class="detail-dl">
+      <div class="data-item"><p class="data-item__label">Tipologia</p><p class="data-item__value">Selfstorage</p></div>
+      <div class="data-item"><p class="data-item__label">Classificação</p><p class="data-item__value">Box climatizado · Premium</p></div>
+      <div class="data-item"><p class="data-item__label">Características</p><p class="data-item__value">Acesso 24h · monitoramento · térreo</p></div>
+      <div class="data-item"><p class="data-item__label">Estrutura no espaço</p><p class="data-item__value">Piso elevado · ventilação · porta 1,2 m</p></div>
+    </dl>
+
+    <h4 class="detail-imgs-h">Imagens do produto <span>6 arquivos · clique para ampliar</span></h4>
+    <div class="gallery">
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Fachada da unidade"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">fachada-unidade.jpg</span><span class="gfile__meta">2,4 MB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Área interna"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">area-interna.jpg</span><span class="gfile__meta">1,8 MB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Corredor de acesso"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">corredor-acesso.jpg</span><span class="gfile__meta">2,1 MB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Planta do espaço"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">planta-do-espaco.png</span><span class="gfile__meta">640 KB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Entrada lateral"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">entrada-lateral.jpg</span><span class="gfile__meta">1,5 MB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+      <button class="gfile" data-ds-lightbox="lb-detail" data-ds-caption="Box 10 m² · Área comum"><span class="gfile__ic"><svg><use href="#ico-image"/></svg></span><span class="gfile__info"><span class="gfile__name">area-comum.jpg</span><span class="gfile__meta">1,9 MB</span></span><span class="gfile__open"><svg><use href="#ri-arrow-right"/></svg>Ampliar</span></button>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--outline" onclick="DS.closeModal(document.getElementById('m-detail'))">Fechar</button></div>
+</div>
+
+<!-- LIGHTBOX: imagem ampliada -->
+<div class="lightbox" id="lb-detail" data-ds="lightbox" hidden>
+  <button class="lightbox__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button>
+  <div class="lightbox__stage">
+    <figure class="lightbox__figure">
+      <div class="lightbox__ph"><svg><use href="#ico-image"/></svg></div>
+      <figcaption class="lightbox__caption">Imagem do produto</figcaption>
+    </figure>
+  </div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+</body>
+</html>

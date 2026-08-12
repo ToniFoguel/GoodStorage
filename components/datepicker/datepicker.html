@@ -12,9 +12,23 @@
     .cell > small { display:block; font-size:11px; color:#999; margin-bottom:10px; }
     .cell { margin-bottom: 8px; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>DatePicker</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — clique no campo, navegue meses/anos, escolha um dia</p>
+    
+    <div style="width:220px;min-height:340px;">
+      <div class="datepicker" data-ds="datepicker">
+        <div class="datepicker__label"><p>Data</p><p class="datepicker__req">*</p></div>
+        <div class="datepicker__input"><p class="datepicker__value">Select a date</p><span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span></div>
+        <p class="datepicker__desc">Selecione uma data</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Ícones -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -154,5 +168,6 @@
       if (cal) cal.style.display = openWrap.classList.contains('datepicker--open') ? '' : 'none';
     });
   </script>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

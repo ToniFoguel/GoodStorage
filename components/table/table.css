@@ -209,3 +209,37 @@
   line-height: var(--line-hight-paragraph);
   color: var(--content-text);
 }
+
+/* ============================================================
+   VARIANTE: colunas fixas (pinned)  ⚠️ node Figma a formalizar
+   Trava colunas à esquerda (--pin-start) e/ou à direita
+   (--pin-end) durante a rolagem horizontal. O próprio .table
+   é o container rolável. As colunas fixas precisam de largura
+   definida e de OFFSET (left/right) no arquivo da tela, pois
+   dependem de quantas colunas ficam fixas e de suas larguras.
+   Fundo sólido é obrigatório p/ cobrir o conteúdo por baixo.
+   ============================================================ */
+.table--pinned { overflow-x: auto; }
+.table--pinned .table__header,
+.table--pinned .table__row { width: max-content; min-width: 100%; }
+
+/* células fixas: sticky + fundo sólido (cabeçalho fica acima) */
+.table__th--pin-start, .table__cell--pin-start,
+.table__th--pin-end,   .table__cell--pin-end {
+  position: sticky; z-index: 2; background: var(--background-bg-main);
+}
+.table__th--pin-start, .table__th--pin-end { z-index: 3; }
+
+/* sombra sutil separando a coluna fixa do conteúdo rolante */
+.table__th--pin-start, .table__cell--pin-start { box-shadow: var(--thin) 0 0 0 var(--border-default); }
+.table__th--pin-end,   .table__cell--pin-end   { box-shadow: calc(-1 * var(--thin)) 0 0 0 var(--border-default); }
+
+/* zebra: a célula fixa acompanha o fundo da linha alternada */
+.table--pinned .table__row--alt .table__cell--pin-start,
+.table--pinned .table__row--alt .table__cell--pin-end { background: var(--background-bg-aux); }
+
+/* linha selecionada: tint (usa Background/warning, como a variante Seleção)
+   ⚠️ tint definitivo (Background/primary-subtle) a formalizar no Figma */
+.table--pinned .table__row--selected .table__cell,
+.table--pinned .table__row--selected .table__cell--pin-start,
+.table--pinned .table__row--selected .table__cell--pin-end { background: var(--background-warning); }

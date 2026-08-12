@@ -1,164 +1,241 @@
 /* ============================================================
-   Componente: Sidebar (SidebarV2)
-   Figma: node 1:7390
-   Estrutura: Header (logo + colapsar) · Nav (grupos + itens) · Footer (user)
-   Variantes: expandido (262px) · rail colapsado (48px) · Mobile/Tablet
-   Depende de: ../../tokens/tokens.css  (+ avatar.css no demo)
+   Componente: Sidebar (Figma "Sidebar_V2")
+   Figma: node 46:118032 (Header / Sidebar / Footer)
+   Estrutura, tokens, ícones (Remix) e organização fiéis ao Figma.
+   Depende de: ../../tokens/tokens.css  e  ../avatar/avatar.css
    ============================================================ */
 
 .sidebar {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 262px;
-  background: var(--background-bg-aux);
-  border: var(--border-width) solid var(--border-default);
+  align-items: flex-start;
+  width: 256px;
+  background: var(--background-bg-aux);            /* Background/bg-aux #fafafa */
+  border: var(--border-width, 1px) solid var(--border-default);
+  font-family: var(--font-family-title-text);
+  transition: width .18s ease;                     /* rail expande/recolhe suave */
 }
-.sidebar--mobile { width: 255px; }
-.sidebar--rail { width: 48px; }   /* colapsado: só ícones */
+.sidebar svg { display: block; width: 100%; height: 100%; fill: currentColor; }
 
-/* ---- Header (logo + nome + colapsar) — borda inferior --------- */
-.sidebar__header {
-  box-sizing: border-box;
+/* ---- Header (Header > _SideBarHeader) --------------------- */
+.sidebar__header {                                  /* Header: p xs(0) */
   display: flex;
   align-items: center;
-  gap: var(--gap-2);
+  gap: var(--md);
   width: 100%;
+  padding: var(--xs);
+}
+.sidebar__headinner {                               /* _SideBarHeader: p xl(16), border-bottom */
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--md);
   padding: var(--xl);
   border-bottom: var(--thin) solid var(--border-default);
 }
-.sidebar--rail .sidebar__header { padding: var(--md); justify-content: center; }
+/* Logo = Avatar (Type=Image) 32×32 */
+.sidebar__logo {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  background: var(--background-bg-main);            /* Background/bg-main #fff */
+  border: var(--thin) solid var(--border-default);
+}
+.sidebar__logo img { display: block; width: auto; height: 18px; }
+/* Marca do produto — Text/Paragraph-Bold sobre Content/text */
 .sidebar__brand {
   flex: 1 0 0;
   min-width: 0;
   margin: 0;
-  font-family: var(--font-family-title-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-paragraph);
   line-height: var(--line-hight-paragraph);
-  color: var(--content-text);
+  color: var(--content-text);                      /* Content/text #313131 */
 }
-.sidebar__collapse { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); background:none; border:0; cursor:pointer; }
-.sidebar__collapse svg { display: block; width: 100%; height: 100%; }
+.sidebar__collapse {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--border-icon);                       /* Border/icon #1a1a1a */
+}
 
-/* ---- Nav ----------------------------------------------------- */
+/* ---- Nav (Sidebar) --------------------------------------- */
 .sidebar__nav {
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  gap: var(--xs);
   flex: 1 0 0;
   min-height: 0;
+  flex-direction: column;
+  gap: var(--xs);
+  align-items: flex-start;
   width: 100%;
   padding: var(--md);
   overflow-y: auto;
 }
 
-/* Grupo (seção expansível) */
-.sidebar__group { display: flex; flex-direction: column; gap: var(--sm); width: 100%; }
+/* Grupo (Wrapper) */
+.sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  width: 100%;
+}
+/* Cabeçalho do grupo (_MenuButton) */
 .sidebar__group-head {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--md);
   height: 32px;
-  padding: var(--md);
   width: 100%;
-  background: none; border: 0; cursor: pointer;
+  padding: var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
   text-align: left;
+}
+.sidebar__ico {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--border-icon);
 }
 .sidebar__group-title {
   flex: 1 0 0;
   min-width: 0;
-  margin: 0;
-  font-family: var(--font-family-title-text);
-  font-weight: var(--font-weight-bold);      /* Paragraph-Bold */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-paragraph);
   line-height: var(--line-hight-paragraph);
-  color: var(--content-title);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--content-title);                     /* Content/title #1a1a1a */
 }
-.sidebar__chevron { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
-.sidebar__chevron svg { display: block; width: 100%; height: 100%; }
+.sidebar__chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--border-icon);
+}
 
-/* Lista de itens do grupo */
+/* Itens do grupo (Wrapper) */
 .sidebar__items {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--space-y-1);
+  gap: var(--sm);
   width: 100%;
-  padding: var(--sm) var(--md) var(--md);
+  padding: var(--sm) var(--md) var(--md);          /* pt sm(4) · px md(8) · pb md(8) */
 }
-
-/* Item (_MenuButton) — icon 16 + label */
+/* Item (_MenuButton) */
 .sidebar__item {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--md);
   height: 32px;
-  padding: var(--md);
   width: 100%;
-  background: none; border: 0; cursor: pointer;
-  text-align: left;
+  padding: var(--md);
   text-decoration: none;
+  cursor: pointer;
+  color: inherit;
 }
-.sidebar__item--active { background: var(--background-neutral); }   /* Empresas ativo */
-.sidebar__item-icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--border-icon); }
-.sidebar__item-icon svg { display: block; width: 100%; height: 100%; }
+.sidebar__item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--border-icon);
+}
 .sidebar__item-label {
   flex: 1 0 0;
   min-width: 0;
-  margin: 0;
-  font-family: var(--font-family-title-text);
-  font-weight: var(--font-weight-regular);    /* Paragraph-Regular */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-paragraph);
   line-height: var(--line-hight-paragraph);
-  color: var(--content-text);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--content-text);                      /* Content/text #313131 */
 }
+/* Ativo — Background/neutral (#d9d9d9) */
+.sidebar__item--active { background: var(--background-neutral); }
+/* Hover — Background/bg-main (token do DS), feedback sutil */
+.sidebar__item:hover:not(.sidebar__item--active) { background: var(--background-bg-main); }
 
-/* Rail colapsado: só o ícone, item vira 32x32 centralizado */
-.sidebar--rail .sidebar__item { width: 32px; justify-content: center; }
-.sidebar--rail .sidebar__item-label,
-.sidebar--rail .sidebar__group-title,
-.sidebar--rail .sidebar__chevron,
-.sidebar--rail .sidebar__brand { display: none; }
-
-/* ---- Footer (usuário) — borda superior ----------------------- */
+/* ---- Footer (Footer > User) ------------------------------ */
 .sidebar__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--xs);
+}
+.sidebar__user {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: var(--space-x-2);
+  gap: var(--md);
   width: 100%;
   padding: var(--xl);
   border-top: var(--thin) solid var(--border-default);
 }
-.sidebar--rail .sidebar__footer { padding: var(--md); justify-content: center; }
-.sidebar__user {
+.sidebar__userinfo {
+  display: flex;
   flex: 1 0 0;
   min-width: 0;
-  display: flex;
   flex-direction: column;
-  line-height: var(--line-hight-label);
 }
-.sidebar--rail .sidebar__user { display: none; }
 .sidebar__user-name {
   margin: 0;
-  font-family: var(--font-family-title-text);
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-label);
   line-height: var(--line-hight-label);
   color: var(--content-text);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .sidebar__user-mail {
   margin: 0;
-  font-family: var(--font-family-title-text);
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-label);
   line-height: var(--line-hight-label);
   color: var(--content-text);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+
+/* ============================================================
+   Rail colapsado (Figma node 1:7391) — só ícones
+   Acionado pelo botão de colapsar via runtime (sidebar--rail).
+   ============================================================ */
+.sidebar--rail { width: 56px; }
+.sidebar--rail .sidebar__brand,
+.sidebar--rail .sidebar__collapse,
+.sidebar--rail .sidebar__group-title,
+.sidebar--rail .sidebar__chevron,
+.sidebar--rail .sidebar__item-label,
+.sidebar--rail .sidebar__userinfo { display: none; }
+.sidebar--rail .sidebar__headinner,
+.sidebar--rail .sidebar__user { justify-content: center; padding: var(--md); }
+.sidebar--rail .sidebar__group-head,
+.sidebar--rail .sidebar__item { justify-content: center; }
+.sidebar--rail .sidebar__items { padding: var(--sm) 0; }

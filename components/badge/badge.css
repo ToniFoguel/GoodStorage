@@ -80,3 +80,59 @@
   border: var(--thin) solid var(--border-default);
   color: var(--content-text);
 }
+
+/* ============================================================
+   Variantes adicionais (Consulta de catálogo) — ver design-system.md
+   Só tokens existentes. Cores fiéis ao DS (não ao wireframe).
+   ============================================================ */
+
+/* Warning / "Aprovação ao finalizar" — Background/warning + Content/label-warning */
+.badge--warning {
+  background: var(--background-warning);
+  color: var(--content-label-warning);
+}
+
+/* Tag removível (cupom/campanha aplicado). Combine com uma variante de cor,
+   ex.: .badge.badge--success.badge--tag. Altura livre p/ caber "x" e meta. */
+.badge--tag {
+  gap: var(--sm);
+  padding-right: var(--sm);
+}
+.badge__meta {                       /* rótulo de meses (sub-informação) */
+  padding: 0 var(--sm);
+  border-left: var(--thin) solid currentColor;
+  opacity: .85;
+}
+.badge__close {
+  display: inline-flex;
+  width: 12px; height: 12px;
+  padding: 0; border: 0; background: none;
+  cursor: pointer;
+  color: currentColor;
+}
+.badge__close svg { display: block; width: 100%; height: 100%; }
+
+/* Chip "adicionar cupom" — outline clicável com "+" */
+.badge--add {
+  cursor: pointer;
+  gap: var(--sm);
+}
+
+/* Tipologia travada (Selfstorage) — outline + ícone de cadeado */
+.badge--lock {
+  gap: var(--sm);
+  color: var(--content-text);
+}
+.badge--lock .badge__icon { color: var(--border-icon); }
+
+/* Pílula de permissão — outline + ponto (usa Background/secondary como "go") */
+.badge--perm { gap: var(--sm); }
+.badge__dot {
+  width: 6px; height: 6px;
+  flex-shrink: 0;
+  background: var(--background-secondary);
+}
+
+/* Contador de seleção — alias semântico de outline com altura de campo */
+.badge--count { height: 28px; padding: 0 var(--lg); }
+

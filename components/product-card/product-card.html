@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product-card — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../badge/badge.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="../collapsible/collapsible.css" />
+  <link rel="stylesheet" href="product-card.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    /* grade de 3 colunas — LAYOUT de composição (fica na tela, não no componente) */
+    .demo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:start; }
+  </style>
+</head>
+<body>
+  <h2>Product-card <span style="font-weight:400;color:#999;font-size:14px">(item de orçamento)</span></h2>
+  <p style="color:#666;font-size:13px;max-width:640px">Estrutura fixa de card + conteúdo variável. Compõe Badge (flag), Collapsible (condições comerciais) e pode abrir o Lightbox (imagem). Usado em grade de 3 colunas no resumo do orçamento.</p>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+    <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+    <symbol id="ico-shield" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802c0-.469.326-.874.783-.976L12 1z"/></symbol>
+    <symbol id="ico-file" viewBox="0 0 24 24" fill="currentColor"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9Z"/></symbol>
+    <symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+    <symbol id="ico-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  </svg>
+
+  <div class="demo-grid">
+
+    <!-- Card 1: dentro da alçada -->
+    <div class="product-card">
+      <div class="product-card__head"><span class="product-card__id">PRD-10245</span></div>
+      <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Vila Leopoldina</span><span class="product-card__sub">Av. Imperatriz Leopoldina, 1200 · São Paulo/SP</span></div>
+      <div class="product-card__section"><span class="product-card__label">Box (PRD-10245)</span><span class="product-card__name product-card__name--sm">Box 5 m² · climatizado</span><span class="product-card__sub">5 m² · térreo</span></div>
+      <div class="product-card__section">
+        <span class="product-card__label">Valor</span>
+        <div class="product-card__prices">
+          <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 890,00</span></div>
+          <div class="product-card__price"><span class="product-card__price-k">Preço m²</span><span class="product-card__price-v">R$ 178,00</span></div>
+          <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 801,00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: com condições comerciais (Collapsible) e imagem -->
+    <div class="product-card">
+      <div class="product-card__head"><span class="product-card__id">PRD-10488</span></div>
+      <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Guarulhos</span><span class="product-card__sub">Rod. Presidente Dutra, km 225 · Guarulhos/SP</span></div>
+      <div class="product-card__section"><span class="product-card__label">Produto (PRD-10488)</span><span class="product-card__name product-card__name--sm">Galpão 120 m² · doca</span><span class="product-card__sub">120 m² · pé-direito 8 m</span></div>
+      <label class="product-card__imgadd"><svg><use href="#ico-image"/></svg><span>Adicionar imagem do produto</span></label>
+      <div class="product-card__section">
+        <span class="product-card__label">Valor</span>
+        <div class="product-card__prices">
+          <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 9.200,00</span></div>
+          <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 9.200,00</span></div>
+        </div>
+      </div>
+      <div class="collapsible" data-ds="collapsible">
+        <button class="collapsible__header" type="button" aria-expanded="false">
+          <h3 class="collapsible__title">Condições comerciais</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content"><div class="collapsible__slot"><span class="product-card__sub">Carência 30 dias · reajuste IGP-M · multa 3 aluguéis.</span></div></div>
+      </div>
+    </div>
+
+    <!-- Card 3: acima da alçada (flag + bloco de aprovação) -->
+    <div class="product-card product-card--over">
+      <div class="product-card__head">
+        <span class="product-card__id">PRD-10312</span>
+        <span class="badge badge--warning"><span class="badge__icon badge__icon--sm"><svg><use href="#ico-shield"/></svg></span>Aprovação</span>
+      </div>
+      <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Barra Funda</span><span class="product-card__sub">Rua Ministro Godói, 300 · São Paulo/SP</span></div>
+      <div class="product-card__section"><span class="product-card__label">Box (PRD-10312)</span><span class="product-card__name product-card__name--sm">Box 10 m² · térreo</span><span class="product-card__sub">10 m² · térreo</span></div>
+      <div class="product-card__section">
+        <span class="product-card__label">Valor</span>
+        <div class="product-card__prices">
+          <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 1.540,00</span></div>
+          <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 1.155,00</span></div>
+        </div>
+      </div>
+      <div class="product-card__approval">
+        <span class="product-card__approval-label"><svg><use href="#ico-shield"/></svg>Aprovação · acima da alçada</span>
+        <p class="product-card__approval-text">Desconto acumulado de <b>25%</b> acima da alçada deste produto (<b>15%</b>). Justificativa: cliente âncora, contrato de 24 meses.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../ds/ds.js" defer></script>
+</body>
+</html>

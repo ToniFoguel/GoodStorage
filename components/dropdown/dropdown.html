@@ -15,9 +15,39 @@
     .col { min-width:240px; }
     .col > small { display:block; font-size:11px; color:#999; margin-bottom:12px; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Dropdown / Filtro</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — trigger abre/fecha, itens selecionáveis, fecha ao clicar fora</p>
+    
+    <div style="display:flex;gap:48px;flex-wrap:wrap;min-height:220px;">
+      <div class="dropdown" data-ds="dropdown">
+        <button class="dropdown__trigger">Filtro<span class="dropdown__trigger-icon"><svg><use href="#ico-filter-3"/></svg></span></button>
+        <div class="dropdown__panel dropdown__panel--filter">
+          <div class="dropdown__section-head"><p class="dropdown__section-title">Status</p></div>
+          <div class="dropdown__section">
+            <div class="dropdown__item"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span><span class="checkbox-card__content"><span class="checkbox-card__desc">Ativa</span></span></label></div>
+            <div class="dropdown__item"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span><span class="checkbox-card__content"><span class="checkbox-card__desc">Inativa</span></span></label></div>
+            <div class="dropdown__clean"><span class="badge badge--outline">Limpar filtro</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown" data-ds="dropdown">
+        <button class="dropdown__trigger">Menu<span class="dropdown__trigger-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></button>
+        <div class="dropdown__panel dropdown__panel--menu">
+          <div class="dropdown__section">
+            <div class="dropdown__item dropdown__item--nav"><p class="dropdown__nav-text">Editar</p></div>
+            <div class="dropdown__item dropdown__item--nav"><p class="dropdown__nav-text">Duplicar</p></div>
+            <div class="dropdown__item dropdown__item--nav dropdown__item--disable"><p class="dropdown__nav-text">Arquivar</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
@@ -130,5 +160,6 @@
       <p class="select__desc">[Descrição]</p>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

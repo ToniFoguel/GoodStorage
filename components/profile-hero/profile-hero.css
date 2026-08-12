@@ -1,0 +1,25 @@
+/* ============================================================
+   Componente: Profile-hero  ⚠️ node Figma a formalizar
+   Cabeçalho de perfil: avatar (56) + nome + subtítulo + flags (badges).
+   Fica DENTRO de uma seção/página, não no pagehead.
+   Compõe: avatar, badge. Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.profile-hero { display: flex; align-items: center; gap: var(--lg); flex-wrap: wrap; }
+.profile-hero .avatar { width: 56px; height: 56px; }
+.profile-hero__meta { min-width: 0; }
+.profile-hero__name {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h2);
+  line-height: var(--line-hight-h2);
+  color: var(--content-title);
+}
+.profile-hero__sub {
+  margin: var(--gap-1) 0 0;
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);            /* ⚠️ cinza "secundário" sem token próprio */
+}
+.profile-hero__flags { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sm); margin-top: var(--sm); }

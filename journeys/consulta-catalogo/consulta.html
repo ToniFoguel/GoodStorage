@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consulta de catálogo — Orçamento · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="consulta.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-arrow-down-s" viewBox="0 0 24 24"><path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"/></symbol>
+  <symbol id="ri-arrow-left-s" viewBox="0 0 24 24"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ri-arrow-right-s" viewBox="0 0 24 24"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM11.6113 4.22157L3.83316 11.9997L12.3184 20.485L20.0966 12.7069L19.036 5.28223L11.6113 4.22157ZM13.7327 10.5855C12.9516 9.80448 12.9516 8.53815 13.7327 7.7571C14.5137 6.97606 15.78 6.97606 16.5611 7.7571C17.3421 8.53815 17.3421 9.80448 16.5611 10.5855C15.78 11.3666 14.5137 11.3666 13.7327 10.5855Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM5.5 14C5.77885 14 6.05009 14.0326 6.3101 14.0942C6.14202 14.594 6.03873 15.122 6.00896 15.6693L6 16L6.0007 16.0856C5.88757 16.0456 5.76821 16.0187 5.64446 16.0069L5.5 16C4.7203 16 4.07955 16.5949 4.00687 17.3555L4 17.5V22H2V17.5C2 15.567 3.567 14 5.5 14ZM18.5 14C20.433 14 22 15.567 22 17.5V22H20V17.5C20 16.7203 19.4051 16.0796 18.6445 16.0069L18.5 16C18.3248 16 18.1566 16.03 18.0003 16.0852L18 16C18 15.3343 17.8916 14.694 17.6915 14.0956C17.9499 14.0326 18.2211 14 18.5 14ZM5.5 8C6.88071 8 8 9.11929 8 10.5C8 11.8807 6.88071 13 5.5 13C4.11929 13 3 11.8807 3 10.5C3 9.11929 4.11929 8 5.5 8ZM18.5 8C19.8807 8 21 9.11929 21 10.5C21 11.8807 19.8807 13 18.5 13C17.1193 13 16 11.8807 16 10.5C16 9.11929 17.1193 8 18.5 8ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ri-close" viewBox="0 0 24 24"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+  <symbol id="ri-check" viewBox="0 0 24 24"><path d="m9.55 17.6-5.15-5.15 1.41-1.41 3.74 3.73 8.6-8.6 1.42 1.42z"/></symbol>
+  <symbol id="ri-pencil" viewBox="0 0 24 24"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+  <symbol id="ri-add" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ri-arrow-right" viewBox="0 0 24 24"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></symbol>
+  <symbol id="ri-information" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/></symbol>
+  <symbol id="ri-shield" viewBox="0 0 24 24"><path d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802c0-.469.326-.874.783-.976L12 1zm0 2.049L5 4.604v9.185a4 4 0 0 0 1.781 3.328L12 20.597l5.219-3.48A4 4 0 0 0 19 13.79V4.604L12 3.05z"/></symbol>
+  <symbol id="ri-delete-bin" viewBox="0 0 24 24"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+  <symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Comercial</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-price-tag-3"/></svg></span><span class="sidebar__item-label">Precificação</span></a>
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Orçamentos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Leads</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Catálogo</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AT</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">André</p><p class="sidebar__user-mail">andre@goodstorage.com</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Orçamentos</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item">…</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item">Novo orçamento</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Consulta de catálogo</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <h1 class="pagehead__title">Consulta de catálogo</h1>
+        <button class="btn btn--primary" id="continue-btn" disabled>Continuar para o orçamento <span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-right"/></svg></span></button>
+      </div>
+
+      <!-- Passo 1 -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Dados do orçamento</h2></div></div>
+        <div class="section__body">
+          <div class="fields">
+            <div>
+              <div class="field__label">Lead vinculado <span class="field__req">*</span></div>
+              <div class="ac-wrap">
+                <div class="dsfield" id="lead-field"><input id="lead-input" placeholder="Selecione um lead" autocomplete="off" role="combobox" /><span class="dsfield__ico"><svg><use href="#ri-arrow-down-s"/></svg></span></div>
+                <div class="ac" id="lead-ac" role="listbox" hidden></div>
+              </div>
+            </div>
+            <div>
+              <div class="field__label">Data de move in <span class="field__req">*</span></div>
+              <input type="date" class="ds-native" id="moveIn" value="2026-07-25" />
+            </div>
+            <div>
+              <div class="field__label">Prazo de validade <span class="field__req">*</span></div>
+              <select class="ds-native"><option>D +3 (padrão)</option><option>D +5</option><option>D +7</option><option>D +15</option></select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Passo 2 -->
+      <section class="section">
+        <div class="section__head">
+          <div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Consulta de produtos</h2></div>
+          <span class="section__count-pill" id="sel-counter"><b>0</b> selecionados</span>
+        </div>
+        <div class="section__body">
+          <div class="filterbar">
+            <label class="searchfield"><input id="qSearch" placeholder="Pesquise por ID do produto ou descrição" autocomplete="off" /><svg><use href="#ri-search"/></svg></label>
+            <select class="fsel" id="catTipologia"><option value="">Tipologia: todas</option><option>Selfstorage</option><option>Flex</option><option>Galpão UI</option><option>Office UI</option></select>
+            <select class="fsel" id="catCluster"><option value="">Cluster: todos</option><option>Cluster A</option><option>Cluster B</option><option>Cluster C</option></select>
+            <select class="fsel" id="catUnidade"><option value="">Unidade: todas</option><option>Vila Leopoldina</option><option>Pinheiros</option><option>Lapa</option><option>Faria Lima</option><option>Tatuapé</option><option>Barra Funda</option><option>Osasco</option><option>Santo Amaro</option><option>Guarulhos</option><option>Alphaville</option></select>
+            <div class="mfield"><input id="mDe" placeholder="De" /><span class="mfield__unit">m²</span></div>
+            <div class="mfield"><input id="mAte" placeholder="Até" /><span class="mfield__unit">m²</span></div>
+            <button class="iconbtn" id="catClear" aria-label="Limpar filtros" title="Limpar filtros"><svg><use href="#ri-delete-bin"/></svg></button>
+          </div>
+
+          <div class="table-scroll">
+          <table class="ptable">
+            <thead><tr>
+              <th class="col-chk"></th>
+              <th class="col-prod">Produto</th>
+              <th>Unidade de negócio</th>
+              <th class="num">Preço base</th>
+              <th class="num">Preço m²</th>
+              <th class="col-adj">Desconto / aumento</th>
+              <th class="col-coup">Cupom de entrada</th>
+              <th class="col-coup">Cupom promocional</th>
+              <th class="col-coup">Campanha</th>
+            </tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+          </div>
+
+          <div class="cat-pager" id="catPager" hidden>
+            <button id="catPrev" aria-label="Anterior"><svg><use href="#ri-arrow-left-s"/></svg></button>
+            <span class="pginfo" id="catPgInfo">1/1</span>
+            <button id="catNext" aria-label="Próxima"><svg><use href="#ri-arrow-right-s"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage" /><small>espaços inteligentes</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- Combobox de cupom (fixed) -->
+<div class="coup-picker" id="coupPicker" hidden>
+  <label class="cp-search"><svg viewBox="0 0 24 24"><use href="#ri-search"/></svg><input id="coupPickerQ" placeholder="Buscar cupom…" autocomplete="off" /></label>
+  <div class="cp-list" id="coupPickerList"></div>
+</div>
+
+<!-- Modal: Desconto / aumento -->
+<div class="modal" id="m-adjust" data-ds="modal" style="max-width:640px">
+  <div class="modal__header"><h3 class="modal__title">Desconto / aumento</h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ri-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning" role="alert" style="margin-bottom:16px">
+      <span class="banner__icon"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:var(--content-label-warning)"><use href="#ri-shield"/></svg></span>
+      <div class="banner__content"><p class="banner__text">A alçada de desconto <strong>neste produto</strong> é de <strong>até <span id="adjAlc">28%</span></strong>. Você pode aplicar acima disso — ao finalizar, <strong>apenas este produto</strong> entra em aprovação.</p></div>
+    </div>
+    <p class="adj-prod" id="adjTitle"></p>
+    <div class="modal-line"><span>Preço base</span><span id="adjBase" style="font-weight:var(--font-weight-bold)"></span></div>
+
+    <p class="adj-sec">Descontos</p>
+    <div class="alc-bar" id="adjAlcadaBar"></div>
+    <div id="descList"></div>
+    <button class="adj-add-modal" id="adjAddDesc"><svg viewBox="0 0 24 24"><use href="#ri-add"/></svg>Adicionar desconto</button>
+
+    <p class="adj-sec">Aumento</p>
+    <div class="aum-field"><span class="aum-unit">R$</span><input id="adjAum" placeholder="0" inputmode="numeric" /></div>
+    <p class="field__hint" style="margin-top:6px">Valor fixo por mês, somado à mensalidade em todos os meses.</p>
+
+    <div class="modal-line modal-line--total" style="margin-top:12px"><span>Preço final (1º mês)</span><span id="adjFinal"></span></div>
+  </div>
+  <div class="modal__footer">
+    <button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('m-adjust'))">Cancelar</button>
+    <button class="btn btn--primary" id="adj-apply">Aplicar</button>
+  </div>
+</div>
+
+<!-- Modal: Detalhe -->
+<div class="modal" id="m-detail" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h3 class="modal__title" id="det-title"></h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ri-close"/></svg></button></div>
+  <div class="modal__content"><dl class="detail-grid" id="det-body"></dl></div>
+  <div class="modal__footer"><button class="btn btn--outline" onclick="DS.closeModal(document.getElementById('m-detail'))">Fechar</button></div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+<script src="consulta.js" defer></script>
+</body>
+</html>

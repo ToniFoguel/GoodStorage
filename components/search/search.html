@@ -13,9 +13,24 @@
     .w853 { max-width: 900px; }
     .w377 { width: 377px; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Search</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — Enter ou botão dispara ds:search (veja o console)</p>
+    
+    <div style="max-width:420px;">
+      <div class="searchbar" data-ds="search">
+        <span class="searchbar__icon"><svg><use href="#ico-search"/></svg></span>
+        <input class="searchbar__input" placeholder="Pesquise e tecle Enter" />
+        <button class="btn btn--primary">Pesquisar</button>
+      </div>
+    </div>
+    <script>document.querySelector('[data-ds="search"]').addEventListener('ds:search',function(e){console.log('ds:search ->',e.detail.query);});</script>
+  </section>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-search" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
@@ -76,5 +91,6 @@
       </button>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,42 @@
+/* ============================================================
+   Componente: SegmentedControl (novo — ver design-system.md)
+   Opções mutuamente exclusivas num trilho. Ativo = Background/primary.
+   Usado no popover de cupom (1 mês / 2 meses / 3 meses).
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.segmented {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: stretch;
+  height: 32px;
+  border: var(--thin) solid var(--border-default);
+  background: var(--background-bg-main);
+  overflow: hidden;
+  width: 100%;
+}
+.segmented__item {
+  flex: 1 0 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--md);
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);
+  border-left: var(--thin) solid var(--border-default);
+  white-space: nowrap;
+}
+.segmented__item:first-child { border-left: 0; }
+.segmented__item:hover:not(.segmented__item--active) { background: var(--background-bg-aux); }
+.segmented__item--active {
+  background: var(--background-primary);
+  color: var(--content-title-inverse);
+  font-weight: var(--font-weight-bold);
+}
+.segmented__item:disabled { color: var(--content-disable); cursor: not-allowed; }

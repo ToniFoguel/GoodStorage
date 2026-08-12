@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selfrow — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="selfrow.css" />
+  <style>body{font-family:var(--font-family-title-text);padding:40px;background:#fff}*{box-sizing:border-box}svg{fill:currentColor}.demo{max-width:420px;display:flex;flex-direction:column;gap:8px}</style>
+</head>
+<body>
+  <h2>Selfrow <span style="font-weight:400;color:#999;font-size:14px">(linha de auto-atendimento)</span></h2>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM13.7327 10.5855C14.5137 11.3666 15.78 11.3666 16.5611 10.5855C17.3421 9.80448 17.3421 8.53815 16.5611 7.7571C15.78 6.97606 14.5137 6.97606 13.7327 7.7571C12.9516 8.53815 12.9516 9.80448 13.7327 10.5855Z"/></symbol>
+    <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9Z"/></symbol>
+    <symbol id="ri-arrow-right-s" viewBox="0 0 24 24"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  </svg>
+
+  <div class="demo">
+    <a class="selfrow"><svg><use href="#ri-price-tag-3"/></svg><div><p class="selfrow__t">Trocar forma de pagamento</p><p class="selfrow__d">Cartão · boleto · PIX</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+    <a class="selfrow"><svg><use href="#ri-file-text"/></svg><div><p class="selfrow__t">Avisar move-out</p><p class="selfrow__d">Aviso prévio de 15 dias</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+  </div>
+</body>
+</html>

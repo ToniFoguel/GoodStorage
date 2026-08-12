@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Playground — tela montada só com peças do DS</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/datepicker/datepicker.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../components/search/search.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/pagination/pagination.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/checkbox-card/checkbox-card.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-family-title-text); background: var(--background-bg-aux); color: var(--content-text); }
+  .app { display: flex; min-height: 100vh; }
+  .sidebar { height: auto; align-self: stretch; }
+  .brandmark { box-sizing:border-box; width:32px; height:32px; flex-shrink:0; border:1px solid var(--border-default);
+    background:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--content-primary); font-size:18px; }
+  .main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; padding: var(--xl) var(--3xl);
+    background: var(--background-bg-main); border-bottom: var(--thin) solid var(--border-default); }
+  .topbar h1 { margin:0; font-size: var(--font-size-h2); line-height: var(--line-hight-h2); font-weight: var(--font-weight-bold); color: var(--content-title); }
+  .content { padding: var(--xl) var(--3xl) var(--3xl); }
+  .filters { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom: var(--lg); }
+  .filters .searchbar { min-width: 320px; flex: 1 0 320px; }
+  .card-surface { background: var(--background-bg-main); border: var(--thin) solid var(--border-default); padding: var(--xl); }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--content-title, #111); color:#fff;
+    padding: 10px 18px; font-size: 14px; opacity: 0; transition: opacity .2s ease; pointer-events:none; z-index: 2000; }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ===== Sprite de ícones (union das páginas do DS) ===== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ico-search" viewBox="0 0 24 24" fill="currentColor"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+  <symbol id="ico-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm3 7H4v9h16v-9zM7 5H4v3h16V5h-3v1h-2V5H9v1H7V5zm0 8h2v2H7v-2z"/></symbol>
+  <symbol id="ico-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="ico-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="ico-arrow-left-s" viewBox="0 0 24 24" fill="currentColor"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-arrow-left-double" viewBox="0 0 24 24" fill="currentColor"><path d="M4.828 12l4.95 4.95-1.414 1.414L2 12l6.364-6.364 1.414 1.414zm7.071 0l4.95 4.95-1.414 1.414L9.9 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-double" viewBox="0 0 24 24" fill="currentColor"><path d="M19.172 12l-4.95-4.95 1.414-1.414L22 12l-6.364 6.364-1.414-1.414zm-7.071 0l-4.95-4.95 1.414-1.414L14.1 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+</svg>
+<!-- Sprite Remix Icon (nomes idênticos ao Figma) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-building-2" viewBox="0 0 24 24"><path d="M3 19V5.70046C3 5.27995 3.26307 4.90437 3.65826 4.76067L13.3291 1.24398C13.5886 1.14961 13.8755 1.28349 13.9699 1.54301C13.9898 1.59778 14 1.65561 14 1.71388V6.6667L20.3162 8.77211C20.7246 8.90822 21 9.29036 21 9.72079V19H23V21H1V19H3ZM5 19H12V3.85543L5 6.40089V19ZM19 19V10.4416L14 8.77488V19H19Z"/></symbol>
+  <symbol id="ri-store" viewBox="0 0 24 24"><path d="M21 11.6458V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11.6458C2.37764 10.9407 2 10.0144 2 9V3C2 2.44772 2.44772 2 3 2H21C21.5523 2 22 2.44772 22 3V9C22 10.0144 21.6224 10.9407 21 11.6458ZM19 12.874C18.6804 12.9562 18.3453 13 18 13C16.8053 13 15.7329 12.4762 15 11.6458C14.2671 12.4762 13.1947 13 12 13C10.8053 13 9.73294 12.4762 9 11.6458C8.26706 12.4762 7.19469 13 6 13C5.6547 13 5.31962 12.9562 5 12.874V20H19V12.874ZM14 9C14 8.44772 14.4477 8 15 8C15.5523 8 16 8.44772 16 9C16 10.1046 16.8954 11 18 11C19.1046 11 20 10.1046 20 9V4H4V9C4 10.1046 4.89543 11 6 11C7.10457 11 8 10.1046 8 9C8 8.44772 8.44772 8 9 8C9.55228 8 10 8.44772 10 9C10 10.1046 10.8954 11 12 11C13.1046 11 14 10.1046 14 9Z"/></symbol>
+  <symbol id="ri-road-map" viewBox="0 0 24 24"><path d="M4 6.14286V18.9669L9.06476 16.7963L15.0648 19.7963L20 17.6812V4.85714L21.303 4.2987C21.5569 4.18992 21.8508 4.30749 21.9596 4.56131C21.9862 4.62355 22 4.69056 22 4.75827V19L15 22L9 19L2.69696 21.7013C2.44314 21.8101 2.14921 21.6925 2.04043 21.4387C2.01375 21.3765 2 21.3094 2 21.2417V7L4 6.14286ZM16.2426 11.2426L12 15.4853L7.75736 11.2426C5.41421 8.89949 5.41421 5.10051 7.75736 2.75736C10.1005 0.414214 13.8995 0.414214 16.2426 2.75736C18.5858 5.10051 18.5858 8.89949 16.2426 11.2426ZM12 12.6569L14.8284 9.82843C16.3905 8.26633 16.3905 5.73367 14.8284 4.17157C13.2663 2.60948 10.7337 2.60948 9.17157 4.17157C7.60948 5.73367 7.60948 8.26633 9.17157 9.82843L12 12.6569Z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-box-3" viewBox="0 0 24 24"><path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM5.49388 7.0777L12.0001 10.8444L18.5062 7.07774L12 3.311L5.49388 7.0777ZM4.5 8.81329V16.3469L11.0001 20.1101V12.5765L4.5 8.81329ZM13.0001 20.11L19.5 16.3469V8.81337L13.0001 12.5765V20.11Z"/></symbol>
+  <symbol id="ri-function-add" viewBox="0 0 24 24"><path d="M4 3C3.44772 3 3 3.44772 3 4V10C3 10.5523 3.44772 11 4 11H10C10.5523 11 11 10.5523 11 10V4C11 3.44772 10.5523 3 10 3H4ZM4 13C3.44772 13 3 13.4477 3 14V20C3 20.5523 3.44772 21 4 21H10C10.5523 21 11 20.5523 11 20V14C11 13.4477 10.5523 13 10 13H4ZM14 13C13.4477 13 13 13.4477 13 14V20C13 20.5523 13.4477 21 14 21H20C20.5523 21 21 20.5523 21 20V14C21 13.4477 20.5523 13 20 13H14ZM15 19V15H19V19H15ZM5 9V5H9V9H5ZM5 19V15H9V19H5ZM16 11V8H13V6H16V3H18V6H21V8H18V11H16Z"/></symbol>
+  <symbol id="ri-multi-image" viewBox="0 0 24 24"><path d="M7 3C6.44772 3 6 3.44772 6 4V7H3C2.44772 7 2 7.44772 2 8V20C2 20.5523 2.44772 21 3 21H17C17.5523 21 18 20.5523 18 20V17H21C21.5523 17 22 16.5523 22 16V4C22 3.44772 21.5523 3 21 3H7ZM17 7H8V5H20V15H18V8C18 7.44772 17.5523 7 17 7ZM16 9V15.7394L11.4911 11.6404L4 18.6321V9H16ZM11.5089 14.3596L16 18.4424V19H6.53702L11.5089 14.3596ZM7 13.5C7.82843 13.5 8.5 12.8284 8.5 12C8.5 11.1716 7.82843 10.5 7 10.5C6.17157 10.5 5.5 11.1716 5.5 12C5.5 12.8284 6.17157 13.5 7 13.5Z"/></symbol>
+  <symbol id="ri-shield-check" viewBox="0 0 24 24"><path d="M12 1L20.2169 2.82598C20.6745 2.92766 21 3.33347 21 3.80217V13.7889C21 15.795 19.9974 17.6684 18.3282 18.7812L12 23L5.6718 18.7812C4.00261 17.6684 3 15.795 3 13.7889V3.80217C3 3.33347 3.32553 2.92766 3.78307 2.82598L12 1ZM12 3.04879L5 4.60434V13.7889C5 15.1263 5.6684 16.3752 6.7812 17.1171L12 20.5963L17.2188 17.1171C18.3316 16.3752 19 15.1263 19 13.7889V4.60434L12 3.04879ZM16.4524 8.22183L17.8666 9.63604L11.5026 16L7.25999 11.7574L8.67421 10.3431L11.5019 13.1709L16.4524 8.22183Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM11.6113 4.22157L3.83316 11.9997L12.3184 20.485L20.0966 12.7069L19.036 5.28223L11.6113 4.22157ZM13.7327 10.5855C12.9516 9.80448 12.9516 8.53815 13.7327 7.7571C14.5137 6.97606 15.78 6.97606 16.5611 7.7571C17.3421 8.53815 17.3421 9.80448 16.5611 10.5855C15.78 11.3666 14.5137 11.3666 13.7327 10.5855Z"/></symbol>
+  <symbol id="ri-money-dollar-box" viewBox="0 0 24 24"><path d="M3.00488 3.00275H21.0049C21.5572 3.00275 22.0049 3.45046 22.0049 4.00275V20.0027C22.0049 20.555 21.5572 21.0027 21.0049 21.0027H3.00488C2.4526 21.0027 2.00488 20.555 2.00488 20.0027V4.00275C2.00488 3.45046 2.4526 3.00275 3.00488 3.00275ZM4.00488 5.00275V19.0027H20.0049V5.00275H4.00488ZM8.50488 14.0027H14.0049C14.281 14.0027 14.5049 13.7789 14.5049 13.5027C14.5049 13.2266 14.281 13.0027 14.0049 13.0027H10.0049C8.62417 13.0027 7.50488 11.8835 7.50488 10.5027C7.50488 9.12203 8.62417 8.00275 10.0049 8.00275H11.0049V6.00275H13.0049V8.00275H15.5049V10.0027H10.0049C9.72874 10.0027 9.50488 10.2266 9.50488 10.5027C9.50488 10.7789 9.72874 11.0027 10.0049 11.0027H14.0049C15.3856 11.0027 16.5049 12.122 16.5049 13.5027C16.5049 14.8835 15.3856 16.0027 14.0049 16.0027H13.0049V18.0027H11.0049V16.0027H8.50488V14.0027Z"/></symbol>
+  <symbol id="ri-coins" viewBox="0 0 24 24"><path d="M14.0049 2.00281C18.4232 2.00281 22.0049 5.58453 22.0049 10.0028C22.0049 13.2474 20.0733 16.0409 17.2973 17.296C16.0422 20.0718 13.249 22.0028 10.0049 22.0028C5.5866 22.0028 2.00488 18.4211 2.00488 14.0028C2.00488 10.7587 3.9359 7.96554 6.71122 6.71012C7.96681 3.93438 10.7603 2.00281 14.0049 2.00281ZM10.0049 8.00281C6.69117 8.00281 4.00488 10.6891 4.00488 14.0028C4.00488 17.3165 6.69117 20.0028 10.0049 20.0028C13.3186 20.0028 16.0049 17.3165 16.0049 14.0028C16.0049 10.6891 13.3186 8.00281 10.0049 8.00281ZM11.0049 9.00281V10.0028H13.0049V12.0028H9.00488C8.72874 12.0028 8.50488 12.2267 8.50488 12.5028C8.50488 12.7483 8.68176 12.9524 8.91501 12.9948L9.00488 13.0028H11.0049C12.3856 13.0028 13.5049 14.1221 13.5049 15.5028C13.5049 16.8835 12.3856 18.0028 11.0049 18.0028V19.0028H9.00488V18.0028H7.00488V16.0028H11.0049C11.281 16.0028 11.5049 15.7789 11.5049 15.5028C11.5049 15.2573 11.328 15.0532 11.0948 15.0109L11.0049 15.0028H9.00488C7.62417 15.0028 6.50488 13.8835 6.50488 12.5028C6.50488 11.1221 7.62417 10.0028 9.00488 10.0028V9.00281H11.0049ZM14.0049 4.00281C12.2214 4.00281 10.6196 4.78097 9.52064 6.01629C9.68133 6.00764 9.84254 6.00281 10.0049 6.00281C14.4232 6.00281 18.0049 9.58453 18.0049 14.0028C18.0049 14.1655 18 14.327 17.9905 14.4873C19.2265 13.3885 20.0049 11.7866 20.0049 10.0028C20.0049 6.6891 17.3186 4.00281 14.0049 4.00281Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-coupon-2" viewBox="0 0 24 24"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM14.0049 4.99979H4.00488V7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H14.0049V4.99979ZM16.0049 4.99979V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H16.0049Z"/></symbol>
+  <symbol id="ri-organization-chart" viewBox="0 0 24 24"><path d="M15 3C15.5523 3 16 3.44772 16 4V8C16 8.55228 15.5523 9 15 9H13V11H17C17.5523 11 18 11.4477 18 12V15H20C20.5523 15 21 15.4477 21 16V20C21 20.5523 20.5523 21 20 21H14C13.4477 21 13 20.5523 13 20V16C13 15.4477 13.4477 15 14 15H16V13H8V15H10C10.5523 15 11 15.4477 11 16V20C11 20.5523 10.5523 21 10 21H4C3.44772 21 3 20.5523 3 20V16C3 15.4477 3.44772 15 4 15H6V12C6 11.4477 6.44772 11 7 11H11V9H9C8.44772 9 8 8.55228 8 8V4C8 3.44772 8.44772 3 9 3H15ZM9 17H5V19H9V17ZM19 17H15V19H19V17ZM14 5H10V7H14V5Z"/></symbol>
+  <symbol id="ri-node-tree" viewBox="0 0 24 24"><path d="M10 2C10.5523 2 11 2.44772 11 3V7C11 7.55228 10.5523 8 10 8H8V10H13V9C13 8.44772 13.4477 8 14 8H20C20.5523 8 21 8.44772 21 9V13C21 13.5523 20.5523 14 20 14H14C13.4477 14 13 13.5523 13 13V12H8V18H13V17C13 16.4477 13.4477 16 14 16H20C20.5523 16 21 16.4477 21 17V21C21 21.5523 20.5523 22 20 22H14C13.4477 22 13 21.5523 13 21V20H7C6.44772 20 6 19.5523 6 19V8H4C3.44772 8 3 7.55228 3 7V3C3 2.44772 3.44772 2 4 2H10ZM19 18H15V20H19V18ZM19 10H15V12H19V10ZM9 4H5V6H9V4Z"/></symbol>
+  <symbol id="ri-check-double" viewBox="0 0 24 24"><path d="M11.602 13.7599L13.014 15.1719L21.4795 6.7063L22.8938 8.12051L13.014 18.0003L6.65 11.6363L8.06421 10.2221L10.189 12.3469L11.6025 13.7594L11.602 13.7599ZM11.6037 10.9322L16.5563 5.97949L17.9666 7.38977L13.014 12.3424L11.6037 10.9322ZM8.77698 16.5873L7.36396 18.0003L1 11.6363L2.41421 10.2221L3.82723 11.6352L3.82604 11.6363L8.77698 16.5873Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM5.5 14C5.77885 14 6.05009 14.0326 6.3101 14.0942C6.14202 14.594 6.03873 15.122 6.00896 15.6693L6 16L6.0007 16.0856C5.88757 16.0456 5.76821 16.0187 5.64446 16.0069L5.5 16C4.7203 16 4.07955 16.5949 4.00687 17.3555L4 17.5V22H2V17.5C2 15.567 3.567 14 5.5 14ZM18.5 14C20.433 14 22 15.567 22 17.5V22H20V17.5C20 16.7203 19.4051 16.0796 18.6445 16.0069L18.5 16C18.3248 16 18.1566 16.03 18.0003 16.0852L18 16C18 15.3343 17.8916 14.694 17.6915 14.0956C17.9499 14.0326 18.2211 14 18.5 14ZM5.5 8C6.88071 8 8 9.11929 8 10.5C8 11.8807 6.88071 13 5.5 13C4.11929 13 3 11.8807 3 10.5C3 9.11929 4.11929 8 5.5 8ZM18.5 8C19.8807 8 21 9.11929 21 10.5C21 11.8807 19.8807 13 18.5 13C17.1193 13 16 11.8807 16 10.5C16 9.11929 17.1193 8 18.5 8ZM5.5 10C5.22386 10 5 10.2239 5 10.5C5 10.7761 5.22386 11 5.5 11C5.77614 11 6 10.7761 6 10.5C6 10.2239 5.77614 10 5.5 10ZM18.5 10C18.2239 10 18 10.2239 18 10.5C18 10.7761 18.2239 11 18.5 11C18.7761 11 19 10.7761 19 10.5C19 10.2239 18.7761 10 18.5 10ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2ZM12 4C10.8954 4 10 4.89543 10 6C10 7.10457 10.8954 8 12 8C13.1046 8 14 7.10457 14 6C14 4.89543 13.1046 4 12 4Z"/></symbol>
+  <symbol id="ri-contacts-book" viewBox="0 0 24 24"><path d="M3 2H19.0049C20.1068 2 21 2.89821 21 3.9908V20.0092C21 21.1087 20.1074 22 19.0049 22H3V2ZM7 4H5V20H7V4ZM9 20H19V4H9V20ZM11 16C11 14.3431 12.3431 13 14 13C15.6569 13 17 14.3431 17 16H11ZM14 12C12.8954 12 12 11.1046 12 10C12 8.89543 12.8954 8 14 8C15.1046 8 16 8.89543 16 10C16 11.1046 15.1046 12 14 12ZM22 6H24V10H22V6ZM22 12H24V16H22V12Z"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ========= SIDEBAR (peça DS, funcional) ========= -->
+  <aside class="sidebar" data-ds="sidebar" data-node-id="46:118032">
+    <div class="sidebar__header">
+      <div class="sidebar__headinner">
+        <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+        <p class="sidebar__brand">GoodStorage</p>
+        <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+      </div>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Dados mestre</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-building-2"/></svg></span><span class="sidebar__item-label">Empresas</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-store"/></svg></span><span class="sidebar__item-label">Unidades de negócio</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-road-map"/></svg></span><span class="sidebar__item-label">Endereços</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__group-title">Produto</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#ri-box-3"/></svg></span><span class="sidebar__item-label">Produtos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-function-add"/></svg></span><span class="sidebar__item-label">Cadastro em lote</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-multi-image"/></svg></span><span class="sidebar__item-label">Imagem em lote</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-shield-check"/></svg></span><span class="sidebar__item-label">Seguradora e coberturas</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Apólices</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-price-tag-3"/></svg></span><span class="sidebar__group-title">Precificação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-money-dollar-box"/></svg></span><span class="sidebar__item-label">Tarifário</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-coins"/></svg></span><span class="sidebar__item-label">Edição de preço em lote</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Range de desconto</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-coupon-2"/></svg></span><span class="sidebar__item-label">Cupom e campanhas</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-organization-chart"/></svg></span><span class="sidebar__group-title">Workflow</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-node-tree"/></svg></span><span class="sidebar__item-label">Workflows</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-check-double"/></svg></span><span class="sidebar__item-label">Aprovação</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-team"/></svg></span><span class="sidebar__group-title">Lead</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-contacts-book"/></svg></span><span class="sidebar__item-label">Gestão de lead</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AT</p></div>
+        <div class="sidebar__userinfo"><p class="sidebar__user-name">André</p><p class="sidebar__user-mail">andre@goodstorage.com</p></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========= MAIN ========= -->
+  <div class="main">
+    <div class="topbar">
+      <h1>Empresas</h1>
+      <button class="btn btn--primary" data-ds-open="pg-modal">Nova empresa</button>
+    </div>
+
+    <div class="content">
+      <!-- Barra de filtros: search + select + datepicker + dropdown de filtro -->
+      <div class="filters">
+        <div class="searchbar searchbar--icon" data-ds="search" style="min-width:320px;flex:1 0 320px;">
+          <input class="searchbar__input" placeholder="Pesquise o nome da empresa e tecle Enter" />
+          <button class="searchbar__iconbtn" aria-label="Buscar"><svg><use href="#ico-search"/></svg></button>
+        </div>
+
+        <div class="select" data-ds="select" style="width:200px;">
+          <div class="select__label"><p>Plano</p></div>
+          <div class="select__field"><p class="select__value">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Todos</p></div>
+            <div class="select__item"><p class="select__item-text">Básico</p></div>
+            <div class="select__item"><p class="select__item-text">Premium</p></div>
+            <div class="select__item"><p class="select__item-text">Enterprise</p></div>
+          </div></div>
+        </div>
+
+        <div class="datepicker" data-ds="datepicker" style="width:180px;">
+          <div class="datepicker__label"><p>Cadastro desde</p></div>
+          <div class="datepicker__input"><p class="datepicker__value">Select a date</p><span class="datepicker__icon"><svg><use href="#ico-calendar"/></svg></span></div>
+        </div>
+
+        <div class="dropdown" data-ds="dropdown">
+          <button class="dropdown__trigger">Filtros<span class="dropdown__trigger-icon"><svg><use href="#ico-filter-3"/></svg></span></button>
+          <div class="dropdown__panel dropdown__panel--filter dropdown__panel--right">
+            <div class="dropdown__section-head"><p class="dropdown__section-title">Status</p></div>
+            <div class="dropdown__section">
+              <div class="dropdown__item"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span><span class="checkbox-card__content"><span class="checkbox-card__desc">Ativa</span></span></label></div>
+              <div class="dropdown__item"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><span class="checkbox-card__check"><svg><use href="#ico-check"/></svg></span></span><span class="checkbox-card__content"><span class="checkbox-card__desc">Inativa</span></span></label></div>
+              <div class="dropdown__clean"><span class="badge badge--outline">Limpar filtro</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela ordenável + paginação (peças DS) -->
+      <div class="card-surface">
+        <div class="table" data-ds="table" id="pg-table">
+          <div class="table__header">
+            <button class="table__th"><span class="table__th-label">Empresa</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+            <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+            <button class="table__th"><span class="table__th-label">Cidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+            <button class="table__th"><span class="table__th-label">Plano</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+            <span class="table__th table__th--action" aria-hidden="true"></span>
+          </div>
+          <div class="table__row"><div class="table__cell"><p class="table__cell-text">Umbrella</p></div><div class="table__cell table__cell--badge"><span class="badge badge--outline">Ativa</span></div><div class="table__cell"><p class="table__cell-text">Belo Horizonte</p></div><div class="table__cell"><p class="table__cell-text">Enterprise</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+          <div class="table__row table__row--alt"><div class="table__cell"><p class="table__cell-text">Acme Ltda</p></div><div class="table__cell table__cell--badge"><span class="badge badge--outline">Ativa</span></div><div class="table__cell"><p class="table__cell-text">São Paulo</p></div><div class="table__cell"><p class="table__cell-text">Premium</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+          <div class="table__row"><div class="table__cell"><p class="table__cell-text">Globex</p></div><div class="table__cell table__cell--badge"><span class="badge badge--outline">Inativa</span></div><div class="table__cell"><p class="table__cell-text">Rio de Janeiro</p></div><div class="table__cell"><p class="table__cell-text">Básico</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+          <div class="table__row table__row--alt"><div class="table__cell"><p class="table__cell-text">Initech</p></div><div class="table__cell table__cell--badge"><span class="badge badge--outline">Ativa</span></div><div class="table__cell"><p class="table__cell-text">Curitiba</p></div><div class="table__cell"><p class="table__cell-text">Premium</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+          <div class="table__row"><div class="table__cell"><p class="table__cell-text">Stark Ind.</p></div><div class="table__cell table__cell--badge"><span class="badge badge--outline">Ativa</span></div><div class="table__cell"><p class="table__cell-text">Recife</p></div><div class="table__cell"><p class="table__cell-text">Enterprise</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+        </div>
+
+        <div class="pagination" data-ds="pagination" data-ds-total="700" data-ds-page-size="20" data-ds-page="1">
+          <div class="pagination__info"></div>
+          <div class="pagination__nav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========= MODAL (peça DS, aberto pelo botão "Nova empresa") ========= -->
+<div class="modal" id="pg-modal" data-ds="modal">
+  <div class="modal__header"><h3 class="modal__title">Nova empresa</h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content" style="display:flex;flex-direction:column;gap:16px;">
+    <div class="input" data-ds="input">
+      <div class="input__label"><p>Razão social</p><p class="input__req">*</p></div>
+      <div class="input__field"><input class="input__control" placeholder="Nome da empresa" /></div>
+    </div>
+    <div class="input" data-ds="input" data-ds-mask="cnpj">
+      <div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div>
+      <div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div>
+      <p class="input__help">Máscara automática.</p>
+    </div>
+  </div>
+  <div class="modal__footer">
+    <button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('pg-modal'))">Cancelar</button>
+    <button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('pg-modal')); toast('Empresa criada ✓')">Salvar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../../ds/ds.js" defer></script>
+<script>
+  function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1800); }
+  // liga os eventos das peças à tela (sem lógica dentro dos componentes)
+  window.addEventListener('DOMContentLoaded', function(){
+    document.querySelector('[data-ds="search"]').addEventListener('ds:search', function(e){ toast('Buscando: "'+e.detail.query+'"'); });
+    document.querySelector('[data-ds="table"]').addEventListener('ds:sort', function(e){ toast('Ordenado por coluna '+(e.detail.column+1)+' ('+e.detail.dir+')'); });
+    document.querySelector('[data-ds="table"]').addEventListener('ds:action', function(e){ toast(e.detail.action+' — '+ e.detail.row.querySelector('.table__cell-text').textContent); });
+    document.querySelector('[data-ds="pagination"]').addEventListener('ds:page', function(e){ toast('Página '+e.detail.page); });
+    document.querySelector('.select[data-ds]').addEventListener('ds:change', function(e){ toast('Plano: '+e.detail.value); });
+    document.querySelector('[data-ds="datepicker"]').addEventListener('ds:change', function(e){ toast('Data: '+e.detail.value); });
+  });
+</script>
+</body>
+</html>

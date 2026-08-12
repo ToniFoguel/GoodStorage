@@ -12,9 +12,33 @@
     .col { width:320px; display:flex; flex-direction:column; gap:20px; }
     h3.sec { font:400 12px var(--font-family-title-text); color:#999; margin:24px 0 0; width:100%; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Input</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — digite — a máscara é aplicada em tempo real</p>
+    
+    <div style="display:flex;gap:48px;flex-wrap:wrap;">
+      <div class="input" data-ds="input" data-ds-mask="cnpj" style="width:280px;">
+        <div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div>
+        <div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div>
+        <p class="input__help">Máscara automática de CNPJ.</p>
+      </div>
+      <div class="input" data-ds="input" data-ds-mask="phone" style="width:280px;">
+        <div class="input__label"><p>Telefone</p></div>
+        <div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div>
+        <p class="input__help">Máscara automática de telefone.</p>
+      </div>
+      <div class="input" data-ds="input" data-ds-mask="currency" style="width:280px;">
+        <div class="input__label"><p>Valor</p></div>
+        <div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div>
+        <p class="input__help">Máscara de moeda.</p>
+      </div>
+    </div>
+  </section>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-pencil" viewBox="0 0 24 24" fill="currentColor"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
@@ -130,5 +154,6 @@
       </div>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

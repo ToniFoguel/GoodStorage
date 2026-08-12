@@ -12,9 +12,25 @@
     .stage { max-width: 440px; }
     .slot-demo { border:1px dashed #000; min-height:106px; width:100%; box-sizing:border-box; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2 style="color:#111;">Modal</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — botão abre; ✕, backdrop ou Esc fecham</p>
+    
+    <button class="btn btn--primary" data-ds-open="live-modal">Abrir modal</button>
+    <div class="modal" id="live-modal" data-ds="modal">
+      <div class="modal__header"><h3 class="modal__title">Confirmar ação</h3><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+      <div class="modal__content"><p style="margin:0;font:400 16px/1.5 var(--font-family-title-text);color:var(--content-text);">Tem certeza que deseja continuar? Esta ação pode ser desfeita depois.</p></div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('live-modal'))">Cancelar</button>
+        <button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('live-modal'))">Confirmar</button>
+      </div>
+    </div>
+  </section>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
@@ -36,5 +52,6 @@
       </div>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Orçamentos — Listagem (layout base) · GoodStorage</title>
+
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/card/card.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/pagination/pagination.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="listagem-base.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM11.6113 4.22157L3.83316 11.9997L12.3184 20.485L20.0966 12.7069L19.036 5.28223L11.6113 4.22157ZM13.7327 10.5855C12.9516 9.80448 12.9516 8.53815 13.7327 7.7571C14.5137 6.97606 15.78 6.97606 16.5611 7.7571C17.3421 8.53815 17.3421 9.80448 16.5611 10.5855C15.78 11.3666 14.5137 11.3666 13.7327 10.5855Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ri-calendar" viewBox="0 0 24 24"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm3 7H4v9h16v-9zM7 5H4v3h16V5h-3v1h-2V5H9v1H7V5z"/></symbol>
+  <symbol id="ri-add" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ri-shield" viewBox="0 0 24 24"><path d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802c0-.469.326-.874.783-.976L12 1z"/></symbol>
+  <symbol id="ri-file-copy" viewBox="0 0 24 24"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V21C16.9998 21.5523 16.5473 22 15.9945 22H3.99855C3.44684 22 3 21.5541 3 21.0034L3.00253 7.00338C3.00259 6.44741 3.44939 6 4.00201 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z"/></symbol>
+  <symbol id="ri-refresh" viewBox="0 0 24 24"><path d="M5.46257 4.43262C7.21556 2.91302 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.087 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"/></symbol>
+
+  <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ico-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="ico-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-left-s" viewBox="0 0 24 24" fill="currentColor"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-arrow-left-double" viewBox="0 0 24 24" fill="currentColor"><path d="M4.828 12l4.95 4.95-1.414 1.414L2 12l6.364-6.364 1.414 1.414zm7.071 0l4.95 4.95-1.414 1.414L9.9 12l6.364-6.364 1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-right-double" viewBox="0 0 24 24" fill="currentColor"><path d="M19.172 12l-4.95-4.95 1.414-1.414L22 12l-6.364 6.364-1.414-1.414zm-7.071 0l-4.95-4.95 1.414-1.414L14.1 12l-6.364 6.364-1.414-1.414z"/></symbol>
+  <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+  <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+</svg>
+
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Comercial</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-price-tag-3"/></svg></span><span class="sidebar__item-label">Precificação</span></a>
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Orçamentos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Leads</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Catálogo</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">André Foguel</p><p class="sidebar__user-mail">Comercial · Alçada 15%</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item breadcrumb__item--current">Orçamentos</span>
+      </nav>
+      <span class="badge badge--perm"><span class="badge__dot"></span>Permissão para criar orçamentos</span>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Orçamentos</h1>
+          <p class="pagehead__sub text-paragraph-regular">Acompanhe todos os orçamentos criados, verifique o status de envio e reenvie quando necessário.</p>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--primary" href="../consulta-catalogo/consulta-base.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span>Iniciar orçamento</a>
+        </div>
+      </div>
+
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <!-- Toolbar -->
+          <div class="list-toolbar">
+            <div class="input list-toolbar__search" data-ds="input">
+              <div class="input__field"><input class="input__control" placeholder="Buscar por ID, nome ou e-mail do lead" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+            </div>
+            <div class="list-toolbar__range">
+              <span class="range-lbl">Envio</span>
+              <div class="input" data-ds="input"><div class="input__field"><input class="input__control" placeholder="dd/mm/aaaa" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div></div>
+              <span class="range-sep">até</span>
+              <div class="input" data-ds="input"><div class="input__field"><input class="input__control" placeholder="dd/mm/aaaa" /><span class="input__icon input__icon--sm"><svg><use href="#ri-calendar"/></svg></span></div></div>
+            </div>
+            <button class="btn btn--outline">Filtros<span class="btn__icon btn__icon--sm"><svg><use href="#ico-filter-3"/></svg></span><span class="badge badge--secondary-number">2</span></button>
+          </div>
+
+          <!-- Chips de filtros ativos -->
+          <div class="active-filters">
+            <span class="active-filters__lbl">Filtros:</span>
+            <span class="badge badge--tag">Status: Enviado<button class="badge__close" aria-label="Remover"><svg><use href="#ico-close"/></svg></button></span>
+            <span class="badge badge--tag">Unidade: Vila Leopoldina<button class="badge__close" aria-label="Remover"><svg><use href="#ico-close"/></svg></button></span>
+            <button class="btn btn--ghost">Limpar tudo</button>
+          </div>
+
+          <!-- Tabela -->
+          <div class="table list-table" data-ds="table">
+            <div class="table__header">
+              <button class="table__th"><span class="table__th-label">ID</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Lead</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">E-mail</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Tipo</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Unidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Data de envio</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+              <span class="table__th" aria-hidden="true"><span class="table__th-label">Ações</span></span>
+            </div>
+
+            <div class="table__row">
+              <div class="table__cell"><a class="cell-id text-label-regular" href="../perfil/perfil-base.html">ORC-2026-0148</a></div>
+              <div class="table__cell"><p class="table__cell-text">Marina Alves Comércio</p></div>
+              <div class="table__cell"><p class="table__cell-text cell-mail">marina@alvescom.com.br</p></div>
+              <div class="table__cell"><p class="table__cell-text">Selfstorage</p></div>
+              <div class="table__cell"><p class="table__cell-text">Vila Leopoldina</p></div>
+              <div class="table__cell"><p class="table__cell-text">03/08/2026 14:20</p></div>
+              <div class="table__cell"><span class="badge badge--success">Enviado</span></div>
+              <div class="table__cell"><div class="row-acts"><button class="btn btn--icon-border" aria-label="Copiar link"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span></button><button class="btn btn--outline">Reenviar<span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span></button></div></div>
+            </div>
+
+            <div class="table__row table__row--alt">
+              <div class="table__cell"><a class="cell-id text-label-regular" href="../perfil/perfil-base.html">ORC-2026-0147</a></div>
+              <div class="table__cell"><p class="table__cell-text">Logística Contorno Ltda</p></div>
+              <div class="table__cell"><p class="table__cell-text cell-mail">contato@contorno.log.br</p></div>
+              <div class="table__cell"><p class="table__cell-text">Galpão UI</p></div>
+              <div class="table__cell"><p class="table__cell-text">Guarulhos</p></div>
+              <div class="table__cell"><p class="table__cell-text">02/08/2026 17:05</p></div>
+              <div class="table__cell"><span class="badge badge--warning"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-shield"/></svg></span>Aguardando aprovação</span></div>
+              <div class="table__cell"><div class="row-acts"><button class="btn btn--icon-border" aria-label="Copiar link"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span></button><button class="btn btn--outline">Reenviar<span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span></button></div></div>
+            </div>
+
+            <div class="table__row">
+              <div class="table__cell"><a class="cell-id text-label-regular" href="../perfil/perfil-base.html">ORC-2026-0146</a></div>
+              <div class="table__cell"><p class="table__cell-text">Studio Prisma Arquitetura</p></div>
+              <div class="table__cell"><p class="table__cell-text cell-mail">financeiro@studioprisma.com</p></div>
+              <div class="table__cell"><p class="table__cell-text">Office UI</p></div>
+              <div class="table__cell"><p class="table__cell-text">Faria Lima</p></div>
+              <div class="table__cell"><p class="table__cell-text">01/08/2026 09:41</p></div>
+              <div class="table__cell"><span class="badge badge--yellow">Pendente</span></div>
+              <div class="table__cell"><div class="row-acts"><button class="btn btn--icon-border" aria-label="Copiar link"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span></button><button class="btn btn--outline">Reenviar<span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span></button></div></div>
+            </div>
+
+            <div class="table__row table__row--alt">
+              <div class="table__cell"><a class="cell-id text-label-regular" href="../perfil/perfil-base.html">ORC-2026-0145</a></div>
+              <div class="table__cell"><p class="table__cell-text">Comercial Dez Irmãos</p></div>
+              <div class="table__cell"><p class="table__cell-text cell-mail">compras@dezirmaos.com.br</p></div>
+              <div class="table__cell"><p class="table__cell-text">Flex</p></div>
+              <div class="table__cell"><p class="table__cell-text">Barra Funda</p></div>
+              <div class="table__cell"><p class="table__cell-text">31/07/2026 16:12</p></div>
+              <div class="table__cell"><span class="badge badge--destructive">Erro</span></div>
+              <div class="table__cell"><div class="row-acts"><button class="btn btn--icon-border" aria-label="Copiar link"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span></button><button class="btn btn--outline">Reenviar<span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span></button></div></div>
+            </div>
+
+            <div class="table__row">
+              <div class="table__cell"><a class="cell-id text-label-regular" href="../perfil/perfil-base.html">ORC-2026-0144</a></div>
+              <div class="table__cell"><p class="table__cell-text">Ateliê Norte</p></div>
+              <div class="table__cell"><p class="table__cell-text cell-mail">ana@atelienorte.com</p></div>
+              <div class="table__cell"><p class="table__cell-text">Selfstorage</p></div>
+              <div class="table__cell"><p class="table__cell-text">Tatuapé</p></div>
+              <div class="table__cell"><p class="table__cell-text">30/07/2026 11:58</p></div>
+              <div class="table__cell"><span class="badge badge--outline">Rascunho</span></div>
+              <div class="table__cell"><div class="row-acts"><button class="btn btn--icon-border" aria-label="Copiar link"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span></button><button class="btn btn--outline">Reenviar<span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span></button></div></div>
+            </div>
+          </div>
+
+          <!-- Rodapé: itens por página + paginação -->
+          <div class="list-foot">
+            <div class="page-size">
+              Exibir
+              <div class="select" data-ds="select">
+                <div class="select__field"><p class="select__value select__value--filled">20</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">20</p></div>
+                  <div class="select__item"><p class="select__item-text">50</p></div>
+                  <div class="select__item"><p class="select__item-text">100</p></div>
+                </div></div>
+              </div>
+              por página <span class="list-count">· 1–5 de 148 orçamentos</span>
+            </div>
+            <div class="pagination" data-ds="pagination" data-ds-total="148" data-ds-page-size="20" data-ds-page="1">
+              <div class="pagination__info"></div>
+              <div class="pagination__nav"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="brandfoot">
+        <img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+</body>
+</html>

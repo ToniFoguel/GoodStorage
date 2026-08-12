@@ -1,0 +1,22 @@
+/* ============================================================
+   Componente: Selfrow  ⚠️ node Figma a formalizar
+   Linha de navegação/auto-atendimento: ícone + título + descrição
+   + chevron. Usada no portal do locatário ("Meu Espaço").
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.selfrow {
+  box-sizing: border-box;
+  display: flex; align-items: center; gap: var(--md); width: 100%;
+  padding: var(--lg);
+  border: var(--thin) solid var(--border-default);
+  background: var(--background-bg-main);
+  text-decoration: none; cursor: pointer;
+  color: var(--content-text); font-family: var(--font-family-title-text);
+}
+.selfrow:hover { background: var(--background-bg-aux); }
+.selfrow > svg { width: var(--2xl); height: var(--2xl); flex: none; color: var(--border-icon); fill: currentColor; }
+.selfrow > div { flex: 1 0 0; min-width: 0; }
+.selfrow__t { margin: 0; font-weight: var(--font-weight-bold); color: var(--content-title); }
+.selfrow__d { margin: var(--gap-1) 0 0; font-size: var(--font-size-label); line-height: var(--line-hight-label); color: var(--content-text); }
+.selfrow .chev { margin-left: auto; flex: none; color: var(--content-disable); }
+.selfrow .chev svg { display: block; width: var(--xl); height: var(--xl); fill: currentColor; }

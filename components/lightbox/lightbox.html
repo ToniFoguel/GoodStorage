@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightbox — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="lightbox.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>body{font-family:var(--font-family-title-text);padding:40px;background:#fff}</style>
+</head>
+<body>
+  <h2>Lightbox</h2>
+  <p style="color:#666;font-size:13px;max-width:520px">Overlay full-screen p/ ampliar imagem. Abre por <code>data-ds-lightbox="&lt;id&gt;"</code> (com <code>data-ds-caption</code> opcional); fecha no ✕, backdrop ou Esc. Sem imagem, mostra placeholder.</p>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+    <symbol id="ico-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  </svg>
+
+  <button class="btn btn--primary" data-ds-lightbox="lb-demo" data-ds-caption="Box 10 m² · Fachada da unidade">Ampliar imagem</button>
+
+  <!-- Lightbox (fica escondido até abrir) -->
+  <div class="lightbox" id="lb-demo" data-ds="lightbox">
+    <button class="lightbox__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button>
+    <div class="lightbox__stage">
+      <figure class="lightbox__figure">
+        <div class="lightbox__ph"><svg><use href="#ico-image"/></svg></div>
+        <figcaption class="lightbox__caption">Legenda da imagem</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script src="../../ds/ds.js" defer></script>
+</body>
+</html>

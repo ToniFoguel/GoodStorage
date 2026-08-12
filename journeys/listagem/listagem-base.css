@@ -1,0 +1,58 @@
+/* ============================================================
+   Journey (layout base): Listagem de orçamentos
+   Revisão do mockup: consulta-catalogo-orcamento_10-A_4
+   Só componentes do DS + tokens. Classes = LAYOUT de composição.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* --- Shell ----------------------------------------------------- */
+.app { display: flex; min-height: 100vh; background: var(--background-bg-main); }
+.sidebar { height: auto; align-self: stretch; flex-shrink: 0; }
+.main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
+.app svg { fill: currentColor; }
+.section > .card__slot { flex: 0 0 auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); padding: var(--lg) var(--3xl) 0; }
+.content { padding: var(--lg) var(--3xl) var(--xl); width: 100%; min-width: 0; }
+
+.pagehead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--lg); margin: var(--md) 0 var(--xl); }
+.pagehead__text { flex: 1 1 340px; min-width: 0; }
+.pagehead__title { margin: 0; color: var(--content-title); }
+.pagehead__sub { margin: var(--sm) 0 0; max-width: 78ch; color: var(--content-text); }
+.pagehead__actions { display: flex; align-items: center; gap: var(--md); flex-shrink: 0; }
+
+.section { margin-bottom: var(--xl); }
+
+/* --- Toolbar: busca + intervalo de datas + filtros ------------- */
+.list-toolbar { display: flex; align-items: flex-end; flex-wrap: wrap; gap: var(--md); margin-bottom: var(--lg); }
+.list-toolbar__search { flex: 1 1 280px; min-width: 220px; }
+.list-toolbar__range { display: flex; align-items: center; gap: var(--sm); }
+.list-toolbar__range .input { width: 150px; }
+.range-lbl { font-size: var(--font-size-label); color: var(--content-text); margin-right: var(--sm); }
+.range-sep { font-size: var(--font-size-label); color: var(--content-disable); }
+
+/* --- Chips de filtros ativos (Badge --tag) --------------------- */
+.active-filters { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sm); margin-bottom: var(--lg); }
+.active-filters__lbl { font-size: var(--font-size-label); color: var(--content-disable); }
+
+/* --- Tabela de listagem (Table do DS, colunas fluidas) --------- */
+.list-table .table__th, .list-table .table__cell { align-items: center; }
+.list-table .table__th:nth-child(1), .list-table .table__cell:nth-child(1) { flex: 0 0 116px; width: 116px; }
+.list-table .table__th:nth-child(4), .list-table .table__cell:nth-child(4) { flex: 0 0 120px; width: 120px; }
+.list-table .table__th:nth-child(6), .list-table .table__cell:nth-child(6) { flex: 0 0 150px; width: 150px; }
+.list-table .table__th:nth-child(7), .list-table .table__cell:nth-child(7) { flex: 0 0 170px; width: 170px; }
+.list-table .table__th:last-child, .list-table .table__cell:last-child { flex: 0 0 176px; width: 176px; justify-content: flex-end; }
+.cell-id { color: var(--content-primary); }
+.cell-mail { color: var(--content-text); }
+.row-acts { display: flex; align-items: center; gap: var(--sm); }
+
+/* --- Rodapé da lista: itens por página + paginação ------------- */
+.list-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); margin-top: var(--lg); flex-wrap: wrap; }
+.page-size { display: flex; align-items: center; gap: var(--sm); font-size: var(--font-size-label); color: var(--content-text); }
+.page-size .select { width: 92px; }
+.list-count { color: var(--content-disable); }
+
+/* --- Rodapé de marca ------------------------------------------- */
+.brandfoot { display: flex; align-items: center; gap: var(--md); padding: var(--xl) 0 var(--md); }
+.brandfoot img { height: var(--2xl); width: auto; }
+.brandfoot small { color: var(--content-disable); }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perfil do orçamento (layout base) · GoodStorage</title>
+
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/card/card.css" />
+<link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
+<link rel="stylesheet" href="../../components/product-card/product-card.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="perfil-base.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM11.6113 4.22157L3.83316 11.9997L12.3184 20.485L20.0966 12.7069L19.036 5.28223L11.6113 4.22157ZM13.7327 10.5855C12.9516 9.80448 12.9516 8.53815 13.7327 7.7571C14.5137 6.97606 15.78 6.97606 16.5611 7.7571C17.3421 8.53815 17.3421 9.80448 16.5611 10.5855C15.78 11.3666 14.5137 11.3666 13.7327 10.5855Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-back" viewBox="0 0 24 24"><path d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"/></symbol>
+  <symbol id="ri-file-copy" viewBox="0 0 24 24"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V21C16.9998 21.5523 16.5473 22 15.9945 22H3.99855C3.44684 22 3 21.5541 3 21.0034L3.00253 7.00338C3.00259 6.44741 3.44939 6 4.00201 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z"/></symbol>
+  <symbol id="ri-refresh" viewBox="0 0 24 24"><path d="M5.46257 4.43262C7.21556 2.91302 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.087 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"/></symbol>
+  <symbol id="ri-shield" viewBox="0 0 24 24"><path d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802c0-.469.326-.874.783-.976L12 1z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ico-close-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"/></symbol>
+  <symbol id="ico-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</svg>
+
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Comercial</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-price-tag-3"/></svg></span><span class="sidebar__item-label">Precificação</span></a>
+          <a class="sidebar__item sidebar__item--active"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Orçamentos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Leads</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Catálogo</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">AF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">André Foguel</p><p class="sidebar__user-mail">Comercial · Alçada 15%</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Orçamentos</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">ORC-2026-0147</span>
+      </nav>
+      <span class="badge badge--perm"><span class="badge__dot"></span>Permissão para criar orçamentos</span>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">ORC-2026-0147 · Logística Contorno Ltda</h1>
+          <p class="pagehead__sub text-paragraph-regular">Visualização somente leitura · 3 itens</p>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--outline" href="../listagem/listagem-base.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-back"/></svg></span>Voltar</a>
+          <button class="btn btn--secondary"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-file-copy"/></svg></span>Copiar link</button>
+          <button class="btn btn--primary"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-refresh"/></svg></span>Reenviar orçamento</button>
+        </div>
+      </div>
+
+      <div class="banner banner--warning stack-banner" role="status">
+        <span class="banner__icon"><svg><use href="#ri-shield"/></svg></span>
+        <div class="banner__content"><p class="banner__text"><b>Aguardando aprovação · 1 item retido de 3.</b> O desconto acima da alçada em PRD-10312 retém o item; os demais seguem para envio normalmente.</p></div>
+      </div>
+
+      <!-- SEÇÃO 1 · DADOS -->
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title text-paragraph-bold">Dados do orçamento</h2></div></div>
+          <div class="sum-grid">
+            <div class="sum-cell"><span class="sum-cell__lbl">Lead vinculado</span><span class="sum-cell__val"><span class="avatar avatar--text"><p class="avatar__label text-label-regular">LC</p></span>Logística Contorno Ltda</span><span class="sum-cell__sub">LD-9017 · contato@contorno.log.br</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Status</span><span class="sum-cell__val"><span class="badge badge--warning"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-shield"/></svg></span>Aguardando aprovação</span></span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Data de move in</span><span class="sum-cell__val">28/08/2026</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Prazo de validade</span><span class="sum-cell__val">05/08/2026</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Emissão / envio</span><span class="sum-cell__val">02/08/2026 17:05</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Vendedor</span><span class="sum-cell__val">André Foguel</span><span class="sum-cell__sub">Comercial · Alçada 15%</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Telefone</span><span class="sum-cell__val">(11) 3555-2210</span></div>
+            <div class="sum-cell"><span class="sum-cell__lbl">Produtos</span><span class="sum-cell__val">3</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 · PRODUTOS E CONDIÇÕES (somente leitura) -->
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <div class="section__head">
+            <div class="section__headleft"><span class="section__num">2</span><h2 class="section__title text-paragraph-bold">Produtos e condições</h2></div>
+            <span class="badge badge--outline selpill"><b>3</b>&nbsp;itens</span>
+          </div>
+
+          <div class="prodcards">
+            <div class="product-card">
+              <div class="product-card__head"><span class="product-card__id">PRD-10245</span></div>
+              <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Guarulhos</span><span class="product-card__sub">Rod. Presidente Dutra, km 225 · Guarulhos/SP</span></div>
+              <div class="product-card__section"><span class="product-card__label">Produto (PRD-10245)</span><span class="product-card__name product-card__name--sm">Galpão 90 m² · doca</span><span class="product-card__sub">90 m² · pé-direito 7 m</span></div>
+              <div class="product-card__section">
+                <span class="product-card__label">Valor</span>
+                <div class="product-card__prices">
+                  <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 6.300,00</span></div>
+                  <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 6.300,00</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div class="product-card__head"><span class="product-card__id">PRD-10402</span></div>
+              <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Guarulhos</span><span class="product-card__sub">Rod. Presidente Dutra, km 225 · Guarulhos/SP</span></div>
+              <div class="product-card__section"><span class="product-card__label">Produto (PRD-10402)</span><span class="product-card__name product-card__name--sm">Galpão 150 m² · doca dupla</span><span class="product-card__sub">150 m² · pé-direito 8 m</span></div>
+              <div class="product-card__section">
+                <span class="product-card__label">Valor</span>
+                <div class="product-card__prices">
+                  <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 11.250,00</span></div>
+                  <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 10.687,00</span></div>
+                </div>
+              </div>
+              <div class="collapsible" data-ds="collapsible">
+                <button class="collapsible__header" type="button" aria-expanded="false">
+                  <h3 class="collapsible__title">Condições comerciais</h3>
+                  <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+                  <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+                </button>
+                <div class="collapsible__content"><div class="collapsible__slot"><span class="product-card__sub">Carência 30 dias · reajuste IGP-M · multa 3 aluguéis.</span></div></div>
+              </div>
+            </div>
+
+            <div class="product-card product-card--over">
+              <div class="product-card__head">
+                <span class="product-card__id">PRD-10312</span>
+                <span class="badge badge--warning"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-shield"/></svg></span>Retido</span>
+              </div>
+              <div class="product-card__section"><span class="product-card__label">Unidade</span><span class="product-card__name">Guarulhos</span><span class="product-card__sub">Rod. Presidente Dutra, km 225 · Guarulhos/SP</span></div>
+              <div class="product-card__section"><span class="product-card__label">Produto (PRD-10312)</span><span class="product-card__name product-card__name--sm">Galpão 220 m² · mezanino</span><span class="product-card__sub">220 m² · mezanino 60 m²</span></div>
+              <div class="product-card__section">
+                <span class="product-card__label">Valor</span>
+                <div class="product-card__prices">
+                  <div class="product-card__price"><span class="product-card__price-k">Base</span><span class="product-card__price-v">R$ 16.500,00</span></div>
+                  <div class="product-card__price"><span class="product-card__price-k">Final (1º mês)</span><span class="product-card__price-v product-card__price-v--final">R$ 12.375,00</span></div>
+                </div>
+              </div>
+              <div class="product-card__approval">
+                <span class="product-card__approval-label"><svg><use href="#ri-shield"/></svg>Aprovação · acima da alçada</span>
+                <p class="product-card__approval-text">Desconto acumulado de <b>25%</b> acima da alçada deste produto (<b>15%</b>). Justificativa: contrato anual com carência estendida.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="totals">
+            <div class="tot-row"><span class="tot-row__k">Total base</span><span class="tot-row__v">R$ 34.050,00</span></div>
+            <div class="tot-row"><span class="tot-row__k">Descontos aplicados</span><span class="tot-row__v">− R$ 4.688,00</span></div>
+            <div class="tot-row tot-row--grand"><span class="tot-row__k">Mensalidade negociada <span class="sum-cell__sub">(sem campanhas)</span></span><span class="tot-row__v">R$ 29.362,00</span></div>
+            <div class="tot-months-head">Total por mês · com campanhas aplicadas</div>
+            <div class="tot-months">
+              <div class="tot-month"><span class="tot-month__lbl">Mês 1</span><span class="tot-month__val">R$ 29.362,00</span></div>
+              <div class="tot-month"><span class="tot-month__lbl">Mês 2</span><span class="tot-month__val">R$ 29.362,00</span></div>
+              <div class="tot-month"><span class="tot-month__lbl">Mês 3</span><span class="tot-month__val">R$ 31.050,00</span></div>
+              <div class="tot-month"><span class="tot-month__lbl">Mês 4</span><span class="tot-month__val">R$ 34.050,00</span></div>
+              <div class="tot-month"><span class="tot-month__lbl">Mês 5</span><span class="tot-month__val">R$ 34.050,00</span></div>
+              <div class="tot-month"><span class="tot-month__lbl">Mês 6</span><span class="tot-month__val">R$ 34.050,00</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 · HISTÓRICO DE ENVIOS -->
+      <section class="card card--desktop section">
+        <div class="card__slot">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">3</span><h2 class="section__title text-paragraph-bold">Histórico de envios</h2></div></div>
+          <div class="hist">
+            <div class="hist-item">
+              <div class="hist-ico hist-ico--fail"><svg><use href="#ico-close-circle"/></svg></div>
+              <div class="hist-body">
+                <div class="hist-top"><b>Falha no envio</b><span class="hist-when">02/08/2026 17:05</span></div>
+                <div class="hist-meta">Por André Foguel</div>
+                <div class="hist-motivo">Motivo: e-mail do lead retornou (caixa cheia).</div>
+              </div>
+            </div>
+            <div class="hist-item">
+              <div class="hist-ico hist-ico--ok"><svg><use href="#ico-check"/></svg></div>
+              <div class="hist-body">
+                <div class="hist-top"><b>Envio realizado</b><span class="hist-when">01/08/2026 10:12</span></div>
+                <div class="hist-meta">Por André Foguel</div>
+              </div>
+            </div>
+            <div class="hist-item">
+              <div class="hist-ico"><svg><use href="#ico-clock"/></svg></div>
+              <div class="hist-body">
+                <div class="hist-top"><b>Rascunho salvo</b><span class="hist-when">31/07/2026 18:40</span></div>
+                <div class="hist-meta">Por André Foguel</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="brandfoot">
+        <img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+</body>
+</html>

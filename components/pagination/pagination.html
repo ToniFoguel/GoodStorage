@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagination — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="pagination.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .wrap { max-width: 720px; }
+    small { font-size:11px; color:#999; display:block; margin: 24px 0 4px; }
+    #out { font-size:13px; color:#666; margin-top:16px; }
+  </style>
+</head>
+<body>
+  <h2>Pagination <span style="font-weight:400;color:#999;font-size:14px">(Figma: TableFooter)</span></h2>
+  <p style="color:#666;font-size:13px;max-width:520px">
+    Rodapé de tabela: seletor de itens por página + navegação. O runtime monta
+    <code>.pagination__info</code> e <code>.pagination__nav</code> a partir dos
+    atributos <code>data-ds-total</code>, <code>data-ds-page-size</code> e
+    <code>data-ds-page</code>, e dispara <code>ds:page</code> / <code>ds:pagesize</code>.
+  </p>
+
+  <!-- Sprite de ícones usado pelo runtime da paginação -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+    <symbol id="ico-arrow-left-double" viewBox="0 0 24 24" fill="currentColor"><path d="M4.828 12l4.95 4.95-1.414 1.414L2 12l6.364-6.364 1.414 1.414zm7.071 0l4.95 4.95-1.414 1.414L9.9 12l6.364-6.364 1.414 1.414z"/></symbol>
+    <symbol id="ico-arrow-left-s" viewBox="0 0 24 24" fill="currentColor"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></symbol>
+    <symbol id="ico-arrow-right-s" viewBox="0 0 24 24" fill="currentColor"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+    <symbol id="ico-arrow-right-double" viewBox="0 0 24 24" fill="currentColor"><path d="M19.172 12l-4.95-4.95 1.414-1.414L22 12l-6.364 6.364-1.414-1.414zm-7.071 0l-4.95-4.95 1.414-1.414L14.1 12l-6.364 6.364-1.414-1.414z"/></symbol>
+    <symbol id="ico-ellipsis" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></symbol>
+  </svg>
+
+  <div class="wrap">
+    <small>700 itens, 20 por página</small>
+    <div class="pagination" data-ds="pagination" data-ds-total="700" data-ds-page-size="20" data-ds-page="1">
+      <div class="pagination__info"></div>
+      <div class="pagination__nav"></div>
+    </div>
+
+    <small>48 itens, 10 por página, começando na página 3</small>
+    <div class="pagination" data-ds="pagination" data-ds-total="48" data-ds-page-size="10" data-ds-page="3">
+      <div class="pagination__info"></div>
+      <div class="pagination__nav"></div>
+    </div>
+
+    <p id="out">Evento: —</p>
+  </div>
+
+  <script src="../../ds/ds.js" defer></script>
+  <script>
+    document.addEventListener('ds:page', function (e) {
+      document.getElementById('out').textContent = 'Página ' + e.detail.page + ' (' + e.detail.size + '/pág)';
+    });
+    document.addEventListener('ds:pagesize', function (e) {
+      document.getElementById('out').textContent = 'Itens por página: ' + e.detail.size;
+    });
+  </script>
+</body>
+</html>

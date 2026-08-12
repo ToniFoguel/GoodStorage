@@ -1,0 +1,104 @@
+/* ============================================================
+   Componente: Product-card (item de orçamento)  ⚠️ node Figma a formalizar
+   "A gente só usa a estrutura de card; o conteúdo dentro é variável."
+   Mesma base visual do Card (bg-main + borda thin + overflow),
+   com partes fixas para o item do resumo do orçamento.
+   Composição: usa Badge (flag), Collapsible (condições) e pode
+   abrir o Lightbox (imagem). Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.product-card {
+  box-sizing: border-box;
+  display: flex; flex-direction: column; align-items: stretch;
+  gap: var(--lg); width: 100%; min-width: 0;
+  padding: var(--xl);
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  overflow: hidden;
+}
+/* item acima da alçada (vai para aprovação) — realce de borda */
+.product-card--over { border-color: var(--border-warnigh); }
+
+/* Cabeçalho: ID + flag de status */
+.product-card__head { display: flex; align-items: center; justify-content: space-between; gap: var(--md); }
+.product-card__id {
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-label); line-height: var(--line-hight-label);
+  color: var(--content-disable);
+}
+
+/* Seção rótulo/nome/sub (Unidade, Produto, Valor…) */
+.product-card__section { display: flex; flex-direction: column; gap: var(--gap-1); min-width: 0; }
+.product-card__label {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label); line-height: var(--line-hight-label);
+  text-transform: uppercase; letter-spacing: .04em;
+  color: var(--content-disable);
+}
+.product-card__name {
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph); line-height: var(--line-hight-paragraph);
+  color: var(--content-title);
+}
+.product-card__name--sm { font-size: var(--font-size-label); line-height: var(--line-hight-label); }
+.product-card__sub {
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-label); line-height: var(--line-hight-label);
+  color: var(--content-text);
+}
+
+/* Blocos de preço (base · m² · final) */
+.product-card__prices { display: flex; gap: var(--md); flex-wrap: wrap; }
+.product-card__price { flex: 1 1 0; min-width: 0; border: var(--thin) solid var(--border-default); padding: var(--md) var(--lg); }
+.product-card__price-k {
+  display: block; font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold); font-size: var(--font-size-label);
+  text-transform: uppercase; letter-spacing: .04em; color: var(--content-disable);
+}
+.product-card__price-v {
+  display: block; margin-top: var(--gap-1);
+  font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph); color: var(--content-title);
+}
+.product-card__price-v--final { color: var(--content-primary); }
+
+/* Imagem do produto (opcional — abre o Lightbox) */
+.product-card__img { position: relative; width: 100%; aspect-ratio: 1 / 1; border: var(--thin) solid var(--border-default); overflow: hidden; }
+.product-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+.product-card__imgadd {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sm);
+  width: 100%; min-height: 112px; padding: 0 var(--lg);
+  border: var(--stroke-2) dashed var(--border-disable);
+  background: var(--background-bg-aux); cursor: pointer;
+  color: var(--content-disable); text-align: center;
+  font-family: var(--font-family-title-text); font-size: var(--font-size-label);
+}
+.product-card__imgadd svg { width: var(--2xl); height: var(--2xl); display: block; fill: none; }
+
+/* CTA tracejada (ex.: "Adicionar condições comerciais") */
+.product-card__cta {
+  display: flex; align-items: center; gap: var(--md); width: 100%;
+  padding: var(--lg); text-align: left; cursor: pointer;
+  border: var(--stroke-2) dashed var(--border-disable);
+  background: var(--background-bg-aux);
+  font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label); color: var(--content-text);
+}
+.product-card__cta svg { width: var(--xl); height: var(--xl); flex: none; }
+.product-card__cta span { flex: 1; }
+
+/* Bloco de aprovação (acima da alçada) */
+.product-card__approval {
+  display: flex; flex-direction: column; gap: var(--sm);
+  padding: var(--lg);
+  border: var(--thin) solid var(--border-warnigh);
+  background: var(--background-warning);
+}
+.product-card__approval-label {
+  display: flex; align-items: center; gap: var(--sm);
+  font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label); color: var(--content-label-warning);
+}
+.product-card__approval-label svg { width: var(--xl); height: var(--xl); flex: none; }
+.product-card__approval-text { font-family: var(--font-family-title-text); font-size: var(--font-size-label); line-height: var(--line-hight-label); color: var(--content-text); }

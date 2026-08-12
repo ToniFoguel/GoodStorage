@@ -1,0 +1,169 @@
+/* ============================================================
+   Journey (layout base): Consulta de catálogo — Orçamento
+   Revisão do mockup: consulta-catalogo-orcamento_10-A_4
+   ------------------------------------------------------------
+   Esqueleto montado SÓ com componentes do DS + tokens.
+   As classes abaixo são apenas LAYOUT de composição
+   (grid/flex/espaço/larguras de coluna), no padrão de consulta.css.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* --- Shell (sidebar + main) ------------------------------------ */
+.app { display: flex; min-height: 100vh; background: var(--background-bg-main); }
+.sidebar { height: auto; align-self: stretch; flex-shrink: 0; }
+.main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
+.app svg { fill: currentColor; }
+
+/* o slot do card do DS é flex:1 0 0 (pensado p/ slot flexível);
+   nas seções ele deve dimensionar pelo conteúdo, senão o corpo colapsa */
+.section > .card__slot { flex: 0 0 auto; }
+
+/* --- Topbar: breadcrumb + pílula de permissão ------------------ */
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); padding: var(--lg) var(--3xl) 0; }
+
+/* --- Conteúdo -------------------------------------------------- */
+.content { padding: var(--lg) var(--3xl) var(--xl); width: 100%; min-width: 0; }
+
+/* --- Cabeçalho de página --------------------------------------- */
+.pagehead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--lg); margin: var(--md) 0 var(--xl); }
+.pagehead__text { flex: 1 1 340px; min-width: 0; }
+.pagehead__title { margin: 0; color: var(--content-title); }
+.pagehead__sub { margin: var(--sm) 0 0; max-width: 72ch; color: var(--content-text); }
+.pagehead__actions { display: flex; align-items: center; gap: var(--md); flex-shrink: 0; }
+
+/* --- Banners --------------------------------------------------- */
+.stack-banner { margin-bottom: var(--xl); }
+
+/* --- Seção = card do DS + cabeçalho de etapa (StepSection) ------ */
+.section { margin-bottom: var(--xl); }
+.section__head { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding-bottom: var(--lg); margin-bottom: var(--lg); border-bottom: var(--thin) solid var(--border-default); }
+.section__headleft { display: flex; align-items: center; gap: var(--md); }
+.section__num { width: var(--2xl); height: var(--2xl); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--background-bg-alt); color: var(--content-title-inverse); font-family: var(--font-family-title-text); font-size: var(--font-size-label); font-weight: var(--font-weight-bold); }
+.section__title { margin: 0; color: var(--content-title); }
+.selpill b { color: var(--content-primary); }
+
+/* --- Etapa 1: grid de campos ----------------------------------- */
+.fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--xl); align-items: start; }
+
+/* --- Etapa 2: barra de busca/filtros --------------------------- */
+.searchbar { display: flex; align-items: flex-end; flex-wrap: wrap; gap: var(--md); margin-bottom: var(--lg); }
+.searchbar__search { flex: 1 1 260px; min-width: 220px; }
+.searchbar__f { flex: 0 1 190px; min-width: 150px; }
+.searchbar__m { flex: 0 0 auto; width: 112px; }
+.searchbar__clear { flex-shrink: 0; }
+
+/* ============================================================
+   Tabela de catálogo — usa a variante .table--pinned do DS.
+   Coluna de checkbox e Produto ficam FIXAS à esquerda; o resto
+   rola horizontalmente. Larguras/offsets são específicos da tela.
+   ============================================================ */
+.catalog-table { max-width: 100%; }
+.catalog-table .table__th, .catalog-table .table__cell { flex: 0 0 auto; align-items: center; }
+
+/* larguras por coluna (na ordem do cabeçalho) */
+.catalog-table .table__th:nth-child(1),  .catalog-table .table__cell:nth-child(1)  { width: 44px; justify-content: center; }
+.catalog-table .table__th:nth-child(2),  .catalog-table .table__cell:nth-child(2)  { width: 208px; }
+.catalog-table .table__th:nth-child(3),  .catalog-table .table__cell:nth-child(3)  { width: 180px; }
+.catalog-table .table__th:nth-child(4),  .catalog-table .table__cell:nth-child(4)  { width: 130px; }
+.catalog-table .table__th:nth-child(5),  .catalog-table .table__cell:nth-child(5)  { width: 120px; }
+.catalog-table .table__th:nth-child(6),  .catalog-table .table__cell:nth-child(6)  { width: 216px; }
+.catalog-table .table__th:nth-child(7),  .catalog-table .table__cell:nth-child(7)  { width: 172px; }
+.catalog-table .table__th:nth-child(8),  .catalog-table .table__cell:nth-child(8)  { width: 172px; }
+.catalog-table .table__th:nth-child(9),  .catalog-table .table__cell:nth-child(9)  { width: 152px; }
+
+/* offsets das colunas fixas: chk em 0, Produto logo após os 44px do chk */
+.catalog-table .table__th--pin-start:nth-child(1), .catalog-table .table__cell--pin-start:nth-child(1) { left: 0; box-shadow: none; }
+.catalog-table .table__th--pin-start:nth-child(2), .catalog-table .table__cell--pin-start:nth-child(2) { left: 44px; }
+
+/* colunas numéricas alinhadas à direita */
+.catalog-table .table__th--num, .catalog-table .table__cell--num { justify-content: flex-end; }
+.catalog-table .table__cell--num .table__cell-text { text-align: right; }
+
+/* célula de produto: texto (id + descrição) + botão de info */
+.prod { display: flex; align-items: center; justify-content: space-between; gap: var(--md); width: 100%; min-width: 0; }
+.prod__txt { display: flex; flex-direction: column; gap: var(--gap-1); min-width: 0; }
+.prod__id { color: var(--content-primary); }
+.prod__desc { color: var(--content-title); }
+
+/* valor "vazio" tokenizado */
+.is-empty { color: var(--content-disable); }
+
+.section__pager { margin-top: var(--lg); }
+
+/* ============================================================
+   Modal de detalhe do produto (composição: modal + data-item + galeria)
+   ============================================================ */
+.detail-modal .modal__content { flex-direction: column; align-items: stretch; gap: var(--lg); max-height: 72vh; overflow: auto; }
+.detail-dl { display: grid; gap: 0; margin: 0; }
+.detail-dl .data-item { display: grid; grid-template-columns: 150px 1fr; gap: var(--lg); padding: var(--md) 0; border-bottom: var(--thin) solid var(--border-default); }
+.detail-dl .data-item__label { margin: 0; }
+.detail-dl .data-item__value { margin: 0; }
+
+.detail-imgs-h { display: flex; align-items: baseline; gap: var(--md); margin: var(--md) 0 var(--sm); color: var(--content-title); font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: .04em; }
+.detail-imgs-h span { text-transform: none; letter-spacing: 0; font-weight: var(--font-weight-regular); color: var(--content-disable); }
+
+.gallery { display: flex; flex-direction: column; gap: var(--sm); }
+.gfile { display: flex; align-items: center; gap: var(--md); width: 100%; text-align: left; padding: var(--md) var(--lg); border: var(--thin) solid var(--border-default); background: var(--background-bg-main); cursor: pointer; font-family: var(--font-family-title-text); }
+.gfile:hover { border-color: var(--border-icon); }
+.gfile__ic { width: var(--2xl); height: var(--2xl); flex: none; color: var(--content-disable); }
+.gfile__ic svg { width: 100%; height: 100%; display: block; fill: none; }
+.gfile__info { display: flex; flex-direction: column; gap: var(--gap-1); min-width: 0; flex: 1 0 0; }
+.gfile__name { font-size: var(--font-size-paragraph); color: var(--content-title); }
+.gfile__meta { font-size: var(--font-size-label); color: var(--content-disable); }
+.gfile__open { display: inline-flex; align-items: center; gap: var(--sm); flex: none; font-size: var(--font-size-label); color: var(--content-primary); }
+.gfile__open svg { width: var(--xl); height: var(--xl); }
+
+/* --- Célula Desconto/aumento: tags + editar + flag ------------- */
+.adj-cell { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sm); }
+.adj-tags { display: flex; flex-wrap: wrap; gap: var(--sm); }
+.approve-flag { display: inline-flex; align-items: center; gap: var(--sm); font-size: var(--font-size-label); color: var(--content-label-warning); }
+.approve-flag svg { width: var(--xl); height: var(--xl); }
+
+/* ============================================================
+   Modal Desconto / aumento (composição: modal + banner + input)
+   ============================================================ */
+.adjust-modal .modal__content { flex-direction: column; align-items: stretch; gap: var(--md); max-height: 72vh; overflow: auto; }
+.adjust-modal .modal__content > * { flex-shrink: 0; }
+.adj-prod { margin: 0; font-weight: var(--font-weight-bold); color: var(--content-title); }
+.adj-line { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding: var(--sm) 0; }
+.adj-line b { color: var(--content-title); }
+.adj-line--total { border-top: var(--thin) solid var(--border-default); padding-top: var(--lg); }
+.adj-line--total b { color: var(--content-primary); }
+.adj-sec { margin: var(--sm) 0 0; font-weight: var(--font-weight-bold); color: var(--content-title); }
+
+/* barra de alçada (capacidade / aplicado / disponível) */
+.alc-bar { display: flex; flex-direction: column; gap: var(--sm); padding: var(--lg); border: var(--thin) solid var(--border-default); background: var(--background-bg-aux); }
+.alc-row { display: flex; align-items: center; justify-content: space-between; gap: var(--md); font-size: var(--font-size-label); color: var(--content-text); }
+.alc-row__v { font-weight: var(--font-weight-bold); color: var(--content-title); }
+.alc-row__v--avail { color: var(--background-secondary); }
+.alc-track { height: 8px; background: var(--background-neutral); overflow: hidden; }
+.alc-fill { height: 100%; width: 0; background: var(--background-primary); }
+
+/* faixa de desconto */
+.desc-tier { border: var(--thin) solid var(--border-default); padding: var(--lg); display: flex; flex-direction: column; gap: var(--md); }
+.desc-tier__head { display: flex; align-items: center; justify-content: space-between; }
+.desc-tier__n { font-size: var(--font-size-label); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: .04em; color: var(--content-disable); }
+.desc-tier__rm { border: 0; background: none; cursor: pointer; color: var(--content-disable); line-height: 1; }
+.desc-tier__rm svg { width: var(--xl); height: var(--xl); display: block; }
+.desc-tier__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--lg); align-items: start; }
+.desc-tier__lbl { display: block; margin-bottom: var(--sm); font-size: var(--font-size-label); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: .04em; color: var(--content-disable); }
+.desc-tier__months { color: var(--content-primary); text-transform: none; letter-spacing: 0; }
+.desc-tier__value { display: flex; gap: var(--sm); }
+.desc-tier__value .input { flex: 1 1 0; min-width: 0; }
+.desc-tier__unit { flex: 0 0 84px; }
+.desc-tier__vig { display: flex; align-items: center; gap: var(--sm); }
+.desc-tier__vig .input { flex: 1 1 0; min-width: 0; }
+.desc-tier__vig-sep { flex: none; font-size: var(--font-size-label); color: var(--content-text); }
+.desc-tier__hint { margin: var(--sm) 0 0; font-size: var(--font-size-label); color: var(--content-disable); }
+
+/* botão tracejado "Adicionar desconto" */
+.adj-add { display: flex; align-items: center; justify-content: center; gap: var(--sm); width: 100%; padding: var(--lg); border: var(--stroke-2) dashed var(--border-disable); background: var(--background-bg-aux); cursor: pointer; font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); color: var(--content-text); }
+.adj-add svg { width: var(--xl); height: var(--xl); }
+
+.adj-hint { margin: 0; font-size: var(--font-size-label); color: var(--content-disable); }
+
+/* --- Rodapé de marca ------------------------------------------- */
+.brandfoot { display: flex; align-items: center; gap: var(--md); padding: var(--xl) 0 var(--md); }
+.brandfoot img { height: var(--2xl); width: auto; }
+.brandfoot small { color: var(--content-disable); }

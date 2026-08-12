@@ -15,9 +15,34 @@
     .wrap { max-width: 900px; border:1px solid #f2f2f2; padding:16px; margin-bottom:48px; }
     h3.section { font: 400 12px var(--font-family-title-text); color:#999; margin:0 0 8px; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Table</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — clique nos cabeçalhos p/ ordenar (asc/desc); kebab abre menu; paginação navega</p>
+    
+    <div style="max-width:760px;">
+      <div class="table" data-ds="table">
+        <div class="table__header">
+          <button class="table__th"><span class="table__th-label">Empresa</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Cidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Plano</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <span class="table__th table__th--action" aria-hidden="true"></span>
+        </div>
+        <div class="table__row"><div class="table__cell"><p class="table__cell-text">Umbrella</p></div><div class="table__cell"><p class="table__cell-text">Belo Horizonte</p></div><div class="table__cell"><p class="table__cell-text">Enterprise</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+        <div class="table__row table__row--alt"><div class="table__cell"><p class="table__cell-text">Acme Ltda</p></div><div class="table__cell"><p class="table__cell-text">São Paulo</p></div><div class="table__cell"><p class="table__cell-text">Premium</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+        <div class="table__row"><div class="table__cell"><p class="table__cell-text">Globex</p></div><div class="table__cell"><p class="table__cell-text">Rio de Janeiro</p></div><div class="table__cell"><p class="table__cell-text">Básico</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+        <div class="table__row table__row--alt"><div class="table__cell"><p class="table__cell-text">Initech</p></div><div class="table__cell"><p class="table__cell-text">Curitiba</p></div><div class="table__cell"><p class="table__cell-text">Premium</p></div><div class="table__cell table__cell--action"><button class="table__kebab" aria-label="Ações"><svg><use href="#ico-more-2"/></svg></button></div></div>
+      </div>
+      <div class="pagination" data-ds="pagination" data-ds-total="700" data-ds-page-size="20" data-ds-page="1">
+        <div class="pagination__info"></div>
+        <div class="pagination__nav"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- Ícones -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -161,5 +186,6 @@
       </div>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

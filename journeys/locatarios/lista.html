@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Locatários — Gestão (layout base) · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="locatarios.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+</svg>
+
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Locatários</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Locatários <span class="pagehead__count">· 128 cadastrados</span></h1>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--primary" href="cadastro.html">Novo locatário<span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="input toolbar__search" data-ds="input">
+          <div class="input__field"><input class="input__control" placeholder="Pesquise por nome, e-mail, telefone ou nº do box" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+        </div>
+        <div class="dropdown toolbar__filter-dd" data-ds="dropdown">
+          <button class="btn btn--icon-border dropdown__trigger" aria-label="Filtrar por status" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-filter-3"/></svg></span></button>
+          <div class="dropdown__panel dropdown__panel--filter dropdown__panel--right" hidden>
+            <div class="fltfield">
+              <span class="fieldlbl">Status</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos os status</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
+                  <div class="select__item"><p class="select__item-text">Ativo</p></div>
+                  <div class="select__item"><p class="select__item-text">Inadimplente</p></div>
+                  <div class="select__item"><p class="select__item-text">Blacklist</p></div>
+                  <div class="select__item"><p class="select__item-text">Move-out avisado</p></div>
+                  <div class="select__item"><p class="select__item-text">Inativo</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="fltfield">
+              <span class="fieldlbl">Tipo de pessoa</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Física</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Jurídica</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="dropdown__clean"><button type="button" class="btn btn--ghost" style="width:100%">Limpar filtro</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table ltable" data-ds="table">
+        <div class="table__header">
+          <button class="table__th"><span class="table__th-label">Locatário</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">E-mail</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Documento</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Box(es)</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Unidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Seguro</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        </div>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Marina Alves Comércio</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">marina@alvescom.com.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">12.345.678/0001-90</p></div>
+          <div class="table__cell"><p class="table__cell-text">A-102, A-103</p></div>
+          <div class="table__cell"><p class="table__cell-text">Vila Leopoldina</p></div>
+          <div class="table__cell"><span class="badge badge--success">MAPFRE</span></div>
+          <div class="table__cell"><span class="badge badge--success">Ativo</span></div>
+        </a>
+
+        <a class="table__row table__row--alt" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Logística Contorno Ltda</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">contato@contorno.log.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">98.765.432/0001-10</p></div>
+          <div class="table__cell"><p class="table__cell-text">G-14</p></div>
+          <div class="table__cell"><p class="table__cell-text">Guarulhos</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Sem seguro</span></div>
+          <div class="table__cell"><span class="badge badge--yellow">Inadimplente</span></div>
+        </a>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Studio Prisma Arquitetura</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">financeiro@studioprisma.com</p></div>
+          <div class="table__cell"><p class="table__cell-text">045.678.912-33</p></div>
+          <div class="table__cell"><p class="table__cell-text">O-07</p></div>
+          <div class="table__cell"><p class="table__cell-text">Faria Lima</p></div>
+          <div class="table__cell"><span class="badge badge--success">MAPFRE</span></div>
+          <div class="table__cell"><span class="badge badge--outline">Move-out avisado</span></div>
+        </a>
+
+        <a class="table__row table__row--alt" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Comercial Dez Irmãos</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">compras@dezirmaos.com.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">33.444.555/0001-77</p></div>
+          <div class="table__cell"><p class="table__cell-text">B-21, B-22</p></div>
+          <div class="table__cell"><p class="table__cell-text">Barra Funda</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Seguro próprio</span></div>
+          <div class="table__cell"><span class="badge badge--destructive">Blacklist</span></div>
+        </a>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Ateliê Norte</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">ana@atelienorte.com</p></div>
+          <div class="table__cell"><p class="table__cell-text">071.222.333-44</p></div>
+          <div class="table__cell"><p class="table__cell-text">—</p></div>
+          <div class="table__cell"><p class="table__cell-text">Tatuapé</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Sem seguro</span></div>
+          <div class="table__cell"><span class="badge badge--outline">Inativo</span></div>
+        </a>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+</body>
+</html>

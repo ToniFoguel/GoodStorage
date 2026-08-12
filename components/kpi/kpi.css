@@ -1,0 +1,34 @@
+/* ============================================================
+   Componente: KPI (card de métrica)  ⚠️ node Figma a formalizar
+   Card compacto com rótulo + valor, usado em grades de indicadores
+   (ex.: Perfil 360). Grade fluida via .kpis.
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--lg);
+}
+.kpi {
+  box-sizing: border-box;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  padding: var(--lg) var(--xl);
+}
+.kpi__label {
+  margin: 0 0 var(--sm);
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  color: var(--content-text);           /* ⚠️ cinza "secundário" sem token próprio */
+}
+.kpi__value {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-hight-h3);
+  color: var(--content-title);
+}
+/* valor textual mais longo (ex.: "MAPFRE · R$ 1.500") */
+.kpi__value--sm { font-size: var(--font-size-paragraph); line-height: var(--line-hight-paragraph); }

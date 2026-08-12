@@ -1,0 +1,76 @@
+/* ============================================================
+   Journey (layout base): Perfil do orçamento (somente leitura)
+   Revisão do mockup: consulta-catalogo-orcamento_10-A_4
+   Reaproveita o layout do Resumo (sum-grid + product-card +
+   totais) e adiciona a seção de Histórico de envios.
+   Só componentes do DS + tokens.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* --- Shell ----------------------------------------------------- */
+.app { display: flex; min-height: 100vh; background: var(--background-bg-main); }
+.sidebar { height: auto; align-self: stretch; flex-shrink: 0; }
+.main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
+.app svg { fill: currentColor; }
+.section > .card__slot { flex: 0 0 auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); padding: var(--lg) var(--3xl) 0; }
+.content { padding: var(--lg) var(--3xl) var(--xl); width: 100%; min-width: 0; }
+
+.pagehead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--lg); margin: var(--md) 0 var(--xl); }
+.pagehead__text { flex: 1 1 340px; min-width: 0; }
+.pagehead__title { margin: 0; color: var(--content-title); }
+.pagehead__sub { margin: var(--sm) 0 0; max-width: 78ch; color: var(--content-text); }
+.pagehead__actions { display: flex; align-items: center; gap: var(--md); flex-shrink: 0; }
+
+.stack-banner { margin-bottom: var(--xl); }
+
+.section { margin-bottom: var(--xl); }
+.section__head { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding-bottom: var(--lg); margin-bottom: var(--lg); border-bottom: var(--thin) solid var(--border-default); }
+.section__headleft { display: flex; align-items: center; gap: var(--md); }
+.section__num { width: var(--2xl); height: var(--2xl); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--background-bg-alt); color: var(--content-title-inverse); font-family: var(--font-family-title-text); font-size: var(--font-size-label); font-weight: var(--font-weight-bold); }
+.section__title { margin: 0; color: var(--content-title); }
+.selpill b { color: var(--content-primary); }
+
+/* --- Dados: grade de 3 colunas --------------------------------- */
+.sum-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: var(--thin) solid var(--border-default); border-bottom: 0; }
+.sum-cell { display: flex; flex-direction: column; gap: var(--gap-1); padding: var(--lg) var(--xl); border-bottom: var(--thin) solid var(--border-default); border-right: var(--thin) solid var(--border-default); min-width: 0; }
+.sum-cell:nth-child(3n) { border-right: 0; }
+.sum-cell__lbl { font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: .04em; color: var(--content-disable); }
+.sum-cell__val { display: flex; align-items: center; gap: var(--md); font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-paragraph); color: var(--content-title); }
+.sum-cell__sub { font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); }
+
+/* --- Produtos e condições: grade de 3 colunas ------------------ */
+.prodcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--lg); align-items: start; }
+
+/* --- Totais ---------------------------------------------------- */
+.totals { border: var(--thin) solid var(--border-default); padding: var(--lg) var(--xl); margin-top: var(--lg); }
+.tot-row { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding: var(--sm) 0; }
+.tot-row__k { color: var(--content-text); }
+.tot-row__v { font-weight: var(--font-weight-bold); color: var(--content-title); }
+.tot-row--grand { border-top: var(--thin) solid var(--border-default); margin-top: var(--sm); padding-top: var(--lg); }
+.tot-row--grand .tot-row__v { color: var(--content-primary); }
+.tot-months-head { margin: var(--lg) 0 var(--sm); font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: .04em; color: var(--content-disable); }
+.tot-months { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sm); }
+.tot-month { border: var(--thin) solid var(--border-default); padding: var(--md); text-align: center; min-width: 0; }
+.tot-month__lbl { display: block; font-size: var(--font-size-label); color: var(--content-disable); }
+.tot-month__val { display: block; margin-top: var(--gap-1); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); color: var(--content-title); }
+
+/* --- Histórico de envios (timeline) ---------------------------- */
+.hist { display: flex; flex-direction: column; gap: var(--lg); }
+.hist-item { display: flex; gap: var(--md); align-items: flex-start; }
+.hist-ico { width: var(--3xl); height: var(--3xl); flex: none; display: inline-flex; align-items: center; justify-content: center; border: var(--thin) solid var(--border-default); color: var(--content-disable); }
+.hist-ico svg { width: var(--xl); height: var(--xl); }
+.hist-ico--ok { color: var(--background-secondary); border-color: var(--background-secondary); }
+.hist-ico--fail { color: var(--error); border-color: var(--border-error); }
+.hist-body { flex: 1 0 0; min-width: 0; }
+.hist-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--md); }
+.hist-top b { color: var(--content-title); }
+.hist-when { flex: none; font-size: var(--font-size-label); color: var(--content-disable); }
+.hist-meta { margin-top: var(--gap-1); font-size: var(--font-size-label); color: var(--content-text); }
+.hist-motivo { margin-top: var(--gap-1); font-size: var(--font-size-label); color: var(--content-label-error); }
+
+/* --- Rodapé de marca ------------------------------------------- */
+.brandfoot { display: flex; align-items: center; gap: var(--md); padding: var(--xl) 0 var(--md); }
+.brandfoot img { height: var(--2xl); width: auto; }
+.brandfoot small { color: var(--content-disable); }

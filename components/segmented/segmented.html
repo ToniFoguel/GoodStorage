@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SegmentedControl — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="segmented.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .grid { display:flex; flex-direction:column; gap:24px; max-width:320px; }
+    .cell { display:flex; flex-direction:column; gap:8px; }
+    .cell small { font-size:11px; color:#999; }
+    #out { font-size:13px; color:#666; }
+  </style>
+</head>
+<body>
+  <h2>SegmentedControl</h2>
+  <p style="color:#666;font-size:13px;max-width:420px">
+    Opções mutuamente exclusivas num trilho. Marque a raiz com
+    <code>data-ds="segmented"</code>; o runtime alterna o item ativo e dispara
+    <code>ds:change</code>. O item ativo inicial recebe
+    <code>segmented__item--active</code>.
+  </p>
+
+  <div class="grid">
+    <div class="cell">
+      <small>3 opções (2 meses ativo)</small>
+      <div class="segmented" data-ds="segmented">
+        <button class="segmented__item" data-value="1">1 mês</button>
+        <button class="segmented__item segmented__item--active" data-value="2">2 meses</button>
+        <button class="segmented__item" data-value="3">3 meses</button>
+      </div>
+    </div>
+
+    <div class="cell">
+      <small>com item desabilitado</small>
+      <div class="segmented" data-ds="segmented">
+        <button class="segmented__item segmented__item--active" data-value="mensal">Mensal</button>
+        <button class="segmented__item" data-value="anual">Anual</button>
+        <button class="segmented__item" data-value="vitalicio" disabled>Vitalício</button>
+      </div>
+    </div>
+
+    <p id="out">Selecionado: —</p>
+  </div>
+
+  <script src="../../ds/ds.js" defer></script>
+  <script>
+    document.addEventListener('ds:change', function (e) {
+      if (e.target.classList.contains('segmented')) {
+        document.getElementById('out').textContent = 'Selecionado: ' + e.detail.value;
+      }
+    });
+  </script>
+</body>
+</html>

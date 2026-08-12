@@ -1,0 +1,56 @@
+/* ============================================================
+   Componente: Lightbox  ⚠️ node Figma a formalizar
+   Overlay full-screen para ampliar a imagem de um produto.
+   Runtime: ds/ds.js (data-ds="lightbox").
+   Gatilho: [data-ds-lightbox="<id>"] (opcional data-ds-caption).
+   Depende de: ../../tokens/tokens.css
+   ------------------------------------------------------------
+   Obs.: o "scrim" escuro segue a MESMA camada de runtime do
+   .ds-modal-overlay (ds/ds.css), que usa rgba direto — não é
+   um valor de design tokenizável, e sim o overlay de runtime.
+   ============================================================ */
+/* z-index acima do overlay do modal (.ds-modal-overlay = 1000):
+   ao ampliar a partir do modal de detalhe, a imagem cobre a tela
+   inteira e NÃO fica com o modal por cima dela. */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1100;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--3xl);
+  background: rgba(17, 17, 17, .96);
+}
+.lightbox[hidden] { display: none !important; }
+
+/* Botão de fechar */
+.lightbox__close {
+  position: absolute; top: var(--xl); right: var(--xl);
+  width: var(--3xl); height: var(--3xl);
+  display: inline-flex; align-items: center; justify-content: center;
+  border: var(--thin) solid var(--content-title-inverse);
+  background: none; color: var(--content-title-inverse); cursor: pointer;
+}
+.lightbox__close svg { width: var(--2xl); height: var(--2xl); display: block; fill: currentColor; }
+
+/* Palco + figura */
+.lightbox__stage { display: flex; align-items: center; justify-content: center; max-width: 90vw; max-height: 90vh; }
+.lightbox__figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--lg); max-width: 90vw; max-height: 90vh; }
+.lightbox__image { max-width: 90vw; max-height: 80vh; width: auto; height: auto; display: block; }
+
+/* Placeholder (quando não há imagem carregada) */
+.lightbox__ph {
+  width: min(90vw, 1200px); height: 78vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--background-bg-alt);
+  border: var(--thin) solid var(--border-default);
+  color: var(--content-disable);
+}
+.lightbox__ph svg { width: 88px; height: 88px; display: block; }
+
+/* Legenda */
+.lightbox__caption {
+  color: var(--content-title-inverse);
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  text-align: center;
+}

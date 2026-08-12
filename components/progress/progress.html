@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="progress.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; }
+    .grid { display:flex; flex-direction:column; gap:24px; max-width:320px; }
+    .cell { display:flex; flex-direction:column; gap:8px; }
+    .cell small { font-size:11px; color:#999; }
+  </style>
+</head>
+<body>
+  <h2>Progress</h2>
+  <p style="color:#666;font-size:13px;max-width:420px">
+    Barra de progresso. A largura do preenchimento vem da variável inline
+    <code>--progress</code> (ex.: <code>style="--progress:70%"</code>).
+    Sem runtime — é markup estático.
+  </p>
+
+  <div class="grid">
+    <div class="cell">
+      <small>0%</small>
+      <div class="progress"><div class="progress__fill" style="--progress:0%"></div></div>
+    </div>
+    <div class="cell">
+      <small>30%</small>
+      <div class="progress"><div class="progress__fill" style="--progress:30%"></div></div>
+    </div>
+    <div class="cell">
+      <small>70%</small>
+      <div class="progress"><div class="progress__fill" style="--progress:70%"></div></div>
+    </div>
+    <div class="cell">
+      <small>100%</small>
+      <div class="progress"><div class="progress__fill" style="--progress:100%"></div></div>
+    </div>
+  </div>
+</body>
+</html>

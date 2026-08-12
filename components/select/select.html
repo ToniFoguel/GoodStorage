@@ -14,9 +14,54 @@
     small { display:block; font-size:11px; color:#999; margin-bottom:10px; }
     .cell { position:relative; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Select</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — clique para abrir, selecione, feche</p>
+    
+    <div style="display:flex;gap:48px;flex-wrap:wrap;">
+      <div style="width:280px;">
+        <div class="select" data-ds="select">
+          <div class="select__label"><p>Fruta</p><p class="select__req">*</p></div>
+          <div class="select__field"><p class="select__value">Select a fruit</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Apple</p></div>
+            <div class="select__item"><p class="select__item-text">Banana</p></div>
+            <div class="select__item"><p class="select__item-text">Orange</p></div>
+            <div class="select__item"><p class="select__item-text">Mango</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div style="width:280px;">
+        <div class="select" data-ds="select" data-ds-search>
+          <div class="select__label"><p>País (busca)</p></div>
+          <div class="select__field"><input class="select__search" placeholder="Digite para filtrar" /><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Brasil</p></div>
+            <div class="select__item"><p class="select__item-text">Bolívia</p></div>
+            <div class="select__item"><p class="select__item-text">Argentina</p></div>
+            <div class="select__item"><p class="select__item-text">Butão</p></div>
+          </div><div class="select__empty" hidden><p class="select__empty-text">Nenhum resultado encontrado</p></div></div>
+        </div>
+      </div>
+      <div style="width:280px;">
+        <div class="select" data-ds="select" data-ds-multi>
+          <div class="select__label"><p>Tags (multi)</p></div>
+          <div class="select__field select__field--tags"><div class="select__tags"></div><span class="select__clear" aria-label="Limpar"><svg><use href="#ico-close"/></svg></span><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Selfstorage</p></div>
+            <div class="select__item"><p class="select__item-text">Flex</p></div>
+            <div class="select__item"><p class="select__item-text">Galpão</p></div>
+            <div class="select__item"><p class="select__item-text">Office</p></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
@@ -151,5 +196,6 @@
       </div>
     </div>
   </div>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>

@@ -148,6 +148,11 @@
   --line-hight-h3: 22px;         /* Figma: Line-Hight/h3 (grafia mantida) */
   --font-size-h1: 24px;          /* Figma: Font-Size/h1 */
   --line-hight-h1: 28px;         /* Figma: Line-Hight/h1 (grafia mantida) */
+  /* ⚠️ H2 usado nos títulos das telas (journeys) mas ausente das variáveis
+     lidas do Figma. Valor interpolado entre H1 (24/28) e H3 (18/22).
+     CONFIRMAR no Figma: se existir Font-Size/h2, ajustar para o valor real. */
+  --font-size-h2: 20px;          /* provisório — confirmar no Figma */
+  --line-hight-h2: 24px;         /* provisório — confirmar no Figma */
 
   /* --- Escala Inter (Calendar/DatePicker) --------------------------
      Figma: family/sans=Inter, size/xs=12, size/sm=14, leading/4=16,

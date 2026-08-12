@@ -1,0 +1,123 @@
+/* ============================================================
+   DS Runtime — estilos de apoio ao comportamento
+   ------------------------------------------------------------
+   NÃO altera a aparência dos componentes do Figma.
+   Só adiciona os estados que o CSS estático não tinha
+   (aberto/fechado, overlay do modal, foco, chevrons girando).
+   Sempre carregue DEPOIS de tokens.css e dos CSS de componente.
+   ============================================================ */
+
+/* Helper universal de visibilidade controlado por JS.
+   `hidden` sozinho não vence display:flex — aqui vence. */
+[hidden] { display: none !important; }
+
+/* Foco visível padrão para elementos interativos do DS */
+.select__field:focus-visible,
+.datepicker__input:focus-visible,
+.dropdown__trigger:focus-visible,
+.table__th:focus-visible,
+.pagination__item:focus-visible,
+.sidebar__item:focus-visible,
+.collapsible__header:focus-visible {
+  outline: 2px solid var(--background-primary);
+  outline-offset: -1px;
+}
+
+/* ---------- Select ---------- */
+.select.is-open .select__field { box-shadow: var(--shadows-default); }
+.select__item:hover { background: var(--background-bg-aux); }
+.select__item[hidden] { display: none !important; }
+
+/* ---------- Dropdown ---------- */
+.dropdown__panel { transition: opacity .12s ease; }
+
+/* ---------- Modal (overlay criado pelo runtime) ---------- */
+.ds-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--xl, 16px);
+  background: rgba(17, 17, 17, .48);
+  z-index: 1000;
+}
+.ds-modal-overlay[hidden] { display: none !important; }
+.ds-modal-overlay .modal { max-width: 480px; width: 100%; }
+
+/* ---------- Datepicker ---------- */
+.datepicker .calendar { z-index: 20; }
+/* mini-seletores de mês/ano gerados pelo runtime */
+.calendar__picker {
+  position: absolute;
+  left: 0; right: 0;
+  top: 52px;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  padding: var(--sm);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  z-index: 30;
+}
+.calendar__picker--year { grid-template-columns: repeat(4, 1fr); max-height: 180px; overflow: auto; }
+.calendar__picker button {
+  border: 0; background: none; cursor: pointer;
+  padding: var(--sm) var(--md);
+  font: var(--font-weight-regular) var(--font-size-paragraph)/var(--line-hight-paragraph) var(--font-family-title-text);
+  color: var(--content-text);
+  border-radius: var(--radius-sm);
+}
+.calendar__picker button:hover { background: var(--background-bg-aux); }
+.calendar__picker button[aria-selected="true"] { font-weight: var(--font-weight-bold); background: var(--background-bg-aux); }
+.calendar__day--today { font-weight: var(--font-weight-bold); }
+
+/* ---------- Collapsible ---------- */
+.collapsible__content { overflow: hidden; }
+.collapsible:not(.is-open) .collapsible__content { display: none; }
+
+/* ---------- Sidebar ---------- */
+.sidebar__items { overflow: hidden; transition: height .15s ease; }
+.sidebar__group.is-collapsed .sidebar__items { display: none; }
+.sidebar__group.is-collapsed .sidebar__chevron { transform: rotate(180deg); }
+.sidebar__chevron { transition: transform .15s ease; display: inline-flex; }
+
+/* ---------- Table ---------- */
+.table__th { cursor: pointer; }
+.table__sort { transition: transform .12s ease, opacity .12s ease; opacity: .35; }
+.table__th.is-sorted .table__sort { opacity: 1; }
+.table__th.is-sorted-desc .table__sort { transform: rotate(180deg); }
+.table__kebab-menu {
+  position: absolute;
+  right: 8px;
+  min-width: 160px;
+  background: var(--background-bg-main);
+  border: var(--thin) solid var(--border-default);
+  box-shadow: var(--shadows-default);
+  padding: var(--xs);
+  z-index: 40;
+}
+.table__kebab-menu[hidden] { display: none !important; }
+.table__kebab-menu button {
+  display: block; width: 100%; text-align: left;
+  border: 0; background: none; cursor: pointer;
+  padding: var(--sm) var(--md);
+  font: var(--font-weight-regular) var(--font-size-paragraph)/var(--line-hight-paragraph) var(--font-family-title-text);
+  color: var(--content-text);
+  border-radius: var(--radius-sm);
+}
+.table__kebab-menu button:hover { background: var(--background-bg-aux); }
+.table { position: relative; }
+/* Seleção de linha (variante Table Seleção — ver design-system.md) */
+.table__row--selected { background: var(--background-warning); }
+.table__th--check, .table__cell--check {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table__th--check input, .table__cell--check input { width: 16px; height: 16px; cursor: pointer; }
+
+/* ---------- Input ---------- */
+.input.is-focus .input__field { outline: 2px solid var(--background-primary); outline-offset: -1px; }

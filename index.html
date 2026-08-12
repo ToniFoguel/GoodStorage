@@ -133,10 +133,15 @@
 <header class="hero">
   <h1>Design System — estudo</h1>
   <p>Implementação fiel em HTML/CSS dos componentes do arquivo Figma "estudo" (GoodStorage/levva). Tokens, specs e composição espelhados 1:1, com rastreabilidade via <code>data-node-id</code>.</p>
-  <div class="meta">21 componentes · fonte: Figma <code>EPHZw7duAVSjyhosJfSSs8</code></div>
+  <div class="meta">24 componentes · fonte: Figma <code>EPHZw7duAVSjyhosJfSSs8</code></div>
 </header>
 
 <main>
+  <a href="journeys/playground/playground.html" target="_blank" style="display:block;text-decoration:none;margin:0 0 var(--xl);padding:var(--lg) var(--xl);background:var(--content-title,#111);color:#fff;border-radius:var(--radius-sm);">
+    <span style="display:block;font-size:var(--font-size-h3);font-weight:var(--font-weight-bold);">▶ Playground — tela funcional montada só com as peças do DS</span>
+    <span style="display:block;margin-top:4px;font-size:var(--font-size-label);opacity:.8;">Componentes agora são funcionais: select abre/fecha/seleciona, modal, datepicker, tabela ordenável, paginação, sidebar. Runtime em <code>ds/ds.js</code> (marque a raiz com <code>data-ds</code>).</span>
+  </a>
+
   <div class="search-box">
     <input type="text" id="filter" placeholder="Buscar componente..." />
   </div>
@@ -174,9 +179,9 @@
         <div class="preview"><iframe src="components/dropdown/dropdown.html"></iframe></div>
         <div class="info"><span class="name">Dropdown</span><span class="desc">Menu de navegação, filtro, tooltip</span><span class="node">1:4001</span></div>
       </a>
-      <a class="card" data-name="pagination" href="components/table/table.html" target="_blank">
-        <div class="preview"><iframe src="components/table/table.html"></iframe></div>
-        <div class="info"><span class="name">Pagination</span><span class="desc">TableFooter — embutido na demo de Table</span><span class="node">1:1447</span></div>
+      <a class="card" data-name="pagination" href="components/pagination/pagination.html" target="_blank">
+        <div class="preview"><iframe src="components/pagination/pagination.html"></iframe></div>
+        <div class="info"><span class="name">Pagination</span><span class="desc">TableFooter — seletor de página + navegação (runtime)</span><span class="node">1:1348</span></div>
       </a>
       <a class="card" data-name="sidebar" href="components/sidebar/sidebar.html" target="_blank">
         <div class="preview"><iframe src="components/sidebar/sidebar.html"></iframe></div>
@@ -216,6 +221,10 @@
         <div class="preview"><iframe src="components/checkbox-card/checkbox-card.html"></iframe></div>
         <div class="info"><span class="name">CheckboxCard</span><span class="desc">Checkbox real, com/sem box</span><span class="node">1:965</span></div>
       </a>
+      <a class="card" data-name="segmented" href="components/segmented/segmented.html" target="_blank">
+        <div class="preview"><iframe src="components/segmented/segmented.html"></iframe></div>
+        <div class="info"><span class="name">SegmentedControl</span><span class="desc">Opções mutuamente exclusivas (runtime)</span><span class="node">a formalizar</span></div>
+      </a>
     </div>
   </section>
 
@@ -230,9 +239,9 @@
         <div class="preview"><iframe src="components/empty-state/empty-state.html"></iframe></div>
         <div class="info"><span class="name">EmptyState</span><span class="desc">4 variantes de estado vazio</span><span class="node">1:6233</span></div>
       </a>
-      <a class="card" data-name="progress" href="components/table/table.html" target="_blank">
-        <div class="preview"><iframe src="components/table/table.html"></iframe></div>
-        <div class="info"><span class="name">Progress</span><span class="desc">Barra de progresso — embutido na demo de Table</span><span class="node">1:1412</span></div>
+      <a class="card" data-name="progress" href="components/progress/progress.html" target="_blank">
+        <div class="preview"><iframe src="components/progress/progress.html"></iframe></div>
+        <div class="info"><span class="name">Progress</span><span class="desc">Barra de progresso (largura via --progress)</span><span class="node">1:1473</span></div>
       </a>
       <a class="card" data-name="modal" href="components/modal/modal.html" target="_blank">
         <div class="preview"><iframe src="components/modal/modal.html"></iframe></div>

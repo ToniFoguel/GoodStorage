@@ -1,0 +1,147 @@
+/* ============================================================
+   Journey (layout base): Módulo Gestão de Locatários
+   Origem: mockup "modulo-locatarios-app 6" (tokens --tars-* transmutados
+   para os tokens do nosso DS). Só componentes/tokens existentes.
+   Classes abaixo = LAYOUT de composição (grid/flex/espaço), no padrão
+   das demais journeys. CSS compartilhado por todas as telas do módulo.
+   ============================================================ */
+
+/* box-sizing global — sem isto, width:100% + padding estoura a largura
+   (era a causa do "quebrando na lateral direita" no desktop). */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* --- Shell ----------------------------------------------------- */
+.app { display: flex; min-height: 100vh; background: var(--background-bg-main); }
+.sidebar { height: auto; align-self: stretch; flex-shrink: 0; }
+.main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
+.app svg { fill: currentColor; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); padding: var(--lg) var(--3xl) 0; }
+.content { padding: var(--lg) var(--3xl) var(--xl); width: 100%; min-width: 0; }
+
+/* --- Cabeçalho de página --------------------------------------- */
+.pagehead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--lg); margin: var(--md) 0 var(--xl); }
+.pagehead__text { flex: 1 1 340px; min-width: 0; }
+.pagehead__title { margin: 0; color: var(--content-title); }
+.pagehead__count { color: var(--content-disable); font-weight: var(--font-weight-regular); font-size: var(--font-size-paragraph); }
+.pagehead__sub { margin: var(--sm) 0 0; color: var(--content-text); }
+.pagehead__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md); flex-shrink: 0; }
+
+/* --- Seção (contêiner bordado) --------------------------------- */
+.section { margin-bottom: var(--xl); background: var(--background-bg-main); border: var(--thin) solid var(--border-default); }
+.section__head { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding: var(--lg) var(--xl); border-bottom: var(--thin) solid var(--border-default); }
+.section__headleft { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.section__num { width: var(--2xl); height: var(--2xl); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--background-bg-alt); color: var(--content-title-inverse); font-family: var(--font-family-title-text); font-size: var(--font-size-label); font-weight: var(--font-weight-bold); }
+.section__title { margin: 0; font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); font-weight: var(--font-weight-bold); color: var(--content-title); }
+.section__pill { border: var(--thin) solid var(--border-default); padding: var(--gap-1) var(--lg); font-size: var(--font-size-label); color: var(--content-text); }
+.section__body { padding: var(--xl); display: flex; flex-direction: column; gap: var(--md); }
+
+/* --- Grade de dados (data-item) -------------------------------- */
+.dados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--lg) var(--xl); margin: 0; }
+.dados .data-item { min-width: 0; }
+.cl-name { font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); color: var(--content-title); }
+.cl-mail { font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); }
+
+/* --- Card-linha (box/contato/endereço/documento/restrição) ----- */
+.bxcard { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding: var(--lg); border: var(--thin) solid var(--border-default); }
+.bxcard__l { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.bxthumb { width: var(--3xl); height: var(--3xl); flex: none; display: inline-flex; align-items: center; justify-content: center; background: var(--background-bg-aux); color: var(--content-text); }
+.bxthumb svg { width: var(--xl); height: var(--xl); }
+.ocard__title { margin: 0; font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); color: var(--content-title); }
+
+/* --- Timeline de histórico ------------------------------------- */
+.hist { display: flex; flex-direction: column; gap: var(--lg); }
+.hist-item { display: flex; gap: var(--md); align-items: flex-start; }
+.hist-ico { width: var(--3xl); height: var(--3xl); flex: none; display: inline-flex; align-items: center; justify-content: center; border: var(--thin) solid var(--border-default); color: var(--content-disable); }
+.hist-ico svg { width: var(--xl); height: var(--xl); }
+.hist-ico.ok { color: var(--background-secondary); border-color: var(--background-secondary); }
+.hist-body { flex: 1 0 0; min-width: 0; }
+.hist-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--md); }
+.hist-top b { color: var(--content-title); }
+.hist-when { flex: none; font-size: var(--font-size-label); color: var(--content-disable); }
+.hist-meta { margin: var(--gap-1) 0 0; font-size: var(--font-size-label); color: var(--content-text); }
+
+/* --- Toolbar de lista (busca + filtro) ------------------------- */
+.toolbar { display: flex; align-items: flex-end; flex-wrap: wrap; gap: var(--md); margin-bottom: var(--lg); }
+.toolbar__search { flex: 1 1 280px; min-width: 220px; }
+.toolbar__filter { flex: 0 0 auto; width: 200px; }
+.toolbar__filter-dd { flex: 0 0 auto; }
+.toolbar__filter-dd .dropdown__panel--filter { width: 240px; padding: var(--lg); display: flex; flex-direction: column; gap: var(--md); }
+.fltfield { display: flex; flex-direction: column; gap: var(--sm); }
+
+/* --- Linha de lista editável (contato/endereço) ---------------- */
+.listrow { border: var(--thin) solid var(--border-default); padding: var(--lg); display: flex; flex-direction: column; gap: var(--md); margin-bottom: var(--md); }
+.listrow__head { display: flex; align-items: center; justify-content: space-between; gap: var(--md); }
+.fieldlbl { font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-label); color: var(--content-text); }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: var(--2xl); height: var(--2xl); flex: none; border: var(--thin) solid var(--border-default); background: var(--background-bg-main); cursor: pointer; color: var(--border-icon); }
+.icon-btn svg { width: var(--xl); height: var(--xl); }
+
+/* --- Linha de representante/procurador (campos em colunas + lixeira) --- */
+.reprow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: var(--md); align-items: end; }
+.repeater__items { display: flex; flex-direction: column; gap: 0; }
+.reprow--2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
+.reprow .input { min-width: 0; }
+/* Cada representante = 1 card (aba + Nome/CPF/Tipo + documento comprobatório) */
+.reprow--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.repeater--rep .repeater__items { counter-reset: rep; }
+.repeater--rep .repeater__item { counter-increment: rep; }
+.rep-n::before { content: counter(rep); }
+.repeater--addr .repeater__items { counter-reset: addr; }
+.repeater--addr .repeater__item { counter-increment: addr; }
+.addr-n::before { content: counter(addr); }
+.repdoc { display: flex; flex-direction: column; gap: var(--md); border-top: var(--thin) solid var(--border-default); margin-top: var(--sm); padding-top: var(--md); }
+.reprow .icon-btn { align-self: end; width: 40px; height: 40px; }
+.listrow__head .icon-btn { width: 40px; height: 40px; }
+
+/* --- Formulário: grade de campos ------------------------------- */
+.formgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lg) var(--xl); align-items: start; }
+.formgrid .input.full { grid-column: 1 / -1; }
+.formgrid .input__control { width: 100%; }
+textarea.input__control { min-height: 84px; resize: vertical; }
+
+/* --- Link de voltar + barra de ações + chips ------------------- */
+.backlink { display: inline-flex; align-items: center; gap: var(--sm); margin-bottom: var(--md); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); text-decoration: none; }
+.backlink svg { width: var(--xl); height: var(--xl); }
+.actions { display: flex; align-items: center; gap: var(--md); margin-top: var(--xl); }
+.actions--end { justify-content: flex-end; }
+.chip { display: inline-flex; align-items: center; gap: var(--sm); padding: var(--gap-1) var(--md); border: var(--thin) solid var(--border-default); font-size: var(--font-size-label); color: var(--content-text); }
+.taglist { display: flex; flex-wrap: wrap; gap: var(--sm); }
+.formerror { display: block; margin-top: var(--md); color: var(--content-label-error); font-size: var(--font-size-label); }
+
+/* --- Modal de confirmação/form (conteúdo empilhado) ------------ */
+.confirm-modal .modal__content { display: flex; flex-direction: column; align-items: stretch; gap: var(--md); max-height: 70vh; overflow: auto; }
+.confirm-modal .tabpanel.is-active { display: flex; flex-direction: column; gap: var(--md); }
+
+/* --- Abas (segmented como barra + painéis) --------------------- */
+.tabbar { margin: 0 0 var(--xl); }
+.tabpanel { display: none; }
+.tabpanel.is-active { display: block; }
+
+/* --- Collapsible: empilha o conteúdo do slot ------------------- */
+.collapsible__slot { display: flex; flex-direction: column; gap: var(--md); }
+
+/* --- Estado vazio ---------------------------------------------- */
+.empty { display: flex; align-items: center; justify-content: center; padding: var(--p-12) var(--xl); border: var(--thin) solid var(--border-default); background: var(--background-bg-main); }
+.empty__inner { max-width: 420px; text-align: center; }
+.empty__heading { display: flex; flex-direction: column; align-items: center; gap: var(--md); }
+.empty__icon { width: var(--3xl); height: var(--3xl); display: inline-flex; align-items: center; justify-content: center; color: var(--content-disable); }
+.empty__icon svg { width: 100%; height: 100%; }
+.empty__title { margin: 0; font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-h3); color: var(--content-title); }
+
+/* --- Tabela de listagem (Table do DS) -------------------------- */
+/* linha inteira clicável -> perfil (sem coluna de ação) */
+.ltable a.table__row { text-decoration: none; color: inherit; cursor: pointer; }
+.ltable a.table__row:hover { background: var(--background-bg-aux); }
+
+/* --- Cartão de identificação (avatar + info) — seção da página -- */
+.idcard { display: flex; align-items: center; gap: var(--lg); min-width: 0; }
+.idcard__meta { min-width: 0; display: flex; flex-direction: column; gap: var(--gap-1); }
+.idcard__name { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: var(--md); font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-h3); line-height: var(--line-hight-h3); color: var(--content-title); }
+
+/* --- Portal do locatário ("Meu Espaço") — moldura de celular ---- */
+.phone { max-width: 380px; margin: 0 auto; border: var(--thin) solid var(--border-default); background: var(--background-bg-main); overflow: hidden; }
+.phone__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--md); padding: var(--md) var(--lg); background: var(--background-bg-alt); color: var(--content-title-inverse); font-family: var(--font-family-title-text); font-size: var(--font-size-label); }
+.phone__body { padding: var(--lg); display: flex; flex-direction: column; gap: var(--md); }
+
+/* --- Rodapé de marca ------------------------------------------- */
+.footer, .brandfoot { display: flex; align-items: center; justify-content: center; gap: var(--md); padding: var(--xl) 0 var(--md); }
+.footer .gs-logo, .brandfoot img { height: var(--2xl); width: auto; }

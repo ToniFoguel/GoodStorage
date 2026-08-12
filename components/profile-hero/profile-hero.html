@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile-hero — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../avatar/avatar.css" />
+  <link rel="stylesheet" href="../badge/badge.css" />
+  <link rel="stylesheet" href="profile-hero.css" />
+  <style>body{font-family:var(--font-family-title-text);padding:40px;background:#fff}*{box-sizing:border-box}.app svg,svg{fill:currentColor}</style>
+</head>
+<body>
+  <h2>Profile-hero</h2>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ri-checkbox-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></symbol>
+  </svg>
+
+  <div class="profile-hero">
+    <div class="avatar avatar--text"><p class="avatar__label text-label-regular">MD</p></div>
+    <div class="profile-hero__meta">
+      <p class="profile-hero__name">Marina Duarte</p>
+      <p class="profile-hero__sub">PF · •••.456.789-00 · cliente desde mar/2021 · Lapa 0</p>
+      <div class="profile-hero__flags">
+        <span class="badge badge--secondary">Ativo</span>
+        <span class="badge badge--secondary-icon"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-checkbox-circle"/></svg></span>Sempre adimplente</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

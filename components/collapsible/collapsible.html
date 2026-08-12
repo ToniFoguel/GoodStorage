@@ -14,9 +14,26 @@
     .placeholder { color:#bbb; font-size:14px; }
     .demo-h { min-height: 180px; }
   </style>
+  <link rel="stylesheet" href="../../ds/ds.css" />
 </head>
 <body>
   <h2>Collapsible</h2>
+  <!-- data-ds-injected -->
+  <!-- ============ DEMO FUNCIONAL (runtime DS) ============ -->
+  <section style="margin:0 0 40px;padding:20px 24px;border:1px solid var(--border-default,#e5e5e5);background:var(--background-bg-aux,#fafafa);">
+    <p style="margin:0 0 16px;font:700 12px/1 var(--font-family-title-text);letter-spacing:.04em;text-transform:uppercase;color:var(--content-primary,#111);">▶ Funcional — clique no cabeçalho para expandir/recolher</p>
+    
+    <div style="width:420px;">
+      <div class="collapsible is-open" data-ds="collapsible">
+        <button class="collapsible__header" type="button" aria-expanded="true">
+          <h3 class="collapsible__title">Detalhes do pedido</h3>
+          <span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span>
+          <span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span>
+        </button>
+        <div class="collapsible__content"><div class="collapsible__slot"><p style="color:#777;font-size:14px;margin:0;">Conteúdo revelado quando aberto.</p></div></div>
+      </div>
+    </div>
+  </section>
 
   <!-- Ícones remix -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -79,7 +96,8 @@
   </div>
 
   <script>
-    document.querySelectorAll('.collapsible__header').forEach(function (btn) {
+    /* galeria estática: componentes com [data-ds] são geridos pelo runtime */
+    document.querySelectorAll('.collapsible:not([data-ds]) .collapsible__header').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var root = btn.closest('.collapsible');
         var open = root.classList.toggle('is-open');
@@ -87,5 +105,6 @@
       });
     });
   </script>
+  <script src="../../ds/ds.js" defer></script>
 </body>
 </html>
