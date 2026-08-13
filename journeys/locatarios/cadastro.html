@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../../components/checkbox-card/checkbox-card.css" />
 <link rel="stylesheet" href="../../components/segmented/segmented.css" />
 <link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
 <link rel="stylesheet" href="locatarios.css" />
 </head>
@@ -36,6 +37,7 @@
   <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
   <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
   <symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+  <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></symbol>
 </svg>
 
 <div class="app">
@@ -83,7 +85,7 @@
         </div>
         <div class="pagehead__actions">
           <a class="btn btn--ghost" href="lista.html">Cancelar</a>
-          <a class="btn btn--primary" href="perfil.html">Salvar cadastro</a>
+          <button type="button" class="btn btn--primary" id="btnSalvar">Cadastrar</button>
         </div>
       </div>
 
@@ -98,70 +100,52 @@
       <!-- Painel Pessoa Física -->
       <div class="tabpanel" id="tab-pf">
         <section class="section">
-          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Identificação (Pessoa Física)</h2></div></div>
-          <div class="section__body"><div class="formgrid">
-            <div class="input full"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome completo" /></div></div>
-            <div class="input"><div class="input__label"><p>Nacionalidade</p></div><div class="input__field"><select class="input__control"><option>Brasileira</option><option>Estrangeira</option></select></div></div>
-            <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
-            <div class="input"><div class="input__label"><p>RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div><p class="input__help">Para locatário estrangeiro — mantido em campo separado do CPF (a pessoa pode ter os dois).</p></div>
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
+          <div class="section__body"><div class="formgrid formgrid--4">
+            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div><p class="input__help lockmsg">Não editável</p></div>
+            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
+            <div class="input"><div class="input__label"><p>Nacionalidade</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
+            <!-- Brasileiro: CPF (obrigatório) + documento com tipo -->
+            <div class="input" data-ds="input" data-ds-mask="cpf" data-nac-show="Brasileira"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
+            <div class="input" data-nac-show="Brasileira"><div class="input__label"><p>Tipo de documento</p></div><div class="input__field"><select class="input__control"><option>RG</option><option>CNH</option><option>Carteira de trabalho</option><option>Carteira de classe</option><option>Passaporte</option></select></div></div>
+            <div class="input" data-nac-show="Brasileira"><div class="input__label"><p>Número do documento</p></div><div class="input__field"><input class="input__control" placeholder="Nº do documento selecionado" /></div></div>
+            <!-- Estrangeiro: RNE (obrigatório) + passaporte -->
+            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>RNE</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div><p class="input__help">Documento do estrangeiro no território brasileiro.</p></div>
+            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>Passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div>
+            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>País de origem</p></div><div class="input__field"><input class="input__control" placeholder="País" /></div></div>
             <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
             <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone da pessoa</p></div><div class="input__field"><input class="input__control" placeholder="(11) 90000-0000" /></div><p class="input__help">Telefone do próprio locatário — distinto dos contatos.</p></div>
-            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
+            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-reveal="js-cnpj-pf" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
+            <div class="input js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
           </div></div>
         </section>
 
-        <!-- PF também pode ter procurador / representante legal -->
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Procurador / representante legal</h2></div><span class="section__pill">opcional</span></div>
-          <div class="section__body">
-            <div class="repeater" data-ds="repeater">
-              <div class="repeater__items">
-                <div class="listrow repeater__item">
-                  <div class="reprow reprow--2">
-                    <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome de quem assina pelo locatário" /></div></div>
-                    <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
-                    <button type="button" class="icon-btn" data-repeat-remove aria-label="Remover"><svg><use href="#ico-trash"/></svg></button>
-                  </div>
-                </div>
-              </div>
-              <template class="repeater__template">
-                <div class="listrow repeater__item">
-                  <div class="reprow reprow--2">
-                    <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome de quem assina pelo locatário" /></div></div>
-                    <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
-                    <button type="button" class="icon-btn" data-repeat-remove aria-label="Remover"><svg><use href="#ico-trash"/></svg></button>
-                  </div>
-                </div>
-              </template>
-              <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar procurador / representante</button>
-            </div>
-          </div>
-        </section>
       </div>
 
       <!-- Painel Pessoa Jurídica -->
       <div class="tabpanel is-active" id="tab-pj">
       <!-- 1. Identificação (PJ) -->
       <section class="section">
-        <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Identificação (Pessoa Jurídica)</h2></div></div>
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
         <div class="section__body">
           <div class="formgrid">
-            <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
-            <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Preenchido via consulta do CNPJ" /></div></div>
-            <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div><p class="input__help lockmsg">Não editável</p></div>
+            <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /></div></div>
+            <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
+            <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Alves Comércio" /></div></div>
             <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Natureza jurídica</p></div><div class="input__field"><input class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Porte</p></div><div class="input__field"><input class="input__control" /></div></div>
-            <div class="input"><div class="input__label"><p>Inscrição estadual</p></div><div class="input__field"><input class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Inscrição municipal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div><p class="input__help">Obrigatória, mas não bloqueia o preenchimento.</p></div>
-            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Contribuinte de ICMS</p><p class="cl-mail">Relevante para a reforma tributária (IBS/CBS).</p></span></label></div>
+            <div class="input"><div class="input__label"><p>Inscrição estadual</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
           </div>
         </div>
       </section>
 
       <!-- 2. Representantes -->
       <section class="section">
-        <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Representantes e procuradores</h2></div></div>
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Representantes e procuradores</h2></div></div>
         <div class="section__body">
           <div class="repeater repeater--rep" data-ds="repeater">
             <div class="repeater__items">
@@ -171,11 +155,6 @@
                   <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
-                </div>
-                <div class="repdoc">
-                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
-                  <p class="cl-mail">Anexe a ata / contrato social que comprova que esta pessoa é representante ou procuradora da empresa.</p>
-                  <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
                 </div>
               </div>
             </div>
@@ -187,14 +166,15 @@
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
                 </div>
-                <div class="repdoc">
-                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
-                  <p class="cl-mail">Anexe a ata / contrato social que comprova que esta pessoa é representante ou procuradora da empresa.</p>
-                  <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
-                </div>
               </div>
             </template>
             <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar representante / procurador</button>
+          </div>
+          <!-- Anexo comprobatório (só no fluxo de edição de PJ) -->
+          <div class="listrow js-edit-only" hidden style="margin-top:var(--md)">
+            <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
+            <p class="cl-mail">Anexe a ata / contrato social que comprova que as pessoas acima são representantes ou procuradores da empresa.</p>
+            <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
           </div>
         </div>
       </section>
@@ -202,41 +182,37 @@
 
       <!-- 3. Contatos -->
       <section class="section">
-        <div class="section__head"><div class="section__headleft"><span class="section__num">3</span><h2 class="section__title">Contatos</h2></div></div>
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Contatos</h2></div></div>
         <div class="section__body">
           <div class="repeater" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Contato 1 (principal)</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
-                <div class="formgrid">
-                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo de uso</p></div><div class="input__field"><select class="input__control"><option>Principal</option><option>Cobrança</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div></div>
+                <div class="formgrid formgrid--4">
+                  <div class="input col-2"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
+                  <div class="input"><div class="input__label"><p>Responsabilidades</p></div><div class="input__field"><select class="input__control"><option>Principal</option><option>Cobrança</option><option>Operacional</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
                 </div>
-                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="emailAssin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para assinatura</p></span></label>
-                <div class="input full" data-toggle="emailAssin" hidden><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
-                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="emailLogin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para o login do "Meu Espaço"</p></span></label>
-                <div class="input full" data-toggle="emailLogin" hidden><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Contato adicional</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
-                <div class="formgrid">
-                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo de uso</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Operacional</option><option>Principal</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+                <div class="formgrid formgrid--4">
+                  <div class="input col-2"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
+                  <div class="input"><div class="input__label"><p>Responsabilidades</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Operacional</option><option>Principal</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
                 </div>
-                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="emailAssin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para assinatura</p></span></label>
-                <div class="input full" data-toggle="emailAssin" hidden><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
-                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="emailLogin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para o login do "Meu Espaço"</p></span></label>
-                <div class="input full" data-toggle="emailLogin" hidden><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
               </div>
             </template>
             <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar contato</button>
@@ -246,34 +222,38 @@
 
       <!-- 4. Endereços -->
       <section class="section">
-        <div class="section__head"><div class="section__headleft"><span class="section__num">4</span><h2 class="section__title">Endereços</h2></div></div>
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Endereços</h2></div></div>
         <div class="section__body">
           <div class="repeater repeater--addr" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="formgrid">
-                  <div class="input"><div class="input__label"><p>CEP</p></div><div class="input__field"><input class="input__control" value="05305-000" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
-                  <div class="input full"><div class="input__label"><p>Logradouro</p></div><div class="input__field"><input class="input__control" value="Av. Imperatriz Leopoldina" /></div></div>
-                  <div class="input"><div class="input__label"><p>Número</p></div><div class="input__field"><input class="input__control" value="1200" /></div></div>
-                  <div class="input"><div class="input__label"><p>Bairro</p></div><div class="input__field"><input class="input__control" value="Vila Leopoldina" /></div></div>
-                  <div class="input"><div class="input__label"><p>Cidade</p></div><div class="input__field"><input class="input__control" value="São Paulo" /></div></div>
-                  <div class="input"><div class="input__label"><p>UF</p></div><div class="input__field"><input class="input__control" value="SP" /></div></div>
+                <div class="formgrid formgrid--4">
+                  <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input col-2"><div class="input__label"><p>Logradouro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Logradouro" /></div></div>
+                  <div class="input"><div class="input__label"><p>País</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Brasil</option><option>Outro</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Estado</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>SP</option><option>RJ</option><option>MG</option><option>ES</option><option>PR</option><option>SC</option><option>RS</option><option>BA</option><option>Outros</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Cidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>São Paulo</option><option>Guarulhos</option><option>Campinas</option><option>Outra</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
+                  <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
+                  <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="formgrid">
-                  <div class="input"><div class="input__label"><p>CEP</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
-                  <div class="input full"><div class="input__label"><p>Logradouro</p></div><div class="input__field"><input class="input__control" placeholder="Rua / avenida" /></div></div>
-                  <div class="input"><div class="input__label"><p>Número</p></div><div class="input__field"><input class="input__control" placeholder="Nº" /></div></div>
-                  <div class="input"><div class="input__label"><p>Bairro</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
-                  <div class="input"><div class="input__label"><p>Cidade</p></div><div class="input__field"><input class="input__control" placeholder="Cidade" /></div></div>
-                  <div class="input"><div class="input__label"><p>UF</p></div><div class="input__field"><input class="input__control" placeholder="UF" /></div></div>
+                <div class="formgrid formgrid--4">
+                  <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input col-2"><div class="input__label"><p>Logradouro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Logradouro" /></div></div>
+                  <div class="input"><div class="input__label"><p>País</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Brasil</option><option>Outro</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Estado</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>SP</option><option>RJ</option><option>MG</option><option>ES</option><option>PR</option><option>SC</option><option>RS</option><option>BA</option><option>Outros</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Cidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>São Paulo</option><option>Guarulhos</option><option>Campinas</option><option>Outra</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
+                  <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
+                  <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
                 </div>
               </div>
             </template>
@@ -282,21 +262,200 @@
         </div>
       </section>
 
-      <!-- 5. LGPD (consentimentos) -->
-      <section class="section">
-        <div class="section__head"><div class="section__headleft"><span class="section__num">5</span><h2 class="section__title">Privacidade e consentimentos (LGPD)</h2></div></div>
-        <div class="section__body">
-          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Execução de contrato (base legal obrigatória)</p><p class="checkbox-card__desc">Não revogável enquanto houver contrato vigente — RN01/E01 de F-LOC-33.</p></span></label>
-          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Comunicações transacionais (cobrança, avisos de contrato)</p></span></label>
-          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Comunicações de marketing e campanhas</p><p class="checkbox-card__desc">Opt-out não bloqueia comunicações transacionais obrigatórias (RN01 de F-LOC-26).</p></span></label>
-        </div>
-      </section>
-
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
   </div>
 </div>
 
+<!-- Modais de salvar cadastro -->
+<div class="modal confirm-modal" id="modalSucesso" data-ds="modal" style="max-width:440px">
+  <div class="modal__header"><h2 class="modal__title">Cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="savemsg savemsg--center savemsg--ok">
+      <span class="savemsg__icon savemsg__icon--sq"><svg><use href="#ico-check"/></svg></span>
+      <p class="savemsg__title">Cadastro realizado com sucesso</p>
+      <p class="savemsg__text">O locatário foi cadastrado. Você pode completar/editar os dados ou voltar à listagem.</p>
+    </div>
+  </div>
+  <div class="modal__footer modal__footer--split"><a class="btn btn--outline" href="lista.html">Ir para a listagem</a><a class="btn btn--primary" href="cadastro.html?editar=1">Completar dados</a></div>
+</div>
+
+<div class="modal confirm-modal" id="modalPendente" data-ds="modal" style="max-width:440px">
+  <div class="modal__header"><h2 class="modal__title">Cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="savemsg savemsg--center savemsg--warn">
+      <span class="savemsg__icon savemsg__icon--sq"><svg><use href="#ico-information"/></svg></span>
+      <p class="savemsg__title">Existem campos que precisam ser completados</p>
+      <p class="savemsg__text savemsg__text--count"></p>
+    </div>
+  </div>
+  <div class="modal__footer modal__footer--stack"><button class="btn btn--primary" id="btnRevisar">Revisar campos</button></div>
+</div>
+
 <script src="../../ds/ds.js" defer></script>
+<script>
+  /* Interações específicas do cadastro (independem de id — sobrevivem à fusão) */
+  (function () {
+    // 1) Campos condicionais por nacionalidade (Brasileira / Estrangeira)
+    document.querySelectorAll('[data-nac]').forEach(function (sel) {
+      var scope = sel.closest('.tabpanel') || document;
+      function apply() {
+        scope.querySelectorAll('[data-nac-show]').forEach(function (el) {
+          el.hidden = (el.getAttribute('data-nac-show') !== sel.value);
+        });
+      }
+      sel.addEventListener('change', apply); apply();
+    });
+    // 2) Revelar campo por checkbox (IBS/CBS -> CNPJ)
+    document.querySelectorAll('[data-reveal]').forEach(function (cb) {
+      var scope = cb.closest('.section') || document;
+      var t = scope.querySelector('.' + cb.getAttribute('data-reveal'));
+      function apply() { if (t) t.hidden = !cb.checked; }
+      cb.addEventListener('change', apply); apply();
+    });
+    // 3) E-mails derivados: sempre visíveis, com opção de espelhar o principal.
+    //    Delegação + ds:add para funcionar também em contatos adicionados.
+    function syncMail(cb) {
+      var row = cb.closest('.mailrow'); if (!row) return;
+      var card = cb.closest('.repeater__item') || document;
+      var main = card.querySelector('.js-mailmain');
+      var input = row.querySelector('.js-mailsync-input'); if (!input) return;
+      var field = input.closest('.input__field');
+      if (cb.checked) {
+        input.value = main ? main.value : '';
+        input.readOnly = true;
+        if (field) field.classList.add('is-synced');
+      } else {
+        input.readOnly = false;
+        if (field) field.classList.remove('is-synced');
+      }
+    }
+    document.addEventListener('change', function (e) {
+      if (e.target && e.target.matches && e.target.matches('[data-mailsync]')) syncMail(e.target);
+    });
+    document.addEventListener('input', function (e) {
+      var main = e.target;
+      if (!main || !main.matches || !main.matches('.js-mailmain')) return;
+      var card = main.closest('.repeater__item') || document;
+      card.querySelectorAll('[data-mailsync]').forEach(function (cb) {
+        if (cb.checked) { var row = cb.closest('.mailrow'); var i = row && row.querySelector('.js-mailsync-input'); if (i) i.value = main.value; }
+      });
+    });
+    document.addEventListener('ds:add', function (e) {
+      if (e.target && e.target.querySelectorAll) e.target.querySelectorAll('[data-mailsync]').forEach(syncMail);
+    });
+    document.querySelectorAll('[data-mailsync]').forEach(syncMail);
+
+    // 4) Salvar cadastro: valida obrigatórios visíveis (aba ativa + seções compartilhadas) e abre modal
+    function requiredMissing() {
+      var miss = [];
+      document.querySelectorAll('.input').forEach(function (inp) {
+        if (!inp.querySelector('.input__req')) return;              // não é obrigatório
+        if (inp.hidden || inp.offsetParent === null) return;        // escondido ou em aba inativa
+        var ctrl = inp.querySelector('.input__control');
+        if (ctrl && !String(ctrl.value || '').trim()) miss.push(inp);
+      });
+      return miss;
+    }
+    var STORE_KEY = 'locatarioCadastro';
+    function collectSections() {
+      var nodes = [];
+      var active = document.querySelector('.tabpanel.is-active');
+      if (active) active.querySelectorAll(':scope > section.section').forEach(function (s) { nodes.push(s); });
+      document.querySelectorAll('.content > section.section').forEach(function (s) { nodes.push(s); });
+      return nodes.map(function (sec) {
+        var t = sec.querySelector('.section__title');
+        var items = [];
+        sec.querySelectorAll('.input').forEach(function (inp) {
+          if (inp.hidden || inp.offsetParent === null) return;
+          var lbl = inp.querySelector('.input__label p');
+          var ctrl = inp.querySelector('.input__control');
+          if (lbl && ctrl && String(ctrl.value || '').trim()) items.push({ label: lbl.textContent.trim(), value: ctrl.value });
+        });
+        return { title: t ? t.textContent.trim() : '', items: items };
+      }).filter(function (s) { return s.items.length; });
+    }
+    function storeCadastro() {
+      try {
+        var vals = [];
+        document.querySelectorAll('.input__control').forEach(function (c) { vals.push(c.value); });
+        var active = document.querySelector('.tabpanel.is-active');
+        localStorage.setItem(STORE_KEY, JSON.stringify({
+          tipo: active && active.id === 'tab-pf' ? 'PF' : 'PJ',
+          vals: vals,
+          dados: collectSections()
+        }));
+      } catch (e) {}
+    }
+    var btnSalvar = document.getElementById('btnSalvar');
+    if (btnSalvar) btnSalvar.addEventListener('click', function () {
+      document.querySelectorAll('.input--error').forEach(function (e) { e.classList.remove('input--error'); });
+      var miss = requiredMissing();
+      if (miss.length) {
+        miss.forEach(function (i) { i.classList.add('input--error'); });
+        var c = document.querySelector('.savemsg__text--count');
+        if (c) c.textContent = miss.length === 1
+          ? '1 campo obrigatório está vazio.'
+          : miss.length + ' campos obrigatórios estão vazios.';
+        DS.openModal('modalPendente');
+      } else {
+        storeCadastro();
+        DS.openModal('modalSucesso');
+      }
+    });
+    var btnRevisar = document.getElementById('btnRevisar');
+    if (btnRevisar) btnRevisar.addEventListener('click', function () {
+      DS.closeModal(document.getElementById('modalPendente'));
+      var first = document.querySelector('.input--error');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // 5) Modo edição (?editar=1): sem seletor PF/PJ, campos preenchidos e docs travados
+    if (/[?&]editar=1/.test(location.search)) {
+      var stored = null;
+      try { stored = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
+      var h = document.querySelector('.pagehead__title'); if (h) h.textContent = 'Editar locatário';
+      var bc = document.querySelector('.breadcrumb__item--current'); if (bc) bc.textContent = 'Editar locatário';
+      if (btnSalvar) btnSalvar.textContent = 'Salvar alterações';
+
+      // Sem seletor PF/PJ: mostra só o tipo cadastrado
+      var tipo = (stored && stored.tipo) ? stored.tipo : 'PJ';
+      var tabbar = document.querySelector('.tabbar'); if (tabbar) tabbar.hidden = true;
+      document.querySelectorAll('.tabpanel').forEach(function (p) {
+        p.classList.toggle('is-active', p.id === (tipo === 'PF' ? 'tab-pf' : 'tab-pj'));
+      });
+
+      // Preencher com o que foi digitado (ou exemplo, se não houver armazenado)
+      if (stored && stored.vals) {
+        document.querySelectorAll('.input__control').forEach(function (c, i) {
+          if (stored.vals[i] != null) c.value = stored.vals[i];
+        });
+      } else {
+        document.querySelectorAll('[data-edit]').forEach(function (el) {
+          var c = el.classList.contains('input__control') ? el : el.querySelector('.input__control');
+          if (c) c.value = el.getAttribute('data-edit');
+        });
+      }
+
+      // Tipo de locatário no 1º bloco
+      var ap = document.querySelector('.tabpanel.is-active');
+      var tf = ap && ap.querySelector('.js-tipo-field');
+      if (tf) { tf.hidden = false; var ti = tf.querySelector('.input__control'); if (ti) ti.value = (tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'); }
+
+      document.querySelectorAll('.js-edit-only').forEach(function (el) { el.hidden = false; });
+      document.querySelectorAll('.js-lock-doc').forEach(function (c) {
+        c.readOnly = true;
+        var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
+        var wrap = c.closest('.input');
+        if (wrap && !wrap.querySelector('.lockmsg')) {
+          var p = document.createElement('p');
+          p.className = 'input__help lockmsg';
+          p.textContent = 'Não editável';
+          wrap.appendChild(p);
+        }
+      });
+    }
+  })();
+</script>
 </body>
 </html>

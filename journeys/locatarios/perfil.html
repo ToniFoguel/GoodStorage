@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Perfil 360 do locatário (layout base) · GoodStorage</title>
+<title>Exibição do locatário · GoodStorage</title>
 <link rel="stylesheet" href="../../tokens/tokens.css" />
 <link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
 <link rel="stylesheet" href="../../components/avatar/avatar.css" />
@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="../../components/profile-hero/profile-hero.css" />
 <link rel="stylesheet" href="../../components/modal/modal.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
+<style>/* abas removidas: mostra o conteúdo de todas as seções */ .content .tabpanel { display: block; }</style>
 <link rel="stylesheet" href="locatarios.css" />
 </head>
 <body>
@@ -41,6 +42,8 @@
   <symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
   <symbol id="ri-checkbox-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></symbol>
   <symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+  <symbol id="ico-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ico-trash" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
   <symbol id="ico-information" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
   <symbol id="ico-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
   <symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
@@ -89,331 +92,122 @@
 
     <div class="content">
       <div class="pagehead">
-        <div class="pagehead__text"><h1 class="pagehead__title title-h1">Perfil 360</h1></div>
+        <div class="pagehead__text"><h1 class="pagehead__title title-h1">Exibição</h1></div>
         <div class="pagehead__actions">
           <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
-          <button class="btn btn--outline" data-ds-open="modalOcorrencia">Nova ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span></button>
-          <button class="btn btn--primary" data-ds-open="modalTransferencia">Transferir box</button>
+          <button type="button" class="btn btn--destructive" id="btnAtivacao">Inativar</button>
+          <a class="btn btn--primary" href="cadastro.html?editar=1"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-pencil"/></svg></span>Editar</a>
           <div class="dropdown" data-ds="dropdown" style="position:relative">
-            <button class="btn btn--icon-border dropdown__trigger" aria-label="Ações do cadastro" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
+            <button class="btn btn--icon-border dropdown__trigger" aria-label="Mais ações" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
             <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalInativar"><p class="dropdown__nav-text">Inativar locatário</p></div>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalBlacklist"><p class="dropdown__nav-text">Bloquear / gerenciar restrições</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalBloquear"><p class="dropdown__nav-text">Bloquear / restrições</p></div>
               <div class="dropdown__item dropdown__item--nav" data-ds-open="modalExcluir"><p class="dropdown__nav-text">Excluir cadastro</p></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Hero do perfil (componente profile-hero) -->
-      <section class="section">
-        <div class="section__body">
-          <div class="profile-hero">
-            <div class="avatar avatar--text"><p class="avatar__label text-label-regular">MD</p></div>
-            <div class="profile-hero__meta">
-              <p class="profile-hero__name">Marina Duarte</p>
-              <p class="profile-hero__sub">PF · •••.456.789-00 · cliente desde mar/2021 · Lapa 0</p>
-              <div class="profile-hero__flags">
-                <span class="badge badge--secondary">Ativo</span>
-                <span class="badge badge--secondary-icon"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-checkbox-circle"/></svg></span>Sempre adimplente</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- KPIs (componente kpi) -->
-      <div class="kpis" style="margin-bottom:var(--xl)">
-        <div class="kpi"><p class="kpi__label">Tempo de casa</p><p class="kpi__value">4a 5m</p></div>
-        <div class="kpi"><p class="kpi__label">Boxes ativos</p><p class="kpi__value">1</p></div>
-        <div class="kpi"><p class="kpi__label">Adimplência</p><p class="kpi__value">100%</p></div>
-        <div class="kpi"><p class="kpi__label">Seguro</p><p class="kpi__value kpi__value--sm">MAPFRE · R$ 1.500</p></div>
-      </div>
-
-      <!-- Abas do perfil (segmented + painéis) -->
-      <div class="tabbar">
-        <div class="segmented" data-ds="segmented">
-          <button class="segmented__item segmented__item--active" data-value="ident" data-tab="tab-ident">Identificação</button>
-          <button class="segmented__item" data-value="boxes" data-tab="tab-boxes">Boxes &amp; contratos</button>
-          <button class="segmented__item" data-value="financeiro" data-tab="tab-financeiro">Financeiro</button>
-          <button class="segmented__item" data-value="docs" data-tab="tab-docs">Documentos</button>
-          <button class="segmented__item" data-value="seguro" data-tab="tab-seguro">Seguro</button>
-          <button class="segmented__item" data-value="restricoes" data-tab="tab-restricoes">Blacklist/Restrições</button>
-          <button class="segmented__item" data-value="hist" data-tab="tab-hist">Histórico</button>
-        </div>
-      </div>
-
-      <!-- Painel: Identificação -->
-      <div class="tabpanel is-active" id="tab-ident">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Dados cadastrais</h2></div><a class="btn btn--icon-border" href="cadastro.html" aria-label="Editar"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-pencil"/></svg></span></a></div>
-          <div class="section__body"><dl class="dados">
-            <div class="data-item"><p class="data-item__label">Nome</p><p class="data-item__value">Marina Duarte</p></div>
-            <div class="data-item"><p class="data-item__label">CPF</p><p class="data-item__value">•••.456.789-00</p></div>
-            <div class="data-item"><p class="data-item__label">Data de nascimento</p><p class="data-item__value">02/09/1988</p></div>
-            <div class="data-item"><p class="data-item__label">Nacionalidade</p><p class="data-item__value">Brasileira</p></div>
-            <div class="data-item"><p class="data-item__label">Cliente desde</p><p class="data-item__value">mar/2021</p></div>
-            <div class="data-item"><p class="data-item__label">Tipo</p><span class="badge badge--default">Pessoa Física</span></div>
-          </dl></div>
-        </section>
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Contatos</h2></div></div>
-          <div class="section__body">
-            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ico-information"/></svg></span><div><p class="ocard__title">Marina Duarte · Principal</p><p class="cl-mail">marina.duarte@email.com · (11) 98888-1200</p></div></div></div>
-          </div>
-        </section>
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><span class="section__num">3</span><h2 class="section__title">Endereços</h2></div></div>
-          <div class="section__body">
-            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Cobrança</p><p class="cl-mail">Rua Guaicurus, 340 · Lapa · São Paulo/SP · 05033-001</p></div></div></div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Painel: Boxes & contratos -->
-      <div class="tabpanel" id="tab-boxes">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Boxes &amp; contratos</h2></div><span class="section__pill">1 ativo(s) · 1 encerrado(s)</span></div>
-          <div class="section__body">
-            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Box B-214 · 4 m²</p><p class="cl-mail">Contrato CT-3391 · desde 03/2021</p></div></div><span class="badge badge--success">Ativo</span></div>
-            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Box B-102 · 2 m²</p><p class="cl-mail">Contrato CT-2210 · encerrado em 02/2021</p></div></div><span class="badge badge--outline">Encerrado</span></div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Painel: Financeiro -->
-      <div class="tabpanel" id="tab-financeiro">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Financeiro (agregado)</h2></div><span class="badge badge--success">Sem atrasos</span></div>
-          <div class="section__body">
-            <dl class="dados">
-              <div class="data-item"><p class="data-item__label">Forma de cobrança</p><p class="data-item__value">Cartão de crédito · recorrência</p></div>
-              <div class="data-item"><p class="data-item__label">Situação</p><p class="data-item__value">Em dia · próxima 05/09</p></div>
-            </dl>
-            <p class="cl-mail">Somente leitura — dado de propriedade do módulo de Contratos.</p>
-          </div>
-        </section>
-      </div>
-
-      <!-- Painel: Documentos -->
-      <div class="tabpanel" id="tab-docs">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div><button class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Enviar documento</button></div>
-          <div class="section__body">
-            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-file-text"/></svg></span><div><p class="ocard__title">RG.pdf</p><p class="cl-mail">v1 · enviado em 04/03/2021</p></div></div><span class="badge badge--outline">Válido</span></div>
-            <p class="cl-mail">Aceitos: PNG, JPG, JPEG, WEBP, PDF · até 5 MB por arquivo.</p>
-          </div>
-        </section>
-      </div>
-
-      <!-- Painel: Seguro -->
-      <div class="tabpanel" id="tab-seguro">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Seguro vigente</h2></div><button class="btn btn--outline" data-ds-open="modalSeguro">Trocar seguro</button></div>
-          <div class="section__body"><dl class="dados">
-            <div class="data-item"><p class="data-item__label">Modalidade</p><span class="badge badge--success">MAPFRE (parceira)</span></div>
-            <div class="data-item"><p class="data-item__label">Plano / cobertura</p><p class="data-item__value">Essencial · até R$ 1.500</p></div>
-            <div class="data-item"><p class="data-item__label">Valor declarado dos bens</p><p class="data-item__value">R$ 1.500,00</p></div>
-            <div class="data-item"><p class="data-item__label">Vínculo</p><p class="data-item__value">Box B-214</p></div>
-          </dl></div>
-        </section>
-      </div>
-
-      <!-- Painel: Blacklist / Restrições -->
-      <div class="tabpanel" id="tab-restricoes">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Blacklist / Restrições</h2></div><button class="btn btn--destructive" data-ds-open="modalBlacklist">Bloquear locatário</button></div>
-          <div class="section__body">
-            <div class="empty">
-              <div class="empty__inner"><div class="empty__heading">
-                <span class="empty__icon"><svg><use href="#ri-lock"/></svg></span>
-                <p class="empty__title">Nenhuma restrição ativa</p>
-                <p class="cl-mail">Uma restrição bloqueia o acesso físico (biometria facial) da pessoa — não impede novo contrato.</p>
-              </div></div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Painel: Histórico -->
-      <div class="tabpanel" id="tab-hist">
-        <section class="section">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico do locatário</h2></div><button class="btn btn--outline" data-ds-open="modalOcorrencia">Nova ocorrência</button></div>
-          <div class="section__body">
-            <div class="hist">
-              <div class="hist-item"><span class="hist-ico ok"><svg><use href="#ico-circle-check"/></svg></span><div class="hist-body"><div class="hist-top"><b>Pagamento confirmado</b><span class="hist-when">05/08/2026 08:30</span></div><p class="hist-meta">Mensalidade Box B-214</p></div></div>
-              <div class="hist-item"><span class="hist-ico"><svg><use href="#ri-file-text"/></svg></span><div class="hist-body"><div class="hist-top"><b>Documento enviado · RG</b><span class="hist-when">04/03/2021 10:05</span></div><p class="hist-meta">Por Carol Ferreira</p></div></div>
-              <div class="hist-item"><span class="hist-ico"><svg><use href="#ico-alert"/></svg></span><div class="hist-body"><div class="hist-top"><b>Move-in Box B-214</b><span class="hist-when">03/03/2021 14:10</span></div><p class="hist-meta">Contrato CT-3391</p></div></div>
-            </div>
-          </div>
-        </section>
-      </div>
+      <div id="exibicaoBody"></div>
 
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: Inativar locatário -->
+<!-- Modais de confirmação (eventos: data + motivo) -->
 <div class="modal confirm-modal" id="modalInativar" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Inativar locatário</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <p class="cl-mail">Não é permitido inativar com contrato ativo ou pendência financeira aberta. Os dados não são apagados e a reativação reconstitui todo o histórico.</p>
-    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: sem contrato ativo há 8 meses, sem interação recente."></textarea></div></div>
+    <div class="input full"><div class="input__label"><p>Data da inativação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da inativação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da inativação"></textarea></div></div>
   </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalInativar'))">Inativar</button></div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmInativar">Inativar</button></div>
 </div>
 
-<!-- MODAL: Blacklist / Restrições (abas Incluir/Remover + campos) -->
-<div class="modal confirm-modal" id="modalBlacklist" data-ds="modal" style="max-width:640px">
-  <div class="modal__header"><h2 class="modal__title">Blacklist / Restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+<div class="modal confirm-modal" id="modalBloquear" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Bloquear / restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="tabbar">
-      <div class="segmented" data-ds="segmented">
-        <button class="segmented__item segmented__item--active" data-value="incluir" data-tab="bl-incluir">Incluir restrição</button>
-        <button class="segmented__item" data-value="remover" data-tab="bl-remover">Remover restrição</button>
-      </div>
-    </div>
-
-    <div class="tabpanel is-active" id="bl-incluir">
-      <div class="banner banner--error"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Ação sensível</p><p class="banner__text">O bloqueio é registrado com responsável, data e motivo. A remoção exige nova solicitação e aprovação.</p></div></div>
-      <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Também sinalizar locatários correlacionados</p><p class="cl-mail">Além de bloquear o acesso facial desta pessoa, sinaliza contatos vinculados — evita uso de "laranja".</p></span></label>
-      <div class="formgrid">
-        <div class="input">
-          <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
-          <div class="select" data-ds="select" data-ds-float>
-            <div class="select__field"><p class="select__value select__value--filled">Ocorrência policial</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
-            <div class="select__dropdown"><div class="select__list">
-              <div class="select__item select__item--active"><p class="select__item-text">Ocorrência policial</p></div>
-              <div class="select__item"><p class="select__item-text">Fraude / documento falso</p></div>
-              <div class="select__item"><p class="select__item-text">Comportamento de risco</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="input input--readonly"><div class="input__label"><p>Faciais vinculadas a bloquear</p></div><div class="input__field"><input class="input__control" value="2 de 4 cadastradas" readonly /></div></div>
-        <div class="input full"><div class="input__label"><p>Detalhe / referência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Nº do B.O., contexto, etc."></textarea></div></div>
-      </div>
-    </div>
-
-    <div class="tabpanel" id="bl-remover">
-      <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-lock"/></svg></span><div><p class="ocard__title">Restrição ativa desde 03/02/2023</p><p class="cl-mail">Motivo: ocorrência policial · registrada por Kelly Rocha</p></div></div><span class="badge badge--destructive">Ativa</span></div>
-      <div class="formgrid">
-        <div class="input full"><div class="input__label"><p>Motivo da remoção</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Justifique a remoção — o histórico original permanece imutável."></textarea></div></div>
-      </div>
-    </div>
+    <div class="input full"><div class="input__label"><p>Data do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo do bloqueio / restrição"></textarea></div></div>
   </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBlacklist'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBlacklist'))">Bloquear locatário</button></div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Bloquear</button></div>
 </div>
 
-<!-- MODAL: Excluir cadastro -->
 <div class="modal confirm-modal" id="modalExcluir" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Excluir cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Exclusão lógica, nunca física</p><p class="banner__text">O registro deixa de ser operável mas permanece auditável. Dados sob obrigação legal de retenção não são removidos. Bloqueada se houver vínculos ativos.</p></div></div>
-    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Justifique a exclusão lógica do cadastro."></textarea></div></div>
+    <div class="input full"><div class="input__label"><p>Data da exclusão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da exclusão</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da exclusão do cadastro"></textarea></div></div>
   </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir logicamente</button></div>
-</div>
-
-<!-- MODAL: Registrar ocorrência -->
-<div class="modal confirm-modal" id="modalOcorrencia" data-ds="modal" style="max-width:600px">
-  <div class="modal__header"><h2 class="modal__title">Registrar ocorrência</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="formgrid">
-      <div class="input">
-        <div class="input__label"><p>Tipo de ocorrência</p><p class="input__req">*</p></div>
-        <div class="select" data-ds="select" data-ds-float>
-          <div class="select__field"><p class="select__value select__value--filled">Quebra de cadeado</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
-          <div class="select__dropdown"><div class="select__list">
-            <div class="select__item select__item--active"><p class="select__item-text">Quebra de cadeado</p></div>
-            <div class="select__item"><p class="select__item-text">Sinistro</p></div>
-            <div class="select__item"><p class="select__item-text">Arrombamento</p></div>
-            <div class="select__item"><p class="select__item-text">Reclamação / atendimento</p></div>
-            <div class="select__item"><p class="select__item-text">Aviso de move-out</p></div>
-          </div></div>
-        </div>
-      </div>
-      <div class="input">
-        <div class="input__label"><p>Box relacionado</p></div>
-        <div class="select" data-ds="select" data-ds-float>
-          <div class="select__field"><p class="select__value">—</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
-          <div class="select__dropdown"><div class="select__list">
-            <div class="select__item"><p class="select__item-text">—</p></div>
-            <div class="select__item"><p class="select__item-text">B-214 · 4 m²</p></div>
-          </div></div>
-        </div>
-      </div>
-      <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo — vira registro rastreável (quem/quando/por quê)."></textarea></div><p class="input__help">Motivo é obrigatório em qualquer movimentação (rastreabilidade).</p></div>
-      <div class="input full"><div class="input__label"><p>Anexos</p></div>
-        <button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo</button>
-        <div class="taglist" style="margin-top:var(--md)"><span class="chip">boletim-ocorrencia.pdf</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalOcorrencia'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalOcorrencia'))">Registrar ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"/></svg></span></button></div>
-</div>
-
-<!-- MODAL: Transferência de box -->
-<div class="modal confirm-modal" id="modalTransferencia" data-ds="modal" style="max-width:600px">
-  <div class="modal__header"><h2 class="modal__title">Transferência de box</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="formgrid">
-      <div class="input input--readonly"><div class="input__label"><p>Box atual</p></div><div class="input__field"><input class="input__control" value="B-214 · 4 m² (Médio)" readonly /></div></div>
-      <div class="input">
-        <div class="input__label"><p>Novo box</p><p class="input__req">*</p></div>
-        <div class="select" data-ds="select" data-ds-float>
-          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
-          <div class="select__dropdown"><div class="select__list">
-            <div class="select__item"><p class="select__item-text">B-307 · Pequeno (2 m²)</p></div>
-            <div class="select__item"><p class="select__item-text">B-321 · Grande (10 m²)</p></div>
-          </div></div>
-        </div>
-        <p class="input__help">Só é permitido mover para a categoria imediatamente adjacente.</p>
-      </div>
-      <div class="input full"><div class="input__label"><p>Motivo da transferência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: upsell, retenção, necessidade do cliente…"></textarea></div></div>
-    </div>
-    <p class="section__title" style="margin:var(--sm) 0 0">Impactos</p>
-    <dl class="dados">
-      <div class="data-item"><p class="data-item__label">Nova capa de contrato</p><span class="badge badge--yellow">Será gerada</span></div>
-      <div class="data-item"><p class="data-item__label">Seguro</p><span class="badge badge--yellow">Novo vínculo + valor declarado</span></div>
-    </dl>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalTransferencia'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalTransferencia'))">Gerar transferência</button></div>
-</div>
-
-<!-- MODAL: Trocar / registrar seguro -->
-<div class="modal confirm-modal" id="modalSeguro" data-ds="modal" style="max-width:600px">
-  <div class="modal__header"><h2 class="modal__title">Trocar / registrar seguro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <span class="fieldlbl">Modalidade *</span>
-    <div class="tabbar">
-      <div class="segmented" data-ds="segmented">
-        <button class="segmented__item segmented__item--active" data-value="parceira" data-tab="mseg-parceira">Parceira (MAPFRE)</button>
-        <button class="segmented__item" data-value="proprio" data-tab="mseg-proprio">Próprio</button>
-        <button class="segmented__item" data-value="sem" data-tab="mseg-sem">Sem seguro</button>
-      </div>
-    </div>
-    <div class="tabpanel is-active" id="mseg-parceira">
-      <div class="formgrid">
-        <div class="input"><div class="input__label"><p>Plano</p></div><div class="input__field"><select class="input__control"><option>Cobertura R$ 1.500</option><option>Cobertura R$ 3.000</option><option>Cobertura R$ 5.000</option></select></div></div>
-        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
-      </div>
-    </div>
-    <div class="tabpanel" id="mseg-proprio">
-      <div class="formgrid">
-        <div class="input"><div class="input__label"><p>Seguradora</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome da seguradora" /></div></div>
-        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
-        <div class="input"><div class="input__label"><p>Vencimento da apólice</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-      </div>
-    </div>
-    <div class="tabpanel" id="mseg-sem">
-      <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Contratação de seguro é obrigatória</p><p class="banner__text">Ao confirmar, o locatário assume total responsabilidade por perdas/danos aos bens armazenados.</p></div></div>
-      <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Declaro que fui informado da obrigatoriedade de seguro e assumo a responsabilidade por não possuir cobertura vigente.</p></span></label>
-    </div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalSeguro'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalSeguro'))">Salvar e gerar capa</button></div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir cadastro</button></div>
 </div>
 
 <script src="../../ds/ds.js" defer></script>
+<script src="locatarios-data.js"></script>
+<script>
+  (function () {
+    // Alternar Ativar / Inativar (vermelho quando "Inativar", secundária quando "Ativar")
+    var btnAtiv = document.getElementById('btnAtivacao');
+    function setAtivo(ativo) {
+      if (!btnAtiv) return;
+      if (ativo) { btnAtiv.textContent = 'Inativar'; btnAtiv.classList.remove('btn--secondary'); btnAtiv.classList.add('btn--destructive'); }
+      else { btnAtiv.textContent = 'Ativar'; btnAtiv.classList.remove('btn--destructive'); btnAtiv.classList.add('btn--secondary'); }
+    }
+    if (btnAtiv) btnAtiv.addEventListener('click', function () {
+      if (btnAtiv.textContent.trim() === 'Inativar') DS.openModal('modalInativar'); // confirma antes
+      else setAtivo(true); // reativar é direto
+    });
+    var btnConfInativar = document.getElementById('btnConfirmInativar');
+    if (btnConfInativar) btnConfInativar.addEventListener('click', function () {
+      DS.closeModal(document.getElementById('modalInativar'));
+      setAtivo(false);
+    });
+
+    var box = document.getElementById('exibicaoBody'); if (!box) return;
+    var stored = null;
+    var id = (location.search.match(/[?&]id=([^&]+)/) || [])[1];
+    if (id && window.LOCATARIOS && window.LOCATARIOS[id]) stored = window.LOCATARIOS[id];
+    else { try { stored = JSON.parse(localStorage.getItem('locatarioCadastro') || 'null'); } catch (e) {} }
+    if ((!stored || !stored.dados || !stored.dados.length) && window.LOCATARIOS) stored = window.LOCATARIOS['1']; // nunca vazio
+    function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
+    if (!stored || !stored.dados || !stored.dados.length) {
+      box.innerHTML = '<section class="section"><div class="section__body"><p class="cl-mail">Nenhum locat\u00e1rio cadastrado ainda. Cadastre um locat\u00e1rio para ver os dados aqui.</p></div></section>';
+      return;
+    }
+    var nome = '';
+    stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
+    if (nome) { var bc = document.querySelector('.breadcrumb__item--current'); if (bc) bc.textContent = nome; }
+    function escAttr(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+    // Mesma diagramação do cadastro
+    function gridClass(title) {
+      if (title === 'Identificação') return stored.tipo === 'PF' ? 'formgrid formgrid--4' : 'formgrid';
+      return 'formgrid formgrid--4'; // Contatos, Endereços
+    }
+    function span(label) {
+      return ['Nome do locatário', 'Nome', 'Logradouro'].indexOf(label) >= 0 ? ' col-2' : '';
+    }
+    function inputRO(label, value, cls) {
+      return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
+    }
+    var html = '';
+    stored.dados.forEach(function (sec) {
+      html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(sec.title) + '</h2></div></div><div class="section__body">';
+      if (sec.reps) {
+        // Representantes: cards read-only (Nome / CPF / Tipo), como no cadastro
+        sec.reps.forEach(function (r, idx) {
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span></div><div class="reprow reprow--3">'
+                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + inputRO('Tipo', r.tipo)
+                + '</div></div>';
+        });
+      } else {
+        html += '<div class="' + gridClass(sec.title) + '">';
+        sec.items.forEach(function (it) { html += inputRO(it.label, it.value, span(it.label)); });
+        html += '</div>';
+      }
+      html += '</div></section>';
+    });
+    box.innerHTML = html;
+  })();
+</script>
 </body>
 </html>

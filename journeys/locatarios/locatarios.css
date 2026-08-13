@@ -12,7 +12,7 @@
 
 /* --- Shell ----------------------------------------------------- */
 .app { display: flex; min-height: 100vh; background: var(--background-bg-main); }
-.sidebar { height: auto; align-self: stretch; flex-shrink: 0; }
+.sidebar { position: sticky; top: 0; align-self: flex-start; height: 100vh; flex-shrink: 0; overflow: hidden; }
 .main { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
 .app svg { fill: currentColor; }
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--lg); padding: var(--lg) var(--3xl) 0; }
@@ -80,6 +80,32 @@
 .repeater__items { display: flex; flex-direction: column; gap: 0; }
 .reprow--2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
 .reprow .input { min-width: 0; }
+/* Mensagem do modal de salvar (sucesso / pendências) */
+.savemsg { display: flex; align-items: flex-start; gap: var(--md); }
+.savemsg--center { flex-direction: column; align-items: center; text-align: center; gap: var(--lg); padding: var(--md) 0; }
+.savemsg__icon { flex: none; width: 40px; height: 40px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; }
+.savemsg__icon svg { width: 24px; height: 24px; }
+.savemsg__icon--sq { width: 56px; height: 56px; border-radius: 10px; border: 3px solid currentColor; background: transparent; }
+.savemsg__icon--sq svg { width: 30px; height: 30px; }
+.savemsg--ok .savemsg__icon { background: var(--background-success, #e6f7ec); color: var(--content-success, #1a9e57); }
+.savemsg--ok .savemsg__icon--sq { background: transparent; color: #9ac400; }
+.savemsg--warn .savemsg__icon { background: var(--background-warning, #fff4e6); color: var(--background-primary, #ff8400); }
+.savemsg--warn .savemsg__icon--sq { background: transparent; color: var(--background-primary, #ff8400); }
+.savemsg__title { margin: 0; font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-h5, 18px); color: var(--content-title); }
+.savemsg__text { margin: 4px 0 0; font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); }
+.savemsg--center .savemsg__text { margin: 0; }
+.modal__footer--stack { flex-direction: column; align-items: stretch; gap: var(--sm); }
+.modal__footer--stack .btn { width: 100%; justify-content: center; }
+.modal__footer--split { display: flex; justify-content: space-between; align-items: center; gap: var(--md); }
+/* E-mails derivados do contato: campo + opção de espelhar o principal */
+.mailrow .mailsync { display: inline-flex; align-items: center; gap: var(--sm); margin-top: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; }
+.mailrow .mailsync input { width: 16px; height: 16px; accent-color: var(--background-primary); }
+.input__field.is-synced, .input__field.is-locked { background: var(--background-bg-aux); }
+.input__field.is-synced .input__control { color: var(--content-disable); }
+.input__field.is-locked { border-style: dashed; }
+.input__field.is-readonly { background: var(--background-bg-aux); }
+.input__field.is-readonly .input__control { cursor: default; }
+.lockmsg { color: var(--content-disable); }
 /* Cada representante = 1 card (aba + Nome/CPF/Tipo + documento comprobatório) */
 .reprow--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .repeater--rep .repeater__items { counter-reset: rep; }
@@ -95,6 +121,10 @@
 /* --- Formulário: grade de campos ------------------------------- */
 .formgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lg) var(--xl); align-items: start; }
 .formgrid .input.full { grid-column: 1 / -1; }
+/* Variante de 4 colunas (Identificação PF) */
+.formgrid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.formgrid--4 .full { grid-column: 1 / -1; }
+.formgrid--4 .col-2 { grid-column: span 2; }
 .formgrid .input__control { width: 100%; }
 textarea.input__control { min-height: 84px; resize: vertical; }
 
