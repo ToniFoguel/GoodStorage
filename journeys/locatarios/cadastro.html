@@ -168,8 +168,15 @@
                 </div>
                 <div class="repdoc js-edit-only">
                   <div class="listrow__head"><span class="fieldlbl">Documento comprobatório com foto</span></div>
-                  <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
-                  <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+                  <div class="docfile js-doc-current">
+                    <span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span>
+                    <span class="docfile__name">rg-marina-alves.jpg</span>
+                    <button type="button" class="icon-btn js-doc-del" aria-label="Excluir imagem"><svg><use href="#ico-trash"/></svg></button>
+                  </div>
+                  <div class="js-doc-add" hidden>
+                    <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
+                    <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -307,6 +314,15 @@
     <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da exclusão</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da exclusão do cadastro"></textarea></div></div>
   </div>
   <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir cadastro</button></div>
+</div>
+
+<div class="modal confirm-modal" id="modalTrocaImagem" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Trocar imagem do documento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data da troca</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da troca</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da troca do documento"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalTrocaImagem'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmTroca">Excluir imagem</button></div>
 </div>
 
 <!-- Modais de salvar cadastro -->
@@ -467,6 +483,22 @@
     if (btnConfInativar) btnConfInativar.addEventListener('click', function () {
       DS.closeModal(document.getElementById('modalInativar'));
       setAtivo(false);
+    });
+
+    // Trocar/excluir imagem comprobatória do representante (evento de log: data + motivo)
+    var pendingDoc = null;
+    document.addEventListener('click', function (e) {
+      var del = e.target.closest && e.target.closest('.js-doc-del');
+      if (del) { pendingDoc = del.closest('.repdoc'); DS.openModal('modalTrocaImagem'); }
+    });
+    var btnConfTroca = document.getElementById('btnConfirmTroca');
+    if (btnConfTroca) btnConfTroca.addEventListener('click', function () {
+      DS.closeModal(document.getElementById('modalTrocaImagem'));
+      if (pendingDoc) {
+        var cur = pendingDoc.querySelector('.js-doc-current'); if (cur) cur.hidden = true;
+        var add = pendingDoc.querySelector('.js-doc-add'); if (add) add.hidden = false;
+        pendingDoc = null;
+      }
     });
 
     // 5) Modo edição (?editar=1): sem seletor PF/PJ, campos preenchidos e docs travados
