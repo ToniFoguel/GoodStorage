@@ -115,12 +115,22 @@
 .repeater--addr .repeater__item { counter-increment: addr; }
 .addr-n::before { content: counter(addr); }
 .repdoc { display: flex; flex-direction: column; gap: var(--md); border-top: var(--thin) solid var(--border-default); margin-top: var(--sm); padding-top: var(--md); }
+/* Só aparece no fluxo de edição (body.is-edit) */
+.js-edit-only { display: none; }
+body.is-edit .js-edit-only { display: revert; }
+body.is-edit .repdoc.js-edit-only { display: flex; }
+/* Arquivo comprobatório na Exibição (imagem enviada) */
+.docfile { display: flex; align-items: center; gap: var(--md); border: var(--thin) solid var(--border-default); padding: var(--md); }
+.docfile__ico { flex: none; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: var(--background-bg-aux); color: var(--content-text); }
+.docfile__ico svg { width: 22px; height: 22px; }
+.docfile__name { font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); }
 .reprow .icon-btn { align-self: end; width: 40px; height: 40px; }
 .listrow__head .icon-btn { width: 40px; height: 40px; }
 
 /* --- Formulário: grade de campos ------------------------------- */
 .formgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lg) var(--xl); align-items: start; }
 .formgrid .input.full { grid-column: 1 / -1; }
+.formgrid .full { grid-column: 1 / -1; }
 /* Variante de 4 colunas (Identificação PF) */
 .formgrid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .formgrid--4 .full { grid-column: 1 / -1; }

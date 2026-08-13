@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../../components/segmented/segmented.css" />
 <link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
 <link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
 <link rel="stylesheet" href="locatarios.css" />
 </head>
@@ -38,6 +39,7 @@
   <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
   <symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
   <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></symbol>
+  <symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
 </svg>
 
 <div class="app">
@@ -85,7 +87,15 @@
         </div>
         <div class="pagehead__actions">
           <a class="btn btn--ghost" href="lista.html">Cancelar</a>
+          <button type="button" class="btn btn--destructive js-edit-only" id="btnAtivacao">Inativar</button>
           <button type="button" class="btn btn--primary" id="btnSalvar">Cadastrar</button>
+          <div class="dropdown js-edit-only" data-ds="dropdown" style="position:relative">
+            <button class="btn btn--icon-border dropdown__trigger" aria-label="Mais ações" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
+            <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalBloquear"><p class="dropdown__nav-text">Bloquear / restrições</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalExcluir"><p class="dropdown__nav-text">Excluir cadastro</p></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -102,7 +112,7 @@
         <section class="section">
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
-            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div><p class="input__help lockmsg">Não editável</p></div>
+            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div></div>
             <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
             <div class="input"><div class="input__label"><p>Nacionalidade</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
             <!-- Brasileiro: CPF (obrigatório) + documento com tipo -->
@@ -129,7 +139,7 @@
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
         <div class="section__body">
           <div class="formgrid">
-            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div><p class="input__help lockmsg">Não editável</p></div>
+            <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div></div>
             <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /></div></div>
             <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
             <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Alves Comércio" /></div></div>
@@ -156,6 +166,11 @@
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
                 </div>
+                <div class="repdoc js-edit-only">
+                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório com foto</span></div>
+                  <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
+                  <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+                </div>
               </div>
             </div>
             <template class="repeater__template">
@@ -166,15 +181,14 @@
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
                 </div>
+                <div class="repdoc js-edit-only">
+                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório com foto</span></div>
+                  <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
+                  <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+                </div>
               </div>
             </template>
             <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar representante / procurador</button>
-          </div>
-          <!-- Anexo comprobatório (só no fluxo de edição de PJ) -->
-          <div class="listrow js-edit-only" hidden style="margin-top:var(--md)">
-            <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
-            <p class="cl-mail">Anexe a ata / contrato social que comprova que as pessoas acima são representantes ou procuradores da empresa.</p>
-            <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
           </div>
         </div>
       </section>
@@ -265,6 +279,34 @@
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
   </div>
+</div>
+
+<!-- Modais de ação (evento: data + motivo) — só no fluxo de edição -->
+<div class="modal confirm-modal" id="modalInativar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Inativar locatário</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data da inativação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da inativação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da inativação"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmInativar">Inativar</button></div>
+</div>
+
+<div class="modal confirm-modal" id="modalBloquear" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Bloquear / restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo do bloqueio / restrição"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Bloquear</button></div>
+</div>
+
+<div class="modal confirm-modal" id="modalExcluir" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Excluir cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data da exclusão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da exclusão</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da exclusão do cadastro"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir cadastro</button></div>
 </div>
 
 <!-- Modais de salvar cadastro -->
@@ -410,6 +452,23 @@
       if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
+    // Ações de edição: Inativar/Ativar (com modal) + Bloquear/Excluir (via ⋯)
+    var btnAtiv = document.getElementById('btnAtivacao');
+    function setAtivo(ativo) {
+      if (!btnAtiv) return;
+      if (ativo) { btnAtiv.textContent = 'Inativar'; btnAtiv.classList.remove('btn--secondary'); btnAtiv.classList.add('btn--destructive'); }
+      else { btnAtiv.textContent = 'Ativar'; btnAtiv.classList.remove('btn--destructive'); btnAtiv.classList.add('btn--secondary'); }
+    }
+    if (btnAtiv) btnAtiv.addEventListener('click', function () {
+      if (btnAtiv.textContent.trim() === 'Inativar') DS.openModal('modalInativar');
+      else setAtivo(true);
+    });
+    var btnConfInativar = document.getElementById('btnConfirmInativar');
+    if (btnConfInativar) btnConfInativar.addEventListener('click', function () {
+      DS.closeModal(document.getElementById('modalInativar'));
+      setAtivo(false);
+    });
+
     // 5) Modo edição (?editar=1): sem seletor PF/PJ, campos preenchidos e docs travados
     if (/[?&]editar=1/.test(location.search)) {
       var stored = null;
@@ -442,17 +501,10 @@
       var tf = ap && ap.querySelector('.js-tipo-field');
       if (tf) { tf.hidden = false; var ti = tf.querySelector('.input__control'); if (ti) ti.value = (tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'); }
 
-      document.querySelectorAll('.js-edit-only').forEach(function (el) { el.hidden = false; });
+      document.body.classList.add('is-edit');
       document.querySelectorAll('.js-lock-doc').forEach(function (c) {
         c.readOnly = true;
         var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
-        var wrap = c.closest('.input');
-        if (wrap && !wrap.querySelector('.lockmsg')) {
-          var p = document.createElement('p');
-          p.className = 'input__help lockmsg';
-          p.textContent = 'Não editável';
-          wrap.appendChild(p);
-        }
       });
     }
   })();

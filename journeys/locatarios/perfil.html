@@ -95,15 +95,7 @@
         <div class="pagehead__text"><h1 class="pagehead__title title-h1">Exibição</h1></div>
         <div class="pagehead__actions">
           <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
-          <button type="button" class="btn btn--destructive" id="btnAtivacao">Inativar</button>
           <a class="btn btn--primary" href="cadastro.html?editar=1"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-pencil"/></svg></span>Editar</a>
-          <div class="dropdown" data-ds="dropdown" style="position:relative">
-            <button class="btn btn--icon-border dropdown__trigger" aria-label="Mais ações" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
-            <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalBloquear"><p class="dropdown__nav-text">Bloquear / restrições</p></div>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalExcluir"><p class="dropdown__nav-text">Excluir cadastro</p></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -114,55 +106,10 @@
   </div>
 </div>
 
-<!-- Modais de confirmação (eventos: data + motivo) -->
-<div class="modal confirm-modal" id="modalInativar" data-ds="modal" style="max-width:480px">
-  <div class="modal__header"><h2 class="modal__title">Inativar locatário</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data da inativação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da inativação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da inativação"></textarea></div></div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmInativar">Inativar</button></div>
-</div>
-
-<div class="modal confirm-modal" id="modalBloquear" data-ds="modal" style="max-width:480px">
-  <div class="modal__header"><h2 class="modal__title">Bloquear / restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo do bloqueio / restrição"></textarea></div></div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Bloquear</button></div>
-</div>
-
-<div class="modal confirm-modal" id="modalExcluir" data-ds="modal" style="max-width:480px">
-  <div class="modal__header"><h2 class="modal__title">Excluir cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data da exclusão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da exclusão</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da exclusão do cadastro"></textarea></div></div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir cadastro</button></div>
-</div>
-
 <script src="../../ds/ds.js" defer></script>
 <script src="locatarios-data.js"></script>
 <script>
   (function () {
-    // Alternar Ativar / Inativar (vermelho quando "Inativar", secundária quando "Ativar")
-    var btnAtiv = document.getElementById('btnAtivacao');
-    function setAtivo(ativo) {
-      if (!btnAtiv) return;
-      if (ativo) { btnAtiv.textContent = 'Inativar'; btnAtiv.classList.remove('btn--secondary'); btnAtiv.classList.add('btn--destructive'); }
-      else { btnAtiv.textContent = 'Ativar'; btnAtiv.classList.remove('btn--destructive'); btnAtiv.classList.add('btn--secondary'); }
-    }
-    if (btnAtiv) btnAtiv.addEventListener('click', function () {
-      if (btnAtiv.textContent.trim() === 'Inativar') DS.openModal('modalInativar'); // confirma antes
-      else setAtivo(true); // reativar é direto
-    });
-    var btnConfInativar = document.getElementById('btnConfirmInativar');
-    if (btnConfInativar) btnConfInativar.addEventListener('click', function () {
-      DS.closeModal(document.getElementById('modalInativar'));
-      setAtivo(false);
-    });
-
     var box = document.getElementById('exibicaoBody'); if (!box) return;
     var stored = null;
     var id = (location.search.match(/[?&]id=([^&]+)/) || [])[1];
@@ -189,6 +136,17 @@
     function inputRO(label, value, cls) {
       return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
     }
+    function mailRO(label, value, usarPrincipal) {
+      return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
+        + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
+        + '<label class="mailsync" style="pointer-events:none"><input type="checkbox" tabindex="-1"' + (usarPrincipal ? ' checked' : '') + ' /><span>Usar o e-mail principal</span></label></div>';
+    }
+    function checkRO(label, checked) {
+      return '<div class="full"><label class="checkbox-card" style="pointer-events:none">'
+        + '<input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (checked ? ' checked' : '') + ' />'
+        + '<span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span>'
+        + '<span class="checkbox-card__content"><p class="checkbox-card__title">' + esc(label) + '</p></span></label></div>';
+    }
     var html = '';
     stored.dados.forEach(function (sec) {
       html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(sec.title) + '</h2></div></div><div class="section__body">';
@@ -197,11 +155,19 @@
         sec.reps.forEach(function (r, idx) {
           html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span></div><div class="reprow reprow--3">'
                 + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + inputRO('Tipo', r.tipo)
-                + '</div></div>';
+                + '</div>'
+                + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
+                + '</div>';
         });
       } else {
         html += '<div class="' + gridClass(sec.title) + '">';
-        sec.items.forEach(function (it) { html += inputRO(it.label, it.value, span(it.label)); });
+        if (sec.title === 'Identificação') {
+          html += inputRO('Tipo de locatário', stored.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica');
+        }
+        sec.items.forEach(function (it) {
+          if (it.check) html += checkRO(it.label, it.checked);
+          else html += inputRO(it.label, it.value, span(it.label));
+        });
         html += '</div>';
       }
       html += '</div></section>';
