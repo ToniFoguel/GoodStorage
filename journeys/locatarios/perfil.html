@@ -159,6 +159,21 @@
                 + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
                 + '</div>';
         });
+      } else if (sec.quadro) {
+        html += '<span class="fieldlbl">Quadro de sócios e administradores</span>';
+        html += '<div class="rf-wrap"><table class="rftable"><thead><tr><th>Nome</th><th>CPF</th><th>Tipo</th><th>Qualificação</th><th>Data de inclusão</th><th>País</th></tr></thead><tbody>';
+        sec.quadro.forEach(function (s) {
+          html += '<tr><td>' + esc(s.nome) + '</td><td>' + esc(s.cpf) + '</td><td>' + esc(s.tipo) + '</td><td>' + esc(s.qualificacao) + '</td><td>' + esc(s.dataInclusao) + '</td><td>' + esc(s.pais) + '</td></tr>';
+        });
+        html += '</tbody></table></div>';
+        if (sec.repLegal) {
+          html += '<span class="fieldlbl" style="margin-top:var(--md)">Representante legal</span>';
+          html += '<div class="rf-wrap"><table class="rftable"><thead><tr><th>Nome</th><th>CPF</th><th>Qualificação</th></tr></thead><tbody>';
+          sec.repLegal.forEach(function (r) {
+            html += '<tr><td>' + esc(r.nome) + '</td><td>' + esc(r.cpf) + '</td><td>' + esc(r.qualificacao) + '</td></tr>';
+          });
+          html += '</tbody></table></div>';
+        }
       } else {
         html += '<div class="' + gridClass(sec.title) + '">';
         if (sec.title === 'Identificação') {

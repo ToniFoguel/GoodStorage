@@ -125,6 +125,13 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .docfile__ico svg { width: 22px; height: 22px; }
 .docfile__name { font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); }
 .docfile .icon-btn { margin-left: auto; }
+/* Tabela read-only de Sócios/Representantes (consulta CNPJ) */
+.rf-wrap { overflow-x: auto; }
+.rftable { width: 100%; border-collapse: collapse; font-family: var(--font-family-title-text); font-size: var(--font-size-label); border: var(--thin) solid var(--border-default); }
+.rftable th, .rftable td { text-align: left; padding: var(--md) var(--lg); border-bottom: var(--thin) solid var(--border-default); white-space: nowrap; }
+.rftable th { color: var(--content-text); font-weight: var(--font-weight-bold); background: var(--background-bg-aux); }
+.rftable td { color: var(--content-title); }
+.rftable tbody tr:last-child td { border-bottom: 0; }
 .reprow .icon-btn { align-self: end; width: 40px; height: 40px; }
 .listrow__head .icon-btn { width: 40px; height: 40px; }
 

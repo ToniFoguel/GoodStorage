@@ -15,6 +15,15 @@ window.LOCATARIOS = {
         { label: "Inscrição estadual", value: "110.042.490.114" },
         { check: true, label: "Pessoa contribuinte do IBS e da CBS", checked: true }
       ]},
+      { title: "Sócios e representantes",
+        quadro: [
+          { nome: "Marina Alves", cpf: "045.678.912-33", tipo: "Pessoa Física", qualificacao: "Administrador", dataInclusao: "12/03/2015", pais: "105 · BRASIL" },
+          { nome: "Alves Participações Ltda", cpf: "11.222.333/0001-44", tipo: "Pessoa Jurídica", qualificacao: "Sócio", dataInclusao: "12/03/2015", pais: "105 · BRASIL" }
+        ],
+        repLegal: [
+          { nome: "Marina Alves", cpf: "045.678.912-33", qualificacao: "Administrador" }
+        ]
+      },
       { title: "Representantes e procuradores", reps: [
         { nome: "Marina Alves", cpf: "045.678.912-33", tipo: "Legal", doc: "rg-marina-alves.jpg" },
         { nome: "Carlos Alves", cpf: "128.334.567-01", tipo: "Procurador", doc: "cnh-carlos-alves.jpg" }
@@ -54,6 +63,15 @@ window.LOCATARIOS = {
         { label: "Inscrição estadual", value: "336.118.902.220" },
         { check: true, label: "Pessoa contribuinte do IBS e da CBS", checked: false }
       ]},
+      { title: "Sócios e representantes",
+        quadro: [
+          { nome: "Paulo Contorno", cpf: "223.445.667-88", tipo: "Pessoa Física", qualificacao: "Administrador", dataInclusao: "07/08/2011", pais: "105 · BRASIL" },
+          { nome: "Contorno Holding S.A.", cpf: "22.333.444/0001-55", tipo: "Pessoa Jurídica", qualificacao: "Sócio", dataInclusao: "07/08/2011", pais: "105 · BRASIL" }
+        ],
+        repLegal: [
+          { nome: "Paulo Contorno", cpf: "223.445.667-88", qualificacao: "Administrador" }
+        ]
+      },
       { title: "Representantes e procuradores", reps: [
         { nome: "Paulo Contorno", cpf: "223.445.667-88", tipo: "Legal", doc: "rg-paulo-contorno.jpg" }
       ]},
@@ -127,6 +145,16 @@ window.LOCATARIOS = {
         { label: "Inscrição estadual", value: "142.775.001.559" },
         { check: true, label: "Pessoa contribuinte do IBS e da CBS", checked: true }
       ]},
+      { title: "Sócios e representantes",
+        quadro: [
+          { nome: "Ricardo Dez", cpf: "334.556.778-99", tipo: "Pessoa Física", qualificacao: "Administrador", dataInclusao: "23/01/2009", pais: "105 · BRASIL" },
+          { nome: "Marta Dez", cpf: "445.667.889-00", tipo: "Pessoa Física", qualificacao: "Sócio", dataInclusao: "23/01/2009", pais: "105 · BRASIL" },
+          { nome: "Gustav Müller", cpf: "—", tipo: "Sócio Estrangeiro", qualificacao: "Sócio", dataInclusao: "10/04/2016", pais: "023 · ALEMANHA" }
+        ],
+        repLegal: [
+          { nome: "Ricardo Dez", cpf: "334.556.778-99", qualificacao: "Administrador" }
+        ]
+      },
       { title: "Representantes e procuradores", reps: [
         { nome: "Ricardo Dez", cpf: "334.556.778-99", tipo: "Legal", doc: "cnh-ricardo-dez.jpg" },
         { nome: "Marta Dez", cpf: "445.667.889-00", tipo: "Procurador", doc: "rg-marta-dez.jpg" }

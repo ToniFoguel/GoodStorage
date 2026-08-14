@@ -153,6 +153,29 @@
         </div>
       </section>
 
+      <!-- Sócios/Representantes (mapeado pela consulta do CNPJ) -->
+      <section class="section js-pj-socios" hidden>
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Sócios e representantes</h2></div><span class="section__pill">Preenchido pela consulta do CNPJ</span></div>
+        <div class="section__body">
+          <span class="fieldlbl">Quadro de sócios e administradores</span>
+          <div class="rf-wrap"><table class="rftable">
+            <thead><tr><th>Nome</th><th>CPF</th><th>Tipo</th><th>Qualificação</th><th>Data de inclusão</th><th>País</th></tr></thead>
+            <tbody>
+              <tr><td>Marina Alves</td><td>045.678.912-33</td><td>Pessoa Física</td><td>Administrador</td><td>12/03/2015</td><td>105 · BRASIL</td></tr>
+              <tr><td>Alves Participações Ltda</td><td>11.222.333/0001-44</td><td>Pessoa Jurídica</td><td>Sócio</td><td>12/03/2015</td><td>105 · BRASIL</td></tr>
+              <tr><td>John A. Smith</td><td>—</td><td>Sócio Estrangeiro</td><td>Sócio</td><td>05/06/2018</td><td>249 · ESTADOS UNIDOS</td></tr>
+            </tbody>
+          </table></div>
+          <span class="fieldlbl" style="margin-top:var(--md)">Representante legal</span>
+          <div class="rf-wrap"><table class="rftable">
+            <thead><tr><th>Nome</th><th>CPF</th><th>Qualificação</th></tr></thead>
+            <tbody>
+              <tr><td>Marina Alves</td><td>045.678.912-33</td><td>Administrador</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </section>
+
       <!-- 2. Representantes -->
       <section class="section">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Representantes e procuradores</h2></div></div>
@@ -403,6 +426,13 @@
       if (e.target && e.target.querySelectorAll) e.target.querySelectorAll('[data-mailsync]').forEach(syncMail);
     });
     document.querySelectorAll('[data-mailsync]').forEach(syncMail);
+
+    // 3b) PJ: ao ter CNPJ, revela a seção de Sócios/Representantes (mapa da Receita)
+    var cnpjMain = document.querySelector('#tab-pj .input[data-ds-mask="cnpj"] .input__control');
+    var socios = document.querySelector('.js-pj-socios');
+    function toggleSocios() { if (socios) socios.hidden = !(cnpjMain && String(cnpjMain.value || '').trim()); }
+    if (cnpjMain) cnpjMain.addEventListener('input', toggleSocios);
+    toggleSocios();
 
     // 4) Salvar cadastro: valida obrigatórios visíveis (aba ativa + seções compartilhadas) e abre modal
     function requiredMissing() {
