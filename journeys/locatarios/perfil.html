@@ -92,9 +92,14 @@
 
     <div class="content">
       <div class="pagehead">
-        <div class="pagehead__text"><h1 class="pagehead__title title-h1">Exibição</h1></div>
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Exibição</h1>
+          <p class="pagehead__sub"><span class="badge" id="statusBadge">—</span></p>
+        </div>
         <div class="pagehead__actions">
           <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
+          <button type="button" class="btn btn--secondary" id="btnAprovar" hidden>Aprovar</button>
+          <button type="button" class="btn btn--destructive" id="btnReprovar" hidden>Reprovar</button>
           <a class="btn btn--primary" href="cadastro.html?editar=1"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-pencil"/></svg></span>Editar</a>
         </div>
       </div>
@@ -104,6 +109,24 @@
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
   </div>
+</div>
+
+<div class="modal confirm-modal" id="modalAprovar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Aprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data da aprovação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da aprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da aprovação"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalAprovar'))">Cancelar</button><button class="btn btn--secondary" id="btnConfirmAprovar">Salvar</button></div>
+</div>
+
+<div class="modal confirm-modal" id="modalReprovar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Reprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Data da reprovação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da reprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da reprovação"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalReprovar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmReprovar">Salvar</button></div>
 </div>
 
 <script src="../../ds/ds.js" defer></script>
@@ -121,6 +144,41 @@
       box.innerHTML = '<section class="section"><div class="section__body"><p class="cl-mail">Nenhum locat\u00e1rio cadastrado ainda. Cadastre um locat\u00e1rio para ver os dados aqui.</p></div></section>';
       return;
     }
+
+    // Status do locat\u00e1rio + Aprovar/Reprovar (s\u00f3 em "An\u00e1lise humana")
+    var STATUS_BADGE = {
+      'Ativo': 'badge--success', 'Aprovado': 'badge--success',
+      'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow', 'An\u00e1lise humana': 'badge--yellow',
+      'Reprovado': 'badge--destructive', 'Inativo': 'badge--outline'
+    };
+    var stBadge = document.getElementById('statusBadge');
+    var btnAp = document.getElementById('btnAprovar');
+    var btnRe = document.getElementById('btnReprovar');
+    function setStatus(s) {
+      if (stBadge) { stBadge.textContent = s || '\u2014'; stBadge.className = 'badge ' + (STATUS_BADGE[s] || 'badge--outline'); }
+      var human = (s === 'An\u00e1lise humana');
+      if (btnAp) btnAp.hidden = !human;
+      if (btnRe) btnRe.hidden = !human;
+    }
+    setStatus(stored.status);
+    var editLink = document.querySelector('.pagehead__actions a[href^="cadastro.html"]');
+    if (editLink && id) editLink.setAttribute('href', 'cadastro.html?editar=1&id=' + id);
+    if (btnAp) btnAp.addEventListener('click', function () { DS.openModal('modalAprovar'); });
+    if (btnRe) btnRe.addEventListener('click', function () { DS.openModal('modalReprovar'); });
+    var btnConfAp = document.getElementById('btnConfirmAprovar');
+    if (btnConfAp) btnConfAp.addEventListener('click', function () {
+      var m = document.getElementById('modalAprovar');
+      var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
+      DS.closeModal(m); setStatus('Ativo');
+      updateDecisao({ tipo: 'Aprovado', data: fmtDate(dt && dt.value), motivo: (mo && mo.value) || 'Documentação aprovada.', por: 'Carol Ferreira' });
+    });
+    var btnConfRe = document.getElementById('btnConfirmReprovar');
+    if (btnConfRe) btnConfRe.addEventListener('click', function () {
+      var m = document.getElementById('modalReprovar');
+      var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
+      DS.closeModal(m); setStatus('Reprovado');
+      updateDecisao({ tipo: 'Reprovado', data: fmtDate(dt && dt.value), motivo: (mo && mo.value) || 'Documentação reprovada.', por: 'Carol Ferreira' });
+    });
     var nome = '';
     stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
     if (nome) { var bc = document.querySelector('.breadcrumb__item--current'); if (bc) bc.textContent = nome; }
@@ -147,8 +205,40 @@
         + '<span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span>'
         + '<span class="checkbox-card__content"><p class="checkbox-card__title">' + esc(label) + '</p></span></label></div>';
     }
+    function docBadge(d) {
+      if (d && d.motivo) return '<span class="badge badge--destructive">Reprovado</span>';
+      if (stored.status === 'Análise humana') return '<span class="badge badge--yellow">Em análise</span>';
+      return '<span class="badge badge--success">Aprovado</span>';
+    }
+    function docsSectionHtml() {
+      var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div></div><div class="section__body">';
+      if (stored.docs && stored.docs.length) {
+        h += '<div class="docgrid">';
+        stored.docs.forEach(function (d) {
+          h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>' + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + '</div>';
+        });
+        h += '</div>';
+      } else {
+        h += '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
+      }
+      return h + '</div></section>';
+    }
+    function decisaoHtml(d) {
+      if (!d) return '<p class="cl-mail">Aguardando decisão (aprovação/reprovação).</p>';
+      var cls = d.tipo === 'Reprovado' ? 'badge--destructive' : 'badge--success';
+      return '<dl class="dados">'
+        + '<div class="data-item"><p class="data-item__label">Decisão</p><span class="badge ' + cls + '">' + esc(d.tipo) + '</span></div>'
+        + '<div class="data-item"><p class="data-item__label">Data</p><p class="data-item__value">' + esc(d.data) + '</p></div>'
+        + '<div class="data-item"><p class="data-item__label">Responsável</p><p class="data-item__value">' + esc(d.por || '—') + '</p></div>'
+        + '</dl>'
+        + '<div class="listrow" style="margin-top:var(--md)"><div class="listrow__head"><span class="fieldlbl">Justificativa</span></div><p class="cl-mail">' + esc(d.motivo) + '</p></div>';
+    }
+    function updateDecisao(d) { var b = document.getElementById('decisaoBody'); if (b) b.innerHTML = decisaoHtml(d); }
+    function fmtDate(v) { if (!v) return new Date().toLocaleDateString('pt-BR'); var p = String(v).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : v; }
     var html = '';
+    var docsDone = false;
     stored.dados.forEach(function (sec) {
+      if (sec.title === 'Contatos' && !docsDone) { html += docsSectionHtml(); docsDone = true; }
       html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(sec.title) + '</h2></div></div><div class="section__body">';
       if (sec.reps) {
         // Representantes: cards read-only (Nome / CPF / Tipo), como no cadastro
@@ -187,6 +277,10 @@
       }
       html += '</div></section>';
     });
+
+    if (!docsDone) html += docsSectionHtml();
+    // Decisão / justificativa (última seção)
+    html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Decisão / justificativa</h2></div></div><div class="section__body" id="decisaoBody">' + decisaoHtml(stored.decisao) + '</div></section>';
     box.innerHTML = html;
   })();
 </script>

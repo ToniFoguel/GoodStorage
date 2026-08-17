@@ -132,6 +132,10 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .rftable th { color: var(--content-text); font-weight: var(--font-weight-bold); background: var(--background-bg-aux); }
 .rftable td { color: var(--content-title); }
 .rftable tbody tr:last-child td { border-bottom: 0; }
+/* Documentos: 2 por linha (cada card = 6/12 colunas) */
+.docgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--md); align-items: start; }
+.docgrid .listrow { margin-bottom: 0; }
+@media (max-width: 720px) { .docgrid { grid-template-columns: 1fr; } }
 .reprow .icon-btn { align-self: end; width: 40px; height: 40px; }
 .listrow__head .icon-btn { width: 40px; height: 40px; }
 
@@ -179,6 +183,7 @@ textarea.input__control { min-height: 84px; resize: vertical; }
 /* linha inteira clicável -> perfil (sem coluna de ação) */
 .ltable a.table__row { text-decoration: none; color: inherit; cursor: pointer; }
 .ltable a.table__row:hover { background: var(--background-bg-aux); }
+.ltable .badge { white-space: nowrap; }
 
 /* --- Cartão de identificação (avatar + info) — seção da página -- */
 .idcard { display: flex; align-items: center; gap: var(--lg); min-width: 0; }

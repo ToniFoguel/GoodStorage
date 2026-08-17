@@ -130,6 +130,23 @@
           </div></div>
         </section>
 
+        <!-- Documentos do locatário (pós-cadastro / edição) -->
+        <section class="section js-edit-only">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos do locatário</h2></div><span class="section__pill">pós-cadastro</span></div>
+          <div class="section__body docgrid js-docs-body">
+            <div class="listrow">
+              <div class="listrow__head"><span class="fieldlbl">Documento de identificação com foto</span></div>
+              <p class="cl-mail">RG, CNH ou outro documento oficial com foto · imagem até 20 MB.</p>
+              <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+            </div>
+            <div class="listrow">
+              <div class="listrow__head"><span class="fieldlbl">Comprovante de residência</span></div>
+              <p class="cl-mail">Conta de consumo recente · PDF ou imagem até 20 MB.</p>
+              <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <!-- Painel Pessoa Jurídica -->
@@ -219,6 +236,38 @@
               </div>
             </template>
             <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar representante / procurador</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Documentos da empresa (pós-cadastro / edição) -->
+      <section class="section js-edit-only">
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos da empresa</h2></div><span class="section__pill">pós-cadastro</span></div>
+        <div class="section__body docgrid js-docs-body">
+          <div class="listrow">
+            <div class="listrow__head"><span class="fieldlbl">Contrato ou estatuto social consolidado</span></div>
+            <p class="cl-mail">Última versão consolidada · PDF até 20 MB.</p>
+            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf" hidden /></label></div>
+          </div>
+          <div class="listrow">
+            <div class="listrow__head"><span class="fieldlbl">Cartão de CNPJ</span></div>
+            <p class="cl-mail">Comprovante de inscrição e situação cadastral · PDF ou imagem até 20 MB.</p>
+            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
+          </div>
+          <div class="listrow">
+            <div class="listrow__head"><span class="fieldlbl">Ato societário (última eleição e representantes legais)</span></div>
+            <p class="cl-mail">Ata/ato que comprova a eleição dos representantes legais da sociedade · PDF até 20 MB.</p>
+            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf" hidden /></label></div>
+          </div>
+          <div class="listrow">
+            <div class="listrow__head"><span class="fieldlbl">Representante legal — identificação com foto</span></div>
+            <p class="cl-mail">RG, CNH ou outro documento com foto · imagem até 20 MB.</p>
+            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+          </div>
+          <div class="listrow">
+            <div class="listrow__head"><span class="fieldlbl">Representante legal — comprovante de residência</span></div>
+            <p class="cl-mail">Conta de consumo recente · PDF ou imagem até 20 MB.</p>
+            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
           </div>
         </div>
       </section>
@@ -342,6 +391,7 @@
 <div class="modal confirm-modal" id="modalTrocaImagem" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Trocar imagem do documento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Volta ao fluxo de aprovação</p><p class="banner__text">Ao alterar este documento, o cadastro retorna para reanálise (Análise humana) e precisa ser aprovado novamente.</p></div></div>
     <div class="input full"><div class="input__label"><p>Data da troca</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
     <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da troca</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da troca do documento"></textarea></div></div>
   </div>
@@ -374,6 +424,7 @@
 </div>
 
 <script src="../../ds/ds.js" defer></script>
+<script src="locatarios-data.js"></script>
 <script>
   /* Interações específicas do cadastro (independem de id — sobrevivem à fusão) */
   (function () {
@@ -535,19 +586,56 @@
     if (/[?&]editar=1/.test(location.search)) {
       var stored = null;
       try { stored = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
+      var editId = (location.search.match(/[?&]id=([^&]+)/) || [])[1];
+      var byId = (editId && window.LOCATARIOS && window.LOCATARIOS[editId]) ? window.LOCATARIOS[editId] : null;
       var h = document.querySelector('.pagehead__title'); if (h) h.textContent = 'Editar locatário';
       var bc = document.querySelector('.breadcrumb__item--current'); if (bc) bc.textContent = 'Editar locatário';
       if (btnSalvar) btnSalvar.textContent = 'Salvar alterações';
+      var okTitle = document.querySelector('#modalSucesso .savemsg__title');
+      var okText = document.querySelector('#modalSucesso .savemsg__text');
+      if (okTitle) okTitle.textContent = 'Alterações salvas';
+      if (okText) okText.textContent = 'As alterações foram salvas. Como houve mudança nos dados/documentos, o cadastro voltou ao fluxo de aprovação (Análise humana).';
 
-      // Sem seletor PF/PJ: mostra só o tipo cadastrado
-      var tipo = (stored && stored.tipo) ? stored.tipo : 'PJ';
+      // Sem seletor PF/PJ: mostra só o tipo cadastrado (prioriza o locatário aberto)
+      var tipo = byId ? byId.tipo : ((stored && stored.tipo) ? stored.tipo : 'PJ');
       var tabbar = document.querySelector('.tabbar'); if (tabbar) tabbar.hidden = true;
       document.querySelectorAll('.tabpanel').forEach(function (p) {
         p.classList.toggle('is-active', p.id === (tipo === 'PF' ? 'tab-pf' : 'tab-pj'));
       });
 
-      // Preencher com o que foi digitado (ou exemplo, se não houver armazenado)
-      if (stored && stored.vals) {
+      // Preencher: do locatário (dataset, por seção/rótulo) > armazenado > exemplo
+      if (byId) {
+        var byTitle = {};
+        byId.dados.forEach(function (sec) { var m = {}; (sec.items || []).forEach(function (it) { m[it.label] = it.value; }); byTitle[sec.title] = m; });
+        var secs = [];
+        var apEd = document.querySelector('.tabpanel.is-active');
+        if (apEd) apEd.querySelectorAll(':scope > section.section').forEach(function (s) { secs.push(s); });
+        document.querySelectorAll('.content > section.section').forEach(function (s) { secs.push(s); });
+        secs.forEach(function (sec) {
+          var t = sec.querySelector('.section__title'); t = t ? t.textContent.trim() : '';
+          var m = byTitle[t]; if (!m) return;
+          sec.querySelectorAll('.input').forEach(function (inp) {
+            var lbl = inp.querySelector('.input__label p'); var ctrl = inp.querySelector('.input__control');
+            if (lbl && ctrl && m[lbl.textContent.trim()] != null) ctrl.value = m[lbl.textContent.trim()];
+          });
+        });
+        // Documentos já enviados: mostra o arquivo + selo (Reprovado/Aprovado) + excluir/trocar
+        var docsBody = document.querySelector('.tabpanel.is-active .js-docs-body');
+        if (docsBody && byId.docs && byId.docs.length) {
+          var dh = '';
+          byId.docs.forEach(function (d) {
+            var isImg = /\.(jpe?g|png|webp)$/i.test(d.file);
+            var db = d.motivo ? '<span class="badge badge--destructive">Reprovado</span>'
+              : byId.status === 'Análise humana' ? '<span class="badge badge--yellow">Em análise</span>'
+              : '<span class="badge badge--success">Aprovado</span>';
+            dh += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + d.label + '</span>' + db + '</div>'
+              + '<div class="docfile js-doc-current"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + d.file + '</span><button type="button" class="icon-btn js-doc-del" aria-label="Excluir documento"><svg><use href="#ico-trash"/></svg></button></div>'
+              + (d.motivo ? '<p class="formerror">' + d.motivo + '</p>' : '')
+              + '<div class="js-doc-add" hidden><p class="cl-mail">Anexe um novo arquivo.</p><div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar ' + (isImg ? 'imagem' : 'arquivo') + '<input type="file" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div></div></div>';
+          });
+          docsBody.innerHTML = dh;
+        }
+      } else if (stored && stored.vals) {
         document.querySelectorAll('.input__control').forEach(function (c, i) {
           if (stored.vals[i] != null) c.value = stored.vals[i];
         });
@@ -557,6 +645,7 @@
           if (c) c.value = el.getAttribute('data-edit');
         });
       }
+      toggleSocios();
 
       // Tipo de locatário no 1º bloco
       var ap = document.querySelector('.tabpanel.is-active');
@@ -564,6 +653,13 @@
       if (tf) { tf.hidden = false; var ti = tf.querySelector('.input__control'); if (ti) ti.value = (tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'); }
 
       document.body.classList.add('is-edit');
+      // Inativar/Ativar só quando aprovado/ativo (ou inativo p/ reativar). Reprovado já está inativo.
+      if (btnAtiv) {
+        var st = byId ? byId.status : '';
+        if (st === 'Ativo' || st === 'Aprovado') { btnAtiv.style.display = ''; setAtivo(true); }
+        else if (st === 'Inativo') { btnAtiv.style.display = ''; setAtivo(false); }
+        else { btnAtiv.style.display = 'none'; }
+      }
       document.querySelectorAll('.js-lock-doc').forEach(function (c) {
         c.readOnly = true;
         var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
