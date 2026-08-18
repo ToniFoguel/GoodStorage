@@ -4,6 +4,7 @@ window.LOCATARIOS = {
     "nome": "Marina Alves Comércio Ltda",
     "tipo": "PJ",
     "status": "Ativo",
+    "contratoAtivo": true,
     "email": "marina@alvescom.com.br",
     "docNum": "12.345.678/0001-90",
     "boxes": "A-102, A-103",
@@ -86,7 +87,9 @@ window.LOCATARIOS = {
           {
             "nome": "Marina Alves",
             "cpf": "045.678.912-33",
+            "cargo": "Administradora",
             "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
             "doc": "rg-representante.jpg"
           }
         ]
@@ -99,8 +102,8 @@ window.LOCATARIOS = {
             "value": "Marina Alves"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -137,7 +140,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -169,23 +172,27 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Contrato ou estatuto social consolidado",
-        "file": "contrato-social.pdf"
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "—"
       },
       {
         "label": "Cartão de CNPJ",
-        "file": "cartao-cnpj.pdf"
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
       },
       {
         "label": "Ato societário (última eleição e representantes legais)",
-        "file": "ata-eleicao.pdf"
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "—"
       },
       {
-        "label": "Documento do representante legal — identificação com foto",
-        "file": "rg-representante.jpg"
-      },
-      {
-        "label": "Documento do representante legal — comprovante de residência",
-        "file": "comprovante-rep.pdf"
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "—"
       }
     ],
     "decisao": {
@@ -198,7 +205,7 @@ window.LOCATARIOS = {
   "2": {
     "nome": "Logística Contorno Ltda",
     "tipo": "PJ",
-    "status": "Análise humana",
+    "status": "Em análise",
     "email": "contato@contorno.log.br",
     "docNum": "98.765.432/0001-10",
     "boxes": "G-14",
@@ -281,7 +288,9 @@ window.LOCATARIOS = {
           {
             "nome": "Paulo Contorno",
             "cpf": "223.445.667-88",
+            "cargo": "Administrador",
             "tipo": "Legal",
+            "email": "contato@contorno.log.br",
             "doc": "rg-representante.jpg"
           }
         ]
@@ -294,8 +303,8 @@ window.LOCATARIOS = {
             "value": "Paulo Contorno"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -332,7 +341,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -364,23 +373,27 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Contrato ou estatuto social consolidado",
-        "file": "contrato-social.pdf"
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "—"
       },
       {
         "label": "Cartão de CNPJ",
-        "file": "cartao-cnpj.pdf"
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
       },
       {
         "label": "Ato societário (última eleição e representantes legais)",
-        "file": "ata-eleicao.pdf"
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "—"
       },
       {
-        "label": "Documento do representante legal — identificação com foto",
-        "file": "rg-representante.jpg"
-      },
-      {
-        "label": "Documento do representante legal — comprovante de residência",
-        "file": "comprovante-rep.pdf"
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "—"
       }
     ]
   },
@@ -440,8 +453,8 @@ window.LOCATARIOS = {
             "value": "Studio Prisma Arquitetura"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -478,7 +491,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -512,7 +525,7 @@ window.LOCATARIOS = {
   "4": {
     "nome": "Comercial Dez Irmãos Ltda",
     "tipo": "PJ",
-    "status": "Reprovado",
+    "status": "Pendente de documentação",
     "email": "compras@dezirmaos.com.br",
     "docNum": "33.444.555/0001-77",
     "boxes": "B-21, B-22",
@@ -595,7 +608,9 @@ window.LOCATARIOS = {
           {
             "nome": "Ricardo Dez",
             "cpf": "334.556.778-99",
+            "cargo": "Administrador",
             "tipo": "Legal",
+            "email": "compras@dezirmaos.com.br",
             "doc": "rg-representante.jpg"
           }
         ]
@@ -608,8 +623,8 @@ window.LOCATARIOS = {
             "value": "Ricardo Dez"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -646,7 +661,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -690,11 +705,7 @@ window.LOCATARIOS = {
         "file": "ata-eleicao.pdf"
       },
       {
-        "label": "Documento do representante legal — identificação com foto",
-        "file": "rg-representante.jpg"
-      },
-      {
-        "label": "Documento do representante legal — comprovante de residência",
+        "label": "Comprovante de residência da empresa",
         "file": "comprovante-rep.pdf",
         "motivo": "Comprovante com mais de 90 dias. Envie um recente (últimos 90 dias)."
       }
@@ -762,8 +773,8 @@ window.LOCATARIOS = {
             "value": "Ateliê Norte"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -932,7 +943,9 @@ window.LOCATARIOS = {
           {
             "nome": "Sérgio Vale",
             "cpf": "512.334.667-01",
-            "tipo": "Legal"
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "contato@valeverde.com.br"
           }
         ]
       },
@@ -944,8 +957,8 @@ window.LOCATARIOS = {
             "value": "Sérgio Vale"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -982,7 +995,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -1016,7 +1029,7 @@ window.LOCATARIOS = {
   "7": {
     "nome": "Rafael Monteiro Silva",
     "tipo": "PF",
-    "status": "Análise humana",
+    "status": "Pendente validação",
     "email": "rafael.monteiro@email.com",
     "docNum": "318.994.220-15",
     "boxes": "V-11",
@@ -1069,8 +1082,8 @@ window.LOCATARIOS = {
             "value": "Rafael Monteiro Silva"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -1151,6 +1164,7 @@ window.LOCATARIOS = {
     "nome": "Bianca Camargo Reis",
     "tipo": "PF",
     "status": "Ativo",
+    "pendenciaFinanceira": true,
     "email": "bianca.reis@email.com",
     "docNum": "457.223.889-00",
     "boxes": "P-03",
@@ -1203,8 +1217,8 @@ window.LOCATARIOS = {
             "value": "Bianca Camargo Reis"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -1290,7 +1304,7 @@ window.LOCATARIOS = {
   "9": {
     "nome": "Otávio Ramos Lima",
     "tipo": "PF",
-    "status": "Reprovado",
+    "status": "Pendente de documentação",
     "email": "otavio.lima@email.com",
     "docNum": "690.114.552-88",
     "boxes": "—",
@@ -1343,8 +1357,8 @@ window.LOCATARIOS = {
             "value": "Otávio Ramos Lima"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -1514,7 +1528,9 @@ window.LOCATARIOS = {
           {
             "nome": "Antônio União",
             "cpf": "221.556.889-04",
+            "cargo": "Administrador",
             "tipo": "Legal",
+            "email": "contato@paouniao.com.br",
             "doc": "rg-representante.jpg"
           }
         ]
@@ -1527,8 +1543,8 @@ window.LOCATARIOS = {
             "value": "Antônio União"
           },
           {
-            "label": "Responsabilidades",
-            "value": "Principal"
+            "label": "Responsabilidade",
+            "value": "Administrativo"
           },
           {
             "label": "E-mail principal",
@@ -1565,7 +1581,7 @@ window.LOCATARIOS = {
           },
           {
             "label": "Tipo",
-            "value": "Comercial"
+            "value": "Fiscal"
           },
           {
             "label": "Logradouro",
@@ -1597,23 +1613,27 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Contrato ou estatuto social consolidado",
-        "file": "contrato-social.pdf"
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "—"
       },
       {
         "label": "Cartão de CNPJ",
-        "file": "cartao-cnpj.pdf"
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
       },
       {
         "label": "Ato societário (última eleição e representantes legais)",
-        "file": "ata-eleicao.pdf"
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "—"
       },
       {
-        "label": "Documento do representante legal — identificação com foto",
-        "file": "rg-representante.jpg"
-      },
-      {
-        "label": "Documento do representante legal — comprovante de residência",
-        "file": "comprovante-rep.pdf"
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "—"
       }
     ],
     "decisao": {

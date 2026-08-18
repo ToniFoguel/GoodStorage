@@ -80,6 +80,17 @@
 .repeater__items { display: flex; flex-direction: column; gap: 0; }
 .reprow--2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
 .reprow .input { min-width: 0; }
+/* "Outros documentos" (PF): checkbox em cima, campo de número logo abaixo (3 por linha) */
+.docchecklist { width: 100%; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--lg) var(--xl); align-items: start; }
+.docitem { grid-column: span 4; display: flex; flex-direction: column; gap: var(--md); min-width: 0; }
+.doccheck { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; }
+.doccheck input { flex: none; width: 16px; height: 16px; accent-color: var(--background-primary); }
+@media (max-width: 900px) { .docitem { grid-column: span 6; } }
+@media (max-width: 560px) { .docitem { grid-column: 1 / -1; } }
+/* Marcador "principal" nos cards de contato/endereço */
+.pmark { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; white-space: nowrap; }
+.pmark input { width: 16px; height: 16px; accent-color: var(--background-primary); }
+.listrow__head-actions { display: flex; align-items: center; gap: var(--md); }
 /* Mensagem do modal de salvar (sucesso / pendências) */
 .savemsg { display: flex; align-items: flex-start; gap: var(--md); }
 .savemsg--center { flex-direction: column; align-items: center; text-align: center; gap: var(--lg); padding: var(--md) 0; }
@@ -136,6 +147,14 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .docgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--md); align-items: start; }
 .docgrid .listrow { margin-bottom: 0; }
 @media (max-width: 720px) { .docgrid { grid-template-columns: 1fr; } }
+/* Datas de emissão/validade por documento (RN-DOC2/DOC3) */
+.docdates { margin-top: var(--md); }
+.docmeta { margin-top: var(--sm); }
+/* Ações de validação manual por documento (exibição) */
+.docactions { display: flex; gap: var(--sm); margin-top: var(--md); }
+.docactions .btn { padding: var(--sm) var(--md); font-size: var(--font-size-label); }
+/* Selo de status no card de representante (RN-ED5) */
+.repcard .listrow__head .badge { margin-left: var(--sm); }
 .reprow .icon-btn { align-self: end; width: 40px; height: 40px; }
 .listrow__head .icon-btn { width: 40px; height: 40px; }
 
@@ -184,6 +203,21 @@ textarea.input__control { min-height: 84px; resize: vertical; }
 .ltable a.table__row { text-decoration: none; color: inherit; cursor: pointer; }
 .ltable a.table__row:hover { background: var(--background-bg-aux); }
 .ltable .badge { white-space: nowrap; }
+.ltable .table__th { cursor: pointer; }
+.ltable .table__th--desc .table__sort svg { transform: rotate(180deg); }
+
+/* Estado vazio + paginação da listagem (RN7/RN11/RN14) */
+.ltempty { padding: var(--xl); text-align: center; border: var(--thin) dashed var(--border-default); margin-top: var(--md); }
+.tablepager { display: flex; align-items: center; justify-content: space-between; gap: var(--md); flex-wrap: wrap; margin-top: var(--md); }
+.tablepager__left { display: flex; align-items: center; gap: var(--md); }
+.tablepager__size { width: auto; }
+.tablepager__range { font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); white-space: nowrap; }
+.tablepager__pages { display: flex; align-items: center; gap: 4px; }
+.tablepager__btn { min-width: 36px; height: 36px; padding: 0 var(--sm); border: none; background: transparent; border-radius: 8px; font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.tablepager__btn:hover:not(:disabled) { background: var(--background-bg-aux); }
+.tablepager__btn:disabled { opacity: .35; cursor: default; }
+.tablepager__btn--active { border: var(--thin) solid var(--border-default); font-weight: var(--font-weight-bold); }
+.tablepager__ellipsis { min-width: 24px; text-align: center; color: var(--content-text); }
 
 /* --- Cartão de identificação (avatar + info) — seção da página -- */
 .idcard { display: flex; align-items: center; gap: var(--lg); min-width: 0; }

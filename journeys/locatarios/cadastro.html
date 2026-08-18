@@ -99,6 +99,17 @@
         </div>
       </div>
 
+      <!-- RN-ED1: metadados imutáveis (somente leitura, apenas na edição) -->
+      <section class="section js-edit-only" id="secMeta">
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Dados do cadastro</h2></div><span class="section__pill">somente leitura</span></div>
+        <div class="section__body"><div class="formgrid formgrid--4">
+          <div class="input"><div class="input__label"><p>Código do locatário</p></div><div class="input__field is-locked"><input class="input__control js-meta-cod" readonly /></div></div>
+          <div class="input"><div class="input__label"><p>Data do cadastro</p></div><div class="input__field is-locked"><input class="input__control js-meta-data" readonly /></div></div>
+          <div class="input"><div class="input__label"><p>Usuário de cadastro</p></div><div class="input__field is-locked"><input class="input__control js-meta-user" readonly /></div></div>
+          <div class="input"><div class="input__label"><p>Status de integração Oracle</p></div><div class="input__field is-locked"><input class="input__control js-meta-oracle" readonly /></div></div>
+        </div></div>
+      </section>
+
       <!-- Tipo de pessoa (abas via segmented) -->
       <div class="tabbar">
         <div class="segmented" data-ds="segmented">
@@ -113,17 +124,23 @@
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
             <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div></div>
-            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
-            <div class="input"><div class="input__label"><p>Nacionalidade</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
-            <!-- Brasileiro: CPF (obrigatório) + documento com tipo -->
-            <div class="input" data-ds="input" data-ds-mask="cpf" data-nac-show="Brasileira"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
-            <div class="input" data-nac-show="Brasileira"><div class="input__label"><p>Tipo de documento</p></div><div class="input__field"><select class="input__control"><option>RG</option><option>CNH</option><option>Carteira de trabalho</option><option>Carteira de classe</option><option>Passaporte</option></select></div></div>
-            <div class="input" data-nac-show="Brasileira"><div class="input__label"><p>Número do documento</p></div><div class="input__field"><input class="input__control" placeholder="Nº do documento selecionado" /></div></div>
-            <!-- Estrangeiro: RNE (obrigatório) + passaporte -->
-            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>RNE</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div><p class="input__help">Documento do estrangeiro no território brasileiro.</p></div>
-            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>Passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div>
-            <div class="input" data-nac-show="Estrangeira" hidden><div class="input__label"><p>País de origem</p></div><div class="input__field"><input class="input__control" placeholder="País" /></div></div>
-            <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
+            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
+            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
+            <!-- CPF: obrigatório p/ brasileiro, opcional p/ estrangeiro (dedup) -->
+            <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req js-cpf-req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
+            <!-- Outros documentos: cada tipo marcado revela o campo de número logo abaixo -->
+            <div class="input full"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
+              <div class="docchecklist">
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="RG" /><span>RG</span></label><div class="input js-docfield" data-docfield="RG" hidden><div class="input__label"><p>Número do RG</p></div><div class="input__field"><input class="input__control" placeholder="Nº do RG" /></div></div></div>
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="CNH" /><span>CNH</span></label><div class="input js-docfield" data-docfield="CNH" hidden><div class="input__label"><p>Número da CNH</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CNH" /></div></div></div>
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="CIN" /><span>CIN</span></label><div class="input js-docfield" data-docfield="CIN" hidden><div class="input__label"><p>Número da CIN</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CIN" /></div></div></div>
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="RNE" /><span>RNE</span></label><div class="input js-docfield" data-docfield="RNE" hidden><div class="input__label"><p>Número do RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div></div></div>
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="Passaporte" /><span>Passaporte</span></label><div class="input js-docfield" data-docfield="Passaporte" hidden><div class="input__label"><p>Número do passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div></div>
+                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="Classe" /><span>Carteira de classe (CRM, CRF, CRP…)</span></label><div class="input js-docfield" data-docfield="Classe" hidden><div class="input__label"><p>Carteira de classe</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: CRM 123456/SP" /></div></div></div>
+              </div>
+              <p class="input__help js-docs-help" hidden>Para locatário estrangeiro, informe ao menos um documento.</p>
+            </div>
+            <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
             <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone da pessoa</p></div><div class="input__field"><input class="input__control" placeholder="(11) 90000-0000" /></div><p class="input__help">Telefone do próprio locatário — distinto dos contatos.</p></div>
             <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-reveal="js-cnpj-pf" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
             <div class="input js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
@@ -138,11 +155,13 @@
               <div class="listrow__head"><span class="fieldlbl">Documento de identificação com foto</span></div>
               <p class="cl-mail">RG, CNH ou outro documento oficial com foto · imagem até 20 MB.</p>
               <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
+              <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
             </div>
             <div class="listrow">
               <div class="listrow__head"><span class="fieldlbl">Comprovante de residência</span></div>
               <p class="cl-mail">Conta de consumo recente · PDF ou imagem até 20 MB.</p>
               <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
+              <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
             </div>
           </div>
         </section>
@@ -158,9 +177,9 @@
           <div class="formgrid">
             <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div></div>
             <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /></div></div>
-            <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
+            <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Razão social" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
             <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Alves Comércio" /></div></div>
-            <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de fundação" /></div></div>
             <div class="input"><div class="input__label"><p>Natureza jurídica</p></div><div class="input__field"><input class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Porte</p></div><div class="input__field"><input class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Inscrição municipal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div><p class="input__help">Obrigatória, mas não bloqueia o preenchimento.</p></div>
@@ -200,11 +219,13 @@
           <div class="repeater repeater--rep" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><span class="badge badge--yellow js-rep-pend" hidden>Documentação pendente</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="reprow reprow--3">
-                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
-                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
+                  <div class="input"><div class="input__label"><p>Cargo</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Administradora" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div></div>
                 </div>
                 <div class="repdoc js-edit-only">
                   <div class="listrow__head"><span class="fieldlbl">Documento comprobatório com foto</span></div>
@@ -222,11 +243,13 @@
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><span class="badge badge--yellow js-rep-pend" hidden>Documentação pendente</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="reprow reprow--3">
-                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome" /></div></div>
-                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
+                  <div class="input"><div class="input__label"><p>Cargo</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Cargo" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
                 </div>
                 <div class="repdoc js-edit-only">
                   <div class="listrow__head"><span class="fieldlbl">Documento comprobatório com foto</span></div>
@@ -248,26 +271,25 @@
             <div class="listrow__head"><span class="fieldlbl">Contrato ou estatuto social consolidado</span></div>
             <p class="cl-mail">Última versão consolidada · PDF até 20 MB.</p>
             <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf" hidden /></label></div>
+            <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
           </div>
           <div class="listrow">
             <div class="listrow__head"><span class="fieldlbl">Cartão de CNPJ</span></div>
             <p class="cl-mail">Comprovante de inscrição e situação cadastral · PDF ou imagem até 20 MB.</p>
             <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
+            <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
           </div>
           <div class="listrow">
             <div class="listrow__head"><span class="fieldlbl">Ato societário (última eleição e representantes legais)</span></div>
             <p class="cl-mail">Ata/ato que comprova a eleição dos representantes legais da sociedade · PDF até 20 MB.</p>
             <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf" hidden /></label></div>
+            <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
           </div>
           <div class="listrow">
-            <div class="listrow__head"><span class="fieldlbl">Representante legal — identificação com foto</span></div>
-            <p class="cl-mail">RG, CNH ou outro documento com foto · imagem até 20 MB.</p>
-            <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
-          </div>
-          <div class="listrow">
-            <div class="listrow__head"><span class="fieldlbl">Representante legal — comprovante de residência</span></div>
-            <p class="cl-mail">Conta de consumo recente · PDF ou imagem até 20 MB.</p>
+            <div class="listrow__head"><span class="fieldlbl">Comprovante de residência da empresa</span></div>
+            <p class="cl-mail">Comprovante de endereço em nome da empresa · PDF ou imagem até 20 MB.</p>
             <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo<input type="file" accept="application/pdf,image/*" hidden /></label></div>
+            <div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" /></div></div></div>
           </div>
         </div>
       </section>
@@ -280,31 +302,33 @@
           <div class="repeater" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Contato 1 (principal)</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="fieldlbl">Contato</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <label class="pmark"><input type="radio" name="contato-principal" checked /><span>Principal</span></label>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
                 <div class="formgrid formgrid--4">
-                  <div class="input col-2"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
-                  <div class="input"><div class="input__label"><p>Responsabilidades</p></div><div class="input__field"><select class="input__control"><option>Principal</option><option>Cobrança</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div></div>
-                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
+                  <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
+                  <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" checked /><span>Pode assinar documentos</span></label></div>
+                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Contato adicional</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="fieldlbl">Contato</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <label class="pmark"><input type="radio" name="contato-principal" /><span>Principal</span></label>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
                 <div class="formgrid formgrid--4">
-                  <div class="input col-2"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
-                  <div class="input"><div class="input__label"><p>Responsabilidades</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Operacional</option><option>Principal</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div></div>
-                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
+                  <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
+                  <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" /><span>Pode assinar documentos</span></label></div>
+                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </template>
@@ -321,9 +345,10 @@
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <label class="pmark"><input type="radio" name="endereco-principal" checked /><span>Principal</span></label>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
                   <div class="input col-2"><div class="input__label"><p>Logradouro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Logradouro" /></div></div>
                   <div class="input"><div class="input__label"><p>País</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Brasil</option><option>Outro</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Estado</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>SP</option><option>RJ</option><option>MG</option><option>ES</option><option>PR</option><option>SC</option><option>RS</option><option>BA</option><option>Outros</option></select></div></div>
@@ -331,15 +356,17 @@
                   <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
                   <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
                   <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
+                  <div class="input"><div class="input__label"><p>Código do endereço</p></div><div class="input__field is-readonly"><input class="input__control" placeholder="Preenchido pela consulta do CEP" readonly /></div></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <label class="pmark"><input type="radio" name="endereco-principal" /><span>Principal</span></label>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
-                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
                   <div class="input col-2"><div class="input__label"><p>Logradouro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Logradouro" /></div></div>
                   <div class="input"><div class="input__label"><p>País</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Brasil</option><option>Outro</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Estado</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>SP</option><option>RJ</option><option>MG</option><option>ES</option><option>PR</option><option>SC</option><option>RS</option><option>BA</option><option>Outros</option></select></div></div>
@@ -347,6 +374,7 @@
                   <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
                   <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
                   <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
+                  <div class="input"><div class="input__label"><p>Código do endereço</p></div><div class="input__field is-readonly"><input class="input__control" placeholder="Preenchido pela consulta do CEP" readonly /></div></div>
                 </div>
               </div>
             </template>
@@ -364,6 +392,7 @@
 <div class="modal confirm-modal" id="modalInativar" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Inativar locatário</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
+    <div class="banner banner--warning js-inativar-block" hidden><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Inativação bloqueada</p><p class="banner__text js-inativar-block-msg"></p></div></div>
     <div class="input full"><div class="input__label"><p>Data da inativação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
     <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da inativação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da inativação"></textarea></div></div>
   </div>
@@ -391,11 +420,21 @@
 <div class="modal confirm-modal" id="modalTrocaImagem" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Trocar imagem do documento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Volta ao fluxo de aprovação</p><p class="banner__text">Ao alterar este documento, o cadastro retorna para reanálise (Análise humana) e precisa ser aprovado novamente.</p></div></div>
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Volta ao fluxo de aprovação</p><p class="banner__text">Ao alterar este documento, ele volta para o fluxo de validação automática (Em análise) e precisa ser aprovado novamente.</p></div></div>
     <div class="input full"><div class="input__label"><p>Data da troca</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
     <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da troca</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da troca do documento"></textarea></div></div>
   </div>
   <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalTrocaImagem'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmTroca">Excluir imagem</button></div>
+</div>
+
+<!-- RN-ED2: motivo obrigatório ao alterar campo sensível -->
+<div class="modal confirm-modal" id="modalMotivoAlteracao" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Motivo da alteração</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <p class="cl-mail">Informe o motivo da alteração do campo <strong class="js-sens-campo">—</strong>.</p>
+    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da alteração"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost js-sens-cancel">Cancelar</button><button class="btn btn--primary" id="btnConfirmMotivo">Salvar motivo</button></div>
 </div>
 
 <!-- Modais de salvar cadastro -->
@@ -416,7 +455,7 @@
   <div class="modal__content">
     <div class="savemsg savemsg--center savemsg--warn">
       <span class="savemsg__icon savemsg__icon--sq"><svg><use href="#ico-information"/></svg></span>
-      <p class="savemsg__title">Existem campos que precisam ser completados</p>
+      <p class="savemsg__title">Um ou mais campos obrigatórios não foram preenchidos.</p>
       <p class="savemsg__text savemsg__text--count"></p>
     </div>
   </div>
@@ -435,8 +474,19 @@
         scope.querySelectorAll('[data-nac-show]').forEach(function (el) {
           el.hidden = (el.getAttribute('data-nac-show') !== sel.value);
         });
+        var estr = sel.value === 'Estrangeira';
+        var cpfReq = scope.querySelector('.js-cpf-req'); if (cpfReq) cpfReq.hidden = estr;
+        var docsReq = scope.querySelector('.js-docs-req'); if (docsReq) docsReq.hidden = !estr;
+        var docsHelp = scope.querySelector('.js-docs-help'); if (docsHelp) docsHelp.hidden = !estr;
       }
       sel.addEventListener('change', apply); apply();
+    });
+    // 1b) "Outros documentos" (checkbox): cada tipo marcado revela seu campo de número logo abaixo
+    document.querySelectorAll('[data-doc]').forEach(function (cb) {
+      var scope = cb.closest('.docitem') || cb.closest('.section') || document;
+      var field = scope.querySelector('.js-docfield[data-docfield="' + cb.getAttribute('data-doc') + '"]');
+      function apply() { if (field) field.hidden = !cb.checked; }
+      cb.addEventListener('change', apply); apply();
     });
     // 2) Revelar campo por checkbox (IBS/CBS -> CNPJ)
     document.querySelectorAll('[data-reveal]').forEach(function (cb) {
@@ -556,8 +606,17 @@
       if (ativo) { btnAtiv.textContent = 'Inativar'; btnAtiv.classList.remove('btn--secondary'); btnAtiv.classList.add('btn--destructive'); }
       else { btnAtiv.textContent = 'Ativar'; btnAtiv.classList.remove('btn--destructive'); btnAtiv.classList.add('btn--secondary'); }
     }
+    function applyInativarBlock() {
+      var msg = window.__inativarBlock || '';
+      var banner = document.querySelector('.js-inativar-block');
+      var bmsg = document.querySelector('.js-inativar-block-msg');
+      var conf = document.getElementById('btnConfirmInativar');
+      if (banner) banner.hidden = !msg;
+      if (bmsg) bmsg.textContent = msg;
+      if (conf) conf.disabled = !!msg;
+    }
     if (btnAtiv) btnAtiv.addEventListener('click', function () {
-      if (btnAtiv.textContent.trim() === 'Inativar') DS.openModal('modalInativar');
+      if (btnAtiv.textContent.trim() === 'Inativar') { applyInativarBlock(); DS.openModal('modalInativar'); }
       else setAtivo(true);
     });
     var btnConfInativar = document.getElementById('btnConfirmInativar');
@@ -580,7 +639,27 @@
         var add = pendingDoc.querySelector('.js-doc-add'); if (add) add.hidden = false;
         pendingDoc = null;
       }
+      updateReps();
     });
+
+    // RN-ED5: selo "Documentação pendente" por representante + trava do último
+    function updateReps() {
+      var wrap = document.querySelector('.repeater--rep');
+      if (!wrap) return;
+      var isEdit = document.body.classList.contains('is-edit');
+      var cards = wrap.querySelectorAll('.repcard');
+      cards.forEach(function (card) {
+        var cur = card.querySelector('.js-doc-current');
+        var hasDoc = cur && !cur.hidden;
+        var pend = card.querySelector('.js-rep-pend');
+        if (pend) pend.hidden = hasDoc || !isEdit;               // pendente só na edição, quando sem doc
+        var rm = card.querySelector('[data-repeat-remove]');
+        if (rm) rm.style.display = (cards.length <= 1) ? 'none' : '';  // não remover o último
+      });
+    }
+    document.addEventListener('ds:add', updateReps);
+    document.addEventListener('ds:remove', updateReps);
+    updateReps();
 
     // 5) Modo edição (?editar=1): sem seletor PF/PJ, campos preenchidos e docs travados
     if (/[?&]editar=1/.test(location.search)) {
@@ -594,7 +673,7 @@
       var okTitle = document.querySelector('#modalSucesso .savemsg__title');
       var okText = document.querySelector('#modalSucesso .savemsg__text');
       if (okTitle) okTitle.textContent = 'Alterações salvas';
-      if (okText) okText.textContent = 'As alterações foram salvas. Como houve mudança nos dados/documentos, o cadastro voltou ao fluxo de aprovação (Análise humana).';
+      if (okText) okText.textContent = 'As alterações foram salvas. Como houve mudança nos dados/documentos, o cadastro voltou ao fluxo de validação (Em análise).';
 
       // Sem seletor PF/PJ: mostra só o tipo cadastrado (prioriza o locatário aberto)
       var tipo = byId ? byId.tipo : ((stored && stored.tipo) ? stored.tipo : 'PJ');
@@ -626,12 +705,14 @@
           byId.docs.forEach(function (d) {
             var isImg = /\.(jpe?g|png|webp)$/i.test(d.file);
             var db = d.motivo ? '<span class="badge badge--destructive">Reprovado</span>'
-              : byId.status === 'Análise humana' ? '<span class="badge badge--yellow">Em análise</span>'
+              : byId.status === 'Em análise' ? '<span class="badge badge--yellow">Em análise</span>'
+              : byId.status === 'Pendente validação' ? '<span class="badge badge--yellow">Validação manual</span>'
               : '<span class="badge badge--success">Aprovado</span>';
             dh += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + d.label + '</span>' + db + '</div>'
               + '<div class="docfile js-doc-current"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + d.file + '</span><button type="button" class="icon-btn js-doc-del" aria-label="Excluir documento"><svg><use href="#ico-trash"/></svg></button></div>'
               + (d.motivo ? '<p class="formerror">' + d.motivo + '</p>' : '')
-              + '<div class="js-doc-add" hidden><p class="cl-mail">Anexe um novo arquivo.</p><div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar ' + (isImg ? 'imagem' : 'arquivo') + '<input type="file" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div></div></div>';
+              + '<div class="js-doc-add" hidden><p class="cl-mail">Anexe um novo arquivo.</p><div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar ' + (isImg ? 'imagem' : 'arquivo') + '<input type="file" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div></div>'
+              + '<div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" value="' + (d.emissao || '2026-01-15') + '" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" value="' + (d.validade || '') + '" /></div></div></div></div>';
           });
           docsBody.innerHTML = dh;
         }
@@ -664,6 +745,55 @@
         c.readOnly = true;
         var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
       });
+
+      // RN-ED1: preenche metadados imutáveis (mock quando ausente no dataset)
+      function pad6(n) { return ('000000' + n).slice(-6); }
+      var metaMap = {
+        '.js-meta-cod': (byId && byId.codigo) || ('LOC-' + pad6(editId || 1)),
+        '.js-meta-data': (byId && byId.dataCadastro) || '12/03/2024 09:41',
+        '.js-meta-user': (byId && byId.usuarioCadastro) || 'Carol Ferreira',
+        '.js-meta-oracle': (byId && byId.oracle) || 'Pendente'
+      };
+      Object.keys(metaMap).forEach(function (sel) { var el = document.querySelector(sel); if (el) el.value = metaMap[sel]; });
+
+      // RN-ED5: aplica selo/trava agora que estamos em modo edição
+      updateReps();
+
+      // RN-ED2: alteração de campo sensível exige motivo
+      document.querySelectorAll('.tabpanel.is-active [data-sensitive]').forEach(function (c) { c.setAttribute('data-orig', c.value || ''); });
+      var pendingSens = null;
+      document.addEventListener('change', function (e) {
+        var c = e.target;
+        if (!c || !c.matches || !c.matches('[data-sensitive]')) return;
+        if ((c.value || '') === (c.getAttribute('data-orig') || '')) return;
+        pendingSens = c;
+        var m = document.getElementById('modalMotivoAlteracao');
+        var campo = m.querySelector('.js-sens-campo'); if (campo) campo.textContent = c.getAttribute('data-sensitive');
+        var ta = m.querySelector('textarea'); if (ta) { ta.value = ''; var inp = ta.closest('.input'); if (inp) inp.classList.remove('input--error'); }
+        DS.openModal('modalMotivoAlteracao');
+      });
+      var btnMot = document.getElementById('btnConfirmMotivo');
+      if (btnMot) btnMot.addEventListener('click', function () {
+        var m = document.getElementById('modalMotivoAlteracao');
+        var ta = m.querySelector('textarea');
+        if (!ta || !ta.value.trim()) { if (ta) { var inp = ta.closest('.input'); if (inp) inp.classList.add('input--error'); } return; }
+        if (pendingSens) pendingSens.setAttribute('data-orig', pendingSens.value || '');
+        pendingSens = null; DS.closeModal(m);
+      });
+      function revertSens() {
+        if (pendingSens) { pendingSens.value = pendingSens.getAttribute('data-orig') || ''; pendingSens = null; }
+        DS.closeModal(document.getElementById('modalMotivoAlteracao'));
+      }
+      var mMot = document.getElementById('modalMotivoAlteracao');
+      if (mMot) {
+        var cc = mMot.querySelector('.js-sens-cancel'); if (cc) cc.addEventListener('click', revertSens);
+        var xx = mMot.querySelector('.modal__close'); if (xx) xx.addEventListener('click', revertSens);
+      }
+
+      // RN-ED6/ED7: bloqueios de inativação (contrato ativo / pendência financeira)
+      window.__inativarBlock = (byId && byId.contratoAtivo) ? 'Não é possível inativar um locatário com contrato ativo.'
+        : (byId && byId.pendenciaFinanceira) ? 'Não é possível inativar um locatário com pendência financeira em aberto.'
+        : '';
     }
   })();
 </script>

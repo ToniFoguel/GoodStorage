@@ -99,9 +99,9 @@
                 <div class="select__dropdown"><div class="select__list">
                   <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
                   <div class="select__item"><p class="select__item-text">Ativo</p></div>
-                  <div class="select__item"><p class="select__item-text">Inadimplente</p></div>
-                  <div class="select__item"><p class="select__item-text">Blacklist</p></div>
-                  <div class="select__item"><p class="select__item-text">Move-out avisado</p></div>
+                  <div class="select__item"><p class="select__item-text">Em análise</p></div>
+                  <div class="select__item"><p class="select__item-text">Pendente validação</p></div>
+                  <div class="select__item"><p class="select__item-text">Pendente de documentação</p></div>
                   <div class="select__item"><p class="select__item-text">Inativo</p></div>
                 </div></div>
               </div>
@@ -135,6 +135,16 @@
         </div>
       </div>
 
+      <div class="ltempty" id="ltEmpty" hidden><p class="cl-mail" id="ltEmptyMsg">Nenhum resultado encontrado</p></div>
+
+      <div class="tablepager" id="ltPager">
+        <div class="tablepager__left">
+          <select class="input__control tablepager__size" id="ltPageSize"><option>20</option><option>50</option><option>100</option></select>
+          <span class="tablepager__range" id="ltRange">0 – 0 de 0</span>
+        </div>
+        <div class="tablepager__pages" id="ltPages"></div>
+      </div>
+
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
   </div>
@@ -145,26 +155,147 @@
 <script>
   (function () {
     var t = document.querySelector('.ltable'); if (!t || !window.LOCATARIOS) return;
-    var badgeMap = {'Ativo':'badge--success','Aprovado':'badge--success','Pendente de documentação':'badge--yellow','Análise humana':'badge--yellow','Reprovado':'badge--destructive','Inativo':'badge--outline'};
-    var STATUS_SHORT = {'Pendente de documentação':'Pendente'};
+    var badgeMap = {'Ativo':'badge--success','Em análise':'badge--yellow','Pendente validação':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline'};
+    var STATUS_SHORT = {'Pendente de documentação':'Pendente doc.','Pendente validação':'Pend. validação'};
     function seg(s){ return s === 'MAPFRE' ? 'badge--success' : 'badge--outline'; }
     function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
-    var i = 0, html = '';
-    Object.keys(window.LOCATARIOS).forEach(function (id) {
+    function norm(s){ return String(s==null?'':s).toLowerCase(); }
+
+    // Dados de cada linha + texto pesquisável (nome, e-mail, documento, box, unidade, telefones)
+    var rows = Object.keys(window.LOCATARIOS).map(function (id) {
       var l = window.LOCATARIOS[id];
-      var alt = (i % 2 === 1) ? ' table__row--alt' : ''; i++;
-      html += '<a class="table__row' + alt + '" href="perfil.html?id=' + id + '">'
-        + '<div class="table__cell"><span class="cl-name">' + esc(l.nome) + '</span></div>'
-        + '<div class="table__cell"><span class="badge badge--outline">' + esc(l.tipo) + '</span></div>'
-        + '<div class="table__cell"><p class="table__cell-text cl-mail">' + esc(l.email) + '</p></div>'
-        + '<div class="table__cell"><p class="table__cell-text">' + esc(l.docNum) + '</p></div>'
-        + '<div class="table__cell"><p class="table__cell-text">' + esc(l.boxes) + '</p></div>'
-        + '<div class="table__cell"><p class="table__cell-text">' + esc(l.unidade) + '</p></div>'
-        + '<div class="table__cell"><span class="badge ' + seg(l.seguro) + '">' + esc(l.seguro) + '</span></div>'
-        + '<div class="table__cell"><span class="badge ' + (badgeMap[l.status] || 'badge--outline') + '">' + esc(STATUS_SHORT[l.status] || l.status) + '</span></div>'
-        + '</a>';
+      var fones = [];
+      (l.dados || []).forEach(function (sec) { (sec.items || []).forEach(function (it) { if (/telefone|whats/i.test(it.label)) fones.push(it.value); }); });
+      var search = [l.nome, l.email, l.docNum, l.boxes, l.unidade].concat(fones).map(norm).join(' ');
+      return { id: id, nome: l.nome, tipo: l.tipo, email: l.email, docNum: l.docNum, boxes: l.boxes, unidade: l.unidade, seguro: l.seguro, status: l.status, search: search };
     });
-    t.insertAdjacentHTML('beforeend', html);
+
+    var fields = ['nome','tipo','email','docNum','boxes','unidade','seguro','status'];
+    var state = { query: '', fStatus: '', fTipo: '', sortField: null, sortDir: 1, pageSize: 20, page: 1 };
+
+    function apply() {
+      var out = rows.filter(function (r) {
+        if (state.fStatus && r.status !== state.fStatus) return false;
+        if (state.fTipo && r.tipo !== state.fTipo) return false;
+        if (state.query && state.query.length >= 3 && r.search.indexOf(state.query) < 0) return false;
+        return true;
+      });
+      if (state.sortField) {
+        out.sort(function (a, b) {
+          var x = norm(a[state.sortField]), y = norm(b[state.sortField]);
+          return x < y ? -state.sortDir : x > y ? state.sortDir : 0;
+        });
+      }
+      return out;
+    }
+
+    function render() {
+      Array.prototype.forEach.call(t.querySelectorAll('.table__row'), function (n) { n.remove(); });
+      var empty = document.getElementById('ltEmpty');
+      var emptyMsg = document.getElementById('ltEmptyMsg');
+      var pager = document.getElementById('ltPager');
+      if (!rows.length) { if (empty) { empty.hidden = false; emptyMsg.textContent = 'Nenhum locatário cadastrado'; } if (pager) pager.hidden = true; return; }
+      var data = apply();
+      if (!data.length) { if (empty) { empty.hidden = false; emptyMsg.textContent = 'Nenhum resultado encontrado'; } if (pager) pager.hidden = true; return; }
+      if (empty) empty.hidden = true;
+      if (pager) pager.hidden = false;
+      var totalPages = Math.max(1, Math.ceil(data.length / state.pageSize));
+      if (state.page > totalPages) state.page = totalPages;
+      var start = (state.page - 1) * state.pageSize;
+      var pageRows = data.slice(start, start + state.pageSize);
+      var html = '';
+      pageRows.forEach(function (r, idx) {
+        var alt = ((start + idx) % 2 === 1) ? ' table__row--alt' : '';
+        html += '<a class="table__row' + alt + '" href="perfil.html?id=' + r.id + '">'
+          + '<div class="table__cell"><span class="cl-name">' + esc(r.nome) + '</span></div>'
+          + '<div class="table__cell"><span class="badge badge--outline">' + esc(r.tipo) + '</span></div>'
+          + '<div class="table__cell"><p class="table__cell-text cl-mail">' + esc(r.email) + '</p></div>'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.docNum) + '</p></div>'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.boxes) + '</p></div>'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.unidade) + '</p></div>'
+          + '<div class="table__cell"><span class="badge ' + seg(r.seguro) + '">' + esc(r.seguro) + '</span></div>'
+          + '<div class="table__cell"><span class="badge ' + (badgeMap[r.status] || 'badge--outline') + '">' + esc(STATUS_SHORT[r.status] || r.status) + '</span></div>'
+          + '</a>';
+      });
+      t.insertAdjacentHTML('beforeend', html);
+      renderPager(data.length, totalPages, start);
+    }
+
+    // Lista de páginas com reticências (ex.: 1 2 … 20 21)
+    function pageList(cur, total) {
+      if (total <= 7) { var a = []; for (var i = 1; i <= total; i++) a.push(i); return a; }
+      var set = {};
+      [1, 2, total - 1, total, cur - 1, cur, cur + 1].forEach(function (p) { if (p >= 1 && p <= total) set[p] = 1; });
+      var arr = Object.keys(set).map(Number).sort(function (x, y) { return x - y; });
+      var out = [], prev = 0;
+      arr.forEach(function (p) { if (prev && p - prev > 1) out.push('...'); out.push(p); prev = p; });
+      return out;
+    }
+    function renderPager(total, totalPages, start) {
+      var range = document.getElementById('ltRange');
+      if (range) { var end = Math.min(start + state.pageSize, total); range.textContent = (total === 0 ? 0 : start + 1) + ' – ' + end + ' de ' + total; }
+      var pg = document.getElementById('ltPages'); if (!pg) return;
+      function nav(label, page, disabled) { return '<button type="button" class="tablepager__btn tablepager__btn--nav" data-page="' + page + '"' + (disabled ? ' disabled' : '') + '>' + label + '</button>'; }
+      var h = '';
+      h += nav('«', 1, state.page <= 1);
+      h += nav('‹', state.page - 1, state.page <= 1);
+      pageList(state.page, totalPages).forEach(function (p) {
+        if (p === '...') h += '<span class="tablepager__ellipsis">…</span>';
+        else h += '<button type="button" class="tablepager__btn' + (p === state.page ? ' tablepager__btn--active' : '') + '" data-page="' + p + '">' + p + '</button>';
+      });
+      h += nav('›', state.page + 1, state.page >= totalPages);
+      h += nav('»', totalPages, state.page >= totalPages);
+      pg.innerHTML = h;
+    }
+
+    // RN3/RN3.1 — Busca parcial (>=3 caracteres), gatilho Enter ou clique no ícone
+    var searchInput = document.querySelector('.toolbar__search .input__control');
+    var searchIcon = document.querySelector('.toolbar__search .input__icon');
+    function doSearch() { state.query = norm(searchInput ? searchInput.value.trim() : ''); state.page = 1; render(); }
+    if (searchInput) searchInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+    if (searchIcon) { searchIcon.style.cursor = 'pointer'; searchIcon.addEventListener('click', doSearch); }
+
+    // RN4/RN5/RN10 — Filtros (Status + Tipo) dinâmicos
+    var selects = document.querySelectorAll('.toolbar__filter-dd .select');
+    if (selects[0]) selects[0].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fStatus = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
+    if (selects[1]) selects[1].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fTipo = /todos/i.test(txt) ? '' : (/f[ií]sica/i.test(txt) ? 'PF' : /jur[ií]dica/i.test(txt) ? 'PJ' : ''); state.page = 1; render(); });
+
+    // RN6 — Limpar filtro
+    var clean = document.querySelector('.dropdown__clean .btn');
+    if (clean) clean.addEventListener('click', function () {
+      state.query = ''; state.fStatus = ''; state.fTipo = ''; state.page = 1;
+      if (searchInput) searchInput.value = '';
+      Array.prototype.forEach.call(document.querySelectorAll('.toolbar__filter-dd .select'), function (sel, i) {
+        var val = sel.querySelector('.select__value'); if (val) val.textContent = i === 0 ? 'Todos os status' : 'Todos';
+        Array.prototype.forEach.call(sel.querySelectorAll('.select__item'), function (it, idx) { it.classList.toggle('select__item--active', idx === 0); });
+      });
+      render();
+    });
+
+    // RN15 — Ordenação por coluna (asc/desc)
+    var ths = t.querySelectorAll('.table__header .table__th');
+    Array.prototype.forEach.call(ths, function (th, idx) {
+      th.addEventListener('click', function () {
+        var f = fields[idx];
+        if (state.sortField === f) state.sortDir = -state.sortDir; else { state.sortField = f; state.sortDir = 1; }
+        state.page = 1;
+        Array.prototype.forEach.call(ths, function (o) { o.classList.remove('table__th--asc', 'table__th--desc'); });
+        th.classList.add(state.sortDir === 1 ? 'table__th--asc' : 'table__th--desc');
+        render();
+      });
+    });
+
+    // RN14 — Paginação
+    var pageSize = document.getElementById('ltPageSize');
+    if (pageSize) pageSize.addEventListener('change', function () { state.pageSize = parseInt(this.value, 10) || 20; state.page = 1; render(); });
+    var pgEl = document.getElementById('ltPages');
+    if (pgEl) pgEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-page]'); if (!b || b.disabled) return;
+      var p = parseInt(b.getAttribute('data-page'), 10);
+      if (!isNaN(p) && p !== state.page) { state.page = p; render(); }
+    });
+
+    render();
   })();
 </script>
 </body>

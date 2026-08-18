@@ -145,39 +145,64 @@
       return;
     }
 
-    // Status do locat\u00e1rio + Aprovar/Reprovar (s\u00f3 em "An\u00e1lise humana")
+    // Status do locatario (modelo IdWall). A validacao manual e POR DOCUMENTO.
     var STATUS_BADGE = {
-      'Ativo': 'badge--success', 'Aprovado': 'badge--success',
-      'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow', 'An\u00e1lise humana': 'badge--yellow',
-      'Reprovado': 'badge--destructive', 'Inativo': 'badge--outline'
+      'Ativo': 'badge--success',
+      'Em an\u00e1lise': 'badge--yellow',
+      'Pendente valida\u00e7\u00e3o': 'badge--yellow',
+      'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow',
+      'Inativo': 'badge--outline'
     };
     var stBadge = document.getElementById('statusBadge');
     var btnAp = document.getElementById('btnAprovar');
     var btnRe = document.getElementById('btnReprovar');
     function setStatus(s) {
       if (stBadge) { stBadge.textContent = s || '\u2014'; stBadge.className = 'badge ' + (STATUS_BADGE[s] || 'badge--outline'); }
-      var human = (s === 'An\u00e1lise humana');
-      if (btnAp) btnAp.hidden = !human;
-      if (btnRe) btnRe.hidden = !human;
+      var manual = (s === 'Pendente valida\u00e7\u00e3o'); // valida\u00e7\u00e3o manual do locat\u00e1rio s\u00f3 quando pendente
+      if (btnAp) btnAp.hidden = !manual;
+      if (btnRe) btnRe.hidden = !manual;
     }
-    setStatus(stored.status);
     var editLink = document.querySelector('.pagehead__actions a[href^="cadastro.html"]');
     if (editLink && id) editLink.setAttribute('href', 'cadastro.html?editar=1&id=' + id);
+
+    // Copia mutavel dos documentos + estado por documento (IdWall)
+    var docs = (stored.docs || []).map(function (d) { var c = {}; for (var k in d) c[k] = d[k]; return c; });
+    function docStatusOf(d) {
+      if (d.status) return d.status;
+      if (d.motivo) return 'Reprovado';
+      if (stored.status === 'Em an\u00e1lise') return 'Em an\u00e1lise';
+      if (stored.status === 'Pendente valida\u00e7\u00e3o') return 'Valida\u00e7\u00e3o manual';
+      return 'Aprovado';
+    }
+    function deriveStatus() {
+      if (stored.status === 'Inativo') return 'Inativo';
+      if (!docs.length) return 'Pendente de documenta\u00e7\u00e3o';
+      var rep = false, man = false, ana = false;
+      docs.forEach(function (d) { var s = docStatusOf(d); if (s === 'Reprovado') rep = true; else if (s === 'Valida\u00e7\u00e3o manual') man = true; else if (s === 'Em an\u00e1lise') ana = true; });
+      if (rep) return 'Pendente de documenta\u00e7\u00e3o';
+      if (man) return 'Pendente valida\u00e7\u00e3o';
+      if (ana) return 'Em an\u00e1lise';
+      return 'Ativo';
+    }
+    // Valida\u00e7\u00e3o manual do LOCAT\u00c1RIO (topo): abre modal de justificativa
     if (btnAp) btnAp.addEventListener('click', function () { DS.openModal('modalAprovar'); });
     if (btnRe) btnRe.addEventListener('click', function () { DS.openModal('modalReprovar'); });
     var btnConfAp = document.getElementById('btnConfirmAprovar');
     if (btnConfAp) btnConfAp.addEventListener('click', function () {
       var m = document.getElementById('modalAprovar');
       var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
-      DS.closeModal(m); setStatus('Ativo');
+      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual') { d.status = 'Aprovado'; d.motivo = ''; } });
+      DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Ativo
       updateDecisao({ tipo: 'Aprovado', data: fmtDate(dt && dt.value), motivo: (mo && mo.value) || 'Documentação aprovada.', por: 'Carol Ferreira' });
     });
     var btnConfRe = document.getElementById('btnConfirmReprovar');
     if (btnConfRe) btnConfRe.addEventListener('click', function () {
       var m = document.getElementById('modalReprovar');
       var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
-      DS.closeModal(m); setStatus('Reprovado');
-      updateDecisao({ tipo: 'Reprovado', data: fmtDate(dt && dt.value), motivo: (mo && mo.value) || 'Documentação reprovada.', por: 'Carol Ferreira' });
+      if (!mo || !mo.value.trim()) { if (mo) { var inp = mo.closest('.input'); if (inp) inp.classList.add('input--error'); } return; } // reprovar exige justificativa
+      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual') { d.status = 'Reprovado'; d.motivo = mo.value.trim(); } });
+      DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Pendente de documentação
+      updateDecisao({ tipo: 'Reprovado', data: fmtDate(dt && dt.value), motivo: mo.value.trim(), por: 'Carol Ferreira' });
     });
     var nome = '';
     stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
@@ -199,6 +224,11 @@
         + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
         + '<label class="mailsync" style="pointer-events:none"><input type="checkbox" tabindex="-1"' + (usarPrincipal ? ' checked' : '') + ' /><span>Usar o e-mail principal</span></label></div>';
     }
+    function mailFlagRO(label, value, assina) {
+      return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
+        + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
+        + '<label class="mailsync" style="pointer-events:none"><input type="checkbox" tabindex="-1"' + (assina ? ' checked' : '') + ' /><span>Pode assinar documentos</span></label></div>';
+    }
     function checkRO(label, checked) {
       return '<div class="full"><label class="checkbox-card" style="pointer-events:none">'
         + '<input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (checked ? ' checked' : '') + ' />'
@@ -206,23 +236,26 @@
         + '<span class="checkbox-card__content"><p class="checkbox-card__title">' + esc(label) + '</p></span></label></div>';
     }
     function docBadge(d) {
-      if (d && d.motivo) return '<span class="badge badge--destructive">Reprovado</span>';
-      if (stored.status === 'Análise humana') return '<span class="badge badge--yellow">Em análise</span>';
+      var s = docStatusOf(d);
+      if (s === 'Reprovado') return '<span class="badge badge--destructive">Reprovado</span>';
+      if (s === 'Em análise') return '<span class="badge badge--yellow">Em análise</span>';
+      if (s === 'Validação manual') return '<span class="badge badge--yellow">Validação manual</span>';
       return '<span class="badge badge--success">Aprovado</span>';
     }
-    function docsSectionHtml() {
-      var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div></div><div class="section__body">';
-      if (stored.docs && stored.docs.length) {
-        h += '<div class="docgrid">';
-        stored.docs.forEach(function (d) {
-          h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>' + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + '</div>';
-        });
-        h += '</div>';
-      } else {
-        h += '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
-      }
-      return h + '</div></section>';
+    function docsBodyHtml() {
+      if (!docs.length) return '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
+      var h = '<div class="docgrid">';
+      docs.forEach(function (d) {
+        h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>'
+          + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(d.emissao || '15/01/2026') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(d.validade || '—') + '</p></div></dl>'
+          + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + '</div>';
+      });
+      return h + '</div>';
     }
+    function docsSectionHtml() {
+      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div></div><div class="section__body" id="docsBody">' + docsBodyHtml() + '</div></section>';
+    }
+    function refreshDocs() { var b = document.getElementById('docsBody'); if (b) b.innerHTML = docsBodyHtml(); setStatus(deriveStatus()); }
     function decisaoHtml(d) {
       if (!d) return '<p class="cl-mail">Aguardando decisão (aprovação/reprovação).</p>';
       var cls = d.tipo === 'Reprovado' ? 'badge--destructive' : 'badge--success';
@@ -230,21 +263,44 @@
         + '<div class="data-item"><p class="data-item__label">Decisão</p><span class="badge ' + cls + '">' + esc(d.tipo) + '</span></div>'
         + '<div class="data-item"><p class="data-item__label">Data</p><p class="data-item__value">' + esc(d.data) + '</p></div>'
         + '<div class="data-item"><p class="data-item__label">Responsável</p><p class="data-item__value">' + esc(d.por || '—') + '</p></div>'
+        + (d.doc ? '<div class="data-item"><p class="data-item__label">Documento</p><p class="data-item__value">' + esc(d.doc) + '</p></div>' : '')
         + '</dl>'
         + '<div class="listrow" style="margin-top:var(--md)"><div class="listrow__head"><span class="fieldlbl">Justificativa</span></div><p class="cl-mail">' + esc(d.motivo) + '</p></div>';
     }
     function updateDecisao(d) { var b = document.getElementById('decisaoBody'); if (b) b.innerHTML = decisaoHtml(d); }
     function fmtDate(v) { if (!v) return new Date().toLocaleDateString('pt-BR'); var p = String(v).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : v; }
-    var html = '';
+    // RN-ED1: mesma seção "Dados do cadastro" do cadastro/edição, aqui somente leitura
+    function metaSectionHtml() {
+      var cod = stored.codigo || ('LOC-' + ('000000' + (id || 1)).slice(-6));
+      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Dados do cadastro</h2></div><span class="section__pill">somente leitura</span></div>'
+        + '<div class="section__body"><div class="formgrid formgrid--4">'
+        + inputRO('Código do locatário', cod) + inputRO('Data do cadastro', stored.dataCadastro || '12/03/2024 09:41')
+        + inputRO('Usuário de cadastro', stored.usuarioCadastro || 'Carol Ferreira') + inputRO('Status de integração Oracle', stored.oracle || 'Pendente')
+        + '</div></div></section>';
+    }
+    // "Outros documentos" (PF) read-only: mesmos checkboxes do cadastro; marcado + campo com o número
+    var DOCTYPES = [['RG', 'RG', 'Número do RG'], ['CNH', 'CNH', 'Número da CNH'], ['CIN', 'CIN', 'Número da CIN'], ['RNE', 'RNE', 'Número do RNE'], ['Passaporte', 'Passaporte', 'Número do passaporte'], ['Classe', 'Carteira de classe (CRM, CRF, CRP…)', 'Carteira de classe']];
+    function outrosDocsRO(tipo, numero) {
+      var h = '<div class="input full"><div class="input__label"><p>Outros documentos</p></div><div class="docchecklist">';
+      DOCTYPES.forEach(function (d) {
+        var checked = (d[0] === tipo);
+        h += '<div class="docitem"><label class="doccheck" style="pointer-events:none"><input type="checkbox" disabled' + (checked ? ' checked' : '') + ' /><span>' + esc(d[1]) + '</span></label>'
+          + (checked ? '<div class="input"><div class="input__label"><p>' + esc(d[2]) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>' : '')
+          + '</div>';
+      });
+      return h + '</div></div>';
+    }
+    var html = metaSectionHtml();
     var docsDone = false;
     stored.dados.forEach(function (sec) {
       if (sec.title === 'Contatos' && !docsDone) { html += docsSectionHtml(); docsDone = true; }
       html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(sec.title) + '</h2></div></div><div class="section__body">';
       if (sec.reps) {
-        // Representantes: cards read-only (Nome / CPF / Tipo), como no cadastro
+        // Representantes: cards read-only (Nome / CPF / Cargo / Tipo / E-mail), como no cadastro
         sec.reps.forEach(function (r, idx) {
-          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span></div><div class="reprow reprow--3">'
-                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + inputRO('Tipo', r.tipo)
+          var repBadge = r.doc ? '<span class="badge badge--success">Documento anexado</span>' : '<span class="badge badge--yellow">Documentação pendente</span>';
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span>' + repBadge + '</div><div class="reprow reprow--3">'
+                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + inputRO('Cargo', r.cargo) + inputRO('Tipo', r.tipo) + inputRO('E-mail', r.email)
                 + '</div>'
                 + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
                 + '</div>';
@@ -271,6 +327,14 @@
         }
         sec.items.forEach(function (it) {
           if (it.check) html += checkRO(it.label, it.checked);
+          else if (it.mail) html += mailRO(it.label, it.value, it.usarPrincipal);
+          else if (it.label === 'E-mail principal') html += mailFlagRO(it.label, it.value, it.assina !== false);
+          else if (it.label === 'Tipo de documento') {
+            var num = '';
+            sec.items.forEach(function (x) { if (x.label === 'Número do documento') num = x.value; });
+            html += outrosDocsRO(it.value, num);
+          }
+          else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
           else html += inputRO(it.label, it.value, span(it.label));
         });
         html += '</div>';
@@ -282,6 +346,7 @@
     // Decisão / justificativa (última seção)
     html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Decisão / justificativa</h2></div></div><div class="section__body" id="decisaoBody">' + decisaoHtml(stored.decisao) + '</div></section>';
     box.innerHTML = html;
+    setStatus(deriveStatus()); // status do locatário derivado dos documentos
   })();
 </script>
 </body>
