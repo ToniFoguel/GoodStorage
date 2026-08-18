@@ -1021,7 +1021,7 @@ window.LOCATARIOS = {
   "7": {
     "nome": "Rafael Monteiro Silva",
     "tipo": "PF",
-    "status": "Pendente validação",
+    "status": "Validação manual",
     "email": "rafael.monteiro@email.com",
     "docNum": "318.994.220-15",
     "boxes": "V-11",

@@ -90,26 +90,8 @@
           <a class="btn btn--ghost" href="lista.html">Cancelar</a>
           <button type="button" class="btn btn--destructive js-edit-only" id="btnAtivacao">Inativar</button>
           <button type="button" class="btn btn--primary" id="btnSalvar">Cadastrar</button>
-          <div class="dropdown js-edit-only" data-ds="dropdown" style="position:relative">
-            <button class="btn btn--icon-border dropdown__trigger" aria-label="Mais ações" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
-            <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalBloquear"><p class="dropdown__nav-text">Bloquear / restrições</p></div>
-              <div class="dropdown__item dropdown__item--nav" data-ds-open="modalExcluir"><p class="dropdown__nav-text">Excluir cadastro</p></div>
-            </div>
-          </div>
         </div>
       </div>
-
-      <!-- RN-ED1: metadados imutáveis (somente leitura, apenas na edição) -->
-      <section class="section js-edit-only" id="secMeta">
-        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Dados do cadastro</h2></div><span class="section__pill">somente leitura</span></div>
-        <div class="section__body"><div class="formgrid formgrid--4">
-          <div class="input"><div class="input__label"><p>Código do locatário</p></div><div class="input__field is-locked"><input class="input__control js-meta-cod" readonly /></div></div>
-          <div class="input"><div class="input__label"><p>Data do cadastro</p></div><div class="input__field is-locked"><input class="input__control js-meta-data" readonly /></div></div>
-          <div class="input"><div class="input__label"><p>Usuário de cadastro</p></div><div class="input__field is-locked"><input class="input__control js-meta-user" readonly /></div></div>
-          <div class="input"><div class="input__label"><p>Status de integração Oracle</p></div><div class="input__field is-locked"><input class="input__control js-meta-oracle" readonly /></div></div>
-        </div></div>
-      </section>
 
       <!-- Tipo de pessoa (abas via segmented) -->
       <div class="tabbar">
@@ -402,24 +384,6 @@
   <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmInativar">Inativar</button></div>
 </div>
 
-<div class="modal confirm-modal" id="modalBloquear" data-ds="modal" style="max-width:480px">
-  <div class="modal__header"><h2 class="modal__title">Bloquear / restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo do bloqueio</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo do bloqueio / restrição"></textarea></div></div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBloquear'))">Bloquear</button></div>
-</div>
-
-<div class="modal confirm-modal" id="modalExcluir" data-ds="modal" style="max-width:480px">
-  <div class="modal__header"><h2 class="modal__title">Excluir cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
-  <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data da exclusão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da exclusão</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da exclusão do cadastro"></textarea></div></div>
-  </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir cadastro</button></div>
-</div>
-
 <div class="modal confirm-modal" id="modalTrocaImagem" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Trocar imagem do documento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
@@ -660,7 +624,7 @@
       if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    // Ações de edição: Inativar/Ativar (com modal) + Bloquear/Excluir (via ⋯)
+    // Ações de edição: Inativar/Ativar (com modal)
     var btnAtiv = document.getElementById('btnAtivacao');
     function setAtivo(ativo) {
       if (!btnAtiv) return;
@@ -735,6 +699,10 @@
       var okText = document.querySelector('#modalSucesso .savemsg__text');
       if (okTitle) okTitle.textContent = 'Alterações salvas';
       if (okText) okText.textContent = 'As alterações foram salvas. Como houve mudança nos dados/documentos, o cadastro voltou ao fluxo de validação (Em análise).';
+      var okHeader = document.querySelector('#modalSucesso .modal__title'); if (okHeader) okHeader.textContent = 'Alterações';
+      var okCompletar = document.querySelector('#modalSucesso .modal__footer a[href^="cadastro.html"]'); if (okCompletar) okCompletar.remove();
+      var okFooter = document.querySelector('#modalSucesso .modal__footer'); if (okFooter) okFooter.classList.remove('modal__footer--split');
+      var okListagem = document.querySelector('#modalSucesso .modal__footer a[href="lista.html"]'); if (okListagem) { okListagem.classList.remove('btn--outline'); okListagem.classList.add('btn--primary'); okListagem.style.width = '100%'; okListagem.style.justifyContent = 'center'; }
 
       // Sem seletor PF/PJ: mostra só o tipo cadastrado (prioriza o locatário aberto)
       var tipo = byId ? byId.tipo : ((stored && stored.tipo) ? stored.tipo : 'PJ');
@@ -759,21 +727,61 @@
             if (lbl && ctrl && m[lbl.textContent.trim()] != null) ctrl.value = m[lbl.textContent.trim()];
           });
         });
+
+        // Representantes (PJ): preencher os cards a partir de byId.reps
+        var repData = null; byId.dados.forEach(function (s) { if (s.reps) repData = s.reps; });
+        var repSec = null; secs.forEach(function (s) { var t = s.querySelector('.section__title'); if (t && t.textContent.trim() === 'Representantes e procuradores') repSec = s; });
+        if (repSec && repData && repData.length) {
+          var repAdd = repSec.querySelector('[data-repeat-add]');
+          for (var ri = repSec.querySelectorAll('.repcard').length; ri < repData.length; ri++) { if (repAdd) repAdd.click(); }
+          var repCards = repSec.querySelectorAll('.repcard');
+          repData.forEach(function (r, idx) {
+            var card = repCards[idx]; if (!card) return;
+            card.querySelectorAll('.input').forEach(function (inp) {
+              var l = inp.querySelector('.input__label p'); var c = inp.querySelector('.input__control'); if (!l || !c) return;
+              var L = l.textContent.trim();
+              if (L === 'Nome') c.value = r.nome || '';
+              else if (L === 'CPF') c.value = r.cpf || '';
+              else if (L === 'Cargo') c.value = r.cargo || '';
+              else if (L === 'Tipo') c.value = r.tipo || '';
+              else if (L === 'E-mail') c.value = r.email || '';
+            });
+            var dn = card.querySelector('.js-doc-current .docfile__name'); if (dn && r.doc) dn.textContent = r.doc;
+          });
+        }
+
+        // Outros documentos (PF): marca o tipo no multi-select e preenche o número
+        var idMap = byTitle['Identificação'] || {};
+        var tDoc = idMap['Tipo de documento']; var tNum = idMap['Número do documento'];
+        if (tDoc) {
+          var msCb = document.querySelector('.tabpanel.is-active [data-multiselect] input[data-doc="' + tDoc + '"]');
+          if (msCb) { msCb.checked = true; msCb.dispatchEvent(new Event('change', { bubbles: true })); }
+          var numCtrl = document.querySelector('.tabpanel.is-active .js-docfield[data-docfield="' + tDoc + '"] .input__control');
+          if (numCtrl && tNum != null) numCtrl.value = tNum;
+        }
+
+        // Indicador IBS/CBS (checkbox)
+        var ibsItem = null; byId.dados.forEach(function (s) { (s.items || []).forEach(function (it) { if (it.check && /IBS/.test(it.label)) ibsItem = it; }); });
+        var ibsCb = document.querySelector('.tabpanel.is-active section .checkbox-card__input');
+        if (ibsCb && ibsItem) { ibsCb.checked = !!ibsItem.checked; ibsCb.dispatchEvent(new Event('change', { bubbles: true })); }
+
         // Documentos já enviados: mostra o arquivo + selo (Reprovado/Aprovado) + excluir/trocar
         var docsBody = document.querySelector('.tabpanel.is-active .js-docs-body');
         if (docsBody && byId.docs && byId.docs.length) {
+          // Datas do documento: converte DD/MM/AAAA (exibição) para AAAA-MM-DD (input date)
+          function toISO(v) { if (!v) return ''; var m = String(v).match(/^(\d{2})\/(\d{2})\/(\d{4})$/); return m ? m[3] + '-' + m[2] + '-' + m[1] : (/^\d{4}-\d{2}-\d{2}$/.test(v) ? v : ''); }
           var dh = '';
           byId.docs.forEach(function (d) {
             var isImg = /\.(jpe?g|png|webp)$/i.test(d.file);
             var db = d.motivo ? '<span class="badge badge--destructive">Reprovado</span>'
               : byId.status === 'Em análise' ? '<span class="badge badge--yellow">Em análise</span>'
-              : byId.status === 'Pendente validação' ? '<span class="badge badge--yellow">Validação manual</span>'
+              : byId.status === 'Validação manual' ? '<span class="badge badge--yellow">Validação manual</span>'
               : '<span class="badge badge--success">Aprovado</span>';
             dh += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + d.label + '</span>' + db + '</div>'
               + '<div class="docfile js-doc-current"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + d.file + '</span><button type="button" class="icon-btn js-doc-del" aria-label="Excluir documento"><svg><use href="#ico-trash"/></svg></button></div>'
               + (d.motivo ? '<p class="formerror">' + d.motivo + '</p>' : '')
               + '<div class="js-doc-add" hidden><p class="cl-mail">Anexe um novo arquivo.</p><div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar ' + (isImg ? 'imagem' : 'arquivo') + '<input type="file" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div></div>'
-              + '<div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" value="' + (d.emissao || '2026-01-15') + '" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" value="' + (d.validade || '') + '" /></div></div></div></div>';
+              + '<div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" value="' + (toISO(d.emissao) || '2026-01-15') + '" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" value="' + toISO(d.validade) + '" /></div></div></div></div>';
           });
           docsBody.innerHTML = dh;
         }
@@ -806,16 +814,6 @@
         c.readOnly = true;
         var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
       });
-
-      // RN-ED1: preenche metadados imutáveis (mock quando ausente no dataset)
-      function pad6(n) { return ('000000' + n).slice(-6); }
-      var metaMap = {
-        '.js-meta-cod': (byId && byId.codigo) || ('LOC-' + pad6(editId || 1)),
-        '.js-meta-data': (byId && byId.dataCadastro) || '12/03/2024 09:41',
-        '.js-meta-user': (byId && byId.usuarioCadastro) || 'Carol Ferreira',
-        '.js-meta-oracle': (byId && byId.oracle) || 'Pendente'
-      };
-      Object.keys(metaMap).forEach(function (sel) { var el = document.querySelector(sel); if (el) el.value = metaMap[sel]; });
 
       // RN-ED5: aplica selo/trava agora que estamos em modo edição
       updateReps();

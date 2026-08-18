@@ -188,6 +188,9 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .formgrid--4 .col-2 { grid-column: span 2; }
 .formgrid .input__control { width: 100%; }
 textarea.input__control { min-height: 84px; resize: vertical; }
+/* Campo com textarea: o .input__field do DS é fixo em 36px + overflow hidden, o que corta o textarea. Deixa crescer. */
+.input__field:has(textarea) { height: auto; align-items: stretch; overflow: visible; padding: var(--sm) var(--lg); }
+.input__field textarea.input__control { width: 100%; padding: var(--sm) 0; }
 
 /* --- Link de voltar + barra de ações + chips ------------------- */
 .backlink { display: inline-flex; align-items: center; gap: var(--sm); margin-bottom: var(--md); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); text-decoration: none; }

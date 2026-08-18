@@ -100,7 +100,7 @@
                   <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
                   <div class="select__item"><p class="select__item-text">Ativo</p></div>
                   <div class="select__item"><p class="select__item-text">Em análise</p></div>
-                  <div class="select__item"><p class="select__item-text">Pendente validação</p></div>
+                  <div class="select__item"><p class="select__item-text">Validação manual</p></div>
                   <div class="select__item"><p class="select__item-text">Pendente de documentação</p></div>
                   <div class="select__item"><p class="select__item-text">Inativo</p></div>
                 </div></div>
@@ -155,8 +155,8 @@
 <script>
   (function () {
     var t = document.querySelector('.ltable'); if (!t || !window.LOCATARIOS) return;
-    var badgeMap = {'Ativo':'badge--success','Em análise':'badge--yellow','Pendente validação':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline'};
-    var STATUS_SHORT = {'Pendente de documentação':'Pendente doc.','Pendente validação':'Pend. validação'};
+    var badgeMap = {'Ativo':'badge--success','Em análise':'badge--yellow','Validação manual':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline'};
+    var STATUS_SHORT = {'Pendente de documentação':'Pendente doc.','Validação manual':'Validação manual'};
     function seg(s){ return s === 'MAPFRE' ? 'badge--success' : 'badge--outline'; }
     function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
     function norm(s){ return String(s==null?'':s).toLowerCase(); }

@@ -149,18 +149,15 @@
     var STATUS_BADGE = {
       'Ativo': 'badge--success',
       'Em an\u00e1lise': 'badge--yellow',
-      'Pendente valida\u00e7\u00e3o': 'badge--yellow',
+      'Valida\u00e7\u00e3o manual': 'badge--yellow',
       'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow',
       'Inativo': 'badge--outline'
     };
     var stBadge = document.getElementById('statusBadge');
-    var btnAp = document.getElementById('btnAprovar');
-    var btnRe = document.getElementById('btnReprovar');
+    var btnAp = document.getElementById('btnAprovar'); if (btnAp) btnAp.hidden = true;  // valida\u00e7\u00e3o agora \u00e9 por documento
+    var btnRe = document.getElementById('btnReprovar'); if (btnRe) btnRe.hidden = true;
     function setStatus(s) {
       if (stBadge) { stBadge.textContent = s || '\u2014'; stBadge.className = 'badge ' + (STATUS_BADGE[s] || 'badge--outline'); }
-      var manual = (s === 'Pendente valida\u00e7\u00e3o'); // valida\u00e7\u00e3o manual do locat\u00e1rio s\u00f3 quando pendente
-      if (btnAp) btnAp.hidden = !manual;
-      if (btnRe) btnRe.hidden = !manual;
     }
     var editLink = document.querySelector('.pagehead__actions a[href^="cadastro.html"]');
     if (editLink && id) editLink.setAttribute('href', 'cadastro.html?editar=1&id=' + id);
@@ -171,7 +168,7 @@
       if (d.status) return d.status;
       if (d.motivo) return 'Reprovado';
       if (stored.status === 'Em an\u00e1lise') return 'Em an\u00e1lise';
-      if (stored.status === 'Pendente valida\u00e7\u00e3o') return 'Valida\u00e7\u00e3o manual';
+      if (stored.status === 'Valida\u00e7\u00e3o manual') return 'Valida\u00e7\u00e3o manual';
       return 'Aprovado';
     }
     function deriveStatus() {
@@ -180,29 +177,36 @@
       var rep = false, man = false, ana = false;
       docs.forEach(function (d) { var s = docStatusOf(d); if (s === 'Reprovado') rep = true; else if (s === 'Valida\u00e7\u00e3o manual') man = true; else if (s === 'Em an\u00e1lise') ana = true; });
       if (rep) return 'Pendente de documenta\u00e7\u00e3o';
-      if (man) return 'Pendente valida\u00e7\u00e3o';
+      if (man) return 'Valida\u00e7\u00e3o manual';
       if (ana) return 'Em an\u00e1lise';
       return 'Ativo';
     }
-    // Valida\u00e7\u00e3o manual do LOCAT\u00c1RIO (topo): abre modal de justificativa
-    if (btnAp) btnAp.addEventListener('click', function () { DS.openModal('modalAprovar'); });
-    if (btnRe) btnRe.addEventListener('click', function () { DS.openModal('modalReprovar'); });
+    // Validação manual POR DOCUMENTO: Aprovar/Reprovar em cada documento "Validação manual"
+    var pendingDocIdx = null;
+    box.addEventListener('click', function (e) {
+      var ap = e.target.closest && e.target.closest('[data-doc-ap]');
+      var re = e.target.closest && e.target.closest('[data-doc-re]');
+      if (ap) { pendingDocIdx = +ap.getAttribute('data-doc-ap'); DS.openModal('modalAprovar'); }
+      else if (re) { pendingDocIdx = +re.getAttribute('data-doc-re'); DS.openModal('modalReprovar'); }
+    });
     var btnConfAp = document.getElementById('btnConfirmAprovar');
     if (btnConfAp) btnConfAp.addEventListener('click', function () {
       var m = document.getElementById('modalAprovar');
       var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
-      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual') { d.status = 'Aprovado'; d.motivo = ''; } });
+      var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
+      if (d) { d.status = 'Aprovado'; d.motivo = ''; }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Ativo
-      updateDecisao({ tipo: 'Aprovado', data: fmtDate(dt && dt.value), motivo: (mo && mo.value) || 'Documentação aprovada.', por: 'Carol Ferreira' });
+      pendingDocIdx = null;
     });
     var btnConfRe = document.getElementById('btnConfirmReprovar');
     if (btnConfRe) btnConfRe.addEventListener('click', function () {
       var m = document.getElementById('modalReprovar');
       var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
       if (!mo || !mo.value.trim()) { if (mo) { var inp = mo.closest('.input'); if (inp) inp.classList.add('input--error'); } return; } // reprovar exige justificativa
-      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual') { d.status = 'Reprovado'; d.motivo = mo.value.trim(); } });
+      var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
+      if (d) { d.status = 'Reprovado'; d.motivo = mo.value.trim(); }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Pendente de documentação
-      updateDecisao({ tipo: 'Reprovado', data: fmtDate(dt && dt.value), motivo: mo.value.trim(), por: 'Carol Ferreira' });
+      pendingDocIdx = null;
     });
     var nome = '';
     stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
@@ -238,6 +242,7 @@
     function docBadge(d) {
       var s = docStatusOf(d);
       if (s === 'Reprovado') return '<span class="badge badge--destructive">Reprovado</span>';
+      if (s === 'Pendente') return '<span class="badge badge--yellow">Pendente</span>';
       if (s === 'Em análise') return '<span class="badge badge--yellow">Em análise</span>';
       if (s === 'Validação manual') return '<span class="badge badge--yellow">Validação manual</span>';
       return '<span class="badge badge--success">Aprovado</span>';
@@ -245,10 +250,12 @@
     function docsBodyHtml() {
       if (!docs.length) return '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
       var h = '<div class="docgrid">';
-      docs.forEach(function (d) {
+      docs.forEach(function (d, i) {
+        var manual = docStatusOf(d) === 'Validação manual';
+        var actions = manual ? '<div class="docactions"><button type="button" class="btn btn--secondary" data-doc-ap="' + i + '">Aprovar</button><button type="button" class="btn btn--destructive" data-doc-re="' + i + '">Reprovar</button></div>' : '';
         h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>'
           + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(d.emissao || '15/01/2026') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(d.validade || '—') + '</p></div></dl>'
-          + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + '</div>';
+          + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + actions + '</div>';
       });
       return h + '</div>';
     }
@@ -284,10 +291,10 @@
       var d = null; DOCTYPES.forEach(function (x) { if (x[0] === tipo) d = x; });
       var nome = d ? d[1] : (tipo || '—');
       var numLabel = d ? d[2] : 'Número do documento';
-      return '<div class="input full"><div class="input__label"><p>Outros documentos</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(nome) + '" readonly /></div></div>'
+      return '<div class="input col-2"><div class="input__label"><p>Outros documentos</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(nome) + '" readonly /></div></div>'
         + '<div class="input"><div class="input__label"><p>' + esc(numLabel) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>';
     }
-    var html = metaSectionHtml();
+    var html = '';
     var docsDone = false;
     stored.dados.forEach(function (sec) {
       if (sec.title === 'Contatos' && !docsDone) { html += docsSectionHtml(); docsDone = true; }
@@ -318,6 +325,8 @@
           html += '</tbody></table></div>';
         }
       } else {
+        var isCard = (sec.title === 'Contatos' || sec.title === 'Endereços');
+        if (isCard) html += '<div class="listrow repcard"><div class="listrow__head"><label class="pmark" style="pointer-events:none"><input type="radio" checked tabindex="-1" /><span>Tornar principal</span></label></div>';
         html += '<div class="' + gridClass(sec.title) + '">';
         if (sec.title === 'Identificação') {
           html += inputRO('Tipo de locatário', stored.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica');
@@ -335,13 +344,12 @@
           else html += inputRO(it.label, it.value, span(it.label));
         });
         html += '</div>';
+        if (isCard) html += '</div>';
       }
       html += '</div></section>';
     });
 
     if (!docsDone) html += docsSectionHtml();
-    // Decisão / justificativa (última seção)
-    html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Decisão / justificativa</h2></div></div><div class="section__body" id="decisaoBody">' + decisaoHtml(stored.decisao) + '</div></section>';
     box.innerHTML = html;
     setStatus(deriveStatus()); // status do locatário derivado dos documentos
   })();
