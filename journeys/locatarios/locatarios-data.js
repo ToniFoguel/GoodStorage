@@ -435,10 +435,6 @@ window.LOCATARIOS = {
             "value": "18/05/1987"
           },
           {
-            "label": "Telefone da pessoa",
-            "value": "(11) 96543-2211"
-          },
-          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -755,10 +751,6 @@ window.LOCATARIOS = {
             "value": "02/11/1991"
           },
           {
-            "label": "Telefone da pessoa",
-            "value": "(11) 94321-7788"
-          },
-          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1064,10 +1056,6 @@ window.LOCATARIOS = {
             "value": "22/09/1990"
           },
           {
-            "label": "Telefone da pessoa",
-            "value": "(11) 91234-5678"
-          },
-          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1197,10 +1185,6 @@ window.LOCATARIOS = {
           {
             "label": "Data de nascimento",
             "value": "14/02/1985"
-          },
-          {
-            "label": "Telefone da pessoa",
-            "value": "(11) 90987-6543"
           },
           {
             "check": true,
@@ -1337,10 +1321,6 @@ window.LOCATARIOS = {
           {
             "label": "Data de nascimento",
             "value": "30/07/1979"
-          },
-          {
-            "label": "Telefone da pessoa",
-            "value": "(11) 98765-1122"
           },
           {
             "check": true,

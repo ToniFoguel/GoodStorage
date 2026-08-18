@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
 <link rel="stylesheet" href="../../components/modal/modal.css" />
 <link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
 <link rel="stylesheet" href="locatarios.css" />
 </head>
@@ -128,20 +129,30 @@
             <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
             <!-- CPF: obrigatório p/ brasileiro, opcional p/ estrangeiro (dedup) -->
             <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req js-cpf-req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
-            <!-- Outros documentos: cada tipo marcado revela o campo de número logo abaixo -->
-            <div class="input full"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
-              <div class="docchecklist">
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="RG" /><span>RG</span></label><div class="input js-docfield" data-docfield="RG" hidden><div class="input__label"><p>Número do RG</p></div><div class="input__field"><input class="input__control" placeholder="Nº do RG" /></div></div></div>
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="CNH" /><span>CNH</span></label><div class="input js-docfield" data-docfield="CNH" hidden><div class="input__label"><p>Número da CNH</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CNH" /></div></div></div>
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="CIN" /><span>CIN</span></label><div class="input js-docfield" data-docfield="CIN" hidden><div class="input__label"><p>Número da CIN</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CIN" /></div></div></div>
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="RNE" /><span>RNE</span></label><div class="input js-docfield" data-docfield="RNE" hidden><div class="input__label"><p>Número do RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div></div></div>
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="Passaporte" /><span>Passaporte</span></label><div class="input js-docfield" data-docfield="Passaporte" hidden><div class="input__label"><p>Número do passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div></div>
-                <div class="docitem"><label class="doccheck"><input type="checkbox" data-doc="Classe" /><span>Carteira de classe (CRM, CRF, CRP…)</span></label><div class="input js-docfield" data-docfield="Classe" hidden><div class="input__label"><p>Carteira de classe</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: CRM 123456/SP" /></div></div></div>
+            <!-- Outros documentos: multi-select (estilo Select DS, 2 col); revela os campos de número na grade -->
+            <div class="input col-2"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
+              <div class="select" data-multiselect>
+                <div class="select__field"><p class="select__value" data-placeholder="Selecione os documentos">Selecione os documentos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown select__dropdown--no-title" hidden>
+                  <div class="select__list">
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">RG</span><input type="checkbox" data-doc="RG" hidden /></label>
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">CNH</span><input type="checkbox" data-doc="CNH" hidden /></label>
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">CIN</span><input type="checkbox" data-doc="CIN" hidden /></label>
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">RNE</span><input type="checkbox" data-doc="RNE" hidden /></label>
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">Passaporte</span><input type="checkbox" data-doc="Passaporte" hidden /></label>
+                    <label class="select__item msitem"><span class="msitem__check"><svg><use href="#ico-check"/></svg></span><span class="select__item-text">Carteira de classe (CRM, CRF, CRP…)</span><input type="checkbox" data-doc="Classe" hidden /></label>
+                  </div>
+                </div>
               </div>
               <p class="input__help js-docs-help" hidden>Para locatário estrangeiro, informe ao menos um documento.</p>
             </div>
+            <div class="input js-docfield" data-docfield="RG" hidden><div class="input__label"><p>Número do RG</p></div><div class="input__field"><input class="input__control" placeholder="Nº do RG" /></div></div>
+            <div class="input js-docfield" data-docfield="CNH" hidden><div class="input__label"><p>Número da CNH</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CNH" /></div></div>
+            <div class="input js-docfield" data-docfield="CIN" hidden><div class="input__label"><p>Número da CIN</p></div><div class="input__field"><input class="input__control" placeholder="Nº da CIN" /></div></div>
+            <div class="input js-docfield" data-docfield="RNE" hidden><div class="input__label"><p>Número do RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div></div>
+            <div class="input js-docfield" data-docfield="Passaporte" hidden><div class="input__label"><p>Número do passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div>
+            <div class="input js-docfield" data-docfield="Classe" hidden><div class="input__label"><p>Carteira de classe</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: CRM 123456/SP" /></div></div>
             <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
-            <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone da pessoa</p></div><div class="input__field"><input class="input__control" placeholder="(11) 90000-0000" /></div><p class="input__help">Telefone do próprio locatário — distinto dos contatos.</p></div>
             <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-reveal="js-cnpj-pf" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
             <div class="input js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
           </div></div>
@@ -302,33 +313,31 @@
           <div class="repeater" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Contato</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
-                <label class="pmark"><input type="radio" name="contato-principal" checked /><span>Principal</span></label>
+                <div class="listrow__head"><label class="pmark"><input type="radio" name="contato-principal" checked /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
                 <div class="formgrid formgrid--4">
                   <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
                   <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" checked /><span>Pode assinar documentos</span></label></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Contato</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
-                <label class="pmark"><input type="radio" name="contato-principal" /><span>Principal</span></label>
+                <div class="listrow__head"><label class="pmark"><input type="radio" name="contato-principal" /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
                 <div class="formgrid formgrid--4">
                   <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
                   <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" /><span>Pode assinar documentos</span></label></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="mailsync"><input type="checkbox" data-mailsync checked /><span>Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
+                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </template>
@@ -344,8 +353,7 @@
           <div class="repeater repeater--addr" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
-                <label class="pmark"><input type="radio" name="endereco-principal" checked /><span>Principal</span></label>
+                <div class="listrow__head"><label class="pmark"><input type="radio" name="endereco-principal" checked /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
@@ -355,15 +363,12 @@
                   <div class="input"><div class="input__label"><p>Cidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>São Paulo</option><option>Guarulhos</option><option>Campinas</option><option>Outra</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
                   <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
-                  <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
-                  <div class="input"><div class="input__label"><p>Código do endereço</p></div><div class="input__field is-readonly"><input class="input__control" placeholder="Preenchido pela consulta do CEP" readonly /></div></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
-                <label class="pmark"><input type="radio" name="endereco-principal" /><span>Principal</span></label>
+                <div class="listrow__head"><label class="pmark"><input type="radio" name="endereco-principal" /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
@@ -373,8 +378,6 @@
                   <div class="input"><div class="input__label"><p>Cidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>São Paulo</option><option>Guarulhos</option><option>Campinas</option><option>Outra</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Bairro</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
                   <div class="input"><div class="input__label"><p>Número do endereço</p></div><div class="input__field"><input class="input__control" placeholder="Número do endereço" /></div></div>
-                  <div class="input"><div class="input__label"><p>Faixa de numeração</p></div><div class="input__field"><input class="input__control" placeholder="Faixa de numeração" /></div></div>
-                  <div class="input"><div class="input__label"><p>Código do endereço</p></div><div class="input__field is-readonly"><input class="input__control" placeholder="Preenchido pela consulta do CEP" readonly /></div></div>
                 </div>
               </div>
             </template>
@@ -437,6 +440,16 @@
   <div class="modal__footer"><button class="btn btn--ghost js-sens-cancel">Cancelar</button><button class="btn btn--primary" id="btnConfirmMotivo">Salvar motivo</button></div>
 </div>
 
+<!-- RN-EN3: CEP com múltiplos endereços correspondentes -->
+<div class="modal confirm-modal" id="modalCEP" data-ds="modal" style="max-width:520px">
+  <div class="modal__header"><h2 class="modal__title">Múltiplos endereços correspondentes</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <label class="cepopt"><input type="radio" name="cepopt" value="0" checked /><span class="cepopt__mark"><svg><use href="#ico-check"/></svg></span><span class="cepopt__box"><span class="cepopt__title">Endereço 1</span><span class="cepopt__desc">Rua das Magnólias, nº 120-240 - Bairro Jardim Aurora</span></span></label>
+    <label class="cepopt"><input type="radio" name="cepopt" value="1" /><span class="cepopt__mark"><svg><use href="#ico-check"/></svg></span><span class="cepopt__box"><span class="cepopt__title">Endereço 2</span><span class="cepopt__desc">Al. dos Ipês, nº 10-80 - Bairro Parque das Acácias</span></span></label>
+  </div>
+  <div class="modal__footer"><button class="btn btn--primary" id="btnUsarCEP" style="width:100%">Usar endereço selecionado</button></div>
+</div>
+
 <!-- Modais de salvar cadastro -->
 <div class="modal confirm-modal" id="modalSucesso" data-ds="modal" style="max-width:440px">
   <div class="modal__header"><h2 class="modal__title">Cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
@@ -481,12 +494,28 @@
       }
       sel.addEventListener('change', apply); apply();
     });
-    // 1b) "Outros documentos" (checkbox): cada tipo marcado revela seu campo de número logo abaixo
-    document.querySelectorAll('[data-doc]').forEach(function (cb) {
-      var scope = cb.closest('.docitem') || cb.closest('.section') || document;
-      var field = scope.querySelector('.js-docfield[data-docfield="' + cb.getAttribute('data-doc') + '"]');
-      function apply() { if (field) field.hidden = !cb.checked; }
-      cb.addEventListener('change', apply); apply();
+    // 1b) "Outros documentos" (multi-select estilo Select DS): revela os campos de número na grade
+    document.querySelectorAll('[data-multiselect]').forEach(function (ms) {
+      var field = ms.querySelector('.select__field');
+      var dd = ms.querySelector('.select__dropdown');
+      var value = ms.querySelector('.select__value');
+      var ph = value.getAttribute('data-placeholder');
+      var scope = ms.closest('.formgrid') || document;
+      field.addEventListener('click', function (e) { e.stopPropagation(); var willOpen = dd.hidden; dd.hidden = !willOpen; ms.classList.toggle('select--open', willOpen); });
+      document.addEventListener('click', function (e) { if (!ms.contains(e.target)) { dd.hidden = true; ms.classList.remove('select--open'); } });
+      function apply() {
+        var sel = [];
+        ms.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+          var item = cb.closest('.select__item'); if (item) item.classList.toggle('is-on', cb.checked);
+          var f = scope.querySelector('.js-docfield[data-docfield="' + cb.getAttribute('data-doc') + '"]');
+          if (f) f.hidden = !cb.checked;
+          if (cb.checked && item) sel.push(item.querySelector('.select__item-text').textContent);
+        });
+        value.textContent = sel.length ? sel.join(', ') : ph;
+        value.classList.toggle('select__value--filled', sel.length > 0);
+      }
+      ms.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.addEventListener('change', apply); });
+      apply();
     });
     // 2) Revelar campo por checkbox (IBS/CBS -> CNPJ)
     document.querySelectorAll('[data-reveal]').forEach(function (cb) {
@@ -534,6 +563,38 @@
     function toggleSocios() { if (socios) socios.hidden = !(cnpjMain && String(cnpjMain.value || '').trim()); }
     if (cnpjMain) cnpjMain.addEventListener('input', toggleSocios);
     toggleSocios();
+
+    // 3c) RN-EN3: CEP com 2 endereços -> modal de escolha (demo: CEP 12345-678)
+    var cepAddrs = [
+      { log: 'Rua das Magnólias', num: '120-240', bairro: 'Jardim Aurora' },
+      { log: 'Al. dos Ipês', num: '10-80', bairro: 'Parque das Acácias' }
+    ];
+    var cepTargetCard = null;
+    document.addEventListener('change', function (e) {
+      var wrap = e.target.closest && e.target.closest('[data-ds-mask="cep"]');
+      if (!wrap || !e.target.classList || !e.target.classList.contains('input__control')) return;
+      if (String(e.target.value || '').replace(/\D/g, '') === '12345678') {
+        cepTargetCard = wrap.closest('.repcard') || wrap.closest('.listrow');
+        DS.openModal('modalCEP');
+      }
+    });
+    var btnUsarCEP = document.getElementById('btnUsarCEP');
+    if (btnUsarCEP) btnUsarCEP.addEventListener('click', function () {
+      var m = document.getElementById('modalCEP');
+      var sel = m.querySelector('input[name="cepopt"]:checked');
+      var a = cepAddrs[sel ? +sel.value : 0];
+      if (cepTargetCard && a) {
+        cepTargetCard.querySelectorAll('.input').forEach(function (i) {
+          var p = i.querySelector('.input__label p'); var c = i.querySelector('.input__control');
+          if (!p || !c) return;
+          var lbl = p.textContent.trim();
+          if (lbl === 'Logradouro') c.value = a.log;
+          else if (lbl === 'Número do endereço') c.value = a.num;
+          else if (lbl === 'Bairro') c.value = a.bairro;
+        });
+      }
+      DS.closeModal(m);
+    });
 
     // 4) Salvar cadastro: valida obrigatórios visíveis (aba ativa + seções compartilhadas) e abre modal
     function requiredMissing() {

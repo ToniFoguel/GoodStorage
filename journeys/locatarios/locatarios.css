@@ -80,13 +80,29 @@
 .repeater__items { display: flex; flex-direction: column; gap: 0; }
 .reprow--2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
 .reprow .input { min-width: 0; }
-/* "Outros documentos" (PF): checkbox em cima, campo de número logo abaixo (3 por linha) */
-.docchecklist { width: 100%; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--lg) var(--xl); align-items: start; }
-.docitem { grid-column: span 4; display: flex; flex-direction: column; gap: var(--md); min-width: 0; }
-.doccheck { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; }
-.doccheck input { flex: none; width: 16px; height: 16px; accent-color: var(--background-primary); }
-@media (max-width: 900px) { .docitem { grid-column: span 6; } }
-@media (max-width: 560px) { .docitem { grid-column: 1 / -1; } }
+/* "Outros documentos" (PF): multi-select no estilo do componente Select do DS */
+.select[data-multiselect] .select__dropdown { z-index: 30; }
+.select--open .select__icon svg { transform: rotate(180deg); }
+.msitem { cursor: pointer; }
+.msitem:hover { background: var(--background-bg-aux); }
+.msitem__check { flex: none; width: 20px; height: 20px; border-radius: 999px; border: 2px solid var(--border-default); display: inline-flex; align-items: center; justify-content: center; color: #fff; }
+.msitem__check svg { width: 12px; height: 12px; opacity: 0; }
+.msitem.is-on { background: #FDEEDD; }
+.msitem.is-on .select__item-text { font-weight: var(--font-weight-bold); }
+.msitem.is-on .msitem__check { background: var(--background-primary); border-color: var(--background-primary); }
+.msitem.is-on .msitem__check svg { opacity: 1; }
+
+/* Modal RN-EN3: opções de endereço por CEP (radio-card) */
+.cepopt { display: flex; align-items: flex-start; gap: var(--md); padding: var(--lg); border: var(--thin) solid var(--border-default); border-radius: 10px; cursor: pointer; margin-bottom: var(--md); }
+.cepopt:last-child { margin-bottom: 0; }
+.cepopt input { position: absolute; opacity: 0; pointer-events: none; }
+.cepopt__mark { flex: none; width: 24px; height: 24px; border-radius: 999px; border: 2px solid var(--border-default); display: inline-flex; align-items: center; justify-content: center; color: #fff; }
+.cepopt__mark svg { width: 14px; height: 14px; opacity: 0; }
+.cepopt input:checked ~ .cepopt__mark { background: var(--background-primary); border-color: var(--background-primary); }
+.cepopt input:checked ~ .cepopt__mark svg { opacity: 1; }
+.cepopt__box { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cepopt__title { font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); color: var(--content-title); }
+.cepopt__desc { color: var(--content-text); font-size: var(--font-size-label); }
 /* Marcador "principal" nos cards de contato/endereço */
 .pmark { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; white-space: nowrap; }
 .pmark input { width: 16px; height: 16px; accent-color: var(--background-primary); }
@@ -111,6 +127,10 @@
 /* E-mails derivados do contato: campo + opção de espelhar o principal */
 .mailrow .mailsync { display: inline-flex; align-items: center; gap: var(--sm); margin-top: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; }
 .mailrow .mailsync input { width: 16px; height: 16px; accent-color: var(--background-primary); }
+/* "Pode assinar documentos": checkbox do DS (checkbox-card) em versão inline */
+.mailflag { width: auto; align-items: center; gap: var(--sm); padding: 0; margin-top: var(--sm); cursor: pointer; }
+.mailflag .checkbox-card__box { margin-top: 0; }
+.mailflag__label { font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); }
 .input__field.is-synced, .input__field.is-locked { background: var(--background-bg-aux); }
 .input__field.is-synced .input__control { color: var(--content-disable); }
 .input__field.is-locked { border-style: dashed; }

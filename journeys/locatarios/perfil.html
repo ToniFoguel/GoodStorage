@@ -222,12 +222,12 @@
     function mailRO(label, value, usarPrincipal) {
       return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
         + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
-        + '<label class="mailsync" style="pointer-events:none"><input type="checkbox" tabindex="-1"' + (usarPrincipal ? ' checked' : '') + ' /><span>Usar o e-mail principal</span></label></div>';
+        + '<label class="checkbox-card mailflag" style="pointer-events:none"><input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (usarPrincipal ? ' checked' : '') + ' /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>';
     }
     function mailFlagRO(label, value, assina) {
       return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
         + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
-        + '<label class="mailsync" style="pointer-events:none"><input type="checkbox" tabindex="-1"' + (assina ? ' checked' : '') + ' /><span>Pode assinar documentos</span></label></div>';
+        + '<label class="checkbox-card mailflag" style="pointer-events:none"><input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (assina ? ' checked' : '') + ' /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>';
     }
     function checkRO(label, checked) {
       return '<div class="full"><label class="checkbox-card" style="pointer-events:none">'
@@ -281,14 +281,11 @@
     // "Outros documentos" (PF) read-only: mesmos checkboxes do cadastro; marcado + campo com o número
     var DOCTYPES = [['RG', 'RG', 'Número do RG'], ['CNH', 'CNH', 'Número da CNH'], ['CIN', 'CIN', 'Número da CIN'], ['RNE', 'RNE', 'Número do RNE'], ['Passaporte', 'Passaporte', 'Número do passaporte'], ['Classe', 'Carteira de classe (CRM, CRF, CRP…)', 'Carteira de classe']];
     function outrosDocsRO(tipo, numero) {
-      var h = '<div class="input full"><div class="input__label"><p>Outros documentos</p></div><div class="docchecklist">';
-      DOCTYPES.forEach(function (d) {
-        var checked = (d[0] === tipo);
-        h += '<div class="docitem"><label class="doccheck" style="pointer-events:none"><input type="checkbox" disabled' + (checked ? ' checked' : '') + ' /><span>' + esc(d[1]) + '</span></label>'
-          + (checked ? '<div class="input"><div class="input__label"><p>' + esc(d[2]) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>' : '')
-          + '</div>';
-      });
-      return h + '</div></div>';
+      var d = null; DOCTYPES.forEach(function (x) { if (x[0] === tipo) d = x; });
+      var nome = d ? d[1] : (tipo || '—');
+      var numLabel = d ? d[2] : 'Número do documento';
+      return '<div class="input full"><div class="input__label"><p>Outros documentos</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(nome) + '" readonly /></div></div>'
+        + '<div class="input"><div class="input__label"><p>' + esc(numLabel) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>';
     }
     var html = metaSectionHtml();
     var docsDone = false;
