@@ -103,7 +103,7 @@
 
       <!-- Painel Pessoa Física -->
       <div class="tabpanel" id="tab-pf">
-        <section class="section">
+        <section class="section" style="order:1">
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
             <div class="input js-tipo-field" hidden><div class="input__label"><p>Tipo de locatário</p></div><div class="input__field is-locked"><input class="input__control" readonly /></div></div>
@@ -141,8 +141,8 @@
         </section>
 
         <!-- Documentos do locatário (pós-cadastro / edição) -->
-        <section class="section js-edit-only">
-          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos do locatário</h2></div><span class="section__pill">pós-cadastro</span></div>
+        <section class="section js-edit-only" style="order:6">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentações</h2></div><span class="section__pill">pós-cadastro</span></div>
           <div class="section__body docgrid js-docs-body">
             <div class="listrow">
               <div class="listrow__head"><span class="fieldlbl">Documento de identificação com foto</span></div>
@@ -164,7 +164,7 @@
       <!-- Painel Pessoa Jurídica -->
       <div class="tabpanel is-active" id="tab-pj">
       <!-- 1. Identificação (PJ) -->
-      <section class="section">
+      <section class="section" style="order:1">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
         <div class="section__body">
           <div class="formgrid">
@@ -183,7 +183,7 @@
       </section>
 
       <!-- Sócios/Representantes (mapeado pela consulta do CNPJ) -->
-      <section class="section js-pj-socios" hidden>
+      <section class="section js-pj-socios" style="order:3" hidden>
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Sócios e representantes</h2></div><span class="section__pill">Preenchido pela consulta do CNPJ</span></div>
         <div class="section__body">
           <span class="fieldlbl">Quadro de sócios e administradores</span>
@@ -206,7 +206,7 @@
       </section>
 
       <!-- 2. Representantes -->
-      <section class="section">
+      <section class="section" style="order:4">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Representantes e procuradores</h2></div></div>
         <div class="section__body">
           <div class="repeater repeater--rep" data-ds="repeater">
@@ -257,8 +257,8 @@
       </section>
 
       <!-- Documentos da empresa (pós-cadastro / edição) -->
-      <section class="section js-edit-only">
-        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos da empresa</h2></div><span class="section__pill">pós-cadastro</span></div>
+      <section class="section js-edit-only" style="order:6">
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentações</h2></div><span class="section__pill">pós-cadastro</span></div>
         <div class="section__body docgrid js-docs-body">
           <div class="listrow">
             <div class="listrow__head"><span class="fieldlbl">Contrato ou estatuto social consolidado</span></div>
@@ -289,7 +289,7 @@
       </div><!-- /tab-pj -->
 
       <!-- 3. Contatos -->
-      <section class="section">
+      <section class="section" style="order:5">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Contatos</h2></div></div>
         <div class="section__body">
           <div class="repeater" data-ds="repeater">
@@ -329,8 +329,8 @@
       </section>
 
       <!-- 4. Endereços -->
-      <section class="section">
-        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Endereços</h2></div></div>
+      <section class="section" style="order:2">
+        <div class="section__head"><div class="section__headleft"><h2 class="section__title">Endereço</h2></div></div>
         <div class="section__body">
           <div class="repeater repeater--addr" data-ds="repeater">
             <div class="repeater__items">

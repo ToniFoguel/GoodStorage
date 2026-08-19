@@ -208,7 +208,11 @@ textarea.input__control { min-height: 84px; resize: vertical; }
 /* --- Abas (segmented como barra + painéis) --------------------- */
 .tabbar { margin: 0 0 var(--xl); }
 .tabpanel { display: none; }
-.tabpanel.is-active { display: block; }
+/* aba ativa vira "contents" para as seções entrarem na ordenação (order) do .content */
+.tabpanel.is-active { display: contents; }
+/* .content em coluna para reordenar as seções via order: Identificação, Endereço, Reps/Sócios, Contatos, Documentações */
+.content { display: flex; flex-direction: column; }
+.content > .footer { order: 9; }
 
 /* --- Collapsible: empilha o conteúdo do slot ------------------- */
 .collapsible__slot { display: flex; flex-direction: column; gap: var(--md); }
@@ -223,8 +227,13 @@ textarea.input__control { min-height: 84px; resize: vertical; }
 
 /* --- Tabela de listagem (Table do DS) -------------------------- */
 /* linha inteira clicável -> perfil (sem coluna de ação) */
-.ltable a.table__row { text-decoration: none; color: inherit; cursor: pointer; }
-.ltable a.table__row:hover { background: var(--background-bg-aux); }
+.ltable .table__row[data-href] { cursor: pointer; }
+.ltable .table__row[data-href]:hover { background: var(--background-bg-aux); }
+/* Kebab por linha -> dropdown com "Editar" */
+.rowmenu { position: relative; }
+.rowmenu__panel { position: absolute; z-index: 40; top: calc(100% - 6px); right: 0; min-width: 160px; background: #fff; border: var(--thin) solid var(--border-default); border-radius: 8px; padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+.rowmenu__item { display: block; padding: var(--sm) var(--md); border-radius: 6px; font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); text-decoration: none; white-space: nowrap; }
+.rowmenu__item:hover { background: var(--background-bg-aux); }
 .ltable .badge { white-space: nowrap; }
 .ltable .table__th { cursor: pointer; }
 .ltable .table__th--desc .table__sort svg { transform: rotate(180deg); }

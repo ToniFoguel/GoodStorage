@@ -132,7 +132,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -333,7 +333,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -479,7 +479,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -649,7 +649,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -795,7 +795,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -979,7 +979,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -1100,7 +1100,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -1231,7 +1231,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -1367,7 +1367,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",
@@ -1553,7 +1553,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Endereços",
+        "title": "Endereço",
         "items": [
           {
             "label": "CEP",

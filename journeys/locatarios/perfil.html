@@ -260,7 +260,7 @@
       return h + '</div>';
     }
     function docsSectionHtml() {
-      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div></div><div class="section__body" id="docsBody">' + docsBodyHtml() + '</div></section>';
+      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentações</h2></div></div><div class="section__body" id="docsBody">' + docsBodyHtml() + '</div></section>';
     }
     function refreshDocs() { var b = document.getElementById('docsBody'); if (b) b.innerHTML = docsBodyHtml(); setStatus(deriveStatus()); }
     function decisaoHtml(d) {
@@ -294,11 +294,15 @@
       return '<div class="input col-2"><div class="input__label"><p>Outros documentos</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(nome) + '" readonly /></div></div>'
         + '<div class="input"><div class="input__label"><p>' + esc(numLabel) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>';
     }
+    var byT = {};
+    stored.dados.forEach(function (sec) { byT[sec.title] = sec; });
+    // Ordem fixa das seções (Documentações renderizada por último, fora deste laço)
+    var ORDER = ['Identificação', 'Endereço', 'Sócios e representantes', 'Representantes e procuradores', 'Contatos'];
     var html = '';
-    var docsDone = false;
-    stored.dados.forEach(function (sec) {
-      if (sec.title === 'Contatos' && !docsDone) { html += docsSectionHtml(); docsDone = true; }
-      html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(sec.title) + '</h2></div></div><div class="section__body">';
+    ORDER.forEach(function (t) {
+      var sec = byT[t]; if (!sec) return;
+      var titleDisplay = (sec.title === 'Endereços') ? 'Endereço' : sec.title;
+      html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(titleDisplay) + '</h2></div></div><div class="section__body">';
       if (sec.reps) {
         // Representantes: cards read-only (Nome / CPF / Cargo / Tipo / E-mail), como no cadastro
         sec.reps.forEach(function (r, idx) {
@@ -325,7 +329,7 @@
           html += '</tbody></table></div>';
         }
       } else {
-        var isCard = (sec.title === 'Contatos' || sec.title === 'Endereços');
+        var isCard = (sec.title === 'Contatos' || sec.title === 'Endereço');
         if (isCard) html += '<div class="listrow repcard"><div class="listrow__head"><label class="pmark" style="pointer-events:none"><input type="radio" checked tabindex="-1" /><span>Tornar principal</span></label></div>';
         html += '<div class="' + gridClass(sec.title) + '">';
         if (sec.title === 'Identificação') {
@@ -349,7 +353,7 @@
       html += '</div></section>';
     });
 
-    if (!docsDone) html += docsSectionHtml();
+    html += docsSectionHtml(); // Documentações por último
     box.innerHTML = html;
     setStatus(deriveStatus()); // status do locatário derivado dos documentos
   })();

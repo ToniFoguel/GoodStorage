@@ -36,6 +36,7 @@
   <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
   <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
   <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+  <symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
 </svg>
 
 <div class="app">
@@ -87,7 +88,7 @@
 
       <div class="toolbar">
         <div class="input toolbar__search" data-ds="input">
-          <div class="input__field"><input class="input__control" placeholder="Pesquise por nome, e-mail, telefone ou nº do box" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+          <div class="input__field"><input class="input__control" placeholder="Pesquisar por ID, locatário, razão social, CNPJ e CPF" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
         </div>
         <div class="dropdown toolbar__filter-dd" data-ds="dropdown">
           <button class="btn btn--icon-border dropdown__trigger" aria-label="Filtrar por status" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-filter-3"/></svg></span></button>
@@ -122,16 +123,14 @@
         </div>
       </div>
 
-      <div class="table ltable" data-ds="table">
+      <div class="table ltable">
         <div class="table__header">
+          <button class="table__th"><span class="table__th-label">Código</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
           <button class="table__th"><span class="table__th-label">Locatário</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
           <button class="table__th"><span class="table__th-label">Tipo</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
-          <button class="table__th"><span class="table__th-label">E-mail</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
-          <button class="table__th"><span class="table__th-label">Documento</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
-          <button class="table__th"><span class="table__th-label">Box(es)</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
-          <button class="table__th"><span class="table__th-label">Unidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
-          <button class="table__th"><span class="table__th-label">Seguro</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">CPF/CNPJ</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
           <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <span class="table__th table__th--action" aria-hidden="true"></span>
         </div>
       </div>
 
@@ -161,16 +160,17 @@
     function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
     function norm(s){ return String(s==null?'':s).toLowerCase(); }
 
-    // Dados de cada linha + texto pesquisável (nome, e-mail, documento, box, unidade, telefones)
+    // Código do locatário (ID) formatado
+    function codigo(id) { return 'LOC-' + ('000000' + id).slice(-6); }
+    // Dados de cada linha + texto pesquisável (ID, código, locatário/razão, CNPJ/CPF)
     var rows = Object.keys(window.LOCATARIOS).map(function (id) {
       var l = window.LOCATARIOS[id];
-      var fones = [];
-      (l.dados || []).forEach(function (sec) { (sec.items || []).forEach(function (it) { if (/telefone|whats/i.test(it.label)) fones.push(it.value); }); });
-      var search = [l.nome, l.email, l.docNum, l.boxes, l.unidade].concat(fones).map(norm).join(' ');
-      return { id: id, nome: l.nome, tipo: l.tipo, email: l.email, docNum: l.docNum, boxes: l.boxes, unidade: l.unidade, seguro: l.seguro, status: l.status, search: search };
+      var cod = codigo(id);
+      var search = [id, cod, l.nome, l.docNum].map(norm).join(' ');
+      return { id: id, codigo: cod, nome: l.nome, tipo: l.tipo, docNum: l.docNum, status: l.status, search: search };
     });
 
-    var fields = ['nome','tipo','email','docNum','boxes','unidade','seguro','status'];
+    var fields = ['codigo','nome','tipo','docNum','status'];
     var state = { query: '', fStatus: '', fTipo: '', sortField: null, sortDir: 1, pageSize: 20, page: 1 };
 
     function apply() {
@@ -206,16 +206,14 @@
       var html = '';
       pageRows.forEach(function (r, idx) {
         var alt = ((start + idx) % 2 === 1) ? ' table__row--alt' : '';
-        html += '<a class="table__row' + alt + '" href="perfil.html?id=' + r.id + '">'
+        html += '<div class="table__row' + alt + '" data-href="perfil.html?id=' + r.id + '">'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.codigo) + '</p></div>'
           + '<div class="table__cell"><span class="cl-name">' + esc(r.nome) + '</span></div>'
           + '<div class="table__cell"><span class="badge badge--outline">' + esc(r.tipo) + '</span></div>'
-          + '<div class="table__cell"><p class="table__cell-text cl-mail">' + esc(r.email) + '</p></div>'
           + '<div class="table__cell"><p class="table__cell-text">' + esc(r.docNum) + '</p></div>'
-          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.boxes) + '</p></div>'
-          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.unidade) + '</p></div>'
-          + '<div class="table__cell"><span class="badge ' + seg(r.seguro) + '">' + esc(r.seguro) + '</span></div>'
           + '<div class="table__cell"><span class="badge ' + (badgeMap[r.status] || 'badge--outline') + '">' + esc(STATUS_SHORT[r.status] || r.status) + '</span></div>'
-          + '</a>';
+          + '<div class="table__cell table__cell--action"><div class="rowmenu"><button type="button" class="table__kebab" data-rowmenu aria-label="Ações"><svg><use href="#ri-more-2"/></svg></button><div class="rowmenu__panel" hidden><a class="rowmenu__item" href="cadastro.html?editar=1&id=' + r.id + '">Editar</a></div></div></div>'
+          + '</div>';
       });
       t.insertAdjacentHTML('beforeend', html);
       renderPager(data.length, totalPages, start);
@@ -276,7 +274,7 @@
     var ths = t.querySelectorAll('.table__header .table__th');
     Array.prototype.forEach.call(ths, function (th, idx) {
       th.addEventListener('click', function () {
-        var f = fields[idx];
+        var f = fields[idx]; if (!f) return; // coluna de ação não ordena
         if (state.sortField === f) state.sortDir = -state.sortDir; else { state.sortField = f; state.sortDir = 1; }
         state.page = 1;
         Array.prototype.forEach.call(ths, function (o) { o.classList.remove('table__th--asc', 'table__th--desc'); });
@@ -293,6 +291,25 @@
       var b = e.target.closest('[data-page]'); if (!b || b.disabled) return;
       var p = parseInt(b.getAttribute('data-page'), 10);
       if (!isNaN(p) && p !== state.page) { state.page = p; render(); }
+    });
+
+    // Navegação da linha (vai pra Exibição) + kebab (dropdown -> Editar)
+    t.addEventListener('click', function (e) {
+      var kebab = e.target.closest('[data-rowmenu]');
+      if (kebab) {
+        e.preventDefault(); e.stopPropagation();
+        var panel = kebab.parentNode.querySelector('.rowmenu__panel');
+        var isOpen = panel && !panel.hidden;
+        document.querySelectorAll('.rowmenu__panel').forEach(function (p) { p.hidden = true; });
+        if (panel) panel.hidden = isOpen;
+        return;
+      }
+      if (e.target.closest('.rowmenu__panel')) return; // clique no item do menu segue o link
+      var row = e.target.closest('.table__row[data-href]');
+      if (row) location.href = row.getAttribute('data-href');
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.rowmenu')) document.querySelectorAll('.rowmenu__panel').forEach(function (p) { p.hidden = true; });
     });
 
     render();
