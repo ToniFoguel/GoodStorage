@@ -47,6 +47,22 @@ window.LOCATARIOS = {
             "value": "110.042.490.114"
           },
           {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": true
@@ -106,8 +122,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "marina@alvescom.com.br"
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -116,18 +133,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@marinaalves"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "marina@alvescom.com.br",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "marina@alvescom.com.br",
-            "usarPrincipal": true
           }
         ]
       },
@@ -248,6 +253,22 @@ window.LOCATARIOS = {
             "value": "110.042.490.114"
           },
           {
+            "label": "E-mail principal",
+            "value": "contato@contorno.log.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "contato@contorno.log.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "contato@contorno.log.br",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -307,8 +328,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "contato@contorno.log.br"
+            "label": "E-mail",
+            "value": "contato@contorno.log.br",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -317,18 +339,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@contornolog"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "contato@contorno.log.br",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "contato@contorno.log.br",
-            "usarPrincipal": true
           }
         ]
       },
@@ -435,6 +445,22 @@ window.LOCATARIOS = {
             "value": "18/05/1987"
           },
           {
+            "label": "E-mail principal",
+            "value": "financeiro@studioprisma.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "financeiro@studioprisma.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "financeiro@studioprisma.com",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -453,8 +479,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "financeiro@studioprisma.com"
+            "label": "E-mail",
+            "value": "financeiro@studioprisma.com",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -463,18 +490,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@studioprisma"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "financeiro@studioprisma.com",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "financeiro@studioprisma.com",
-            "usarPrincipal": true
           }
         ]
       },
@@ -564,6 +579,22 @@ window.LOCATARIOS = {
             "value": "110.042.490.114"
           },
           {
+            "label": "E-mail principal",
+            "value": "compras@dezirmaos.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "compras@dezirmaos.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "compras@dezirmaos.com.br",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": true
@@ -623,8 +654,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "compras@dezirmaos.com.br"
+            "label": "E-mail",
+            "value": "compras@dezirmaos.com.br",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -633,18 +665,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@dezirmaos"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "compras@dezirmaos.com.br",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "compras@dezirmaos.com.br",
-            "usarPrincipal": true
           }
         ]
       },
@@ -751,6 +771,22 @@ window.LOCATARIOS = {
             "value": "02/11/1991"
           },
           {
+            "label": "E-mail principal",
+            "value": "ana@atelienorte.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "ana@atelienorte.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "ana@atelienorte.com",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -769,8 +805,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "ana@atelienorte.com"
+            "label": "E-mail",
+            "value": "ana@atelienorte.com",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -779,18 +816,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@atelienorte"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "ana@atelienorte.com",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "ana@atelienorte.com",
-            "usarPrincipal": true
           }
         ]
       },
@@ -895,6 +920,22 @@ window.LOCATARIOS = {
             "value": "110.042.490.114"
           },
           {
+            "label": "E-mail principal",
+            "value": "contato@valeverde.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "contato@valeverde.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "contato@valeverde.com.br",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -953,8 +994,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "contato@valeverde.com.br"
+            "label": "E-mail",
+            "value": "contato@valeverde.com.br",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -963,18 +1005,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@valeverde"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "contato@valeverde.com.br",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "contato@valeverde.com.br",
-            "usarPrincipal": true
           }
         ]
       },
@@ -1056,6 +1086,22 @@ window.LOCATARIOS = {
             "value": "22/09/1990"
           },
           {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1074,8 +1120,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "rafael.monteiro@email.com"
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -1084,18 +1131,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@rafaelm"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "rafael.monteiro@email.com",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "rafael.monteiro@email.com",
-            "usarPrincipal": true
           }
         ]
       },
@@ -1187,6 +1222,22 @@ window.LOCATARIOS = {
             "value": "14/02/1985"
           },
           {
+            "label": "E-mail principal",
+            "value": "bianca.reis@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "bianca.reis@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "bianca.reis@email.com",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1205,8 +1256,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "bianca.reis@email.com"
+            "label": "E-mail",
+            "value": "bianca.reis@email.com",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -1215,18 +1267,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@biancareis"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "bianca.reis@email.com",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "bianca.reis@email.com",
-            "usarPrincipal": true
           }
         ]
       },
@@ -1323,6 +1363,22 @@ window.LOCATARIOS = {
             "value": "30/07/1979"
           },
           {
+            "label": "E-mail principal",
+            "value": "otavio.lima@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "otavio.lima@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "otavio.lima@email.com",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1341,8 +1397,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "otavio.lima@email.com"
+            "label": "E-mail",
+            "value": "otavio.lima@email.com",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -1351,18 +1408,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@otaviolima"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "otavio.lima@email.com",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "otavio.lima@email.com",
-            "usarPrincipal": true
           }
         ]
       },
@@ -1468,6 +1513,22 @@ window.LOCATARIOS = {
             "value": "110.042.490.114"
           },
           {
+            "label": "E-mail principal",
+            "value": "contato@paouniao.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "contato@paouniao.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "contato@paouniao.com.br",
+            "usarPrincipal": true
+          },
+          {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
             "checked": false
@@ -1527,8 +1588,9 @@ window.LOCATARIOS = {
             "value": "Administrativo"
           },
           {
-            "label": "E-mail principal",
-            "value": "contato@paouniao.com.br"
+            "label": "E-mail",
+            "value": "contato@paouniao.com.br",
+            "assina": true
           },
           {
             "label": "Telefone / WhatsApp",
@@ -1537,18 +1599,6 @@ window.LOCATARIOS = {
           {
             "label": "Usuário do WhatsApp",
             "value": "@paouniao"
-          },
-          {
-            "mail": true,
-            "label": "E-mail para assinatura",
-            "value": "contato@paouniao.com.br",
-            "usarPrincipal": true
-          },
-          {
-            "mail": true,
-            "label": "E-mail de login (Meu Espaço)",
-            "value": "contato@paouniao.com.br",
-            "usarPrincipal": true
           }
         ]
       },

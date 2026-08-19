@@ -106,6 +106,14 @@
 /* Marcador "principal" nos cards de contato/endereço */
 .pmark { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-text); cursor: pointer; white-space: nowrap; }
 .pmark input { width: 16px; height: 16px; accent-color: var(--background-primary); }
+/* Seleção de principal (estilo Amazon): selo "Principal" no atual + ação "Tornar principal" nos demais */
+.prin { display: inline-flex; align-items: center; }
+.prin__badge { display: none; }
+.repeater__item.is-principal .prin__badge, .listrow.is-principal .prin__badge { display: inline-flex; }
+.prin__set { cursor: pointer; }
+.repeater__item.is-principal .prin__set, .listrow.is-principal .prin__set { display: none; }
+/* Card principal: borda laranja */
+.listrow.is-principal { border-color: var(--background-primary); }
 .listrow__head-actions { display: flex; align-items: center; gap: var(--md); }
 /* Mensagem do modal de salvar (sucesso / pendências) */
 .savemsg { display: flex; align-items: flex-start; gap: var(--md); }

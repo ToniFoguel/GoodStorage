@@ -135,6 +135,9 @@
             <div class="input js-docfield" data-docfield="Passaporte" hidden><div class="input__label"><p>Número do passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div>
             <div class="input js-docfield" data-docfield="Classe" hidden><div class="input__label"><p>Carteira de classe</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: CRM 123456/SP" /></div></div>
             <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
+            <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div></div>
+            <div class="input mailrow"><div class="input__label"><p>E-mail de assinatura de contrato</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
+            <div class="input mailrow"><div class="input__label"><p>E-mail de login do Meu Espaço</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
             <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-reveal="js-cnpj-pf" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
             <div class="input js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
           </div></div>
@@ -177,6 +180,9 @@
             <div class="input"><div class="input__label"><p>Porte</p></div><div class="input__field"><input class="input__control" /></div></div>
             <div class="input"><div class="input__label"><p>Inscrição municipal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div><p class="input__help">Obrigatória, mas não bloqueia o preenchimento.</p></div>
             <div class="input"><div class="input__label"><p>Inscrição estadual</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div></div>
+            <div class="input mailrow"><div class="input__label"><p>E-mail de assinatura de contrato</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
+            <div class="input mailrow"><div class="input__label"><p>E-mail de login do Meu Espaço</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
             <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
           </div>
         </div>
@@ -295,31 +301,25 @@
           <div class="repeater" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><label class="pmark"><input type="radio" name="contato-principal" checked /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
-                <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
+                <div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span><button type="button" class="prin__set badge badge--outline" data-prin-set>Tornar principal</button></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
                   <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
+                  <div class="input"><div class="input__label"><p>E-mail</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repeater__item">
-                <div class="listrow__head"><label class="pmark"><input type="radio" name="contato-principal" /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
-                <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
+                <div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span><button type="button" class="prin__set badge badge--outline" data-prin-set>Tornar principal</button></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input col-2"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
                   <div class="input"><div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Administrativo</option><option>Financeiro</option><option>Comercial</option><option>Marketing</option><option>Operacional</option></select></div></div>
-                  <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
+                  <div class="input"><div class="input__label"><p>E-mail</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>
                   <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
                   <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail para assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
-                  <div class="input mailrow"><div class="input__label"><p>E-mail de login (Meu Espaço)</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
                 </div>
               </div>
             </template>
@@ -335,7 +335,7 @@
           <div class="repeater repeater--addr" data-ds="repeater">
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><label class="pmark"><input type="radio" name="endereco-principal" checked /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span><button type="button" class="prin__set badge badge--outline" data-prin-set>Tornar principal</button></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
@@ -350,7 +350,7 @@
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
-                <div class="listrow__head"><label class="pmark"><input type="radio" name="endereco-principal" /><span>Tornar principal</span></label><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span><button type="button" class="prin__set badge badge--outline" data-prin-set>Tornar principal</button></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
                 <div class="formgrid formgrid--4">
                   <div class="input" data-ds="input" data-ds-mask="cep"><div class="input__label"><p>CEP</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="" selected disabled hidden>Selecione</option><option>Residencial</option><option>Cobrança</option><option>Fiscal</option></select></div></div>
@@ -492,7 +492,7 @@
     //    Delegação + ds:add para funcionar também em contatos adicionados.
     function syncMail(cb) {
       var row = cb.closest('.mailrow'); if (!row) return;
-      var card = cb.closest('.repeater__item') || document;
+      var card = cb.closest('.repeater__item') || cb.closest('.section') || document;
       var main = card.querySelector('.js-mailmain');
       var input = row.querySelector('.js-mailsync-input'); if (!input) return;
       var field = input.closest('.input__field');
@@ -511,7 +511,7 @@
     document.addEventListener('input', function (e) {
       var main = e.target;
       if (!main || !main.matches || !main.matches('.js-mailmain')) return;
-      var card = main.closest('.repeater__item') || document;
+      var card = main.closest('.repeater__item') || main.closest('.section') || document;
       card.querySelectorAll('[data-mailsync]').forEach(function (cb) {
         if (cb.checked) { var row = cb.closest('.mailrow'); var i = row && row.querySelector('.js-mailsync-input'); if (i) i.value = main.value; }
       });
@@ -558,6 +558,19 @@
         });
       }
       DS.closeModal(m);
+    });
+
+    // 3e) Principal (estilo Amazon): "Tornar principal" promove o card; selo "Principal" no atual
+    document.querySelectorAll('.repeater').forEach(function (wrap) {
+      if (!wrap.querySelector('[data-prin-set]')) return;
+      var first = wrap.querySelector('.repeater__items > .repeater__item');
+      if (first) first.classList.add('is-principal');
+    });
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-prin-set]');
+      if (!b) return;
+      var card = b.closest('.repeater__item'); var wrap = b.closest('.repeater');
+      if (wrap && card) { wrap.querySelectorAll('.repeater__item').forEach(function (it) { it.classList.remove('is-principal'); }); card.classList.add('is-principal'); }
     });
 
     // 4) Salvar cadastro: valida obrigatórios visíveis (aba ativa + seções compartilhadas) e abre modal

@@ -330,7 +330,7 @@
         }
       } else {
         var isCard = (sec.title === 'Contatos' || sec.title === 'Endereço');
-        if (isCard) html += '<div class="listrow repcard"><div class="listrow__head"><label class="pmark" style="pointer-events:none"><input type="radio" checked tabindex="-1" /><span>Tornar principal</span></label></div>';
+        if (isCard) html += '<div class="listrow repcard is-principal"><div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span></span></div>';
         html += '<div class="' + gridClass(sec.title) + '">';
         if (sec.title === 'Identificação') {
           html += inputRO('Tipo de locatário', stored.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica');
@@ -338,7 +338,7 @@
         sec.items.forEach(function (it) {
           if (it.check) html += checkRO(it.label, it.checked);
           else if (it.mail) html += mailRO(it.label, it.value, it.usarPrincipal);
-          else if (it.label === 'E-mail principal') html += mailFlagRO(it.label, it.value, it.assina !== false);
+          else if (it.assina !== undefined) html += mailFlagRO(it.label, it.value, it.assina !== false);
           else if (it.label === 'Tipo de documento') {
             var num = '';
             sec.items.forEach(function (x) { if (x.label === 'Número do documento') num = x.value; });
