@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perfil 360 · UI — Contratos · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/checkbox-card/checkbox-card.css" />
+<link rel="stylesheet" href="../../components/data-item/data-item.css" />
+<link rel="stylesheet" href="../../components/datepicker/datepicker.css" />
+<link rel="stylesheet" href="../../components/pagination/pagination.css" />
+<link rel="stylesheet" href="../../components/progress/progress.css" />
+<link rel="stylesheet" href="../../components/segmented/segmented.css" />
+<link rel="stylesheet" href="../../components/footer/footer.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="contratos.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+<symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+<symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+<symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+<symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+<symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+<symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+<symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+<symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+<symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+<symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+<symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+<symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+<symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+<symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+<symbol id="ri-arrow-left" viewBox="0 0 24 24" fill="currentColor"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></symbol>
+<symbol id="ri-pencil" viewBox="0 0 24 24"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+<symbol id="ri-lock" viewBox="0 0 24 24"><path d="M6 8V7a6 6 0 1 1 12 0v1h1a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h1zm2 0h8V7a4 4 0 1 0-8 0v1zm3 6.732V17h2v-2.268a2 2 0 1 0-2 0z"/></symbol>
+<symbol id="ri-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+<symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+<symbol id="ri-checkbox-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></symbol>
+<symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+<symbol id="ico-information" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+<symbol id="ico-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
+<symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+<symbol id="ico-trash" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+<symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM13.7327 10.5855C14.5137 11.3666 15.78 11.3666 16.5611 10.5855C17.3421 9.80448 17.3421 8.53815 16.5611 7.7571C15.78 6.97606 14.5137 6.97606 13.7327 7.7571C12.9516 8.53815 12.9516 9.80448 13.7327 10.5855Z"/></symbol>
+<symbol id="ri-arrow-right-s" viewBox="0 0 24 24"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+<symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7" stroke-linecap="round"/><line x1="16" y1="3" x2="16" y2="7" stroke-linecap="round"/></symbol>
+<symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5l7 2.8v5.6c0 5.1-3.2 8.6-7 10.1-3.8-1.5-7-5-7-10.1V5.3l7-2.8z"/></symbol>
+<symbol id="ico-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M14 4l3 3-3 3"/><path d="M20 17H7M10 14l-3 3 3 3"/></symbol>
+<symbol id="ico-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="3" width="10" height="18"/><rect x="14" y="10" width="6" height="11"/><line x1="7" y1="7" x2="10.5" y2="7"/><line x1="7" y1="11" x2="10.5" y2="11"/><line x1="7" y1="15" x2="10.5" y2="15"/></symbol>
+<symbol id="ico-signature" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18c2-3 3-5 4.5-5s1.5 3 3 3 2-6 4-6 1 4 3 4 2-2 3.5-2"/><line x1="3" y1="21" x2="21" y2="21"/></symbol>
+<symbol id="ico-bell" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a6 6 0 0 0-6 6v3.586l-1.707 1.707A1 1 0 0 0 5 15h14a1 1 0 0 0 .707-1.707L18 11.586V8a6 6 0 0 0-6-6zm0 20a3 3 0 0 0 3-3H9a3 3 0 0 0 3 3z"/></symbol>
+<symbol id="ico-chart" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h2v18H3V3zm16 8h2v10h-2V11zm-8-5h2v15h-2V6zm-4 8h2v7H7v-7zm12-2h2v9h-2v-9z"/></symbol>
+<symbol id="ico-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+          <a class="sidebar__item" href="dashboard.html"><span class="sidebar__item-icon"><svg><use href="#ico-chart"/></svg></span><span class="sidebar__item-label">Dashboard</span></a>
+          <a class="sidebar__item" href="visitas.html"><span class="sidebar__item-icon"><svg><use href="#ico-briefcase"/></svg></span><span class="sidebar__item-label">Relacionamento (B2B/UI)</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item" href="parametros.html"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a>
+          <a class="sidebar__item" href="templates.html"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Templates de minuta</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Contratos</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">CT-6110</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Contrato CT-6110</h1>
+          <p class="pagehead__sub">Move-in em 08/2019 · origem: fechamento do draft DRAFT-1187 (F-CON-14)</p>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
+          <button class="btn btn--outline" data-ds-open="perfil__modalOcorrencia">Nova ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span></button>
+          <div class="dropdown" data-ds="dropdown" style="position:relative">
+            <button class="btn btn--icon-border dropdown__trigger" aria-label="Mais ações" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
+            <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalTrocaEspaco"><p class="dropdown__nav-text">Troca de espaço</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalTrocaTitularidade"><p class="dropdown__nav-text">Troca de titularidade</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalAditivo"><p class="dropdown__nav-text">Aditivo contratual</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalValorContratual"><p class="dropdown__nav-text">Alterar valor fora do reajuste</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalGarantia"><p class="dropdown__nav-text">Atualizar garantia</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalSuspender"><p class="dropdown__nav-text">Suspender contrato</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalEncerrar"><p class="dropdown__nav-text">Encerrar contrato</p></div>
+            </div>
+          </div>
+          <button class="btn btn--primary" data-ds-open="perfil__modalAvisoMoveOut">Registrar aviso de move-out</button>
+        </div>
+      </div>
+
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Dados do contrato</h2></div></div>
+          <div class="section__body"><dl class="dados">
+            <div class="data-item"><p class="data-item__label">Produto</p><p class="data-item__value">Galpão Urbano (UI)</p></div>
+            <div class="data-item"><p class="data-item__label">Locatário</p><p class="data-item__value">Comercial Dez Irmãos</p></div>
+            <div class="data-item"><p class="data-item__label">Espaço</p><p class="data-item__value">Bloco B · Módulo 3 · 4.200 m²</p></div>
+            <div class="data-item"><p class="data-item__label">Plano</p><p class="data-item__value">Prazo determinado · 5 anos</p></div>
+            <div class="data-item"><p class="data-item__label">Rate</p><p class="data-item__value">R$ 32,50/m² (Lease Abstract)</p></div>
+            <div class="data-item"><p class="data-item__label">Origem</p><p class="data-item__value">Draft DRAFT-1187 · fechado em 22/08/2019</p></div>
+          </dl></div>
+        </section>
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage" /><small>espaços inteligentes</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     MODAIS GLOBAIS — vivem fora de qualquer .uni-page para poderem
+     ser abertos a partir de qualquer tela (ex.: perfil UI reaproveita
+     os mesmos modais do perfil Self Storage).
+     ================================================================ -->
+<!-- ============ MODAIS DO PERFIL 360 (Self Storage + UI) ============ -->
+
+<!-- MODAL: Nova ocorrência (F-CON-45) -->
+<div class="modal confirm-modal" id="perfil__modalOcorrencia" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Registrar ocorrência</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Tipo de ocorrência</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value select__value--filled">Quebra de cadeado</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item select__item--active"><p class="select__item-text">Quebra de cadeado</p></div>
+            <div class="select__item"><p class="select__item-text">Sinistro</p></div>
+            <div class="select__item"><p class="select__item-text">Arrombamento</p></div>
+            <div class="select__item"><p class="select__item-text">Reclamação / atendimento</p></div>
+            <div class="select__item"><p class="select__item-text">Falha de sincronização financeira</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input">
+        <div class="input__label"><p>Espaço relacionado</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value select__value--filled">A-102</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item select__item--active"><p class="select__item-text">A-102</p></div>
+            <div class="select__item"><p class="select__item-text">A-103</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo — vira registro rastreável (quem/quando/por quê)."></textarea></div><p class="input__help">Motivo é obrigatório em qualquer movimentação (rastreabilidade).</p></div>
+      <div class="input full"><div class="input__label"><p>Anexos</p></div>
+        <button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo</button>
+        <div class="taglist" style="margin-top:var(--md)"><span class="chip">boletim-ocorrencia.pdf</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Registrar ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"/></svg></span></button></div>
+</div>
+
+<!-- MODAL: Registrar vistoria (F-CON-39/44) -->
+<div class="modal confirm-modal" id="perfil__modalVistoria" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Registrar vistoria</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Tipo de vistoria</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value select__value--filled">Periódica</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Entrada</p></div>
+            <div class="select__item select__item--active"><p class="select__item-text">Periódica</p></div>
+            <div class="select__item"><p class="select__item-text">Saída</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input">
+        <div class="input__label"><p>Condição geral</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value select__value--filled">Sem avarias</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item select__item--active"><p class="select__item-text">Sem avarias</p></div>
+            <div class="select__item"><p class="select__item-text">Avarias leves</p></div>
+            <div class="select__item"><p class="select__item-text">Avarias graves</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input full"><div class="input__label"><p>Observações</p></div><div class="input__field"><textarea class="input__control" placeholder="Detalhes da vistoria — vira parte do dossiê probatório do contrato."></textarea></div></div>
+      <div class="input full"><div class="input__label"><p>Fotos / laudo</p></div>
+        <button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar fotos</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Registrar vistoria</button></div>
+</div>
+
+<!-- MODAL: Troca de espaço (F-CON-22) -->
+<div class="modal confirm-modal" id="perfil__modalTrocaEspaco" data-ds="modal" style="max-width:620px">
+  <div class="modal__header"><h2 class="modal__title">Troca de espaço</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input input--readonly"><div class="input__label"><p>Espaço atual</p></div><div class="input__field"><input class="input__control" value="A-102 · 5 m² (Médio)" readonly /></div></div>
+      <div class="input">
+        <div class="input__label"><p>Novo espaço</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">B-307 · Pequeno (2 m²)</p></div>
+            <div class="select__item"><p class="select__item-text">B-321 · Grande (10 m²)</p></div>
+          </div></div>
+        </div>
+        <p class="input__help">Downgrade só é permitido para a categoria imediatamente adjacente (RN02).</p>
+      </div>
+      <div class="input full"><div class="input__label"><p>Motivo da transferência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: upsell, retenção, sinistro, necessidade do cliente…"></textarea></div></div>
+    </div>
+    <p class="section__title" style="margin:var(--lg) 0 var(--sm)">Impactos</p>
+    <div class="diffrow"><span class="diffrow__label">Nova capa contratual</span><span class="badge badge--yellow">Será gerada</span></div>
+    <div class="diffrow"><span class="diffrow__label">Data de vencimento e data-base de reajuste</span><span class="badge badge--outline">Preservadas (RN04)</span></div>
+    <div class="diffrow"><span class="diffrow__label">Acerto financeiro</span><span class="badge badge--outline">Comandado ao Motor de Recebíveis</span></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Gerar transferência</button></div>
+</div>
+
+<!-- MODAL: Troca de titularidade (F-CON-23) -->
+<div class="modal confirm-modal" id="perfil__modalTrocaTitularidade" data-ds="modal" style="max-width:620px">
+  <div class="modal__header"><h2 class="modal__title">Troca de titularidade</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--info"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__title">Condições comerciais são preservadas</p><p class="banner__text">Saldo de promoções, data-base e prazo de reajuste seguem inalterados (RN01). Não conta como move-in/move-out.</p></div></div>
+    <div class="formgrid">
+      <div class="input input--readonly"><div class="input__label"><p>Titular atual</p></div><div class="input__field"><input class="input__control" value="Marina Alves Comércio" readonly /></div></div>
+      <div class="input">
+        <div class="input__label"><p>Novo titular</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Buscar locatário existente ou cadastrar novo…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Ateliê Norte · CPF •••.222.333-44</p></div>
+            <div class="select__item"><p class="select__item-text">+ Cadastrar novo locatário</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: sucessão familiar, venda do negócio…"></textarea></div></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Gerar nova capa e enviar assinaturas</button></div>
+</div>
+
+<!-- MODAL: Troca de seguro (F-CON-24) -->
+<div class="modal confirm-modal" id="perfil__modalTrocaSeguro" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Trocar / registrar seguro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <span class="fieldlbl">Modalidade *</span>
+    <div class="tabbar">
+      <div class="segmented" data-ds="segmented">
+        <button class="segmented__item segmented__item--active" data-value="parceira" data-tab="perfil__mseg-parceira">Parceira (MAPFRE)</button>
+        <button class="segmented__item" data-value="proprio" data-tab="perfil__mseg-proprio">Próprio</button>
+        <button class="segmented__item" data-value="sem" data-tab="perfil__mseg-sem">Sem seguro</button>
+      </div>
+    </div>
+    <div class="tabpanel is-active" id="perfil__mseg-parceira">
+      <div class="formgrid">
+        <div class="input"><div class="input__label"><p>Plano</p></div><div class="input__field"><select class="input__control"><option>Cobertura R$ 1.500</option><option>Cobertura R$ 3.000</option><option>Cobertura R$ 5.000</option></select></div></div>
+        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div><p class="input__help">Deve sempre casar com o valor da cobertura (RN01).</p></div>
+      </div>
+    </div>
+    <div class="tabpanel" id="perfil__mseg-proprio">
+      <div class="formgrid">
+        <div class="input"><div class="input__label"><p>Seguradora</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome da seguradora" /></div></div>
+        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+        <div class="input full"><div class="input__label"><p>Apólice (anexo)</p><p class="input__req">*</p></div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar apólice</button></div>
+      </div>
+      <div class="banner banner--warning" style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__text">Migração para seguro próprio exige aprovação do Regional (RN03).</p></div></div>
+    </div>
+    <div class="tabpanel" id="perfil__mseg-sem">
+      <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Contratação de seguro é obrigatória</p><p class="banner__text">Ao confirmar, o locatário assume total responsabilidade por eventuais perdas/danos aos bens armazenados.</p></div></div>
+      <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Declaro que fui informado da obrigatoriedade de seguro e assumo a responsabilidade por não possuir cobertura vigente.</p></span></label>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Salvar e gerar capa</button></div>
+</div>
+
+<!-- MODAL: Aditivo contratual (F-CON-10) -->
+<div class="modal confirm-modal" id="perfil__modalAditivo" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Aditivo contratual</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--info"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__text">Aditivo é para condições acessórias e uso deliberadamente mínimo — nunca altera titular ou objeto (nesses casos, use nova capa).</p></div></div>
+    <div class="formgrid">
+      <div class="input full">
+        <div class="input__label"><p>Matéria do aditivo</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Autorização de permanência pós-horário</p></div>
+            <div class="select__item"><p class="select__item-text">Particularidade operacional da unidade</p></div>
+            <div class="select__item"><p class="select__item-text">Outro (descrever)</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input full"><div class="input__label"><p>Descrição</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Detalhe a condição acessória a formalizar."></textarea></div></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Gerar aditivo</button></div>
+</div>
+
+<!-- MODAL: Registrar/atualizar garantia (F-CON-33/34) -->
+<div class="modal confirm-modal" id="perfil__modalGarantia" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Registrar / atualizar garantia</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Tipo de garantia</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Caução em dinheiro</p></div>
+            <div class="select__item"><p class="select__item-text">Fiador</p></div>
+            <div class="select__item"><p class="select__item-text">Carta fiança</p></div>
+            <div class="select__item"><p class="select__item-text">Seguro fiança</p></div>
+            <div class="select__item"><p class="select__item-text">Título de capitalização</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input"><div class="input__label"><p>Valor da garantia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div><p class="input__help">Valor-alvo deve acompanhar o valor do aluguel a cada reajuste.</p></div>
+      <div class="input"><div class="input__label"><p>Vencimento (se aplicável)</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+      <div class="input full"><div class="input__label"><p>Documento comprobatório</p><p class="input__req">*</p></div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Salvar garantia</button></div>
+</div>
+
+<!-- MODAL: Simular / aplicar reajuste (F-CON-17/18) -->
+<div class="modal confirm-modal" id="perfil__modalReajuste" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Simular reajuste</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <dl class="dados" style="margin-bottom:var(--md)">
+      <div class="data-item"><p class="data-item__label">Índice</p><p class="data-item__value">IGP-M · acumulado do período: 4,2%</p></div>
+      <div class="data-item"><p class="data-item__label">Data-base</p><p class="data-item__value">03/09/2026</p></div>
+    </dl>
+    <div class="diffrow"><span class="diffrow__label">Valor bruto</span><span class="diffrow__vals"><span class="diffrow__old">R$ 890,00</span><svg class="diffrow__arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="diffrow__new">R$ 927,38</span></span></div>
+    <div class="formgrid" style="margin-top:var(--lg)">
+      <div class="input"><div class="input__label"><p>Percentual a aplicar</p></div><div class="input__field"><input class="input__control" value="4,2%" /></div><p class="input__help">Alterar para fora do índice exige alçada (F-CON-18).</p></div>
+    </div>
+    <div class="banner banner--info" style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__text">O faturamento nunca fica condicionado ao reajuste — a comunicação ao locatário é automática e obrigatória.</p></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Aplicar reajuste</button></div>
+</div>
+
+<!-- MODAL: Renegociação de reajuste (F-CON-20) -->
+<div class="modal confirm-modal" id="perfil__modalRenegociacao" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Renegociação de reajuste</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input full"><div class="input__label"><p>Motivo da reclamação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva a reclamação do locatário sobre o reajuste aplicado."></textarea></div></div>
+      <div class="input">
+        <div class="input__label"><p>Decisão</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Manter reajuste aplicado</p></div>
+            <div class="select__item"><p class="select__item-text">Reduzir percentual</p></div>
+            <div class="select__item"><p class="select__item-text">Reajuste negativo</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input"><div class="input__label"><p>Novo percentual</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: 2%" /></div></div>
+    </div>
+    <div class="banner banner--warning" style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__text">Redução permanente gera nova capa assinada; desconto temporário gera capa de renegociação apenas com ciência.</p></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Registrar decisão</button></div>
+</div>
+
+<!-- MODAL: Aviso de move-out (F-CON-40) -->
+<div class="modal confirm-modal" id="perfil__modalAvisoMoveOut" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Registrar aviso de move-out</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--info"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__title">Prazo de aviso vigente: 15 dias</p><p class="banner__text">Definido na minuta deste contrato — exibido aqui de forma proeminente para evitar surpresas.</p></div></div>
+    <div class="formgrid">
+      <div class="input"><div class="input__label"><p>Data prevista de saída</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+      <div class="input">
+        <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Mudança de endereço</p></div>
+            <div class="select__item"><p class="select__item-text">Preço</p></div>
+            <div class="select__item"><p class="select__item-text">Não precisa mais do espaço</p></div>
+            <div class="select__item"><p class="select__item-text">Insatisfação com o serviço</p></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <p class="section__title" style="margin:var(--lg) 0 var(--sm)">O que acontece a seguir</p>
+    <div class="diffrow"><span class="diffrow__label">Reajustes</span><span class="badge badge--outline">Pausados até resolução do aviso</span></div>
+    <div class="diffrow"><span class="diffrow__label">Retenção</span><span class="badge badge--outline">Disparada automaticamente</span></div>
+    <div class="diffrow"><span class="diffrow__label">Faturamento</span><span class="badge badge--outline">Segue normalmente até a efetivação</span></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Registrar aviso</button></div>
+</div>
+
+<!-- MODAL: Alteração de plano / vencimento (F-CON-25/26) -->
+<div class="modal confirm-modal" id="perfil__modalAlteracaoPlano" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h2 class="modal__title">Alterar plano / vencimento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <span class="fieldlbl">Plano</span>
+    <div class="segmented" data-ds="segmented" style="margin:var(--sm) 0 var(--lg)">
+      <button class="segmented__item segmented__item--active" data-value="mensal">Mensal</button>
+      <button class="segmented__item" data-value="anual">Anual</button>
+    </div>
+    <div class="formgrid">
+      <div class="input"><div class="input__label"><p>Novo dia de vencimento</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: 10" /></div><p class="input__help">Vale a partir do próximo ciclo ainda não faturado (janela D-15).</p></div>
+    </div>
+    <div class="banner banner--warning" style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__text">Alteração de condição essencial: gera nova capa contratual assinada.</p></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Salvar e gerar capa</button></div>
+</div>
+
+<!-- MODAL: Suspender contrato (F-CON-06) -->
+<div class="modal confirm-modal" id="perfil__modalSuspender" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Suspender contrato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--error"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Ação sensível</p><p class="banner__text">Pausa o faturamento e bloqueia o acesso físico. Suspensão por inadimplência é automática — use esta ação apenas para suspensão administrativa.</p></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: determinação jurídica, decisão de gestão."></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(this.closest('.modal'))">Suspender contrato</button></div>
+</div>
+
+<!-- MODAL: Encerrar contrato (F-CON-07) -->
+<div class="modal confirm-modal" id="perfil__modalEncerrar" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h2 class="modal__title">Encerrar contrato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--error"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Estado terminal — não é reativável</p><p class="banner__text">Cobrança residual segue no domínio financeiro, sem reabrir o contrato. Histórico e documentos permanecem por no mínimo 5 anos.</p></div></div>
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Solicitação do locatário (move-out)</p></div>
+            <div class="select__item"><p class="select__item-text">Inadimplência</p></div>
+            <div class="select__item"><p class="select__item-text">Transferência para novo contrato</p></div>
+            <div class="select__item"><p class="select__item-text">Término de vigência</p></div>
+            <div class="select__item"><p class="select__item-text">Decisão judicial</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input"><div class="input__label"><p>Data efetiva</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+    </div>
+    <p class="section__title" style="margin:var(--lg) 0 var(--sm)">Checklist de pré-requisitos</p>
+    <div class="checklist">
+      <div class="checklist-item done"><span class="checklist-ico"><svg><use href="#ico-check"/></svg></span><div class="checklist-body"><p class="checklist-title">Quitação ou encaminhamento formal do saldo</p></div></div>
+      <div class="checklist-item done"><span class="checklist-ico"><svg><use href="#ico-check"/></svg></span><div class="checklist-body"><p class="checklist-title">Vistoria final registrada</p></div></div>
+      <div class="checklist-item pending"><span class="checklist-ico"><svg><use href="#ico-alert"/></svg></span><div class="checklist-body"><p class="checklist-title">Termo de quitação assinado</p></div></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(this.closest('.modal'))">Encerrar contrato</button></div>
+</div>
+
+<!-- MODAL: Cancelar contrato pré-ativação (F-CON-08) -->
+<div class="modal confirm-modal" id="perfil__modalCancelar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Cancelar contrato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Só disponível antes da ativação</p><p class="banner__text">Este contrato já está Ativo — o cancelamento aplica-se a Reserva ou Pré-Move-in. Após assinatura + pagamento, apenas alçada superior pode cancelar.</p></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: desistência, erro operacional, reprovação documental."></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Voltar</button><button class="btn btn--destructive" onclick="DS.closeModal(this.closest('.modal'))">Cancelar contrato</button></div>
+</div>
+
+<!-- MODAL: Alteração de valor contratual fora do reajuste (F-CON-28) -->
+<div class="modal confirm-modal" id="perfil__modalValorContratual" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h2 class="modal__title">Alterar valor fora do reajuste</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__text">Diferente do reajuste: altera o valor-base permanente do contrato. Exige alçada e gera nova capa assinada.</p></div></div>
+    <div class="formgrid">
+      <div class="input input--readonly"><div class="input__label"><p>Valor vigente</p></div><div class="input__field"><input class="input__control" value="R$ 890,00" readonly /></div></div>
+      <div class="input"><div class="input__label"><p>Novo valor</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+      <div class="input full">
+        <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Acordo de sinistro</p></div>
+            <div class="select__item"><p class="select__item-text">Renegociação permanente</p></div>
+            <div class="select__item"><p class="select__item-text">Decisão comercial</p></div>
+            <div class="select__item"><p class="select__item-text">Decisão judicial</p></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <p class="cl-mail" style="margin-top:var(--md)">Sujeito à tarifa mínima do cluster (validação com Precificação/Promoções). Redução permanente reinicia a régua anti-abuso de renegociações.</p>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Enviar para alçada</button></div>
+</div>
+
+<!-- MODAL: Agendar efetivação do move-out (F-CON-42) -->
+<div class="modal confirm-modal" id="perfil__modalAgendarMoveOut" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h2 class="modal__title">Agendar efetivação do move-out</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--info"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__text">Só disponível com aviso de move-out ativo. Conduz a saída física: agendamento, tarefas de loja, vistoria final e termo.</p></div></div>
+    <div class="formgrid">
+      <div class="input"><div class="input__label"><p>Data de retirada</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+      <div class="input"><div class="input__label"><p>Horário</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: 14:00" /></div></div>
+    </div>
+    <p class="section__title" style="margin:var(--lg) 0 var(--sm)">Tarefas geradas à loja</p>
+    <div class="checklist">
+      <div class="checklist-item pending"><span class="checklist-ico"><svg><use href="#ico-alert"/></svg></span><div class="checklist-body"><p class="checklist-title">Checklist de saída e conferência de cadeado</p></div></div>
+      <div class="checklist-item pending"><span class="checklist-ico"><svg><use href="#ico-alert"/></svg></span><div class="checklist-body"><p class="checklist-title">Vistoria final (F-CON-44)</p></div></div>
+      <div class="checklist-item pending"><span class="checklist-ico"><svg><use href="#ico-alert"/></svg></span><div class="checklist-body"><p class="checklist-title">Termo de move-out com assinatura em tablet</p></div></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Confirmar agendamento</button></div>
+</div>
+
+<!-- MODAL: Aplicar multa (F-CON-32) -->
+<div class="modal confirm-modal" id="perfil__modalMulta" data-ds="modal" style="max-width:560px">
+  <div class="modal__header"><h2 class="modal__title">Aplicar multa</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Tipo</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Rescisão antecipada</p></div>
+            <div class="select__item"><p class="select__item-text">Aviso prévio descumprido</p></div>
+            <div class="select__item"><p class="select__item-text">Devolução de desconto condicional</p></div>
+            <div class="select__item"><p class="select__item-text">Custo de esvaziamento/restituição</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input"><div class="input__label"><p>Valor calculado</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+      <div class="input full"><div class="input__label"><p>Memória de cálculo</p></div><div class="input__field"><textarea class="input__control" placeholder="Percentual/múltiplo aplicado, prazo remanescente, cláusula da minuta."></textarea></div></div>
+    </div>
+    <p class="cl-mail" style="margin-top:var(--md)">Vira comando de cobrança ao Motor de Recebíveis — nunca cobrança manual fora do sistema. Abono exige alçada e fica registrado (nunca apaga o histórico).</p>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Aplicar multa</button></div>
+</div>
+
+<!-- MODAL: Vincular sinistro (F-CON-47) -->
+<div class="modal confirm-modal" id="perfil__modalSinistro" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Vincular sinistro ao contrato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Responsabilidade</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Locatário responsável</p></div>
+            <div class="select__item"><p class="select__item-text">Locatário não responsável</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input"><div class="input__label"><p>Espaço afetado</p></div><div class="input__field"><select class="input__control"><option>A-102</option><option>A-103</option></select></div></div>
+      <div class="input full"><div class="input__label"><p>Laudo / termo</p></div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar laudo</button></div>
+      <div class="input full">
+        <div class="input__label"><p>Desfecho financeiro</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">Cobrança de reembolso (Motor de Recebíveis)</p></div>
+            <div class="select__item"><p class="select__item-text">Compensação como desconto operacional</p></div>
+            <div class="select__item"><p class="select__item-text">Sem efeito financeiro</p></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div class="banner banner--info" style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ico-information"/></svg></span><div class="banner__content"><p class="banner__text">Dívida de sinistro não bloqueia acesso nem suspende o contrato (limite contratual explícito).</p></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Vincular sinistro</button></div>
+</div>
+
+<!-- MODAL: Qualificar permuta / comodato (F-CON-31) -->
+<div class="modal confirm-modal" id="perfil__modalPermuta" data-ds="modal" style="max-width:520px">
+  <div class="modal__header"><h2 class="modal__title">Qualificar permuta / comodato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__text">Exige alçada de Diretoria/Gestão. Relatórios segregam permutas da receita efetiva — não é desconto comum.</p></div></div>
+    <div class="formgrid">
+      <div class="input"><div class="input__label"><p>Percentual</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: 100%" /></div></div>
+      <div class="input"><div class="input__label"><p>Vigência</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+      <div class="input full"><div class="input__label"><p>Contrapartida</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva a contrapartida da permuta/comodato."></textarea></div></div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Enviar para aprovação da Diretoria</button></div>
+</div>
+
+<!-- MODAL: Corrigir e-mail e reenviar envelope (F-CON-13) -->
+<div class="modal confirm-modal" id="perfil__modalEnvelope" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Corrigir e-mail e reenviar envelope</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <p class="cl-mail">A loja resolve isso direto — sem chamado ao TI. A correção é auditada e o e-mail é revalidado antes do reenvio.</p>
+    <div class="input full"><div class="input__label"><p>E-mail de assinatura</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="marina@alvescom.com.br" /></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Corrigir e reenviar</button></div>
+</div>
+
+<!-- ============ MODAL DO CONTRATO EM ELABORAÇÃO ============ -->
+
+<!-- MODAL: Fechar contrato (encerra elaboração -> cria pré-move-in) -->
+<div class="modal confirm-modal" id="elab__modalFechar" data-ds="modal" style="max-width:520px">
+  <div class="modal__header"><h2 class="modal__title">Fechar contrato</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Aprovação jurídica ainda pendente</p><p class="banner__text">O fechamento exige aprovação financeira, jurídica da minuta final e alçada comercial (RN03).</p></div></div>
+    <p class="cl-mail">Ao fechar, este draft vira um contrato em Pré-Move-in, com o checklist de documentação, assinatura e pagamento do move-in.</p>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><a class="btn btn--primary" href="perfil.html">Fechar mesmo assim (alçada)</a></div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+</body>
+</html>

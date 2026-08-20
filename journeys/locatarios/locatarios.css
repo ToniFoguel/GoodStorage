@@ -83,6 +83,9 @@
 /* "Outros documentos" (PF): multi-select no estilo do componente Select do DS */
 .select[data-multiselect] .select__dropdown { z-index: 30; }
 .select--open .select__icon svg { transform: rotate(180deg); }
+/* Select travado (tipo de locatário na edição) */
+.select.is-locked .select__field { background: var(--background-bg-aux); cursor: not-allowed; }
+.select.is-locked .select__icon { opacity: .4; }
 .msitem { cursor: pointer; }
 .msitem:hover { background: var(--background-bg-aux); }
 .msitem__check { flex: none; width: 20px; height: 20px; border-radius: 999px; border: 2px solid var(--border-default); display: inline-flex; align-items: center; justify-content: center; color: #fff; }
@@ -178,6 +181,19 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 /* Datas de emissão/validade por documento (RN-DOC2/DOC3) */
 .docdates { margin-top: var(--md); }
 .docmeta { margin-top: var(--sm); }
+/* Pinguinho vermelho de obrigatoriedade no rótulo do documento */
+.fieldlbl-req { color: var(--content-label-error); margin-left: 2px; }
+/* "Outros documentos" (opcionais): separador dos obrigatórios + botão pontilhado de adicionar */
+.docsep { border-top: var(--thin) solid var(--border-default); margin: var(--lg) 0 var(--md); }
+/* Repeater de opcionais: grade de 2 col; o card de adicionar fica à direita do último doc */
+.repeater:has(.docadd-card) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--md); align-items: start; }
+.repeater:has(.docadd-card) .repeater__items { display: contents; }
+/* card do doc opcional e o card de adicionar: mesmo tamanho fixo */
+.repeater:has(.docadd-card) .repeater__item { height: 340px; overflow: auto; margin-bottom: 0; border: none; background: var(--background-bg-aux); }
+/* Card "adicionar" no padrão do DS (product-card__imgadd): tracejado --border-disable, fundo bg-aux, texto content-disable */
+.docadd-card { height: 340px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sm); border: var(--stroke-2) dashed var(--border-disable); background: var(--background-bg-aux); cursor: pointer; font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-disable); text-align: center; }
+.docadd-card__plus { font-size: 26px; line-height: 1; }
+@media (max-width: 720px) { .repeater:has(.docadd-card) { grid-template-columns: 1fr; } }
 /* Ações de validação manual por documento (exibição) */
 .docactions { display: flex; gap: var(--sm); margin-top: var(--md); }
 .docactions .btn { padding: var(--sm) var(--md); font-size: var(--font-size-label); }
@@ -272,3 +288,22 @@ textarea.input__control { min-height: 84px; resize: vertical; }
 /* --- Rodapé de marca ------------------------------------------- */
 .footer, .brandfoot { display: flex; align-items: center; justify-content: center; gap: var(--md); padding: var(--xl) 0 var(--md); }
 .footer .gs-logo, .brandfoot img { height: var(--2xl); width: auto; }
+
+/* --- Seções colapsáveis (componente Collapsible do DS) ----------
+   Quando a .section vira um wrapper de .collapsible, o box visual
+   (borda + fundo) vem do próprio collapsible; evita borda/fundo e
+   padding duplicados. O padding do conteúdo é o do collapsible. */
+.section:has(> .collapsible) { border: 0; background: none; }
+.collapsible__slot > .section__body { padding: 0; }
+/* pílula/pendência ao lado do título dentro do header colapsável */
+.collapsible__header .section__pill { flex: none; }
+/* O slot do DS usa flex:1 0 0 (pensado p/ a altura fixa do Figma). Aqui a
+   altura é pelo conteúdo; sem isso o slot colapsa p/ 0 e o overflow:hidden
+   do __content corta tudo. Deixa o slot/conteúdo crescerem naturalmente. */
+.section > .collapsible .collapsible__content { overflow: visible; }
+.section > .collapsible .collapsible__slot { flex: 0 0 auto; min-height: 0; }
+
+/* Cada sócio = 1 card (mesmo padrão dos representantes) */
+.repeater--socio .repeater__items { counter-reset: socio; }
+.repeater--socio .repeater__item { counter-increment: socio; }
+.socio-n::before { content: counter(socio); }

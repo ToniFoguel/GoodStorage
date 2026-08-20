@@ -70,7 +70,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Sócios e representantes",
+        "title": "Sócios",
         "quadro": [
           {
             "nome": "Marina Alves",
@@ -88,17 +88,10 @@ window.LOCATARIOS = {
             "dataInclusao": "12/03/2015",
             "pais": "105 · BRASIL"
           }
-        ],
-        "repLegal": [
-          {
-            "nome": "Marina Alves",
-            "cpf": "045.678.912-33",
-            "qualificacao": "Administrador"
-          }
         ]
       },
       {
-        "title": "Representantes e procuradores",
+        "title": "Representantes",
         "reps": [
           {
             "nome": "Marina Alves",
@@ -276,7 +269,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Sócios e representantes",
+        "title": "Sócios",
         "quadro": [
           {
             "nome": "Paulo Contorno",
@@ -294,17 +287,10 @@ window.LOCATARIOS = {
             "dataInclusao": "12/03/2015",
             "pais": "105 · BRASIL"
           }
-        ],
-        "repLegal": [
-          {
-            "nome": "Paulo Contorno",
-            "cpf": "223.445.667-88",
-            "qualificacao": "Administrador"
-          }
         ]
       },
       {
-        "title": "Representantes e procuradores",
+        "title": "Representantes",
         "reps": [
           {
             "nome": "Paulo Contorno",
@@ -602,7 +588,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Sócios e representantes",
+        "title": "Sócios",
         "quadro": [
           {
             "nome": "Ricardo Dez",
@@ -620,17 +606,10 @@ window.LOCATARIOS = {
             "dataInclusao": "12/03/2015",
             "pais": "105 · BRASIL"
           }
-        ],
-        "repLegal": [
-          {
-            "nome": "Ricardo Dez",
-            "cpf": "334.556.778-99",
-            "qualificacao": "Administrador"
-          }
         ]
       },
       {
-        "title": "Representantes e procuradores",
+        "title": "Representantes",
         "reps": [
           {
             "nome": "Ricardo Dez",
@@ -943,7 +922,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Sócios e representantes",
+        "title": "Sócios",
         "quadro": [
           {
             "nome": "Sérgio Vale",
@@ -961,17 +940,10 @@ window.LOCATARIOS = {
             "dataInclusao": "12/03/2015",
             "pais": "105 · BRASIL"
           }
-        ],
-        "repLegal": [
-          {
-            "nome": "Sérgio Vale",
-            "cpf": "512.334.667-01",
-            "qualificacao": "Administrador"
-          }
         ]
       },
       {
-        "title": "Representantes e procuradores",
+        "title": "Representantes",
         "reps": [
           {
             "nome": "Sérgio Vale",
@@ -1536,7 +1508,7 @@ window.LOCATARIOS = {
         ]
       },
       {
-        "title": "Sócios e representantes",
+        "title": "Sócios",
         "quadro": [
           {
             "nome": "Antônio União",
@@ -1554,17 +1526,10 @@ window.LOCATARIOS = {
             "dataInclusao": "12/03/2015",
             "pais": "105 · BRASIL"
           }
-        ],
-        "repLegal": [
-          {
-            "nome": "Antônio União",
-            "cpf": "221.556.889-04",
-            "qualificacao": "Administrador"
-          }
         ]
       },
       {
-        "title": "Representantes e procuradores",
+        "title": "Representantes",
         "reps": [
           {
             "nome": "Antônio União",
