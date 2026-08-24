@@ -1,4 +1,4 @@
-/* Dados simulados de locatário (Exibição/Listagem). 20 casos (1 página): todos os status PF/PJ + validação manual de CPF (id14 PF) e CNPJ (id19 PJ). */
+/* Dados simulados de locatário (Exibição/Listagem). 20 casos + validação manual de CPF/CNPJ. Endereço: CEP, Logradouro, Número de endereço, Complemento, País, Estado, Cidade. */
 window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
@@ -137,12 +137,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -155,14 +159,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -336,12 +332,16 @@ window.LOCATARIOS = {
             "value": "07034-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Rod. Pres. Dutra, km 225"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "225"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -354,14 +354,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "Guarulhos"
-          },
-          {
-            "label": "Bairro",
-            "value": "Cumbica"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "225"
           }
         ]
       }
@@ -487,12 +479,16 @@ window.LOCATARIOS = {
             "value": "04538-133"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Brig. Faria Lima"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "3477"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -505,14 +501,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Itaim Bibi"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "3477"
           }
         ]
       }
@@ -655,12 +643,16 @@ window.LOCATARIOS = {
             "value": "01141-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Marquês de São Vicente"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "446"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -673,14 +665,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Barra Funda"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "446"
           }
         ]
       }
@@ -810,12 +794,16 @@ window.LOCATARIOS = {
             "value": "03310-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Tuiuti"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1520"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -828,14 +816,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Tatuapé"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1520"
           }
         ]
       }
@@ -994,12 +974,16 @@ window.LOCATARIOS = {
             "value": "02220-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Guilherme Cotching"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "850"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1012,14 +996,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Maria"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "850"
           }
         ]
       }
@@ -1120,12 +1096,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1138,14 +1118,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -1258,12 +1230,16 @@ window.LOCATARIOS = {
             "value": "05409-002"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Cardeal Arcoverde"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1276,14 +1252,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Pinheiros"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -1401,12 +1369,16 @@ window.LOCATARIOS = {
             "value": "03810-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. São Miguel"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "640"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1419,14 +1391,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Penha"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "640"
           }
         ]
       }
@@ -1587,12 +1551,16 @@ window.LOCATARIOS = {
             "value": "03047-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua do Hipódromo"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "320"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1605,14 +1573,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Brás"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "320"
           }
         ]
       }
@@ -1744,12 +1704,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1762,14 +1726,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -1881,12 +1837,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -1899,14 +1859,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -2018,12 +1970,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2036,14 +1992,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -2155,12 +2103,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2173,14 +2125,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -2293,12 +2237,16 @@ window.LOCATARIOS = {
             "value": "04101-000"
           },
           {
-            "label": "Tipo",
-            "value": "Residencial"
-          },
-          {
             "label": "Logradouro",
             "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "210"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2311,14 +2259,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Mariana"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "210"
           }
         ]
       }
@@ -2472,12 +2412,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2490,14 +2434,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -2671,12 +2607,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2689,14 +2629,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -2870,12 +2802,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -2888,14 +2824,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -3069,12 +2997,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -3087,14 +3019,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }
@@ -3269,12 +3193,16 @@ window.LOCATARIOS = {
             "value": "05305-000"
           },
           {
-            "label": "Tipo",
-            "value": "Fiscal"
-          },
-          {
             "label": "Logradouro",
             "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "Número de endereço",
+            "value": "1200"
+          },
+          {
+            "label": "Complemento",
+            "value": ""
           },
           {
             "label": "País",
@@ -3287,14 +3215,6 @@ window.LOCATARIOS = {
           {
             "label": "Cidade",
             "value": "São Paulo"
-          },
-          {
-            "label": "Bairro",
-            "value": "Vila Leopoldina"
-          },
-          {
-            "label": "Número do endereço",
-            "value": "1200"
           }
         ]
       }

@@ -229,6 +229,8 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .formgrid--4 .full { grid-column: 1 / -1; }
 .formgrid--4 .col-2 { grid-column: span 2; }
 .formgrid .input__control { width: 100%; }
+/* Endereço (grade de 4 colunas): CEP(1)+Logradouro(3); Número(1)+Complemento(3); País/Estado/Cidade (1 cada) */
+.formgrid--4 .col-3 { grid-column: span 3; }
 textarea.input__control { min-height: 84px; resize: vertical; }
 /* Campo com textarea: o .input__field do DS é fixo em 36px + overflow hidden, o que corta o textarea. Deixa crescer. */
 .input__field:has(textarea) { height: auto; align-items: stretch; overflow: visible; padding: var(--sm) var(--lg); }

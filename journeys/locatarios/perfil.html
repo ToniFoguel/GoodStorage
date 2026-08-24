@@ -227,10 +227,11 @@
     // Mesma diagramação do cadastro
     function gridClass(title) {
       if (title === 'Identificação') return stored.tipo === 'PF' ? 'formgrid formgrid--4' : 'formgrid';
-      return 'formgrid formgrid--4'; // Contatos, Endereços
+      return 'formgrid formgrid--4'; // Endereço, Contatos
     }
     function span(label) {
-      return ['Nome do locatário', 'Nome', 'Logradouro'].indexOf(label) >= 0 ? ' col-2' : '';
+      if (['Logradouro', 'Complemento'].indexOf(label) >= 0) return ' col-3';
+      return ['Nome do locatário', 'Nome'].indexOf(label) >= 0 ? ' col-2' : '';
     }
     function inputRO(label, value, cls) {
       return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
