@@ -132,6 +132,8 @@
 .savemsg__title { margin: 0; font-family: var(--font-family-title-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-h5, 18px); color: var(--content-title); }
 .savemsg__text { margin: 4px 0 0; font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); }
 .savemsg--center .savemsg__text { margin: 0; }
+/* rodapé padrão dos modais: ações alinhadas à direita (Cancelar + confirmar) */
+.modal__footer:not(.modal__footer--split):not(.modal__footer--stack) { justify-content: flex-end; }
 .modal__footer--stack { flex-direction: column; align-items: stretch; gap: var(--sm); }
 .modal__footer--stack .btn { width: 100%; justify-content: center; }
 .modal__footer--split { display: flex; justify-content: space-between; align-items: center; gap: var(--md); }
@@ -166,7 +168,11 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .docfile__ico { flex: none; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: var(--background-bg-aux); color: var(--content-text); }
 .docfile__ico svg { width: 22px; height: 22px; }
 .docfile__name { font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); }
-.docfile .icon-btn { margin-left: auto; }
+.docfile .icon-btn { margin-left: 0; }
+/* agrupa Trocar + Excluir na direita; entre eles ficam 8px (gap var(--md) do .docfile) */
+.docfile .js-doc-swap { margin-left: auto; }
+/* mesmo tamanho de ícone para Trocar e Excluir */
+.docfile .icon-btn svg { width: var(--xl); height: var(--xl); }
 /* Tabela read-only de Sócios/Representantes (consulta CNPJ) */
 .rf-wrap { overflow-x: auto; }
 .rftable { width: 100%; border-collapse: collapse; font-family: var(--font-family-title-text); font-size: var(--font-size-label); border: var(--thin) solid var(--border-default); }
@@ -180,6 +186,18 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 @media (max-width: 720px) { .docgrid { grid-template-columns: 1fr; } }
 /* Datas de emissão/validade por documento (RN-DOC2/DOC3) */
 .docdates { margin-top: var(--md); }
+/* datas do documento na exibição: 2 colunas ocupando a largura toda (fill) */
+.docmeta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* validação manual do CPF/CNPJ: controle inline abaixo do campo (Identificação) */
+.cpfval { display: flex; align-items: center; justify-content: space-between; gap: var(--md); flex-wrap: wrap; width: 100%; min-width: 0; box-sizing: border-box; margin-top: var(--sm); padding: 10px var(--lg); background: var(--background-warning); border: var(--thin) solid var(--border-warnigh); }
+.cpfval__msg { display: flex; align-items: flex-start; gap: var(--sm); min-width: 0; flex: 1 1 100%; font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-label-warning); }
+.cpfval__ico { width: var(--xl); height: var(--xl); flex: none; }
+.cpfval__acts { display: flex; gap: var(--sm); flex: none; }
+/* a célula do CPF/CNPJ na exibição/edição não deve crescer por causa da faixa */
+.dados > .input, .formgrid > .input { min-width: 0; }
+/* banner full-width abaixo do CPF/CNPJ sem desemparelhar os campos: o grid
+   preenche a lacuna deixada (dense), mantendo a mesma ordem/par do cadastro */
+.formgrid:has(> .js-cpfval-box), .formgrid:has(> #cpfInlineSlot) { grid-auto-flow: row dense; }
 .docmeta { margin-top: var(--sm); }
 /* Pinguinho vermelho de obrigatoriedade no rótulo do documento */
 .fieldlbl-req { color: var(--content-label-error); margin-left: 2px; }

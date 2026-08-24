@@ -1,4 +1,4 @@
-/* Dados simulados de locatário (Exibição/Listagem). 10 casos: cada status com PF e PJ. */
+/* Dados simulados de locatário (Exibição/Listagem). 20 casos (1 página): todos os status PF/PJ + validação manual de CPF (id14 PF) e CNPJ (id19 PJ). */
 window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
@@ -96,7 +96,7 @@ window.LOCATARIOS = {
           {
             "nome": "Marina Alves",
             "cpf": "045.678.912-33",
-            "cargo": "Administradora",
+            "cargo": "Administrador",
             "tipo": "Legal",
             "email": "marina@alvescom.com.br",
             "doc": "rg-representante.jpg"
@@ -172,7 +172,7 @@ window.LOCATARIOS = {
         "label": "Contrato ou estatuto social consolidado",
         "file": "contrato-social.pdf",
         "emissao": "10/03/2015",
-        "validade": "—"
+        "validade": "10/03/2020"
       },
       {
         "label": "Cartão de CNPJ",
@@ -184,13 +184,13 @@ window.LOCATARIOS = {
         "label": "Ato societário (última eleição e representantes legais)",
         "file": "ata-eleicao.pdf",
         "emissao": "22/06/2023",
-        "validade": "—"
+        "validade": "22/06/2028"
       },
       {
         "label": "Comprovante de residência da empresa",
         "file": "comprovante-rep.pdf",
         "emissao": "01/07/2026",
-        "validade": "—"
+        "validade": "01/07/2031"
       }
     ],
     "decisao": {
@@ -371,7 +371,7 @@ window.LOCATARIOS = {
         "label": "Contrato ou estatuto social consolidado",
         "file": "contrato-social.pdf",
         "emissao": "10/03/2015",
-        "validade": "—"
+        "validade": "10/03/2020"
       },
       {
         "label": "Cartão de CNPJ",
@@ -383,13 +383,13 @@ window.LOCATARIOS = {
         "label": "Ato societário (última eleição e representantes legais)",
         "file": "ata-eleicao.pdf",
         "emissao": "22/06/2023",
-        "validade": "—"
+        "validade": "22/06/2028"
       },
       {
         "label": "Comprovante de residência da empresa",
         "file": "comprovante-rep.pdf",
         "emissao": "01/07/2026",
-        "validade": "—"
+        "validade": "01/07/2031"
       }
     ]
   },
@@ -688,21 +688,25 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Contrato ou estatuto social consolidado",
-        "file": "contrato-social.pdf"
+        "file": "contrato-social.pdf",
+        "validade": "10/03/2030"
       },
       {
         "label": "Cartão de CNPJ",
         "file": "cartao-cnpj.pdf",
-        "motivo": "Documento vencido — emita a versão atualizada no site da Receita."
+        "motivo": "Documento vencido — emita a versão atualizada no site da Receita.",
+        "validade": "10/03/2030"
       },
       {
         "label": "Ato societário (última eleição e representantes legais)",
-        "file": "ata-eleicao.pdf"
+        "file": "ata-eleicao.pdf",
+        "validade": "10/03/2030"
       },
       {
         "label": "Comprovante de residência da empresa",
         "file": "comprovante-rep.pdf",
-        "motivo": "Comprovante com mais de 90 dias. Envie um recente (últimos 90 dias)."
+        "motivo": "Comprovante com mais de 90 dias. Envie um recente (últimos 90 dias).",
+        "validade": "10/03/2030"
       }
     ],
     "decisao": {
@@ -839,11 +843,13 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Documento de identificação com foto",
-        "file": "rg-identidade.jpg"
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
       },
       {
         "label": "Comprovante de residência",
-        "file": "comprovante-residencia.pdf"
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
       }
     ],
     "decisao": {
@@ -1147,11 +1153,13 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Documento de identificação com foto",
-        "file": "rg-identidade.jpg"
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
       },
       {
         "label": "Comprovante de residência",
-        "file": "comprovante-residencia.pdf"
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
       }
     ]
   },
@@ -1283,11 +1291,13 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Documento de identificação com foto",
-        "file": "rg-identidade.jpg"
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
       },
       {
         "label": "Comprovante de residência",
-        "file": "comprovante-residencia.pdf"
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
       }
     ],
     "decisao": {
@@ -1424,12 +1434,14 @@ window.LOCATARIOS = {
     "docs": [
       {
         "label": "Documento de identificação com foto",
-        "file": "rg-identidade.jpg"
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
       },
       {
         "label": "Comprovante de residência",
         "file": "comprovante-residencia.pdf",
-        "motivo": "Documento ilegível — reenvie uma imagem/PDF nítido e completo."
+        "motivo": "Documento ilegível — reenvie uma imagem/PDF nítido e completo.",
+        "validade": "10/03/2030"
       }
     ],
     "decisao": {
@@ -1610,7 +1622,7 @@ window.LOCATARIOS = {
         "label": "Contrato ou estatuto social consolidado",
         "file": "contrato-social.pdf",
         "emissao": "10/03/2015",
-        "validade": "—"
+        "validade": "10/03/2020"
       },
       {
         "label": "Cartão de CNPJ",
@@ -1622,19 +1634,1701 @@ window.LOCATARIOS = {
         "label": "Ato societário (última eleição e representantes legais)",
         "file": "ata-eleicao.pdf",
         "emissao": "22/06/2023",
-        "validade": "—"
+        "validade": "22/06/2028"
       },
       {
         "label": "Comprovante de residência da empresa",
         "file": "comprovante-rep.pdf",
         "emissao": "01/07/2026",
-        "validade": "—"
+        "validade": "01/07/2031"
       }
     ],
     "decisao": {
       "tipo": "Aprovado",
       "data": "12/01/2024",
       "motivo": "Documentação aprovada antes da inativação.",
+      "por": "Carol Ferreira"
+    }
+  },
+  "11": {
+    "nome": "Beatriz Nogueira Lima",
+    "tipo": "PF",
+    "status": "Ativo",
+    "email": "beatriz.lima@email.com",
+    "docNum": "401.223.870-56",
+    "boxes": "P-02",
+    "unidade": "Pinheiros",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "Nome do locatário",
+            "value": "Beatriz Nogueira Lima"
+          },
+          {
+            "label": "Nacionalidade",
+            "value": "Brasileira"
+          },
+          {
+            "label": "CPF",
+            "value": "401.223.870-56"
+          },
+          {
+            "label": "Tipo de documento",
+            "value": "RG"
+          },
+          {
+            "label": "Número do documento",
+            "value": "22.334.556-7"
+          },
+          {
+            "label": "Data de nascimento",
+            "value": "22/09/1990"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": false
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Beatriz Nogueira Lima"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 91234-5678"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@rafaelm"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "04101-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Residencial"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Mariana"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "210"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Documento de identificação com foto",
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
+      },
+      {
+        "label": "Comprovante de residência",
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
+      }
+    ]
+  },
+  "12": {
+    "nome": "Carlos Eduardo Ramos",
+    "tipo": "PF",
+    "status": "Em análise",
+    "email": "carlos.ramos@email.com",
+    "docNum": "512.667.900-31",
+    "boxes": "S-07",
+    "unidade": "Santo Amaro",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "Nome do locatário",
+            "value": "Carlos Eduardo Ramos"
+          },
+          {
+            "label": "Nacionalidade",
+            "value": "Brasileira"
+          },
+          {
+            "label": "CPF",
+            "value": "512.667.900-31"
+          },
+          {
+            "label": "Tipo de documento",
+            "value": "RG"
+          },
+          {
+            "label": "Número do documento",
+            "value": "22.334.556-7"
+          },
+          {
+            "label": "Data de nascimento",
+            "value": "22/09/1990"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": false
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Carlos Eduardo Ramos"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 91234-5678"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@rafaelm"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "04101-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Residencial"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Mariana"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "210"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Documento de identificação com foto",
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
+      },
+      {
+        "label": "Comprovante de residência",
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
+      }
+    ]
+  },
+  "13": {
+    "nome": "Débora Farias Pinto",
+    "tipo": "PF",
+    "status": "Em análise",
+    "email": "débora.pinto@email.com",
+    "docNum": "623.114.558-09",
+    "boxes": "T-19",
+    "unidade": "Tatuapé",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "Nome do locatário",
+            "value": "Débora Farias Pinto"
+          },
+          {
+            "label": "Nacionalidade",
+            "value": "Brasileira"
+          },
+          {
+            "label": "CPF",
+            "value": "623.114.558-09"
+          },
+          {
+            "label": "Tipo de documento",
+            "value": "RG"
+          },
+          {
+            "label": "Número do documento",
+            "value": "22.334.556-7"
+          },
+          {
+            "label": "Data de nascimento",
+            "value": "22/09/1990"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": false
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Débora Farias Pinto"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 91234-5678"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@rafaelm"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "04101-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Residencial"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Mariana"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "210"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Documento de identificação com foto",
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
+      },
+      {
+        "label": "Comprovante de residência",
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
+      }
+    ]
+  },
+  "14": {
+    "nome": "Eduardo Tavares Melo",
+    "tipo": "PF",
+    "status": "Pendente de Validação Manual",
+    "email": "eduardo.melo@email.com",
+    "docNum": "734.889.201-77",
+    "boxes": "L-05",
+    "unidade": "Lapa",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "Nome do locatário",
+            "value": "Eduardo Tavares Melo"
+          },
+          {
+            "label": "Nacionalidade",
+            "value": "Brasileira"
+          },
+          {
+            "label": "CPF",
+            "value": "734.889.201-77"
+          },
+          {
+            "label": "Tipo de documento",
+            "value": "RG"
+          },
+          {
+            "label": "Número do documento",
+            "value": "22.334.556-7"
+          },
+          {
+            "label": "Data de nascimento",
+            "value": "22/09/1990"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": false
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Eduardo Tavares Melo"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 91234-5678"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@rafaelm"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "04101-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Residencial"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Mariana"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "210"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Documento de identificação com foto",
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
+      },
+      {
+        "label": "Comprovante de residência",
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
+      }
+    ],
+    "cpfManual": true
+  },
+  "15": {
+    "nome": "Fernanda Quirino Sá",
+    "tipo": "PF",
+    "status": "Inativo",
+    "email": "fernanda.sá@email.com",
+    "docNum": "845.550.132-44",
+    "boxes": "I-12",
+    "unidade": "Ipiranga",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "Nome do locatário",
+            "value": "Fernanda Quirino Sá"
+          },
+          {
+            "label": "Nacionalidade",
+            "value": "Brasileira"
+          },
+          {
+            "label": "CPF",
+            "value": "845.550.132-44"
+          },
+          {
+            "label": "Tipo de documento",
+            "value": "RG"
+          },
+          {
+            "label": "Número do documento",
+            "value": "22.334.556-7"
+          },
+          {
+            "label": "Data de nascimento",
+            "value": "22/09/1990"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "rafael.monteiro@email.com"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "rafael.monteiro@email.com",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": false
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Fernanda Quirino Sá"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "rafael.monteiro@email.com",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 91234-5678"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@rafaelm"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "04101-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Residencial"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Rua Domingos de Morais"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Mariana"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "210"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Documento de identificação com foto",
+        "file": "rg-identidade.jpg",
+        "validade": "10/03/2030"
+      },
+      {
+        "label": "Comprovante de residência",
+        "file": "comprovante-residencia.pdf",
+        "validade": "10/03/2030"
+      }
+    ]
+  },
+  "16": {
+    "nome": "Aurora Distribuidora Ltda",
+    "tipo": "PJ",
+    "status": "Ativo",
+    "email": "contato@aurora.com.br",
+    "docNum": "12.884.706/0001-55",
+    "boxes": "B-21",
+    "unidade": "Barueri",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "CNPJ",
+            "value": "12.884.706/0001-55"
+          },
+          {
+            "label": "Razão social",
+            "value": "Aurora Distribuidora Ltda"
+          },
+          {
+            "label": "Nome fantasia",
+            "value": "Alves Comércio"
+          },
+          {
+            "label": "Data de fundação",
+            "value": "12/03/2015"
+          },
+          {
+            "label": "Natureza jurídica",
+            "value": "Sociedade Empresária Limitada"
+          },
+          {
+            "label": "Porte",
+            "value": "EPP"
+          },
+          {
+            "label": "Inscrição municipal",
+            "value": "1.234.567-8"
+          },
+          {
+            "label": "Inscrição estadual",
+            "value": "110.042.490.114"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": true
+          }
+        ]
+      },
+      {
+        "title": "Sócios",
+        "quadro": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "tipo": "Pessoa Física",
+            "qualificacao": "Administrador",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          },
+          {
+            "nome": "Alves Participações Ltda",
+            "cpf": "11.222.333/0001-44",
+            "tipo": "Pessoa Jurídica",
+            "qualificacao": "Sócio",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          }
+        ]
+      },
+      {
+        "title": "Representantes",
+        "reps": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
+            "doc": "rg-representante.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Aurora Distribuidora Ltda"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 98888-1200"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@marinaalves"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "05305-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Fiscal"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Leopoldina"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "1200"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Contrato ou estatuto social consolidado",
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "10/03/2020"
+      },
+      {
+        "label": "Cartão de CNPJ",
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
+      },
+      {
+        "label": "Ato societário (última eleição e representantes legais)",
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "22/06/2028"
+      },
+      {
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "01/07/2031"
+      }
+    ],
+    "decisao": {
+      "tipo": "Aprovado",
+      "data": "05/08/2026",
+      "motivo": "Documentação conferida e válida.",
+      "por": "Carol Ferreira"
+    }
+  },
+  "17": {
+    "nome": "Bravo Log Transportes Ltda",
+    "tipo": "PJ",
+    "status": "Em análise",
+    "email": "contato@bravo.com.br",
+    "docNum": "23.556.910/0001-08",
+    "boxes": "O-03",
+    "unidade": "Osasco",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "CNPJ",
+            "value": "23.556.910/0001-08"
+          },
+          {
+            "label": "Razão social",
+            "value": "Bravo Log Transportes Ltda"
+          },
+          {
+            "label": "Nome fantasia",
+            "value": "Alves Comércio"
+          },
+          {
+            "label": "Data de fundação",
+            "value": "12/03/2015"
+          },
+          {
+            "label": "Natureza jurídica",
+            "value": "Sociedade Empresária Limitada"
+          },
+          {
+            "label": "Porte",
+            "value": "EPP"
+          },
+          {
+            "label": "Inscrição municipal",
+            "value": "1.234.567-8"
+          },
+          {
+            "label": "Inscrição estadual",
+            "value": "110.042.490.114"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": true
+          }
+        ]
+      },
+      {
+        "title": "Sócios",
+        "quadro": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "tipo": "Pessoa Física",
+            "qualificacao": "Administrador",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          },
+          {
+            "nome": "Alves Participações Ltda",
+            "cpf": "11.222.333/0001-44",
+            "tipo": "Pessoa Jurídica",
+            "qualificacao": "Sócio",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          }
+        ]
+      },
+      {
+        "title": "Representantes",
+        "reps": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
+            "doc": "rg-representante.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Bravo Log Transportes Ltda"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 98888-1200"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@marinaalves"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "05305-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Fiscal"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Leopoldina"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "1200"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Contrato ou estatuto social consolidado",
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "10/03/2020"
+      },
+      {
+        "label": "Cartão de CNPJ",
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
+      },
+      {
+        "label": "Ato societário (última eleição e representantes legais)",
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "22/06/2028"
+      },
+      {
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "01/07/2031"
+      }
+    ],
+    "decisao": {
+      "tipo": "Aprovado",
+      "data": "05/08/2026",
+      "motivo": "Documentação conferida e válida.",
+      "por": "Carol Ferreira"
+    }
+  },
+  "18": {
+    "nome": "Cobalto Serviços Ltda",
+    "tipo": "PJ",
+    "status": "Validação manual",
+    "email": "contato@cobalto.com.br",
+    "docNum": "34.667.021/0001-90",
+    "boxes": "C-14",
+    "unidade": "Campinas",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "CNPJ",
+            "value": "34.667.021/0001-90"
+          },
+          {
+            "label": "Razão social",
+            "value": "Cobalto Serviços Ltda"
+          },
+          {
+            "label": "Nome fantasia",
+            "value": "Alves Comércio"
+          },
+          {
+            "label": "Data de fundação",
+            "value": "12/03/2015"
+          },
+          {
+            "label": "Natureza jurídica",
+            "value": "Sociedade Empresária Limitada"
+          },
+          {
+            "label": "Porte",
+            "value": "EPP"
+          },
+          {
+            "label": "Inscrição municipal",
+            "value": "1.234.567-8"
+          },
+          {
+            "label": "Inscrição estadual",
+            "value": "110.042.490.114"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": true
+          }
+        ]
+      },
+      {
+        "title": "Sócios",
+        "quadro": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "tipo": "Pessoa Física",
+            "qualificacao": "Administrador",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          },
+          {
+            "nome": "Alves Participações Ltda",
+            "cpf": "11.222.333/0001-44",
+            "tipo": "Pessoa Jurídica",
+            "qualificacao": "Sócio",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          }
+        ]
+      },
+      {
+        "title": "Representantes",
+        "reps": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
+            "doc": "rg-representante.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Cobalto Serviços Ltda"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 98888-1200"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@marinaalves"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "05305-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Fiscal"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Leopoldina"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "1200"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Contrato ou estatuto social consolidado",
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "10/03/2020"
+      },
+      {
+        "label": "Cartão de CNPJ",
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
+      },
+      {
+        "label": "Ato societário (última eleição e representantes legais)",
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "22/06/2028"
+      },
+      {
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "01/07/2031"
+      }
+    ],
+    "decisao": {
+      "tipo": "Aprovado",
+      "data": "05/08/2026",
+      "motivo": "Documentação conferida e válida.",
+      "por": "Carol Ferreira"
+    }
+  },
+  "19": {
+    "nome": "Delta Prime Comércio Ltda",
+    "tipo": "PJ",
+    "status": "Pendente de Validação Manual",
+    "email": "contato@delta.com.br",
+    "docNum": "45.778.132/0001-33",
+    "boxes": "J-08",
+    "unidade": "Jundiaí",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "CNPJ",
+            "value": "45.778.132/0001-33"
+          },
+          {
+            "label": "Razão social",
+            "value": "Delta Prime Comércio Ltda"
+          },
+          {
+            "label": "Nome fantasia",
+            "value": "Alves Comércio"
+          },
+          {
+            "label": "Data de fundação",
+            "value": "12/03/2015"
+          },
+          {
+            "label": "Natureza jurídica",
+            "value": "Sociedade Empresária Limitada"
+          },
+          {
+            "label": "Porte",
+            "value": "EPP"
+          },
+          {
+            "label": "Inscrição municipal",
+            "value": "1.234.567-8"
+          },
+          {
+            "label": "Inscrição estadual",
+            "value": "110.042.490.114"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": true
+          }
+        ]
+      },
+      {
+        "title": "Sócios",
+        "quadro": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "tipo": "Pessoa Física",
+            "qualificacao": "Administrador",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          },
+          {
+            "nome": "Alves Participações Ltda",
+            "cpf": "11.222.333/0001-44",
+            "tipo": "Pessoa Jurídica",
+            "qualificacao": "Sócio",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          }
+        ]
+      },
+      {
+        "title": "Representantes",
+        "reps": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
+            "doc": "rg-representante.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Delta Prime Comércio Ltda"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 98888-1200"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@marinaalves"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "05305-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Fiscal"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Leopoldina"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "1200"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Contrato ou estatuto social consolidado",
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "10/03/2020"
+      },
+      {
+        "label": "Cartão de CNPJ",
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
+      },
+      {
+        "label": "Ato societário (última eleição e representantes legais)",
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "22/06/2028"
+      },
+      {
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "01/07/2031"
+      }
+    ],
+    "decisao": {
+      "tipo": "Aprovado",
+      "data": "05/08/2026",
+      "motivo": "Documentação conferida e válida.",
+      "por": "Carol Ferreira"
+    },
+    "cpfManual": true
+  },
+  "20": {
+    "nome": "Everest Holding Ltda",
+    "tipo": "PJ",
+    "status": "Inativo",
+    "email": "contato@everest.com.br",
+    "docNum": "56.889.243/0001-76",
+    "boxes": "SO-01",
+    "unidade": "Sorocaba",
+    "seguro": "MAPFRE",
+    "dados": [
+      {
+        "title": "Identificação",
+        "items": [
+          {
+            "label": "CNPJ",
+            "value": "56.889.243/0001-76"
+          },
+          {
+            "label": "Razão social",
+            "value": "Everest Holding Ltda"
+          },
+          {
+            "label": "Nome fantasia",
+            "value": "Alves Comércio"
+          },
+          {
+            "label": "Data de fundação",
+            "value": "12/03/2015"
+          },
+          {
+            "label": "Natureza jurídica",
+            "value": "Sociedade Empresária Limitada"
+          },
+          {
+            "label": "Porte",
+            "value": "EPP"
+          },
+          {
+            "label": "Inscrição municipal",
+            "value": "1.234.567-8"
+          },
+          {
+            "label": "Inscrição estadual",
+            "value": "110.042.490.114"
+          },
+          {
+            "label": "E-mail principal",
+            "value": "marina@alvescom.com.br"
+          },
+          {
+            "mail": true,
+            "label": "E-mail de assinatura de contrato",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "mail": true,
+            "label": "E-mail de login do Meu Espaço",
+            "value": "marina@alvescom.com.br",
+            "usarPrincipal": true
+          },
+          {
+            "check": true,
+            "label": "Pessoa contribuinte do IBS e da CBS",
+            "checked": true
+          }
+        ]
+      },
+      {
+        "title": "Sócios",
+        "quadro": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "tipo": "Pessoa Física",
+            "qualificacao": "Administrador",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          },
+          {
+            "nome": "Alves Participações Ltda",
+            "cpf": "11.222.333/0001-44",
+            "tipo": "Pessoa Jurídica",
+            "qualificacao": "Sócio",
+            "dataInclusao": "12/03/2015",
+            "pais": "105 · BRASIL"
+          }
+        ]
+      },
+      {
+        "title": "Representantes",
+        "reps": [
+          {
+            "nome": "Marina Alves",
+            "cpf": "045.678.912-33",
+            "cargo": "Administrador",
+            "tipo": "Legal",
+            "email": "marina@alvescom.com.br",
+            "doc": "rg-representante.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Contatos",
+        "items": [
+          {
+            "label": "Nome",
+            "value": "Everest Holding Ltda"
+          },
+          {
+            "label": "Responsabilidade",
+            "value": "Administrativo"
+          },
+          {
+            "label": "E-mail",
+            "value": "marina@alvescom.com.br",
+            "assina": true
+          },
+          {
+            "label": "Telefone / WhatsApp",
+            "value": "(11) 98888-1200"
+          },
+          {
+            "label": "Usuário do WhatsApp",
+            "value": "@marinaalves"
+          }
+        ]
+      },
+      {
+        "title": "Endereço",
+        "items": [
+          {
+            "label": "CEP",
+            "value": "05305-000"
+          },
+          {
+            "label": "Tipo",
+            "value": "Fiscal"
+          },
+          {
+            "label": "Logradouro",
+            "value": "Av. Imperatriz Leopoldina"
+          },
+          {
+            "label": "País",
+            "value": "Brasil"
+          },
+          {
+            "label": "Estado",
+            "value": "SP"
+          },
+          {
+            "label": "Cidade",
+            "value": "São Paulo"
+          },
+          {
+            "label": "Bairro",
+            "value": "Vila Leopoldina"
+          },
+          {
+            "label": "Número do endereço",
+            "value": "1200"
+          }
+        ]
+      }
+    ],
+    "docs": [
+      {
+        "label": "Contrato ou estatuto social consolidado",
+        "file": "contrato-social.pdf",
+        "emissao": "10/03/2015",
+        "validade": "10/03/2020"
+      },
+      {
+        "label": "Cartão de CNPJ",
+        "file": "cartao-cnpj.pdf",
+        "emissao": "05/08/2026",
+        "validade": "04/09/2026"
+      },
+      {
+        "label": "Ato societário (última eleição e representantes legais)",
+        "file": "ata-eleicao.pdf",
+        "emissao": "22/06/2023",
+        "validade": "22/06/2028"
+      },
+      {
+        "label": "Comprovante de residência da empresa",
+        "file": "comprovante-rep.pdf",
+        "emissao": "01/07/2026",
+        "validade": "01/07/2031"
+      }
+    ],
+    "decisao": {
+      "tipo": "Aprovado",
+      "data": "05/08/2026",
+      "motivo": "Documentação conferida e válida.",
       "por": "Carol Ferreira"
     }
   }

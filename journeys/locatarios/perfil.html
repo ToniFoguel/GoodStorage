@@ -115,19 +115,17 @@
 <div class="modal confirm-modal" id="modalAprovar" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Aprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data da aprovação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da aprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da aprovação"></textarea></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo da aprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da aprovação"></textarea></div></div>
   </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalAprovar'))">Cancelar</button><button class="btn btn--secondary" id="btnConfirmAprovar">Salvar</button></div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalAprovar'))">Cancelar</button><button class="btn btn--secondary" id="btnConfirmAprovar">Aprovar</button></div>
 </div>
 
 <div class="modal confirm-modal" id="modalReprovar" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Reprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="input full"><div class="input__label"><p>Data da reprovação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da reprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da reprovação"></textarea></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo da reprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da reprovação"></textarea></div></div>
   </div>
-  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalReprovar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmReprovar">Salvar</button></div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalReprovar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmReprovar">Reprovar</button></div>
 </div>
 
 <script src="../../ds/ds.js" defer></script>
@@ -152,8 +150,11 @@
       'Em an\u00e1lise': 'badge--yellow',
       'Valida\u00e7\u00e3o manual': 'badge--yellow',
       'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow',
+      'Pendente de Valida\u00e7\u00e3o Manual': 'badge--warning',
       'Inativo': 'badge--outline'
     };
+    var cpfResolvido = null; // null | 'Aprovado' | 'Reprovado' \u2014 valida\u00e7\u00e3o manual do documento
+    var docLabel = stored.tipo === 'PF' ? 'CPF' : 'CNPJ'; // CPF p/ PF, CNPJ p/ PJ
     var stBadge = document.getElementById('statusBadge');
     var btnAp = document.getElementById('btnAprovar'); if (btnAp) btnAp.hidden = true;  // valida\u00e7\u00e3o agora \u00e9 por documento
     var btnRe = document.getElementById('btnReprovar'); if (btnRe) btnRe.hidden = true;
@@ -173,6 +174,10 @@
       return 'Aprovado';
     }
     function deriveStatus() {
+      // Validação manual do CPF (PF): enquanto não aprovada, o locatário fica pendente
+      if (stored.cpfManual && cpfResolvido !== 'Aprovado') {
+        return cpfResolvido === 'Reprovado' ? 'Pendente de documentação' : 'Pendente de Validação Manual';
+      }
       if (stored.status === 'Inativo') return 'Inativo';
       if (!docs.length) return 'Pendente de documenta\u00e7\u00e3o';
       var rep = false, man = false, ana = false;
@@ -183,17 +188,22 @@
       return 'Ativo';
     }
     // Validação manual POR DOCUMENTO: Aprovar/Reprovar em cada documento "Validação manual"
-    var pendingDocIdx = null;
+    var pendingDocIdx = null, cpfMode = null;
+    function setModalTitle(id, txt) { var m = document.getElementById(id); var t = m && m.querySelector('.modal__title'); if (t) t.textContent = txt; }
     box.addEventListener('click', function (e) {
+      var apCpf = e.target.closest && e.target.closest('[data-cpf-ap]');
+      var reCpf = e.target.closest && e.target.closest('[data-cpf-re]');
+      if (apCpf) { cpfMode = 'ap'; setModalTitle('modalAprovar', 'Aprovar validação do ' + docLabel); DS.openModal('modalAprovar'); return; }
+      if (reCpf) { cpfMode = 're'; setModalTitle('modalReprovar', 'Reprovar validação do ' + docLabel); DS.openModal('modalReprovar'); return; }
       var ap = e.target.closest && e.target.closest('[data-doc-ap]');
       var re = e.target.closest && e.target.closest('[data-doc-re]');
-      if (ap) { pendingDocIdx = +ap.getAttribute('data-doc-ap'); DS.openModal('modalAprovar'); }
-      else if (re) { pendingDocIdx = +re.getAttribute('data-doc-re'); DS.openModal('modalReprovar'); }
+      if (ap) { cpfMode = null; setModalTitle('modalAprovar', 'Aprovar documentação'); pendingDocIdx = +ap.getAttribute('data-doc-ap'); DS.openModal('modalAprovar'); }
+      else if (re) { cpfMode = null; setModalTitle('modalReprovar', 'Reprovar documentação'); pendingDocIdx = +re.getAttribute('data-doc-re'); DS.openModal('modalReprovar'); }
     });
     var btnConfAp = document.getElementById('btnConfirmAprovar');
     if (btnConfAp) btnConfAp.addEventListener('click', function () {
       var m = document.getElementById('modalAprovar');
-      var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
+      if (cpfMode === 'ap') { cpfResolvido = 'Aprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); cpfMode = null; return; }
       var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
       if (d) { d.status = 'Aprovado'; d.motivo = ''; }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Ativo
@@ -202,8 +212,9 @@
     var btnConfRe = document.getElementById('btnConfirmReprovar');
     if (btnConfRe) btnConfRe.addEventListener('click', function () {
       var m = document.getElementById('modalReprovar');
-      var dt = m.querySelector('input[type="date"]'); var mo = m.querySelector('textarea');
+      var mo = m.querySelector('textarea');
       if (!mo || !mo.value.trim()) { if (mo) { var inp = mo.closest('.input'); if (inp) inp.classList.add('input--error'); } return; } // reprovar exige justificativa
+      if (cpfMode === 're') { cpfResolvido = 'Reprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); cpfMode = null; return; }
       var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
       if (d) { d.status = 'Reprovado'; d.motivo = mo.value.trim(); }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Pendente de documentação
@@ -223,6 +234,13 @@
     }
     function inputRO(label, value, cls) {
       return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
+    }
+    var QUAL_OPTS = ['Administrador', 'Sócio', 'Sócio-Administrador', 'Diretor', 'Presidente', 'Procurador'];
+    function selectRO(label, value) {
+      var opts = QUAL_OPTS.slice();
+      if (value && opts.indexOf(value) < 0) opts.unshift(value);
+      var o = opts.map(function (op) { return '<option' + (op === value ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
+      return '<div class="input"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><select class="input__control" disabled>' + o + '</select></div></div>';
     }
     function mailRO(label, value, usarPrincipal) {
       return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
@@ -288,7 +306,7 @@
       var rows = validacoesRows();
       var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Validações</h2></div></div><div class="section__body">';
       h += '<div class="rf-wrap"><table class="rftable"><thead><tr><th>Integração</th><th>Data</th><th>Hora</th><th>Status</th></tr></thead><tbody>';
-      rows.forEach(function (r) { h += '<tr><td>' + esc(r.origem) + '</td><td>' + esc(r.data) + '</td><td>' + esc(r.hora) + '</td><td>' + valBadge(r.status) + '</td></tr>'; });
+      rows.forEach(function (r) { h += '<tr><td>' + esc(r.origem) + '</td><td>' + esc(r.data) + '</td><td>' + esc(r.hora) + '</td><td>' + esc(r.status) + '</td></tr>'; });
       return h + '</tbody></table></div></div></section>';
     }
     function decisaoHtml(d) {
@@ -337,7 +355,7 @@
         sec.reps.forEach(function (r, idx) {
           var repBadge = r.doc ? '<span class="badge badge--success">Documento anexado</span>' : '<span class="badge badge--yellow">Documentação pendente</span>';
           html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span>' + repBadge + '</div><div class="reprow reprow--3">'
-                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + inputRO('Qualificação', r.cargo || r.qualificacao)
+                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + selectRO('Qualificação', r.cargo || r.qualificacao)
                 + '</div>'
                 + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento de identificação</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
                 + '</div>';
@@ -348,7 +366,7 @@
         sec.quadro.forEach(function (s, idx) {
           html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Sócio ' + (idx + 1) + '</span></div><div class="reprow reprow--3">'
                 + inputRO('Nome', s.nome) + inputRO('CPF', s.cpf) + inputRO('Tipo', s.tipo)
-                + inputRO('Qualificação', s.qualificacao) + inputRO('Data de inclusão', s.dataInclusao) + inputRO('País', s.pais)
+                + selectRO('Qualificação', s.qualificacao) + inputRO('Data de inclusão', s.dataInclusao) + inputRO('País', s.pais)
                 + '</div></div>';
         });
       } else {
@@ -366,6 +384,7 @@
           }
           else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
           else html += inputRO(it.label, it.value, span(it.label));
+          if ((it.label === 'CPF' || it.label === 'CNPJ') && stored.cpfManual) html += '<div class="full" id="cpfInlineSlot"></div>';
         });
         html += '</div>';
         if (isCard) html += '</div>';
@@ -378,6 +397,13 @@
     box.innerHTML = html;
     setStatus(deriveStatus()); // status do locatário derivado dos documentos
 
+    // Validação manual do CPF/CNPJ: aviso passivo (a ação de aprovar/reprovar é feita na Edição)
+    function renderCpfInline() {
+      var slot = document.getElementById('cpfInlineSlot'); if (!slot) return;
+      slot.innerHTML = '<div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do ' + docLabel + ' pendente — a aprovação/reprovação é feita na tela de Edição.</span></div>';
+    }
+    renderCpfInline();
+
     // Colapsáveis (componente do DS): seções recolhidas por padrão, exceto Documentações
     document.querySelectorAll('#exibicaoBody > section.section').forEach(function (sec) {
       var head = sec.querySelector(':scope > .section__head');
@@ -385,7 +411,7 @@
       if (!head || !body) return;
       var tt = sec.querySelector('.section__title'); tt = tt ? tt.textContent.trim() : '';
       var pill = sec.querySelector('.section__pill');
-      var open = /Document|Represent/i.test(tt); // docs + representantes/sócios abertos por padrão
+      var open = /Document|Represent/i.test(tt) || (stored.cpfManual && !cpfResolvido && /Identifica/i.test(tt)); // docs/reps + Identificação quando há validação manual pendente
       var wrap = document.createElement('div');
       wrap.className = 'collapsible' + (open ? ' is-open' : '');
       wrap.setAttribute('data-ds', 'collapsible'); // componente Collapsible do DS trata o clique
