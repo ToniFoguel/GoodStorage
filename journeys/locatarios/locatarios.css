@@ -231,6 +231,17 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .formgrid .input__control { width: 100%; }
 /* Endereço (grade de 4 colunas): CEP(1)+Logradouro(3); Número(1)+Complemento(3); País/Estado/Cidade (1 cada) */
 .formgrid--4 .col-3 { grid-column: span 3; }
+/* Campo combinado (tipo + valor) — documento do locatário estrangeiro */
+.combofield { display: flex; align-items: stretch; height: 36px; border: var(--thin) solid var(--border-default); background: var(--background-bg-main); overflow: hidden; }
+.combofield__pre { flex: none; width: auto; border: 0; border-right: var(--thin) solid var(--border-default); background: var(--background-bg-aux) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231a1a1a'%3E%3Cpath d='M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z'/%3E%3C/svg%3E") no-repeat right var(--sm) center; background-size: 16px 16px; padding: 0 28px 0 var(--lg); appearance: none; -webkit-appearance: none; -moz-appearance: none; font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); cursor: pointer; }
+.combofield__val { flex: 1; min-width: 0; border: 0; padding: 0 var(--lg); font-family: var(--font-family-title-text); font-size: var(--font-size-paragraph); color: var(--content-text); background: transparent; }
+.combofield__val::placeholder { color: var(--content-text-inverse); }
+.combofield__pre:focus, .combofield__val:focus { outline: none; }
+.combofield.is-error { border-color: var(--content-label-error); }
+.combofield.is-locked { background: var(--background-bg-aux); border-style: dashed; }
+.combofield.is-locked .combofield__pre, .combofield.is-locked .combofield__val { background-color: var(--background-bg-aux); cursor: not-allowed; }
+.combofield__err { display: none; margin-top: var(--gap-1); font-size: var(--font-size-label); color: var(--content-label-error); }
+.js-doc-estr.is-error .combofield__err { display: block; }
 textarea.input__control { min-height: 84px; resize: vertical; }
 /* Campo com textarea: o .input__field do DS é fixo em 36px + overflow hidden, o que corta o textarea. Deixa crescer. */
 .input__field:has(textarea) { height: auto; align-items: stretch; overflow: visible; padding: var(--sm) var(--lg); }

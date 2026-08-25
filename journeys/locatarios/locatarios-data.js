@@ -1,4 +1,4 @@
-/* Dados simulados de locatário (Exibição/Listagem). 20 casos + validação manual de CPF/CNPJ. Endereço: CEP, Logradouro, Número de endereço, Complemento, País, Estado, Cidade. */
+/* Dados simulados de locatário (Exibição/Listagem). 20 casos + validação manual de CPF/CNPJ. Endereço 4 col; alguns com "outros" documentos opcionais (imagem + datas). */
 window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
@@ -194,7 +194,21 @@ window.LOCATARIOS = {
       "data": "05/08/2026",
       "motivo": "Documentação conferida e válida.",
       "por": "Carol Ferreira"
-    }
+    },
+    "outros": [
+      {
+        "nome": "Procuração",
+        "file": "procuracao.jpg",
+        "emissao": "12/02/2026",
+        "validade": "12/02/2027"
+      },
+      {
+        "nome": "Comprovante de vínculo",
+        "file": "comprovante-vinculo.png",
+        "emissao": "03/01/2026",
+        "validade": "03/01/2028"
+      }
+    ]
   },
   "2": {
     "nome": "Logística Contorno Ltda",
@@ -2141,7 +2155,21 @@ window.LOCATARIOS = {
         "validade": "10/03/2030"
       }
     ],
-    "cpfManual": true
+    "cpfManual": true,
+    "outros": [
+      {
+        "nome": "Carteira de trabalho",
+        "file": "ctps.jpg",
+        "emissao": "20/05/2025",
+        "validade": "—"
+      },
+      {
+        "nome": "Comprovante de renda",
+        "file": "holerite.png",
+        "emissao": "01/07/2026",
+        "validade": "01/08/2026"
+      }
+    ]
   },
   "15": {
     "nome": "Fernanda Quirino Sá",

@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="../../components/kpi/kpi.css" />
 <link rel="stylesheet" href="../../components/profile-hero/profile-hero.css" />
 <link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/tabs/tabs.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
 <style>/* abas removidas: mostra o conteúdo de todas as seções */ .content .tabpanel { display: block; }</style>
 <link rel="stylesheet" href="locatarios.css" />
@@ -87,7 +88,7 @@
       <nav class="breadcrumb" aria-label="Trilha">
         <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
         <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
-        <span class="breadcrumb__item breadcrumb__item--current">Marina Duarte</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Exibição</span>
       </nav>
     </div>
 
@@ -95,7 +96,6 @@
       <div class="pagehead">
         <div class="pagehead__text">
           <h1 class="pagehead__title title-h1">Exibição</h1>
-          <p class="pagehead__sub"><span class="badge" id="statusBadge">—</span></p>
         </div>
         <div class="pagehead__actions">
           <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
@@ -105,7 +105,12 @@
         </div>
       </div>
 
-      <div id="exibicaoBody"></div>
+      <div class="tabs" id="perfilTabs">
+        <button type="button" class="tabs__item tabs__item--active" data-tab-target="tabDados">Dados cadastrais</button>
+        <button type="button" class="tabs__item" data-tab-target="tabValidacoes">Validações</button>
+      </div>
+      <div class="tabs__panel is-active" id="tabDados"><div id="exibicaoBody"></div></div>
+      <div class="tabs__panel" id="tabValidacoes"><div id="validacoesBody"></div></div>
 
       <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
     </div>
@@ -222,7 +227,7 @@
     });
     var nome = '';
     stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
-    if (nome) { var bc = document.querySelector('.breadcrumb__item--current'); if (bc) bc.textContent = nome; }
+    // breadcrumb permanece "Exibição" (não usa o nome do locatário)
     function escAttr(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
     // Mesma diagramação do cadastro
     function gridClass(title) {
@@ -280,7 +285,20 @@
       });
       h += '</div>'; // fecha docgrid dos obrigatórios
       // Outros documentos (opcional) — segmentado dos obrigatórios
-      h += '<div class="docsep"></div><div class="listrow"><div class="listrow__head"><span class="fieldlbl">Outros documentos</span><span class="badge badge--outline">Opcional</span></div><p class="cl-mail">Documento complementar (opcional).</p></div>';
+      h += '<div class="docsep"></div><div class="listrow__head"><span class="fieldlbl">Outros documentos</span><span class="badge badge--outline">Opcional</span></div>';
+      var outros = stored.outros || [];
+      if (outros.length) {
+        h += '<div class="docgrid">';
+        outros.forEach(function (o) {
+          h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(o.nome) + '</span></div>'
+            + '<div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(o.file) + '</span></div>'
+            + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(o.emissao || '—') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(o.validade || '—') + '</p></div></dl>'
+            + '</div>';
+        });
+        h += '</div>';
+      } else {
+        h += '<p class="cl-mail">Nenhum documento complementar enviado.</p>';
+      }
       return h;
     }
     function docsSectionHtml() {
@@ -309,6 +327,24 @@
       h += '<div class="rf-wrap"><table class="rftable"><thead><tr><th>Integração</th><th>Data</th><th>Hora</th><th>Status</th></tr></thead><tbody>';
       rows.forEach(function (r) { h += '<tr><td>' + esc(r.origem) + '</td><td>' + esc(r.data) + '</td><td>' + esc(r.hora) + '</td><td>' + esc(r.status) + '</td></tr>'; });
       return h + '</tbody></table></div></div></section>';
+    }
+    // Aba "Histórico": linha do tempo dos eventos do locatário
+    function historicoSectionHtml() {
+      var ev = [];
+      ev.push({ ok: true, t: 'Locatário cadastrado', when: '05/08/2026', meta: 'Cadastro criado no sistema.' });
+      validacoesRows().forEach(function (r) {
+        var okv = /regular|aprov|conclu|sucesso/i.test(r.status);
+        ev.push({ ok: okv, t: r.origem, when: (r.data + (r.hora && r.hora !== '—' ? ' · ' + r.hora : '')), meta: 'Retorno: ' + r.status });
+      });
+      if (stored.decisao) { var d = stored.decisao; ev.push({ ok: d.tipo === 'Aprovado', t: 'Documentação ' + String(d.tipo || '').toLowerCase(), when: d.data || '', meta: (d.motivo || '') + (d.por ? ' · ' + d.por : '') }); }
+      ev.push({ ok: deriveStatus() === 'Ativo', t: 'Status atual: ' + deriveStatus(), when: '', meta: '' });
+      var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico</h2></div></div><div class="section__body"><div class="hist">';
+      ev.forEach(function (e) {
+        h += '<div class="hist-item"><div class="hist-ico' + (e.ok ? ' ok' : '') + '"><svg><use href="#' + (e.ok ? 'ico-circle-check' : 'ri-file-text') + '"/></svg></div>'
+          + '<div class="hist-body"><div class="hist-top"><b>' + esc(e.t) + '</b>' + (e.when ? '<span class="hist-when">' + esc(e.when) + '</span>' : '') + '</div>'
+          + (e.meta ? '<p class="hist-meta">' + esc(e.meta) + '</p>' : '') + '</div></div>';
+      });
+      return h + '</div></div></section>';
     }
     function decisaoHtml(d) {
       if (!d) return '<p class="cl-mail">Aguardando decisão (aprovação/reprovação).</p>';
@@ -394,14 +430,31 @@
     });
 
     html += docsSectionHtml(); // Documentações
-    html += validacoesSectionHtml(); // Aba Validações (integrações)
+    // Validações não fica mais em "Dados cadastrais" — vai para a aba Histórico
     box.innerHTML = html;
     setStatus(deriveStatus()); // status do locatário derivado dos documentos
+
+    // Aba Histórico + troca de abas (Dados cadastrais / Histórico)
+    var valBox = document.getElementById('validacoesBody'); if (valBox) valBox.innerHTML = validacoesSectionHtml();
+    document.querySelectorAll('#perfilTabs .tabs__item').forEach(function (t) {
+      t.addEventListener('click', function () {
+        document.querySelectorAll('#perfilTabs .tabs__item').forEach(function (x) { x.classList.remove('tabs__item--active'); });
+        t.classList.add('tabs__item--active');
+        document.querySelectorAll('.tabs__panel').forEach(function (p) { p.classList.remove('is-active'); });
+        var tgt = document.getElementById(t.getAttribute('data-tab-target')); if (tgt) tgt.classList.add('is-active');
+      });
+    });
 
     // Validação manual do CPF/CNPJ: aviso passivo (a ação de aprovar/reprovar é feita na Edição)
     function renderCpfInline() {
       var slot = document.getElementById('cpfInlineSlot'); if (!slot) return;
-      slot.innerHTML = '<div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do ' + docLabel + ' pendente — a aprovação/reprovação é feita na tela de Edição.</span></div>';
+      if (!cpfResolvido) {
+        slot.innerHTML = '<div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do ' + docLabel + ' pendente — confira o ' + docLabel + ' informado com o documento anexado.</span>'
+          + '<span class="cpfval__acts"><button type="button" class="btn btn--secondary" data-cpf-ap>Aprovar ' + docLabel + '</button><button type="button" class="btn btn--destructive" data-cpf-re>Reprovar ' + docLabel + '</button></span></div>';
+      } else {
+        var ok = cpfResolvido === 'Aprovado';
+        slot.innerHTML = '<div class="cpfval cpfval--done"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + docLabel + ' ' + (ok ? 'aprovado' : 'reprovado') + ' na validação manual.</span></div>';
+      }
     }
     renderCpfInline();
 

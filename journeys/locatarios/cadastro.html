@@ -121,10 +121,27 @@
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
             <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
-            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
-            <!-- CPF: obrigatório p/ brasileiro, opcional p/ estrangeiro (dedup) -->
-            <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req js-cpf-req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
-            <div class="full js-cpfval-box" id="cpfvalPF" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CPF pendente — confira o CPF informado com o documento anexado.</span><span class="cpfval__acts"><button type="button" class="btn btn--secondary" data-cpfval-ap>Aprovar CPF</button><button type="button" class="btn btn--destructive" data-cpfval-re>Reprovar CPF</button></span></div></div>
+            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control js-lock-edit" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
+            <!-- CPF (brasileiro) | Documento (estrangeiro): trocam conforme a nacionalidade -->
+            <div class="input js-cpf-field" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req js-cpf-req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
+            <!-- Documento do estrangeiro: tipo (dos "Outros documentos") + número, interligado -->
+            <div class="input js-doc-estr" hidden>
+              <div class="input__label"><p>Documento</p><p class="input__req">*</p></div>
+              <div class="combofield" id="docEstrField">
+                <select class="combofield__pre js-lock-edit" id="docEstrTipo" data-doc-estr>
+                  <option value="" selected disabled hidden>Tipo</option>
+                  <option value="RG">RG</option>
+                  <option value="CNH">CNH</option>
+                  <option value="CIN">CIN</option>
+                  <option value="RNE">RNE</option>
+                  <option value="Passaporte">Passaporte</option>
+                  <option value="Classe">Carteira de classe</option>
+                </select>
+                <input class="combofield__val js-lock-edit" id="docEstrNum" placeholder="Número do documento" />
+              </div>
+              <p class="combofield__err">Selecione o tipo e informe o número do documento.</p>
+            </div>
+            <div class="full js-cpfval-box" id="cpfvalPF" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CPF pendente — a aprovação/reprovação é feita na tela de Exibição.</span></div></div>
             <!-- Outros documentos: multi-select (estilo Select DS, 2 col); revela os campos de número na grade -->
             <div class="input col-2"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
               <div class="select" data-multiselect>
@@ -197,7 +214,7 @@
         <div class="section__body">
           <div class="formgrid">
             <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /></div></div>
-            <div class="full js-cpfval-box" id="cpfvalPJ" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CNPJ pendente — confira o CNPJ informado com o documento anexado.</span><span class="cpfval__acts"><button type="button" class="btn btn--secondary" data-cpfval-ap>Aprovar CNPJ</button><button type="button" class="btn btn--destructive" data-cpfval-re>Reprovar CNPJ</button></span></div></div>
+            <div class="full js-cpfval-box" id="cpfvalPJ" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CNPJ pendente — a aprovação/reprovação é feita na tela de Exibição.</span></div></div>
             <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Razão social" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
             <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Alves Comércio" /></div></div>
             <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de fundação" /></div></div>
@@ -517,9 +534,14 @@
           el.hidden = (el.getAttribute('data-nac-show') !== sel.value);
         });
         var estr = sel.value === 'Estrangeira';
-        var cpfReq = scope.querySelector('.js-cpf-req'); if (cpfReq) cpfReq.hidden = estr;
-        var docsReq = scope.querySelector('.js-docs-req'); if (docsReq) docsReq.hidden = !estr;
-        var docsHelp = scope.querySelector('.js-docs-help'); if (docsHelp) docsHelp.hidden = !estr;
+        // Estrangeiro: troca o campo CPF pelo campo Documento (tipo + número)
+        var cpf = scope.querySelector('.js-cpf-field'); if (cpf) cpf.hidden = estr;
+        var docEstr = scope.querySelector('.js-doc-estr'); if (docEstr) docEstr.hidden = !estr;
+        // O documento do estrangeiro cobre a exigência; "Outros documentos" segue opcional
+        var docsReq = scope.querySelector('.js-docs-req'); if (docsReq) docsReq.hidden = true;
+        var docsHelp = scope.querySelector('.js-docs-help'); if (docsHelp) docsHelp.hidden = true;
+        // ao voltar para brasileiro, restaura todos os tipos em "Outros documentos"
+        if (!estr) scope.querySelectorAll('[data-multiselect] .msitem').forEach(function (m) { m.hidden = false; });
       }
       sel.addEventListener('change', apply); apply();
     });
@@ -545,6 +567,27 @@
       }
       ms.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.addEventListener('change', apply); });
       apply();
+    });
+    // 1c) Documento do estrangeiro (tipo + número) interligado com "Outros documentos"
+    document.querySelectorAll('[data-doc-estr]').forEach(function (sel) {
+      var num = sel.closest('.js-doc-estr').querySelector('.combofield__val');
+      var box = sel.closest('.js-doc-estr');
+      var ms = (sel.closest('.tabpanel') || document).querySelector('[data-multiselect]');
+      var prev = '';
+      function msItem(t) { return ms ? ms.querySelector('input[data-doc="' + t + '"]') : null; }
+      sel.addEventListener('change', function () {
+        var t = sel.value;
+        if (prev) { var p = msItem(prev); var pl = p && p.closest('.msitem'); if (pl) pl.hidden = false; } // restaura o anterior
+        var cur = msItem(t);
+        if (cur) {
+          if (cur.checked) { cur.checked = false; cur.dispatchEvent(new Event('change', { bubbles: true })); } // sai de "Outros documentos"
+          var cl = cur.closest('.msitem'); if (cl) cl.hidden = true;
+        }
+        prev = t;
+        if (num) num.placeholder = 'Número do documento (' + sel.options[sel.selectedIndex].textContent + ')'; // campo recebe o tipo
+        if (box) box.classList.remove('is-error');
+        if (box) box.querySelector('.combofield') && box.querySelector('.combofield').classList.remove('is-error');
+      });
     });
     // 2) Revelar campo por checkbox (IBS/CBS -> CNPJ)
     document.querySelectorAll('[data-reveal]').forEach(function (cb) {
@@ -1011,6 +1054,11 @@
       document.querySelectorAll('.js-lock-doc').forEach(function (c) {
         c.readOnly = true;
         var f = c.closest('.input__field'); if (f) f.classList.add('is-locked');
+      });
+      // Read-only na edição: Nacionalidade, CPF/Documento (tipo + número)
+      document.querySelectorAll('.js-lock-edit').forEach(function (c) {
+        if (c.tagName === 'SELECT') { c.disabled = true; } else { c.readOnly = true; }
+        var f = c.closest('.input__field') || c.closest('.combofield'); if (f) f.classList.add('is-locked');
       });
 
       // RN-ED5: aplica selo/trava agora que estamos em modo edição

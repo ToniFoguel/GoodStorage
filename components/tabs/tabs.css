@@ -1,0 +1,44 @@
+/* ============================================================
+   Componente: Tabs (abas com indicador sublinhado)
+   Figma: node 6597-1389 (Design - TARS)
+   Abas de navegação por conteúdo; ativa = texto Content/title +
+   sublinhado Background/primary. Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.tabs {
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  gap: var(--2xl);
+  width: 100%;
+  border-bottom: var(--thin) solid var(--border-default);
+}
+.tabs__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--md) 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+  white-space: nowrap;
+}
+.tabs__item:hover { color: var(--content-title); }
+.tabs__item--active { color: var(--content-title); font-weight: var(--font-weight-bold); }
+.tabs__item--active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: calc(-1 * var(--thin));
+  height: var(--stroke-2, 2px);
+  background: var(--background-primary);
+}
+.tabs__item:disabled { color: var(--content-disable); cursor: not-allowed; }
+
+/* Painéis de conteúdo das abas (16px de gap entre a barra de abas e o conteúdo) */
+.tabs__panel { display: none; margin-top: var(--xl); }
+.tabs__panel.is-active { display: block; }
