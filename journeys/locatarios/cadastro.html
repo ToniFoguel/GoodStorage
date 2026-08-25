@@ -459,10 +459,7 @@
 <div class="modal confirm-modal" id="modalTrocaImagem" data-ds="modal" style="max-width:480px">
   <div class="modal__header"><h2 class="modal__title">Trocar documento</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
   <div class="modal__content">
-    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Volta ao fluxo de aprovação</p><p class="banner__text">Ao alterar este documento, ele volta para o fluxo de validação automática (Em análise) e precisa ser aprovado novamente.</p></div></div>
-    <div class="input full"><div class="input__label"><p>Novo arquivo</p></div><div class="input__field is-readonly"><input class="input__control" id="trocaFileName" value="" readonly /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Data e hora da troca</p><p class="input__req">*</p></div><div class="input__field"><input type="datetime-local" class="input__control" id="trocaData" /></div></div>
-    <div class="input full" style="margin-top:var(--md)"><div class="input__label"><p>Motivo da troca</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" id="trocaMotivo" placeholder="Descreva o motivo da troca do documento"></textarea></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo da troca</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" id="trocaMotivo" placeholder="Descreva o motivo da troca do documento"></textarea></div></div>
   </div>
   <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalTrocaImagem'))">Cancelar</button><button class="btn btn--primary" id="btnConfirmTroca"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-swap"/></svg></span>Confirmar troca</button></div>
 </div>
@@ -789,10 +786,7 @@
     // Trocar documento: o botão de troca abre direto o seletor de arquivo; só DEPOIS de escolher
     // o novo arquivo aparece o modal (motivo). A data é registrada automaticamente pelo sistema.
     var pendingDoc = null, pendingName = '';
-    var trocaFileName = document.getElementById('trocaFileName');
     var trocaMotivo = document.getElementById('trocaMotivo');
-    var trocaData = document.getElementById('trocaData');
-    function nowLocal() { var n = new Date(); n.setMinutes(n.getMinutes() - n.getTimezoneOffset()); return n.toISOString().slice(0, 16); }
     document.addEventListener('change', function (e) {
       var inp = e.target;
       if (!inp || !inp.classList || !inp.classList.contains('js-doc-swap-input')) return;
@@ -805,20 +799,14 @@
       }
       pendingDoc = inp.closest('.repdoc') || inp.closest('.listrow');
       pendingName = inp.files[0].name;
-      if (trocaFileName) trocaFileName.value = pendingName;
-      if (trocaData) { trocaData.value = nowLocal(); var wd = trocaData.closest('.input'); if (wd) wd.classList.remove('input--error'); } // abre com data/hora atual (editável)
       if (trocaMotivo) { trocaMotivo.value = ''; var wrap = trocaMotivo.closest('.input'); if (wrap) wrap.classList.remove('input--error'); }
       inp.value = ''; // permite reescolher o mesmo arquivo depois
       DS.openModal('modalTrocaImagem');
     });
     if (trocaMotivo) trocaMotivo.addEventListener('input', function () { var wrap = this.closest('.input'); if (wrap) wrap.classList.remove('input--error'); });
-    if (trocaData) trocaData.addEventListener('input', function () { var wrap = this.closest('.input'); if (wrap) wrap.classList.remove('input--error'); });
     var btnConfTroca = document.getElementById('btnConfirmTroca');
     if (btnConfTroca) btnConfTroca.addEventListener('click', function () {
-      var erro = false;
-      if (trocaData && !trocaData.value) { var wd2 = trocaData.closest('.input'); if (wd2) wd2.classList.add('input--error'); erro = true; }
-      if (trocaMotivo && !trocaMotivo.value.trim()) { var w = trocaMotivo.closest('.input'); if (w) w.classList.add('input--error'); erro = true; }
-      if (erro) return;
+      if (trocaMotivo && !trocaMotivo.value.trim()) { var w = trocaMotivo.closest('.input'); if (w) w.classList.add('input--error'); return; }
       DS.closeModal(document.getElementById('modalTrocaImagem'));
       if (pendingDoc && pendingName) {
         var nm = pendingDoc.querySelector('.js-doc-current .docfile__name'); if (nm) nm.textContent = pendingName; // troca efetiva
