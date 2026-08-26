@@ -1,4 +1,4 @@
-/* Dados simulados de locatário (Exibição/Listagem). 20 casos + validação manual de CPF/CNPJ. Endereço 4 col; alguns com "outros" documentos opcionais (imagem + datas). */
+/* Dados simulados de locatário (Exibição/Listagem). Validação manual só para CPF (PF). */
 window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
@@ -2026,7 +2026,7 @@ window.LOCATARIOS = {
   "14": {
     "nome": "Eduardo Tavares Melo",
     "tipo": "PF",
-    "status": "Pendente de Validação Manual",
+    "status": "Validação manual",
     "email": "eduardo.melo@email.com",
     "docNum": "734.889.201-77",
     "boxes": "L-05",
@@ -2892,7 +2892,7 @@ window.LOCATARIOS = {
   "19": {
     "nome": "Delta Prime Comércio Ltda",
     "tipo": "PJ",
-    "status": "Pendente de Validação Manual",
+    "status": "Validação manual",
     "email": "contato@delta.com.br",
     "docNum": "45.778.132/0001-33",
     "boxes": "J-08",
@@ -3082,8 +3082,7 @@ window.LOCATARIOS = {
       "data": "05/08/2026",
       "motivo": "Documentação conferida e válida.",
       "por": "Carol Ferreira"
-    },
-    "cpfManual": true
+    }
   },
   "20": {
     "nome": "Everest Holding Ltda",

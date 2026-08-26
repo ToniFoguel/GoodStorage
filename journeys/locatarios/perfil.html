@@ -151,11 +151,10 @@
 
     // Status do locatario (modelo IdWall). A validacao manual e POR DOCUMENTO.
     var STATUS_BADGE = {
-      'Ativo': 'badge--success',
-      'Em an\u00e1lise': 'badge--yellow',
+      'Ativo': 'badge--secondary',
+      'Em an\u00e1lise': 'badge--success',
       'Valida\u00e7\u00e3o manual': 'badge--yellow',
       'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow',
-      'Pendente de Valida\u00e7\u00e3o Manual': 'badge--warning',
       'Inativo': 'badge--outline'
     };
     var cpfResolvido = null; // null | 'Aprovado' | 'Reprovado' \u2014 valida\u00e7\u00e3o manual do documento
@@ -180,8 +179,8 @@
     }
     function deriveStatus() {
       // Validação manual do CPF (PF): enquanto não aprovada, o locatário fica pendente
-      if (stored.cpfManual && cpfResolvido !== 'Aprovado') {
-        return cpfResolvido === 'Reprovado' ? 'Pendente de documentação' : 'Pendente de Validação Manual';
+      if (stored.cpfManual && stored.tipo === 'PF' && cpfResolvido !== 'Aprovado') {
+        return cpfResolvido === 'Reprovado' ? 'Pendente de documentação' : 'Validação manual';
       }
       if (stored.status === 'Inativo') return 'Inativo';
       if (!docs.length) return 'Pendente de documenta\u00e7\u00e3o';
@@ -208,7 +207,7 @@
     var btnConfAp = document.getElementById('btnConfirmAprovar');
     if (btnConfAp) btnConfAp.addEventListener('click', function () {
       var m = document.getElementById('modalAprovar');
-      if (cpfMode === 'ap') { cpfResolvido = 'Aprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); cpfMode = null; return; }
+      if (cpfMode === 'ap') { cpfResolvido = 'Aprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); renderPendingBanner(); cpfMode = null; return; }
       var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
       if (d) { d.status = 'Aprovado'; d.motivo = ''; }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Ativo
@@ -219,7 +218,7 @@
       var m = document.getElementById('modalReprovar');
       var mo = m.querySelector('textarea');
       if (!mo || !mo.value.trim()) { if (mo) { var inp = mo.closest('.input'); if (inp) inp.classList.add('input--error'); } return; } // reprovar exige justificativa
-      if (cpfMode === 're') { cpfResolvido = 'Reprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); cpfMode = null; return; }
+      if (cpfMode === 're') { cpfResolvido = 'Reprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); renderPendingBanner(); cpfMode = null; return; }
       var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
       if (d) { d.status = 'Reprovado'; d.motivo = mo.value.trim(); }
       DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Pendente de documentação
@@ -277,7 +276,7 @@
       if (!docs.length) h += '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
       h += '<div class="docgrid">';
       docs.forEach(function (d, i) {
-        var manual = docStatusOf(d) === 'Validação manual';
+        var manual = docStatusOf(d) === 'Validação manual' && !/CNPJ/i.test(d.label); // Cartão de CNPJ é validado automaticamente
         var actions = manual ? '<div class="docactions"><button type="button" class="btn btn--secondary" data-doc-ap="' + i + '">Aprovar</button><button type="button" class="btn btn--destructive" data-doc-re="' + i + '">Reprovar</button></div>' : '';
         h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + (d.opcional ? '' : ' <span class="fieldlbl-req">*</span>') + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>'
           + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(d.emissao || '15/01/2026') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(d.validade || '—') + '</p></div></dl>'
@@ -304,7 +303,7 @@
     function docsSectionHtml() {
       return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentações</h2></div></div><div class="section__body" id="docsBody">' + docsBodyHtml() + '</div></section>';
     }
-    function refreshDocs() { var b = document.getElementById('docsBody'); if (b) b.innerHTML = docsBodyHtml(); setStatus(deriveStatus()); }
+    function refreshDocs() { var b = document.getElementById('docsBody'); if (b) b.innerHTML = docsBodyHtml(); setStatus(deriveStatus()); if (typeof renderPendingBanner === 'function') renderPendingBanner(); }
     // Aba "Validações": log das integrações (Serpro, IdWall, etc.)
     function valBadge(sName) {
       var cls = /reprov|irregular|falh|erro|indispon/i.test(sName) ? 'badge--destructive'
@@ -420,8 +419,8 @@
             html += outrosDocsRO(it.value, num);
           }
           else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
+          else if (it.label === 'CPF' && stored.cpfManual && stored.tipo === 'PF') html += '<div class="input"><div class="input__label"><p>CPF</p></div><div class="input__field is-readonly cpffield"><input class="input__control" value="' + escAttr(it.value) + '" readonly /><div class="cpfacts" id="cpfInlineSlot"></div></div></div>';
           else html += inputRO(it.label, it.value, span(it.label));
-          if ((it.label === 'CPF' || it.label === 'CNPJ') && stored.cpfManual) html += '<div class="full" id="cpfInlineSlot"></div>';
         });
         html += '</div>';
         if (isCard) html += '</div>';
@@ -445,18 +444,36 @@
       });
     });
 
-    // Validação manual do CPF/CNPJ: aviso passivo (a ação de aprovar/reprovar é feita na Edição)
+    // Validação manual do CPF/CNPJ: botões Aprovar/Reprovar dentro do próprio campo
     function renderCpfInline() {
       var slot = document.getElementById('cpfInlineSlot'); if (!slot) return;
       if (!cpfResolvido) {
-        slot.innerHTML = '<div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do ' + docLabel + ' pendente — confira o ' + docLabel + ' informado com o documento anexado.</span>'
-          + '<span class="cpfval__acts"><button type="button" class="btn btn--secondary" data-cpf-ap>Aprovar ' + docLabel + '</button><button type="button" class="btn btn--destructive" data-cpf-re>Reprovar ' + docLabel + '</button></span></div>';
+        slot.innerHTML = '<button type="button" class="btn btn--secondary" data-cpf-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-cpf-re>Reprovar</button>';
       } else {
         var ok = cpfResolvido === 'Aprovado';
-        slot.innerHTML = '<div class="cpfval cpfval--done"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + docLabel + ' ' + (ok ? 'aprovado' : 'reprovado') + ' na validação manual.</span></div>';
+        slot.innerHTML = '<span class="cpfacts__done"><svg class="cpfacts__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + docLabel + ' ' + (ok ? 'aprovado' : 'reprovado') + '</span>';
       }
     }
+    // Banner amarelo no topo: lista, em passos, todas as aprovações pendentes (CPF + documentos)
+    function pendingItems() {
+      var items = [];
+      if (stored.cpfManual && stored.tipo === 'PF' && !cpfResolvido) items.push('Aprovar validação do CPF');
+      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual' && !/CNPJ/i.test(d.label)) items.push('Aprovar documento: ' + d.label); }); // CNPJ não entra na aprovação manual
+      return items;
+    }
+    function renderPendingBanner() {
+      var old = document.getElementById('pendBanner'); if (old) old.remove();
+      var items = pendingItems(); if (!items.length) return;
+      var b = document.createElement('div');
+      b.id = 'pendBanner';
+      b.className = 'banner banner--warning';
+      b.style.marginBottom = 'var(--xl)';
+      var lis = items.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+      b.innerHTML = '<span class="banner__icon"><svg><use href="#ico-alert"/></svg></span><div class="banner__content"><p class="banner__title">Ações pendentes de validação</p><ol class="pendlist">' + lis + '</ol></div>';
+      box.insertBefore(b, box.firstChild);
+    }
     renderCpfInline();
+    renderPendingBanner();
 
     // Colapsáveis (componente do DS): seções recolhidas por padrão, exceto Documentações
     document.querySelectorAll('#exibicaoBody > section.section').forEach(function (sec) {

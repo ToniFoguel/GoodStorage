@@ -238,6 +238,17 @@ body.is-edit .repdoc.js-edit-only { display: flex; }
 .combofield__val::placeholder { color: var(--content-text-inverse); }
 .combofield__pre:focus, .combofield__val:focus { outline: none; }
 .combofield.is-error { border-color: var(--content-label-error); }
+/* Aprovar/Reprovar do CPF dentro da própria caixa do campo (exibição) */
+.cpffield { height: auto; min-height: 36px; overflow: visible; }
+.cpffield .input__control { flex: 1 1 auto; min-width: 0; }
+.cpfacts { display: flex; gap: var(--sm); flex: none; }
+.cpffield .cpfacts { margin: 0; }
+.cpfacts .btn { height: 28px; padding: 0 var(--md); font-size: var(--font-size-label); }
+.cpfacts__done { display: inline-flex; align-items: center; gap: var(--sm); font-family: var(--font-family-title-text); font-size: var(--font-size-label); color: var(--content-label-warning); }
+.cpfacts__ico { width: var(--xl); height: var(--xl); flex: none; }
+/* Lista de ações pendentes no banner amarelo do topo */
+.pendlist { margin: var(--gap-1) 0 0; padding-left: 1.3em; color: var(--content-label-warning); }
+.pendlist li { font-family: var(--font-family-title-text); font-size: var(--font-size-label); line-height: var(--line-hight-label); }
 .combofield.is-locked { background: var(--background-bg-aux); border-style: dashed; }
 .combofield.is-locked .combofield__pre, .combofield.is-locked .combofield__val { background-color: var(--background-bg-aux); cursor: not-allowed; }
 .combofield__err { display: none; margin-top: var(--gap-1); font-size: var(--font-size-label); color: var(--content-label-error); }
