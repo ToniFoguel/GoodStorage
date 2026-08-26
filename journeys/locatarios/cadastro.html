@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../../components/segmented/segmented.css" />
 <link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
 <link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/tabs/tabs.css" />
 <link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
 <link rel="stylesheet" href="../../components/select/select.css" />
 <link rel="stylesheet" href="../../ds/ds.css" />
@@ -96,6 +97,18 @@
         </div>
       </div>
 
+      <!-- Abas (só na edição): Dados cadastrais / Validações -->
+      <div class="tabs" id="edTabs" hidden>
+        <button type="button" class="tabs__item tabs__item--active" data-edtab="dados">Dados cadastrais</button>
+        <button type="button" class="tabs__item" data-edtab="validacoes">Validações</button>
+      </div>
+      <div id="edValidacoes">
+        <div class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Validações</h2></div></div>
+          <div class="section__body"><div class="rf-wrap"><table class="rftable"><thead><tr><th>Integração</th><th>Data</th><th>Hora</th><th>Status</th></tr></thead><tbody id="edValRows"></tbody></table></div></div>
+        </div>
+      </div>
+
       <!-- Tipo de locatário (select em seção própria) -->
       <section class="section" id="secTipo" style="order:0">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipo de locatário</h2></div></div>
@@ -120,16 +133,11 @@
         <section class="section" style="order:1">
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
-            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
-            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control js-lock-edit" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
-            <!-- CPF (brasileiro) | Documento (estrangeiro): trocam conforme a nacionalidade -->
-            <div class="input js-cpf-field" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req js-cpf-req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="123.456.789-00" placeholder="000.000.000-00" /></div></div>
-            <!-- Documento do estrangeiro: tipo (dos "Outros documentos") + número, interligado -->
-            <div class="input js-doc-estr" hidden>
-              <div class="input__label"><p>Documento</p><p class="input__req">*</p></div>
+            <!-- Documento: CPF por padrão; pode selecionar outro tipo (2 colunas, 1º campo) -->
+            <div class="input col-2 js-doc-combo"><div class="input__label"><p>Documento</p><p class="input__req">*</p></div>
               <div class="combofield" id="docEstrField">
                 <select class="combofield__pre js-lock-edit" id="docEstrTipo" data-doc-estr>
-                  <option value="" selected disabled hidden>Tipo</option>
+                  <option value="CPF" selected>CPF</option>
                   <option value="RG">RG</option>
                   <option value="CNH">CNH</option>
                   <option value="CIN">CIN</option>
@@ -137,12 +145,14 @@
                   <option value="Passaporte">Passaporte</option>
                   <option value="Classe">Carteira de classe</option>
                 </select>
-                <input class="combofield__val js-lock-edit" id="docEstrNum" placeholder="Número do documento" />
+                <input class="combofield__val js-lock-edit" id="docEstrNum" placeholder="000.000.000-00" />
+                <div class="cpfacts js-cpfval-box" id="cpfvalPF" hidden><button type="button" class="btn btn--secondary" data-cpfval-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-cpfval-re>Reprovar</button></div>
               </div>
               <p class="combofield__err">Selecione o tipo e informe o número do documento.</p>
             </div>
-            <div class="full js-cpfval-box" id="cpfvalPF" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CPF pendente — a aprovação/reprovação é feita na tela de Exibição.</span></div></div>
-            <!-- Outros documentos: multi-select (estilo Select DS, 2 col); revela os campos de número na grade -->
+            <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
+            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control js-lock-edit" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
+            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
             <div class="input col-2"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
               <div class="select" data-multiselect>
                 <div class="select__field"><p class="select__value" data-placeholder="Selecione os documentos">Selecione os documentos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
@@ -165,12 +175,11 @@
             <div class="input js-docfield" data-docfield="RNE" hidden><div class="input__label"><p>Número do RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div></div>
             <div class="input js-docfield" data-docfield="Passaporte" hidden><div class="input__label"><p>Número do passaporte</p></div><div class="input__field"><input class="input__control" placeholder="Nº do passaporte" /></div></div>
             <div class="input js-docfield" data-docfield="Classe" hidden><div class="input__label"><p>Carteira de classe</p></div><div class="input__field"><input class="input__control" placeholder="Ex.: CRM 123456/SP" /></div></div>
-            <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
             <div class="input"><div class="input__label"><p>E-mail principal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailmain" placeholder="nome@email.com" /></div></div>
             <div class="input mailrow"><div class="input__label"><p>E-mail de assinatura de contrato</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
             <div class="input mailrow"><div class="input__label"><p>E-mail de login do Meu Espaço</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-mailsync-input" placeholder="nome@email.com" /></div><label class="checkbox-card mailflag"><input type="checkbox" class="checkbox-card__input" data-mailsync checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>
             <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-reveal="js-cnpj-pf" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
-            <div class="input js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
+            <div class="input col-2 js-cnpj-pf" data-ds="input" data-ds-mask="cnpj" hidden><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
           </div></div>
         </section>
 
@@ -213,8 +222,7 @@
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
         <div class="section__body">
           <div class="formgrid">
-            <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /></div></div>
-            <div class="full js-cpfval-box" id="cpfvalPJ" hidden><div class="cpfval"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#ico-alert"/></svg>Validação manual do CNPJ pendente — a aprovação/reprovação é feita na tela de Exibição.</span></div></div>
+            <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field cpffield"><input class="input__control js-lock-doc" data-edit="12.345.678/0001-90" placeholder="00.000.000/0000-00" /><div class="cpfacts js-cpfval-box" id="cpfvalPJ" hidden><button type="button" class="btn btn--secondary" data-cpfval-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-cpfval-re>Reprovar</button></div></div></div>
             <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Razão social" data-edit="Marina Alves Comércio Ltda" placeholder="Preenchido via consulta do CNPJ" /></div></div>
             <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-edit="Alves Comércio" /></div></div>
             <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de fundação" /></div></div>
@@ -239,37 +247,40 @@
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Sócio <span class="socio-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir sócio"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="reprow reprow--3">
+                <div class="reprow reprow--4">
                   <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><input class="input__control" value="Pessoa Física" /></div></div>
                   <div class="input"><div class="input__label"><p>Qualificação</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option selected>Administrador</option><option>Sócio</option><option>Sócio-Administrador</option><option>Diretor</option><option>Presidente</option><option>Procurador</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Data de inclusão</p></div><div class="input__field"><input class="input__control" value="12/03/2015" /></div></div>
                   <div class="input"><div class="input__label"><p>País</p></div><div class="input__field"><input class="input__control" value="105 · BRASIL" /></div></div>
+                  <div class="input"><div class="input__label"><p>Possui procurador</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div></div>
                 </div>
               </div>
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Sócio <span class="socio-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir sócio"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="reprow reprow--3">
+                <div class="reprow reprow--4">
                   <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Alves Participações Ltda" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="11.222.333/0001-44" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><input class="input__control" value="Pessoa Jurídica" /></div></div>
                   <div class="input"><div class="input__label"><p>Qualificação</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Administrador</option><option selected>Sócio</option><option>Sócio-Administrador</option><option>Diretor</option><option>Presidente</option><option>Procurador</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Data de inclusão</p></div><div class="input__field"><input class="input__control" value="12/03/2015" /></div></div>
                   <div class="input"><div class="input__label"><p>País</p></div><div class="input__field"><input class="input__control" value="105 · BRASIL" /></div></div>
+                  <div class="input"><div class="input__label"><p>Possui procurador</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div></div>
                 </div>
               </div>
             </div>
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Sócio <span class="socio-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir sócio"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="reprow reprow--3">
+                <div class="reprow reprow--4">
                   <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
                   <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><input class="input__control" placeholder="Pessoa Física / Jurídica" /></div></div>
                   <div class="input"><div class="input__label"><p>Qualificação</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Administrador</option><option>Sócio</option><option>Sócio-Administrador</option><option>Diretor</option><option>Presidente</option><option>Procurador</option></select></div></div>
                   <div class="input"><div class="input__label"><p>Data de inclusão</p></div><div class="input__field"><input class="input__control" placeholder="DD/MM/AAAA" /></div></div>
                   <div class="input"><div class="input__label"><p>País</p></div><div class="input__field"><input class="input__control" placeholder="País" /></div></div>
+                  <div class="input"><div class="input__label"><p>Possui procurador</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div></div>
                 </div>
               </div>
             </template>
@@ -286,10 +297,11 @@
             <div class="repeater__items">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><span class="badge badge--yellow js-rep-pend" hidden>Documentação pendente</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="reprow reprow--3">
+                <div class="reprow reprow--4">
                   <div class="input"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
                   <div class="input"><div class="input__label"><p>Qualificação</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option selected>Administrador</option><option>Sócio</option><option>Sócio-Administrador</option><option>Diretor</option><option>Presidente</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Sócio associado</p></div><div class="input__field"><select class="input__control"><option value="">Nenhum</option><option>Marina Alves</option><option>Alves Participações Ltda</option></select></div></div>
                 </div>
                 <div class="repdoc js-edit-only">
                   <div class="listrow__head"><span class="fieldlbl">Documento de identificação com foto</span></div>
@@ -299,7 +311,7 @@
                     <label class="icon-btn js-doc-swap" title="Trocar documento" aria-label="Trocar documento"><svg><use href="#ico-swap"/></svg><input type="file" class="js-doc-swap-input" accept="image/*" hidden /></label>
                   </div>
                   <div class="js-doc-add" hidden>
-                    <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
+                    <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB. Tipos diferentes de RG/CNH entram em validação manual.</p>
                     <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
                   </div>
                 </div>
@@ -308,14 +320,15 @@
             <template class="repeater__template">
               <div class="listrow repcard repeater__item">
                 <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><span class="badge badge--yellow js-rep-pend" hidden>Documentação pendente</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
-                <div class="reprow reprow--3">
+                <div class="reprow reprow--4">
                   <div class="input"><div class="input__label"><p>Nome</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome" /></div></div>
                   <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
                   <div class="input"><div class="input__label"><p>Qualificação</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option value="">Selecione</option><option>Administrador</option><option>Sócio</option><option>Sócio-Administrador</option><option>Diretor</option><option>Presidente</option><option>Procurador</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>Sócio associado</p></div><div class="input__field"><select class="input__control"><option value="">Nenhum</option><option>Marina Alves</option><option>Alves Participações Ltda</option></select></div></div>
                 </div>
                 <div class="repdoc js-edit-only">
                   <div class="listrow__head"><span class="fieldlbl">Documento de identificação com foto</span></div>
-                  <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB.</p>
+                  <p class="cl-mail">RG, CNH ou outro documento com foto (deste representante) · imagem até 20 MB. Tipos diferentes de RG/CNH entram em validação manual.</p>
                   <div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar imagem<input type="file" accept="image/*" hidden /></label></div>
                 </div>
               </div>
@@ -530,15 +543,6 @@
         scope.querySelectorAll('[data-nac-show]').forEach(function (el) {
           el.hidden = (el.getAttribute('data-nac-show') !== sel.value);
         });
-        var estr = sel.value === 'Estrangeira';
-        // Estrangeiro: troca o campo CPF pelo campo Documento (tipo + número)
-        var cpf = scope.querySelector('.js-cpf-field'); if (cpf) cpf.hidden = estr;
-        var docEstr = scope.querySelector('.js-doc-estr'); if (docEstr) docEstr.hidden = !estr;
-        // O documento do estrangeiro cobre a exigência; "Outros documentos" segue opcional
-        var docsReq = scope.querySelector('.js-docs-req'); if (docsReq) docsReq.hidden = true;
-        var docsHelp = scope.querySelector('.js-docs-help'); if (docsHelp) docsHelp.hidden = true;
-        // ao voltar para brasileiro, restaura todos os tipos em "Outros documentos"
-        if (!estr) scope.querySelectorAll('[data-multiselect] .msitem').forEach(function (m) { m.hidden = false; });
       }
       sel.addEventListener('change', apply); apply();
     });
@@ -567,10 +571,10 @@
     });
     // 1c) Documento do estrangeiro (tipo + número) interligado com "Outros documentos"
     document.querySelectorAll('[data-doc-estr]').forEach(function (sel) {
-      var num = sel.closest('.js-doc-estr').querySelector('.combofield__val');
-      var box = sel.closest('.js-doc-estr');
+      var num = sel.closest('.js-doc-combo').querySelector('.combofield__val');
+      var box = sel.closest('.js-doc-combo');
       var ms = (sel.closest('.tabpanel') || document).querySelector('[data-multiselect]');
-      var prev = '';
+      var prev = 'CPF'; // CPF é o documento padrão (não está em "Outros documentos")
       function msItem(t) { return ms ? ms.querySelector('input[data-doc="' + t + '"]') : null; }
       sel.addEventListener('change', function () {
         var t = sel.value;
@@ -581,7 +585,7 @@
           var cl = cur.closest('.msitem'); if (cl) cl.hidden = true;
         }
         prev = t;
-        if (num) num.placeholder = 'Número do documento (' + sel.options[sel.selectedIndex].textContent + ')'; // campo recebe o tipo
+        if (num) num.placeholder = (t === 'CPF') ? '000.000.000-00' : 'Número do documento (' + sel.options[sel.selectedIndex].textContent + ')'; // campo recebe o tipo
         if (box) box.classList.remove('is-error');
         if (box) box.querySelector('.combofield') && box.querySelector('.combofield').classList.remove('is-error');
       });
@@ -839,17 +843,39 @@
       var empty = card.querySelector('.js-opt-empty'); if (empty) empty.hidden = false;
     });
 
-    // Validação manual do CPF/CNPJ (edição): aprovar/reprovar abre modal de motivo
-    var valMode = null, valBox = null, valMotivo = document.getElementById('valDocMotivo');
+    // Validação manual (edição): aprovar/reprovar CPF/CNPJ e cada documento — modal de motivo
+    var valMode = null, valBox = null, valDoc = null, valMotivo = document.getElementById('valDocMotivo');
+    function docName(row) { var n = row.querySelector('.fieldlbl'); return n ? n.textContent.replace('*', '').trim() : 'documento'; }
+    function editBanner() {
+      var old = document.getElementById('edPendBanner'); if (old) old.remove();
+      if (!document.body.classList.contains('is-edit')) return;
+      var items = [];
+      document.querySelectorAll('.js-cpfval-box:not([hidden]) [data-cpfval-ap]').forEach(function (a) { var b = a.closest('.js-cpfval-box'); items.push('Aprovar validação do ' + (b.id === 'cpfvalPF' ? 'CPF' : 'CNPJ')); });
+      document.querySelectorAll('[data-docval-ap]').forEach(function (btn) { items.push('Aprovar documento: ' + docName(btn.closest('.listrow'))); });
+      document.querySelectorAll('[data-repdocval-ap]').forEach(function (btn) { var rc = btn.closest('.repcard'); var nm = rc && rc.querySelector('.input__control') ? rc.querySelector('.input__control').value : ''; items.push('Aprovar documento do representante' + (nm ? ': ' + nm : '')); });
+      if (!items.length) return;
+      var el = document.createElement('div'); el.id = 'edPendBanner'; el.className = 'banner banner--warning'; el.style.margin = 'var(--md) 0 var(--xl)';
+      el.innerHTML = '<span class="banner__icon"><svg><use href="#ico-alert"/></svg></span><div class="banner__content"><p class="banner__title">Ações pendentes de validação</p><ol class="pendlist">' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ol></div>';
+      var tabs = document.getElementById('edTabs'); // banner logo abaixo das abas (só na aba Dados cadastrais)
+      if (tabs && !tabs.hidden) { tabs.insertAdjacentElement('afterend', el); }
+      else { var content = document.querySelector('.content'); var head = content.querySelector('.pagehead'); if (head) head.insertAdjacentElement('afterend', el); else content.insertBefore(el, content.firstChild); }
+    }
+    window.__editBanner = editBanner;
     document.addEventListener('click', function (e) {
-      var ap = e.target.closest && e.target.closest('[data-cpfval-ap]');
-      var re = e.target.closest && e.target.closest('[data-cpfval-re]');
-      if (!ap && !re) return;
-      valMode = ap ? 'ap' : 're';
-      valBox = (ap || re).closest('.js-cpfval-box');
-      var lbl = valBox && valBox.id === 'cpfvalPF' ? 'CPF' : 'CNPJ';
-      var tt = document.getElementById('valDocTitle'); if (tt) tt.textContent = (ap ? 'Aprovar' : 'Reprovar') + ' validação do ' + lbl;
-      var cb = document.getElementById('btnValDocConfirm'); if (cb) { cb.textContent = ap ? 'Aprovar' : 'Reprovar'; cb.className = 'btn ' + (ap ? 'btn--secondary' : 'btn--destructive'); }
+      var apC = e.target.closest && e.target.closest('[data-cpfval-ap]');
+      var reC = e.target.closest && e.target.closest('[data-cpfval-re]');
+      var apD = e.target.closest && e.target.closest('[data-docval-ap]');
+      var reD = e.target.closest && e.target.closest('[data-docval-re]');
+      var apR = e.target.closest && e.target.closest('[data-repdocval-ap]');
+      var reR = e.target.closest && e.target.closest('[data-repdocval-re]');
+      if (!apC && !reC && !apD && !reD && !apR && !reR) return;
+      valMode = (apC || apD || apR) ? 'ap' : 're';
+      var lbl;
+      if (apC || reC) { valBox = (apC || reC).closest('.js-cpfval-box'); valDoc = null; lbl = 'validação do ' + (valBox && valBox.id === 'cpfvalPF' ? 'CPF' : 'CNPJ'); }
+      else if (apR || reR) { valDoc = (apR || reR).closest('.repdoc'); valBox = null; var rc = valDoc.closest('.repcard'); var rnm = rc && rc.querySelector('.input__control') ? rc.querySelector('.input__control').value : ''; lbl = 'documento do representante' + (rnm ? ' ' + rnm : ''); }
+      else { valDoc = (apD || reD).closest('.listrow'); valBox = null; lbl = 'documento: ' + docName(valDoc); }
+      var tt = document.getElementById('valDocTitle'); if (tt) tt.textContent = (valMode === 'ap' ? 'Aprovar' : 'Reprovar') + ' ' + lbl;
+      var cb = document.getElementById('btnValDocConfirm'); if (cb) { cb.textContent = valMode === 'ap' ? 'Aprovar' : 'Reprovar'; cb.className = 'btn ' + (valMode === 'ap' ? 'btn--secondary' : 'btn--destructive'); }
       if (valMotivo) { valMotivo.value = ''; var w = valMotivo.closest('.input'); if (w) w.classList.remove('input--error'); }
       DS.openModal('modalValDoc');
     });
@@ -858,12 +884,16 @@
     if (btnValDoc) btnValDoc.addEventListener('click', function () {
       if (valMotivo && !valMotivo.value.trim()) { var w = valMotivo.closest('.input'); if (w) w.classList.add('input--error'); return; }
       DS.closeModal(document.getElementById('modalValDoc'));
+      var ok = valMode === 'ap';
       if (valBox) {
-        var lbl = valBox.id === 'cpfvalPF' ? 'CPF' : 'CNPJ', ok = valMode === 'ap';
-        var strip = valBox.querySelector('.cpfval');
-        if (strip) strip.outerHTML = '<div class="cpfval cpfval--done"><span class="cpfval__msg"><svg class="cpfval__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + lbl + ' ' + (ok ? 'aprovado' : 'reprovado') + ' na validação manual.</span></div>';
+        var lbl = valBox.id === 'cpfvalPF' ? 'CPF' : 'CNPJ';
+        valBox.innerHTML = '<span class="cpfacts__done"><svg class="cpfacts__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + lbl + ' ' + (ok ? 'aprovado' : 'reprovado') + '</span>';
+      } else if (valDoc) {
+        var badge = valDoc.querySelector('.listrow__head .badge'); if (badge) badge.outerHTML = ok ? '<span class="badge badge--success">Aprovado</span>' : '<span class="badge badge--destructive">Reprovado</span>';
+        var acts = valDoc.querySelector('.docactions'); if (acts) acts.remove();
       }
-      valMode = null; valBox = null;
+      editBanner();
+      valMode = null; valBox = null; valDoc = null;
     });
 
 
@@ -933,6 +963,11 @@
           });
         });
 
+        // Documento (PF): preenche o combo com o CPF (tipo CPF por padrão)
+        var idM0 = byTitle['Identificação'] || {};
+        var docNum0 = document.getElementById('docEstrNum');
+        if (docNum0 && idM0['CPF'] != null) { docNum0.value = idM0['CPF']; var docTp0 = document.getElementById('docEstrTipo'); if (docTp0) docTp0.value = 'CPF'; }
+
         // Representantes (PJ): preencher os cards a partir de byId.reps
         var repData = null; byId.dados.forEach(function (s) { if (s.reps) repData = s.reps; });
         var repSec = null; secs.forEach(function (s) { var t = s.querySelector('.section__title'); if (t && t.textContent.trim() === 'Representantes') repSec = s; });
@@ -950,6 +985,15 @@
               else if (L === 'Qualificação') c.value = r.cargo || r.qualificacao || '';
             });
             var dn = card.querySelector('.js-doc-current .docfile__name'); if (dn && r.doc) dn.textContent = r.doc;
+            // Documento com foto do representante: RG/CNH são validados automaticamente;
+            // qualquer outro tipo (Passaporte, RNE, CIN, carteira de classe…) cai em validação manual.
+            var repDocManual = r.docTipo && !/^(RG|CNH)$/i.test(r.docTipo);
+            var rdoc = card.querySelector('.repdoc');
+            if (rdoc && repDocManual) {
+              var rhead = rdoc.querySelector('.listrow__head');
+              if (rhead && !rhead.querySelector('.badge')) rhead.insertAdjacentHTML('beforeend', '<span class="badge badge--yellow">Validação manual</span>');
+              if (!rdoc.querySelector('.docactions')) rdoc.insertAdjacentHTML('beforeend', '<div class="docactions"><button type="button" class="btn btn--secondary" data-repdocval-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-repdocval-re>Reprovar</button></div>');
+            }
           });
         }
 
@@ -1004,11 +1048,13 @@
               : byId.status === 'Em análise' ? '<span class="badge badge--yellow">Em análise</span>'
               : byId.status === 'Validação manual' ? '<span class="badge badge--yellow">Validação manual</span>'
               : '<span class="badge badge--success">Aprovado</span>';
+            var manualDoc = byId.status === 'Validação manual' && !d.motivo && !/CNPJ/i.test(d.label); // Cartão de CNPJ é automático
+            var docActs = manualDoc ? '<div class="docactions"><button type="button" class="btn btn--secondary" data-docval-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-docval-re>Reprovar</button></div>' : '';
             dh += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + d.label + (d.opcional ? '' : ' <span class="fieldlbl-req">*</span>') + '</span>' + db + '</div>'
               + '<div class="docfile js-doc-current"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + d.file + '</span><label class="icon-btn js-doc-swap" title="Trocar documento" aria-label="Trocar documento"><svg><use href="#ico-swap"/></svg><input type="file" class="js-doc-swap-input" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div>'
               + (d.motivo ? '<p class="formerror">' + d.motivo + '</p>' : '')
               + '<div class="js-doc-add" hidden><p class="cl-mail">Anexe um novo arquivo.</p><div><label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar ' + (isImg ? 'imagem' : 'arquivo') + '<input type="file" accept="' + (isImg ? 'image/*' : 'application/pdf,image/*') + '" hidden /></label></div></div>'
-              + '<div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" value="' + (toISO(d.emissao) || '2026-01-15') + '" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" value="' + toISO(d.validade) + '" /></div></div></div></div>';
+              + '<div class="formgrid docdates"><div class="input"><div class="input__label"><p>Data de emissão</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" value="' + (toISO(d.emissao) || '2026-01-15') + '" /></div></div><div class="input"><div class="input__label"><p>Data de validade</p></div><div class="input__field"><input type="date" class="input__control" value="' + toISO(d.validade) + '" /></div></div></div>' + docActs + '</div>';
           });
           docsBody.innerHTML = dh; // só os obrigatórios; o repeater de "Outros documentos" é estático (ao lado)
         }
@@ -1031,6 +1077,24 @@
         if (vbox) vbox.hidden = false;
         document.body.classList.add('has-cpfval');
       }
+      // banner de ações pendentes no topo da edição (CPF/CNPJ + documentos em validação manual)
+      setTimeout(function () { if (window.__editBanner) window.__editBanner(); }, 0);
+
+      // Abas da edição: Dados cadastrais / Validações (mesmo comportamento da exibição)
+      var edTabs = document.getElementById('edTabs'); if (edTabs) edTabs.hidden = false;
+      var stEd = byId ? byId.status : '';
+      var idwallEd = stEd === 'Ativo' ? 'Aprovado' : stEd === 'Pendente de documentação' ? 'Reprovado' : stEd === 'Validação manual' ? 'Necessita validação humana' : stEd === 'Em análise' ? 'Em análise' : 'Aprovado';
+      var serproEd = (byId && byId.tipo === 'PF') ? 'Serpro — Consulta CPF' : 'Serpro — Consulta CNPJ v2';
+      var edRows = [{ origem: serproEd, data: '05/08/2026', hora: '09:41', status: 'Regular' }, { origem: 'IdWall — Validação documental', data: '05/08/2026', hora: '09:42', status: idwallEd }];
+      var edTb = document.getElementById('edValRows');
+      if (edTb) edTb.innerHTML = edRows.map(function (r) { return '<tr><td>' + r.origem + '</td><td>' + r.data + '</td><td>' + r.hora + '</td><td>' + r.status + '</td></tr>'; }).join('');
+      document.querySelectorAll('#edTabs .tabs__item').forEach(function (t) {
+        t.addEventListener('click', function () {
+          document.querySelectorAll('#edTabs .tabs__item').forEach(function (x) { x.classList.remove('tabs__item--active'); });
+          t.classList.add('tabs__item--active');
+          document.querySelector('.content').classList.toggle('show-validacoes', t.getAttribute('data-edtab') === 'validacoes');
+        });
+      });
 
       // Inativar/Ativar só quando aprovado/ativo (ou inativo p/ reativar). Reprovado já está inativo.
       if (btnAtiv) {

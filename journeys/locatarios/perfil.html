@@ -179,7 +179,7 @@
     }
     function deriveStatus() {
       // Validação manual do CPF (PF): enquanto não aprovada, o locatário fica pendente
-      if (stored.cpfManual && stored.tipo === 'PF' && cpfResolvido !== 'Aprovado') {
+      if (stored.cpfManual && cpfResolvido !== 'Aprovado') {
         return cpfResolvido === 'Reprovado' ? 'Pendente de documentação' : 'Validação manual';
       }
       if (stored.status === 'Inativo') return 'Inativo';
@@ -247,6 +247,16 @@
       var o = opts.map(function (op) { return '<option' + (op === value ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
       return '<div class="input"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><select class="input__control" disabled>' + o + '</select></div></div>';
     }
+    // Documento (PF) read-only — fiel ao combofield do cadastro (select + input), ambos read-only
+    function docComboRO(value, tipo, extra) {
+      tipo = tipo || 'CPF';
+      var opts = ['CPF', 'RG', 'CNH', 'CIN', 'RNE', 'Passaporte', 'Carteira de classe'];
+      if (opts.indexOf(tipo) < 0) opts.unshift(tipo);
+      var o = opts.map(function (op) { return '<option' + (op === tipo ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
+      return '<div class="input col-2"><div class="input__label"><p>Documento</p></div>'
+        + '<div class="combofield is-readonly"><select class="combofield__pre" disabled>' + o + '</select><input class="combofield__val" value="' + escAttr(value) + '" readonly /></div>'
+        + (extra || '') + '</div>';
+    }
     function mailRO(label, value, usarPrincipal) {
       return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
         + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
@@ -276,8 +286,7 @@
       if (!docs.length) h += '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
       h += '<div class="docgrid">';
       docs.forEach(function (d, i) {
-        var manual = docStatusOf(d) === 'Validação manual' && !/CNPJ/i.test(d.label); // Cartão de CNPJ é validado automaticamente
-        var actions = manual ? '<div class="docactions"><button type="button" class="btn btn--secondary" data-doc-ap="' + i + '">Aprovar</button><button type="button" class="btn btn--destructive" data-doc-re="' + i + '">Reprovar</button></div>' : '';
+        var actions = ''; // exibição é só leitura — Aprovar/Reprovar é feito na Edição
         h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + (d.opcional ? '' : ' <span class="fieldlbl-req">*</span>') + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>'
           + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(d.emissao || '15/01/2026') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(d.validade || '—') + '</p></div></dl>'
           + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + actions + '</div>';
@@ -390,8 +399,8 @@
         // Representantes: cards read-only (Nome / CPF / Qualificação), como no cadastro
         sec.reps.forEach(function (r, idx) {
           var repBadge = r.doc ? '<span class="badge badge--success">Documento anexado</span>' : '<span class="badge badge--yellow">Documentação pendente</span>';
-          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span>' + repBadge + '</div><div class="reprow reprow--3">'
-                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + selectRO('Qualificação', r.cargo || r.qualificacao)
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span>' + repBadge + '</div><div class="reprow reprow--4">'
+                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + selectRO('Qualificação', r.cargo || r.qualificacao) + inputRO('Sócio associado', r.socio || '—')
                 + '</div>'
                 + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento de identificação</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
                 + '</div>';
@@ -400,16 +409,21 @@
         // Quadro de sócios e administradores: cards read-only (Nome/CPF/Tipo/Qualificação/Data de inclusão/País)
         html += '<span class="fieldlbl">Quadro de sócios e administradores</span>';
         sec.quadro.forEach(function (s, idx) {
-          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Sócio ' + (idx + 1) + '</span></div><div class="reprow reprow--3">'
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Sócio ' + (idx + 1) + '</span></div><div class="reprow reprow--4">'
                 + inputRO('Nome', s.nome) + inputRO('CPF', s.cpf) + inputRO('Tipo', s.tipo)
-                + selectRO('Qualificação', s.qualificacao) + inputRO('Data de inclusão', s.dataInclusao) + inputRO('País', s.pais)
+                + selectRO('Qualificação', s.qualificacao) + inputRO('Data de inclusão', s.dataInclusao) + inputRO('País', s.pais) + inputRO('Possui procurador', s.procurador || '—')
                 + '</div></div>';
         });
       } else {
         var isCard = (sec.title === 'Contatos' || sec.title === 'Endereço');
         if (isCard) html += '<div class="listrow repcard is-principal"><div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span></span></div>';
         html += '<div class="' + gridClass(sec.title) + '">';
-        sec.items.forEach(function (it) {
+        var items = sec.items;
+        if (sec.title === 'Identificação' && stored.tipo === 'PF') { // mesma ordem do cadastro: Documento, Data de nascimento, Nacionalidade, Nome, Outros documentos, e-mails, IBS
+          var ordPF = ['CPF', 'Data de nascimento', 'Nacionalidade', 'Nome do locatário', 'Tipo de documento', 'Número do documento', 'E-mail principal', 'E-mail de assinatura de contrato', 'E-mail de login do Meu Espaço', 'Pessoa contribuinte do IBS e da CBS'];
+          items = items.slice().sort(function (a, b) { var ia = ordPF.indexOf(a.label); var ib = ordPF.indexOf(b.label); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+        }
+        items.forEach(function (it) {
           if (it.check) html += checkRO(it.label, it.checked);
           else if (it.mail) html += mailRO(it.label, it.value, it.usarPrincipal);
           else if (it.assina !== undefined) html += mailFlagRO(it.label, it.value, it.assina !== false);
@@ -419,7 +433,8 @@
             html += outrosDocsRO(it.value, num);
           }
           else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
-          else if (it.label === 'CPF' && stored.cpfManual && stored.tipo === 'PF') html += '<div class="input"><div class="input__label"><p>CPF</p></div><div class="input__field is-readonly cpffield"><input class="input__control" value="' + escAttr(it.value) + '" readonly /><div class="cpfacts" id="cpfInlineSlot"></div></div></div>';
+          else if (it.label === 'CPF' && stored.tipo === 'PF') html += docComboRO(it.value, 'CPF');
+          else if (it.label === 'CNPJ' && stored.tipo === 'PF') html += inputRO('CNPJ', it.value, ' col-2'); // contribuinte IBS/CBS: CNPJ abaixo do checkbox
           else html += inputRO(it.label, it.value, span(it.label));
         });
         html += '</div>';
@@ -457,7 +472,7 @@
     // Banner amarelo no topo: lista, em passos, todas as aprovações pendentes (CPF + documentos)
     function pendingItems() {
       var items = [];
-      if (stored.cpfManual && stored.tipo === 'PF' && !cpfResolvido) items.push('Aprovar validação do CPF');
+      if (stored.cpfManual && !cpfResolvido) items.push('Aprovar validação do ' + (stored.tipo === 'PF' ? 'CPF' : 'CNPJ'));
       docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual' && !/CNPJ/i.test(d.label)) items.push('Aprovar documento: ' + d.label); }); // CNPJ não entra na aprovação manual
       return items;
     }

@@ -1,4 +1,4 @@
-/* Dados simulados de locatário (Exibição/Listagem). Validação manual só para CPF (PF). */
+/* Dados simulados de locatário. */
 window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
@@ -455,7 +455,11 @@ window.LOCATARIOS = {
           {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
-            "checked": false
+            "checked": true
+          },
+          {
+            "label": "CNPJ",
+            "value": "12.345.678/0001-90"
           }
         ]
       },
@@ -1206,7 +1210,11 @@ window.LOCATARIOS = {
           {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
-            "checked": false
+            "checked": true
+          },
+          {
+            "label": "CNPJ",
+            "value": "98.765.432/0001-55"
           }
         ]
       },
@@ -2079,7 +2087,11 @@ window.LOCATARIOS = {
           {
             "check": true,
             "label": "Pessoa contribuinte do IBS e da CBS",
-            "checked": false
+            "checked": true
+          },
+          {
+            "label": "CNPJ",
+            "value": "34.567.890/0001-21"
           }
         ]
       },
@@ -2987,7 +2999,8 @@ window.LOCATARIOS = {
             "cargo": "Administrador",
             "tipo": "Legal",
             "email": "marina@alvescom.com.br",
-            "doc": "rg-representante.jpg"
+            "doc": "passaporte-representante.jpg",
+            "docTipo": "Passaporte"
           }
         ]
       },
@@ -3082,7 +3095,8 @@ window.LOCATARIOS = {
       "data": "05/08/2026",
       "motivo": "Documentação conferida e válida.",
       "por": "Carol Ferreira"
-    }
+    },
+    "cpfManual": true
   },
   "20": {
     "nome": "Everest Holding Ltda",
