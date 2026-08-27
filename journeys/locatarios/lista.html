@@ -113,8 +113,9 @@
                 <div class="select__field"><p class="select__value select__value--filled">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
                 <div class="select__dropdown"><div class="select__list">
                   <div class="select__item select__item--active"><p class="select__item-text">Todos</p></div>
-                  <div class="select__item"><p class="select__item-text">Pessoa Física</p></div>
-                  <div class="select__item"><p class="select__item-text">Pessoa Jurídica</p></div>
+                  <div class="select__item"><p class="select__item-text">PF brasileiro</p></div>
+                  <div class="select__item"><p class="select__item-text">PF estrangeiro</p></div>
+                  <div class="select__item"><p class="select__item-text">PJ</p></div>
                 </div></div>
               </div>
             </div>
@@ -166,17 +167,19 @@
     var rows = Object.keys(window.LOCATARIOS).map(function (id) {
       var l = window.LOCATARIOS[id];
       var cod = codigo(id);
-      var search = [id, cod, l.nome, l.docNum].map(norm).join(' ');
-      return { id: id, codigo: cod, nome: l.nome, tipo: l.tipo, docNum: l.docNum, status: l.status, search: search };
+      var nac = ''; (l.dados || []).forEach(function (s) { (s.items || []).forEach(function (it) { if (it.label === 'Nacionalidade') nac = it.value; }); });
+      var tipoLabel = l.tipo === 'PF' ? (/estrang/i.test(nac) ? 'PF estrangeiro' : 'PF brasileiro') : 'PJ';
+      var search = [id, cod, l.nome, l.docNum, tipoLabel].map(norm).join(' ');
+      return { id: id, codigo: cod, nome: l.nome, tipo: l.tipo, tipoLabel: tipoLabel, docNum: l.docNum, status: l.status, search: search };
     });
 
-    var fields = ['codigo','nome','tipo','docNum','status'];
+    var fields = ['codigo','nome','tipoLabel','docNum','status'];
     var state = { query: '', fStatus: '', fTipo: '', sortField: null, sortDir: 1, pageSize: 20, page: 1 };
 
     function apply() {
       var out = rows.filter(function (r) {
         if (state.fStatus && r.status !== state.fStatus) return false;
-        if (state.fTipo && r.tipo !== state.fTipo) return false;
+        if (state.fTipo && r.tipoLabel !== state.fTipo) return false;
         if (state.query && state.query.length >= 3 && r.search.indexOf(state.query) < 0) return false;
         return true;
       });
@@ -209,7 +212,7 @@
         html += '<div class="table__row' + alt + '" data-href="perfil.html?id=' + r.id + '">'
           + '<div class="table__cell"><p class="table__cell-text">' + esc(r.codigo) + '</p></div>'
           + '<div class="table__cell"><span class="cl-name">' + esc(r.nome) + '</span></div>'
-          + '<div class="table__cell"><span class="badge badge--outline">' + esc(r.tipo) + '</span></div>'
+          + '<div class="table__cell"><span class="badge badge--outline">' + esc(r.tipoLabel) + '</span></div>'
           + '<div class="table__cell"><p class="table__cell-text">' + esc(r.docNum) + '</p></div>'
           + '<div class="table__cell"><span class="badge ' + (badgeMap[r.status] || 'badge--outline') + '">' + esc(STATUS_SHORT[r.status] || r.status) + '</span></div>'
           + '<div class="table__cell table__cell--action"><div class="rowmenu"><button type="button" class="table__kebab" data-rowmenu aria-label="Ações"><svg><use href="#ri-more-2"/></svg></button><div class="rowmenu__panel" hidden><a class="rowmenu__item" href="cadastro.html?editar=1&id=' + r.id + '">Editar</a></div></div></div>'
@@ -256,7 +259,7 @@
     // RN4/RN5/RN10 — Filtros (Status + Tipo) dinâmicos
     var selects = document.querySelectorAll('.toolbar__filter-dd .select');
     if (selects[0]) selects[0].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fStatus = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
-    if (selects[1]) selects[1].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fTipo = /todos/i.test(txt) ? '' : (/f[ií]sica/i.test(txt) ? 'PF' : /jur[ií]dica/i.test(txt) ? 'PJ' : ''); state.page = 1; render(); });
+    if (selects[1]) selects[1].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fTipo = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
 
     // RN6 — Limpar filtro
     var clean = document.querySelector('.dropdown__clean .btn');

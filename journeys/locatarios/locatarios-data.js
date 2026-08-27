@@ -1903,7 +1903,7 @@ window.LOCATARIOS = {
     "tipo": "PF",
     "status": "Em análise",
     "email": "débora.pinto@email.com",
-    "docNum": "623.114.558-09",
+    "docNum": "FH123456",
     "boxes": "T-19",
     "unidade": "Tatuapé",
     "seguro": "MAPFRE",
@@ -1917,19 +1917,15 @@ window.LOCATARIOS = {
           },
           {
             "label": "Nacionalidade",
-            "value": "Brasileira"
-          },
-          {
-            "label": "CPF",
-            "value": "623.114.558-09"
+            "value": "Estrangeira"
           },
           {
             "label": "Tipo de documento",
-            "value": "RG"
+            "value": "Passaporte"
           },
           {
             "label": "Número do documento",
-            "value": "22.334.556-7"
+            "value": "FH123456"
           },
           {
             "label": "Data de nascimento",

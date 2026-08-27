@@ -158,7 +158,9 @@
       'Inativo': 'badge--outline'
     };
     var cpfResolvido = null; // null | 'Aprovado' | 'Reprovado' \u2014 valida\u00e7\u00e3o manual do documento
-    var docLabel = stored.tipo === 'PF' ? 'CPF' : 'CNPJ'; // CPF p/ PF, CNPJ p/ PJ
+    var nacExib = ''; stored.dados.forEach(function (s) { (s.items || []).forEach(function (it) { if (it.label === 'Nacionalidade') nacExib = it.value; }); });
+    var pfEstrangeira = stored.tipo === 'PF' && /estrang/i.test(nacExib);
+    var docLabel = stored.tipo !== 'PF' ? 'CNPJ' : (pfEstrangeira ? 'Documento' : 'CPF'); // CPF p/ PF brasileira, Documento p/ estrangeira, CNPJ p/ PJ
     var stBadge = document.getElementById('statusBadge');
     var btnAp = document.getElementById('btnAprovar'); if (btnAp) btnAp.hidden = true;  // valida\u00e7\u00e3o agora \u00e9 por documento
     var btnRe = document.getElementById('btnReprovar'); if (btnRe) btnRe.hidden = true;
@@ -235,7 +237,7 @@
     }
     function span(label) {
       if (['Logradouro', 'Complemento'].indexOf(label) >= 0) return ' col-3';
-      return ['Nome do locatário', 'Nome'].indexOf(label) >= 0 ? ' col-2' : '';
+      return label === 'Nome' ? ' col-2' : '';
     }
     function inputRO(label, value, cls) {
       return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
@@ -248,13 +250,16 @@
       return '<div class="input"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><select class="input__control" disabled>' + o + '</select></div></div>';
     }
     // Documento (PF) read-only — fiel ao combofield do cadastro (select + input), ambos read-only
-    function docComboRO(value, tipo, extra) {
+    function docComboRO(value, tipo, extra, o2) {
+      o2 = o2 || {};
       tipo = tipo || 'CPF';
       var opts = ['CPF', 'RG', 'CNH', 'CIN', 'RNE', 'Passaporte', 'Carteira de classe'];
       if (opts.indexOf(tipo) < 0) opts.unshift(tipo);
       var o = opts.map(function (op) { return '<option' + (op === tipo ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
-      return '<div class="input col-2"><div class="input__label"><p>Documento</p></div>'
-        + '<div class="combofield is-readonly"><select class="combofield__pre" disabled>' + o + '</select><input class="combofield__val" value="' + escAttr(value) + '" readonly /></div>'
+      var label = o2.label || 'Documento';
+      var preHidden = o2.hideSelect ? ' hidden' : '';   // brasileira: só CPF, sem seletor de tipo
+      return '<div class="input col-2"><div class="input__label"><p>' + esc(label) + '</p></div>'
+        + '<div class="combofield is-readonly"><select class="combofield__pre" disabled' + preHidden + '>' + o + '</select><input class="combofield__val" value="' + escAttr(value) + '" readonly /></div>'
         + (extra || '') + '</div>';
     }
     function mailRO(label, value, usarPrincipal) {
@@ -390,7 +395,8 @@
     // Ordem fixa das seções (Documentações renderizada por último, fora deste laço)
     var ORDER = ['Identificação', 'Endereço', 'Sócios', 'Representantes', 'Contatos'];
     // Seção própria "Tipo de locatário" (topo), espelhando o cadastro
-    var html = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipo de locatário</h2></div></div><div class="section__body"><div class="formgrid formgrid--4">' + inputRO('Tipo de locatário', stored.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica') + '</div></div></section>';
+    var tipoLoc = stored.tipo === 'PF' ? (pfEstrangeira ? 'Pessoa física estrangeira' : 'Pessoa física brasileira') : 'Pessoa jurídica';
+    var html = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipo de locatário</h2></div></div><div class="section__body"><div class="formgrid formgrid--4">' + inputRO('Tipo de locatário', tipoLoc, ' col-2') + '</div></div></section>';
     ORDER.forEach(function (t) {
       var sec = byT[t]; if (!sec) return;
       var titleDisplay = (sec.title === 'Endereços') ? 'Endereço' : sec.title;
@@ -419,21 +425,25 @@
         if (isCard) html += '<div class="listrow repcard is-principal"><div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span></span></div>';
         html += '<div class="' + gridClass(sec.title) + '">';
         var items = sec.items;
-        if (sec.title === 'Identificação' && stored.tipo === 'PF') { // mesma ordem do cadastro: Documento, Data de nascimento, Nacionalidade, Nome, Outros documentos, e-mails, IBS
-          var ordPF = ['CPF', 'Data de nascimento', 'Nacionalidade', 'Nome do locatário', 'Tipo de documento', 'Número do documento', 'E-mail principal', 'E-mail de assinatura de contrato', 'E-mail de login do Meu Espaço', 'Pessoa contribuinte do IBS e da CBS'];
+        if (sec.title === 'Identificação' && stored.tipo === 'PF') { // Nacionalidade foi unificada em "Tipo de locatário" (topo)
+          var ordPF = pfEstrangeira
+            ? ['Tipo de documento', 'Número do documento', 'Data de nascimento', 'Nome do locatário', 'E-mail principal', 'E-mail de assinatura de contrato', 'E-mail de login do Meu Espaço', 'Pessoa contribuinte do IBS e da CBS', 'CPF']
+            : ['CPF', 'Data de nascimento', 'Nome do locatário', 'Tipo de documento', 'Número do documento', 'E-mail principal', 'E-mail de assinatura de contrato', 'E-mail de login do Meu Espaço', 'Pessoa contribuinte do IBS e da CBS'];
           items = items.slice().sort(function (a, b) { var ia = ordPF.indexOf(a.label); var ib = ordPF.indexOf(b.label); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
         }
         items.forEach(function (it) {
+          if (it.label === 'Nacionalidade') return;                 // unificado em "Tipo de locatário"
           if (it.check) html += checkRO(it.label, it.checked);
           else if (it.mail) html += mailRO(it.label, it.value, it.usarPrincipal);
           else if (it.assina !== undefined) html += mailFlagRO(it.label, it.value, it.assina !== false);
           else if (it.label === 'Tipo de documento') {
             var num = '';
             sec.items.forEach(function (x) { if (x.label === 'Número do documento') num = x.value; });
-            html += outrosDocsRO(it.value, num);
+            if (pfEstrangeira) html += docComboRO(num, it.value, '', { label: 'Documento' });   // estrangeira: documento principal (tipo + número)
+            else html += outrosDocsRO(it.value, num);                                            // brasileira: fica em "Outros documentos"
           }
-          else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
-          else if (it.label === 'CPF' && stored.tipo === 'PF') html += docComboRO(it.value, 'CPF');
+          else if (it.label === 'Número do documento') { /* consumido acima */ }
+          else if (it.label === 'CPF' && stored.tipo === 'PF') { if (!pfEstrangeira) html += docComboRO(it.value, 'CPF', '', { label: 'CPF', hideSelect: true }); } // brasileira: CPF; estrangeira: oculto
           else if (it.label === 'CNPJ' && stored.tipo === 'PF') html += inputRO('CNPJ', it.value, ' col-2'); // contribuinte IBS/CBS: CNPJ abaixo do checkbox
           else html += inputRO(it.label, it.value, span(it.label));
         });

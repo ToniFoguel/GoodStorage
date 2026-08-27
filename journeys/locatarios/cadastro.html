@@ -113,14 +113,15 @@
       <section class="section" id="secTipo" style="order:0">
         <div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipo de locatário</h2></div></div>
         <div class="section__body"><div class="formgrid formgrid--4">
-          <div class="input">
+          <div class="input col-2">
             <div class="input__label"><p>Tipo de locatário</p><p class="input__req">*</p></div>
             <div class="select" data-tiposelect>
-              <div class="select__field"><p class="select__value select__value--filled">Pessoa Jurídica</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+              <div class="select__field"><p class="select__value select__value--filled">Pessoa jurídica</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
               <div class="select__dropdown select__dropdown--no-title" hidden>
                 <div class="select__list">
-                  <div class="select__item" data-tab="tab-pf"><p class="select__item-text">Pessoa Física</p></div>
-                  <div class="select__item select__item--active" data-tab="tab-pj"><p class="select__item-text">Pessoa Jurídica</p></div>
+                  <div class="select__item" data-tab="tab-pf" data-mode="brasileira"><p class="select__item-text">Pessoa física brasileira</p></div>
+                  <div class="select__item" data-tab="tab-pf" data-mode="estrangeira"><p class="select__item-text">Pessoa física estrangeira</p></div>
+                  <div class="select__item select__item--active" data-tab="tab-pj" data-mode="pj"><p class="select__item-text">Pessoa jurídica</p></div>
                 </div>
               </div>
             </div>
@@ -134,7 +135,7 @@
           <div class="section__head"><div class="section__headleft"><h2 class="section__title">Identificação</h2></div></div>
           <div class="section__body"><div class="formgrid formgrid--4">
             <!-- Documento: CPF por padrão; pode selecionar outro tipo (2 colunas, 1º campo) -->
-            <div class="input col-2 js-doc-combo"><div class="input__label"><p>Documento</p><p class="input__req">*</p></div>
+            <div class="input col-2 js-doc-combo"><div class="input__label"><p id="docComboLabel">Documento</p><p class="input__req">*</p></div>
               <div class="combofield" id="docEstrField">
                 <select class="combofield__pre js-lock-edit" id="docEstrTipo" data-doc-estr>
                   <option value="CPF" selected>CPF</option>
@@ -151,8 +152,7 @@
               <p class="combofield__err">Selecione o tipo e informe o número do documento.</p>
             </div>
             <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" data-sensitive="Data de nascimento" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
-            <div class="input"><div class="input__label"><p>Nacionalidade</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control js-lock-edit" data-nac><option>Brasileira</option><option>Estrangeira</option></select></div></div>
-            <div class="input col-2"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
+            <div class="input"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" data-sensitive="Nome do locatário" data-edit="Marina Duarte" placeholder="Nome completo" /></div></div>
             <div class="input col-2"><div class="input__label"><p>Outros documentos</p><p class="input__req js-docs-req" hidden>*</p></div>
               <div class="select" data-multiselect>
                 <div class="select__field"><p class="select__value" data-placeholder="Selecione os documentos">Selecione os documentos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
@@ -677,24 +677,42 @@
       if (wrap && card) { wrap.querySelectorAll('.repeater__item').forEach(function (it) { it.classList.remove('is-principal'); }); card.classList.add('is-principal'); }
     });
 
-    // 3f) Seletor de tipo (select): troca o painel ativo (travado na edição)
+    // 3f) Seletor "Tipo de locatário": troca o painel ativo e alterna o documento do PF (travado na edição)
     (function () {
       var sel = document.querySelector('[data-tiposelect]'); if (!sel) return;
       var field = sel.querySelector('.select__field');
       var dd = sel.querySelector('.select__dropdown');
       var value = sel.querySelector('.select__value');
+      var docLabel = document.getElementById('docComboLabel');
+      var docPre = document.getElementById('docEstrTipo');
+      var docNum = document.getElementById('docEstrNum');
+      function applyDocMode(val) {                 // 'brasileira' -> apenas CPF; 'estrangeira' -> escolher tipo de documento
+        if (!docPre || !docNum) return;
+        var estr = val === 'estrangeira';
+        docPre.hidden = !estr;                      // brasileira: sem seletor de tipo (apenas CPF)
+        if (docLabel) docLabel.textContent = estr ? 'Documento' : 'CPF';
+        var cpfOpt = docPre.querySelector('option[value="CPF"]');
+        if (cpfOpt) cpfOpt.hidden = estr;           // CPF não é opção para estrangeiro
+        if (estr) { if (docPre.value === 'CPF') { docPre.value = 'Passaporte'; docPre.dispatchEvent(new Event('change', { bubbles: true })); } }
+        else { if (docPre.value !== 'CPF') { docPre.value = 'CPF'; docPre.dispatchEvent(new Event('change', { bubbles: true })); } docNum.placeholder = '000.000.000-00'; }
+      }
+      function choose(it) {
+        sel.querySelectorAll('.select__item').forEach(function (x) { x.classList.remove('select__item--active'); });
+        it.classList.add('select__item--active');
+        value.textContent = it.querySelector('.select__item-text').textContent;
+        var tab = it.getAttribute('data-tab');
+        document.querySelectorAll('.tabpanel').forEach(function (p) { p.classList.toggle('is-active', p.id === tab); });
+        var mode = it.getAttribute('data-mode');
+        if (mode === 'brasileira' || mode === 'estrangeira') applyDocMode(mode);
+      }
       field.addEventListener('click', function (e) { if (sel.classList.contains('is-locked')) return; e.stopPropagation(); dd.hidden = !dd.hidden; sel.classList.toggle('select--open', !dd.hidden); });
       document.addEventListener('click', function (e) { if (!sel.contains(e.target)) { dd.hidden = true; sel.classList.remove('select--open'); } });
       sel.querySelectorAll('.select__item').forEach(function (it) {
-        it.addEventListener('click', function () {
-          sel.querySelectorAll('.select__item').forEach(function (x) { x.classList.remove('select__item--active'); });
-          it.classList.add('select__item--active');
-          value.textContent = it.querySelector('.select__item-text').textContent;
-          var tab = it.getAttribute('data-tab');
-          document.querySelectorAll('.tabpanel').forEach(function (p) { p.classList.toggle('is-active', p.id === tab); });
-          dd.hidden = true; sel.classList.remove('select--open');
-        });
+        it.addEventListener('click', function () { choose(it); dd.hidden = true; sel.classList.remove('select--open'); });
       });
+      window.__setTipo = function (mode) { var it = sel.querySelector('.select__item[data-mode="' + mode + '"]'); if (it) choose(it); };  // usado pela edição
+      var act = sel.querySelector('.select__item--active');   // estado inicial: aplica o modo do item ativo
+      if (act) { var m = act.getAttribute('data-mode'); if (m === 'brasileira' || m === 'estrangeira') applyDocMode(m); }
     })();
 
     // 4) Salvar cadastro: valida obrigatórios visíveis (aba ativa + seções compartilhadas) e abre modal
@@ -936,15 +954,13 @@
 
       // Tipo cadastrado (prioriza o locatário aberto); na edição o select fica travado
       var tipo = byId ? byId.tipo : ((stored && stored.tipo) ? stored.tipo : 'PJ');
-      document.querySelectorAll('.tabpanel').forEach(function (p) {
-        p.classList.toggle('is-active', p.id === (tipo === 'PF' ? 'tab-pf' : 'tab-pj'));
-      });
+      var nac = '';
+      if (byId) byId.dados.forEach(function (s) { (s.items || []).forEach(function (it) { if (it.label === 'Nacionalidade') nac = it.value; }); });
+      var mode = tipo === 'PF' ? (/estrang/i.test(nac) ? 'estrangeira' : 'brasileira') : 'pj';
+      if (window.__setTipo) window.__setTipo(mode);
+      else document.querySelectorAll('.tabpanel').forEach(function (p) { p.classList.toggle('is-active', p.id === (tipo === 'PF' ? 'tab-pf' : 'tab-pj')); });
       var tsel = document.querySelector('[data-tiposelect]');
-      if (tsel) {
-        tsel.classList.add('is-locked');
-        var tval = tsel.querySelector('.select__value'); if (tval) tval.textContent = (tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica');
-        tsel.querySelectorAll('.select__item').forEach(function (it) { it.classList.toggle('select__item--active', it.getAttribute('data-tab') === (tipo === 'PF' ? 'tab-pf' : 'tab-pj')); });
-      }
+      if (tsel) tsel.classList.add('is-locked');
 
       // Preencher: do locatário (dataset, por seção/rótulo) > armazenado > exemplo
       if (byId) {
@@ -963,10 +979,20 @@
           });
         });
 
-        // Documento (PF): preenche o combo com o CPF (tipo CPF por padrão)
+        // Documento (PF): brasileira -> CPF; estrangeira -> tipo + número do documento
         var idM0 = byTitle['Identificação'] || {};
         var docNum0 = document.getElementById('docEstrNum');
-        if (docNum0 && idM0['CPF'] != null) { docNum0.value = idM0['CPF']; var docTp0 = document.getElementById('docEstrTipo'); if (docTp0) docTp0.value = 'CPF'; }
+        var docTp0 = document.getElementById('docEstrTipo');
+        if (docNum0 && docTp0) {
+          if (mode === 'estrangeira') {
+            var tEstr = idM0['Tipo de documento'] || 'Passaporte';
+            docTp0.value = tEstr; docTp0.dispatchEvent(new Event('change', { bubbles: true }));
+            docNum0.value = idM0['Número do documento'] || '';
+          } else {
+            docTp0.value = 'CPF';
+            docNum0.value = idM0['CPF'] != null ? idM0['CPF'] : '';
+          }
+        }
 
         // Representantes (PJ): preencher os cards a partir de byId.reps
         var repData = null; byId.dados.forEach(function (s) { if (s.reps) repData = s.reps; });
