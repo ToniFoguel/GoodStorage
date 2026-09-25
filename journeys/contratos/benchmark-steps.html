@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Benchmark — Steps Contratos</title>
+<style>
+  :root{
+    --bg:#f6f6f7; --surface:#ffffff; --ink:#1b1b1f; --ink-2:#565660; --ink-3:#8a8a94;
+    --line:#e6e6ea; --line-2:#d9d9e0; --accent:#f5731f; --accent-soft:#fff1e8;
+    --ok:#1f9d57; --ok-soft:#e7f6ee; --info:#5b5bd6; --info-soft:#ececfb;
+    --warn:#c9820a; --warn-soft:#fdf3e0; --radius:14px; --radius-sm:10px;
+    --shadow:0 1px 2px rgba(20,20,30,.05),0 8px 24px rgba(20,20,30,.05);
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme:dark){
+    :root{}
+  }}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#0f0f12; --surface:#17171b; --ink:#f0f0f3; --ink-2:#b6b6bf; --ink-3:#7c7c86;
+    --line:#26262c; --line-2:#33333b; --accent:#ff8a45; --accent-soft:#2a1a10;
+    --ok:#3fca7f; --ok-soft:#12241a; --info:#8f8ff0; --info-soft:#1a1a2c;
+    --warn:#e0a94a; --warn-soft:#26200f;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0f0f12; --surface:#17171b; --ink:#f0f0f3; --ink-2:#b6b6bf; --ink-3:#7c7c86;
+    --line:#26262c; --line-2:#33333b; --accent:#ff8a45; --accent-soft:#2a1a10;
+    --ok:#3fca7f; --ok-soft:#12241a; --info:#8f8ff0; --info-soft:#1a1a2c;
+    --warn:#e0a94a; --warn-soft:#26200f;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 16px 80px;}
+  header.top{margin-bottom:28px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--accent);
+    background:var(--accent-soft);padding:5px 12px;border-radius:999px;}
+  h1{font-size:34px;line-height:1.15;letter-spacing:-.02em;margin:16px 0 8px;}
+  .lede{color:var(--ink-2);font-size:17px;max-width:70ch;margin:0;}
+  h2{font-size:24px;letter-spacing:-.01em;margin:56px 0 6px;}
+  h3{font-size:15px;margin:0 0 8px;}
+  .sub{color:var(--ink-3);font-size:14px;margin:0 0 20px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);}
+  .pad{padding:22px;}
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:start;}
+  @media (max-width:780px){ .grid2{grid-template-columns:1fr;} h1{font-size:27px;} }
+  .tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;
+    border:1px solid var(--line-2);color:var(--ink-2);}
+  .tag--ok{background:var(--ok-soft);color:var(--ok);border-color:transparent;}
+  .tag--info{background:var(--info-soft);color:var(--info);border-color:transparent;}
+  .tag--warn{background:var(--warn-soft);color:var(--warn);border-color:transparent;}
+  .tag--accent{background:var(--accent-soft);color:var(--accent);border-color:transparent;}
+  ul.clean{margin:10px 0 0;padding:0;list-style:none;}
+  ul.clean li{position:relative;padding-left:22px;margin:7px 0;color:var(--ink-2);font-size:14px;}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:9px;width:6px;height:6px;
+    border-radius:50%;background:var(--accent);}
+  ul.pro li::before{background:var(--ok);}
+  ul.con li::before{background:#e0574b;}
+  .prosbox{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;}
+  @media (max-width:520px){ .prosbox{grid-template-columns:1fr;} }
+  .mini-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);}
+  .ex{font-size:13px;color:var(--ink-2);margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2);}
+  .ex b{color:var(--ink);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* ====== MOCKUP CHROME ====== */
+  .mock{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);
+    overflow:hidden;}
+  .mock__bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);
+    background:linear-gradient(var(--bg),var(--surface));}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--line-2);}
+  .mock__title{margin-left:8px;font-size:12px;color:var(--ink-3);font-weight:600;}
+  .mock__body{padding:18px;}
+  .field{margin:0 0 11px;}
+  .field label{display:block;font-size:11px;color:var(--ink-3);margin-bottom:5px;font-weight:600;}
+  .field .inp{height:30px;border:1px solid var(--line-2);border-radius:8px;background:var(--bg);}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .btnrow{display:flex;justify-content:space-between;margin-top:16px;gap:10px;}
+  .b{font-size:12px;font-weight:600;padding:8px 16px;border-radius:9px;border:1px solid var(--line-2);
+    background:var(--surface);color:var(--ink-2);cursor:pointer;}
+  .b--primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .b--ghost{border-color:transparent;background:transparent;}
+
+  /* horizontal stepper */
+  .hsteps{display:flex;align-items:center;gap:0;padding:4px 4px 2px;}
+  .hstep{display:flex;align-items:center;gap:9px;cursor:pointer;flex:0 0 auto;}
+  .hstep__n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;
+    font-weight:700;background:var(--bg);color:var(--ink-3);border:1.5px solid var(--line-2);flex:0 0 auto;}
+  .hstep__t{font-size:12px;color:var(--ink-3);font-weight:600;white-space:nowrap;}
+  .hstep.is-active .hstep__n{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .hstep.is-active .hstep__t{color:var(--ink);}
+  .hstep.is-done .hstep__n{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);}
+  .hstep.is-done .hstep__t{color:var(--ink-2);}
+  .hbar{flex:1 1 auto;height:1.5px;background:var(--line-2);margin:0 10px;min-width:14px;}
+  .hbar.is-done{background:var(--ok);}
+  @media (max-width:520px){ .hstep__t{display:none;} }
+
+  /* vertical stepper */
+  .vlayout{display:grid;grid-template-columns:150px 1fr;gap:16px;}
+  .vsteps{display:flex;flex-direction:column;gap:2px;}
+  .vstep{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:7px 6px;border-radius:9px;}
+  .vstep.is-active{background:var(--accent-soft);}
+  .vstep__n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:11px;
+    font-weight:700;background:var(--bg);color:var(--ink-3);border:1.5px solid var(--line-2);flex:0 0 auto;}
+  .vstep.is-active .vstep__n{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .vstep.is-done .vstep__n{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);}
+  .vstep__t{font-size:12px;color:var(--ink-2);font-weight:600;line-height:1.3;padding-top:3px;}
+  .vstep.is-active .vstep__t{color:var(--ink);}
+  @media (max-width:520px){ .vlayout{grid-template-columns:1fr;} .vsteps{flex-direction:row;overflow:auto;} .vstep__t{display:none;} }
+
+  /* accordion / progressive disclosure */
+  .acc{display:flex;flex-direction:column;gap:8px;}
+  .accitem{border:1px solid var(--line-2);border-radius:var(--radius-sm);overflow:hidden;}
+  .acchead{display:flex;align-items:center;gap:11px;padding:12px 14px;cursor:pointer;background:var(--surface);}
+  .accitem.is-open .acchead{border-bottom:1px solid var(--line);}
+  .acc__n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:11px;
+    font-weight:700;background:var(--bg);color:var(--ink-3);border:1.5px solid var(--line-2);flex:0 0 auto;}
+  .accitem.is-open .acc__n{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .accitem.is-done .acc__n{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);}
+  .acc__t{font-size:13px;font-weight:600;flex:1;}
+  .acc__sum{font-size:12px;color:var(--ink-3);}
+  .acc__chev{color:var(--ink-3);transition:transform .18s;font-size:12px;}
+  .accitem.is-open .acc__chev{transform:rotate(180deg);}
+  .accbody{padding:14px;display:none;}
+  .accitem.is-open .accbody{display:block;}
+  .editpill{font-size:11px;color:var(--accent);font-weight:600;}
+
+  /* recommendation matrix */
+  .matrix{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;}
+  .matrix th,.matrix td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .matrix th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);}
+  .matrix td b{color:var(--ink);}
+  .matrix tr:last-child td{border-bottom:none;}
+  .matrix .rowh{font-weight:700;color:var(--ink);white-space:nowrap;}
+  .note{font-size:13px;color:var(--ink-2);}
+  .callout{display:flex;gap:12px;padding:16px;border-radius:var(--radius-sm);background:var(--accent-soft);
+    border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);margin-top:14px;}
+  .callout .ico{font-size:18px;}
+  .foot{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px;}
+  .foot a{color:var(--ink-2);}
+  .chipline{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .kbd{font-size:12px;color:var(--ink-3);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="eyebrow">◆ Benchmark de UI · GoodStorage</span>
+    <h1>Visualização de steps para Contratos</h1>
+    <p class="lede">Três formas de exibir um formulário multi-etapas — horizontal, vertical e colapsado (progressive disclosure) — com exemplos reais, prós e contras, e uma recomendação para o fluxo de Contratos (Cadastro, Exibição e Edição sobre os 4 mesmos steps).</p>
+  </header>
+
+  <div class="card pad">
+    <h3 style="margin-bottom:4px">O problema a resolver</h3>
+    <p class="note" style="margin:0 0 14px">As telas de <b>Exibição</b>, <b>Edição</b> e <b>Cadastro manual</b> compartilham os mesmos 4 steps. Alguns são densos (Locatário e Orçamento têm muitos campos), outros são curtos (Seguro, Informações do contrato). A pergunta é como mostrar o step atual sem afogar a pessoa nos campos dos outros.</p>
+    <div class="hsteps" style="pointer-events:none">
+      <div class="hstep is-active"><span class="hstep__n">1</span><span class="hstep__t">Locatário · ~15 campos</span></div>
+      <div class="hbar"></div>
+      <div class="hstep"><span class="hstep__n">2</span><span class="hstep__t">Orçamento · ~9 campos</span></div>
+      <div class="hbar"></div>
+      <div class="hstep"><span class="hstep__n">3</span><span class="hstep__t">Seguro · curto</span></div>
+      <div class="hbar"></div>
+      <div class="hstep"><span class="hstep__n">4</span><span class="hstep__t">Contrato · ~3 campos</span></div>
+    </div>
+  </div>
+
+  <!-- ============ PADRÃO A ============ -->
+  <h2>A · Stepper horizontal <span class="tag tag--accent" style="vertical-align:middle">barra no topo</span></h2>
+  <p class="sub">A trilha fica no topo; só o step atual aparece embaixo. É o "um passo por tela".</p>
+  <div class="grid2">
+    <div class="card pad">
+      <p class="note" style="margin-top:0">A pessoa vê a linha inteira do processo (onde está, quanto falta) e trabalha um passo de cada vez. Material recomenda o horizontal <b>quando o conteúdo de um step depende do anterior</b> e há espaço em tela (desktop).</p>
+      <div class="prosbox">
+        <div>
+          <span class="mini-label">A favor</span>
+          <ul class="clean pro">
+            <li>Progresso e tamanho do processo visíveis o tempo todo</li>
+            <li>Foco total: só os campos do passo atual</li>
+            <li>Ótimo para criação linear (novato/pouco frequente)</li>
+          </ul>
+        </div>
+        <div>
+          <span class="mini-label">Contra</span>
+          <ul class="clean con">
+            <li>Rótulos longos não cabem; encurta em telas estreitas</li>
+            <li>Comparar dados entre steps exige ir e voltar</li>
+            <li>Acima de ~5 steps a barra fica apertada</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ex"><span class="mini-label">Exemplos reais</span><br><b>Urban Outfitters</b> e <b>Tripadvisor</b> (checkout/booking), <b>Airbnb</b> (anunciar espaço). Clássico de checkout e wizard de setup.</p>
+    </div>
+    <div class="mock" id="mockH">
+      <div class="mock__bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mock__title">Cadastro de contrato — horizontal</span></div>
+      <div class="mock__body">
+        <div class="hsteps" data-steps></div>
+        <div style="height:1px;background:var(--line);margin:14px -4px 16px"></div>
+        <div data-panel></div>
+        <div class="btnrow">
+          <button class="b b--ghost" data-prev>← Voltar</button>
+          <button class="b b--primary" data-next>Avançar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PADRÃO B ============ -->
+  <h2>B · Stepper vertical <span class="tag tag--info" style="vertical-align:middle">trilha lateral</span></h2>
+  <p class="sub">Steps empilhados numa coluna à esquerda; conteúdo do step à direita.</p>
+  <div class="grid2">
+    <div class="card pad">
+      <p class="note" style="margin-top:0">A trilha vira menu lateral. Material indica o vertical <b>quando o conteúdo de cada step é longo/responsivo</b> e em telas estreitas — rótulos podem ser maiores e cada step "respira".</p>
+      <div class="prosbox">
+        <div>
+          <span class="mini-label">A favor</span>
+          <ul class="clean pro">
+            <li>Aguenta rótulos e descrições maiores por step</li>
+            <li>Escala bem para muitos steps (rola a coluna)</li>
+            <li>Vira acordeão no mobile com naturalidade</li>
+          </ul>
+        </div>
+        <div>
+          <span class="mini-label">Contra</span>
+          <ul class="clean con">
+            <li>Consome largura fixa da tela</li>
+            <li>Menos "sensação de progresso" que a barra do topo</li>
+            <li>Em desktop largo pode sobrar espaço vazio</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ex"><span class="mini-label">Exemplos reais</span><br><b>Uniswap</b> (criar posição) e fluxos de <b>onboarding</b> tipo checklist, onde ver todos os passos de uma vez ajuda.</p>
+    </div>
+    <div class="mock" id="mockV">
+      <div class="mock__bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mock__title">Edição de contrato — vertical</span></div>
+      <div class="mock__body">
+        <div class="vlayout">
+          <div class="vsteps" data-steps></div>
+          <div>
+            <div data-panel></div>
+            <div class="btnrow">
+              <button class="b b--ghost" data-prev>← Voltar</button>
+              <button class="b b--primary" data-next>Avançar →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PADRÃO C ============ -->
+  <h2>C · Colapsado / acordeão <span class="tag tag--ok" style="vertical-align:middle">progressive disclosure</span></h2>
+  <p class="sub">Todas as seções numa coluna; a atual aberta com os campos, as outras colapsadas num resumo com "Editar". É exatamente o "mostrar só o que importa agora".</p>
+  <div class="grid2">
+    <div class="card pad">
+      <p class="note" style="margin-top:0">Cada step é uma seção colapsável. A aberta mostra os campos; as concluídas viram uma linha-resumo. É o padrão de <b>progressive disclosure</b>: revela a informação secundária só quando ela é pedida, reduzindo a carga cognitiva sem esconder o todo.</p>
+      <div class="prosbox">
+        <div>
+          <span class="mini-label">A favor</span>
+          <ul class="clean pro">
+            <li>Melhor dos dois: foco no atual + visão do todo</li>
+            <li>Resumo de cada seção concluída fica à vista</li>
+            <li>Perfeito para Exibição (ler) e Edição (abrir sob demanda)</li>
+          </ul>
+        </div>
+        <div>
+          <span class="mini-label">Contra</span>
+          <ul class="clean con">
+            <li>Menos "linear" — precisa deixar claro o que falta</li>
+            <li>Muitas seções abertas de uma vez viram scroll longo</li>
+            <li>Exige um bom resumo por seção (senão vira só sanfona)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ex"><span class="mini-label">Exemplos reais</span><br>Checkout em acordeão do <b>Shopify</b> e <b>Stripe</b> (Contato → Entrega → Pagamento), e o "stepper vertical editável" do Material.</p>
+    </div>
+    <div class="mock" id="mockC">
+      <div class="mock__bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mock__title">Exibição / Edição — acordeão</span></div>
+      <div class="mock__body">
+        <div class="acc" data-acc></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RECOMENDAÇÃO ============ -->
+  <h2>Recomendação para Contratos</h2>
+  <p class="sub">Reaproveitando os 4 steps nas três telas, mas com o padrão certo para cada intenção.</p>
+  <div class="card">
+    <table class="matrix">
+      <thead><tr><th>Tela</th><th>Intenção</th><th>Padrão sugerido</th><th>Por quê</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="rowh">Cadastro manual</td>
+          <td class="note">Criar do zero, ordem importa</td>
+          <td><b>Horizontal (A)</b> <span class="tag tag--accent">linear</span></td>
+          <td class="note">Wizard clássico: força a sequência, um passo por tela, valida ao avançar. NN/g: ideal para tarefa pouco frequente.</td>
+        </tr>
+        <tr>
+          <td class="rowh">Exibição</td>
+          <td class="note">Ler tudo, achar rápido</td>
+          <td><b>Acordeão (C)</b> <span class="tag tag--ok">read-only</span></td>
+          <td class="note">Seções colapsadas com resumo; abre a que interessa. Vê o todo sem rolar 40 campos.</td>
+        </tr>
+        <tr>
+          <td class="rowh">Edição</td>
+          <td class="note">Mexer num ponto específico</td>
+          <td><b>Acordeão (C)</b> ou <b>Vertical (B)</b> <span class="tag tag--info">navegável</span></td>
+          <td class="note">Mesma cara da Exibição, campos abertos. Steps editáveis (Material): pula direto pra seção certa, sem refazer o fluxo.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <span class="ico">📱</span>
+    <div>
+      <b>Regra de responsividade</b><br>
+      <span class="note">O horizontal do Cadastro deve <b>virar vertical/acordeão no mobile</b> (recomendação do Material para telas estreitas). Assim o mesmo fluxo funciona no desktop da operação e no celular em campo. E: nunca aninhar stepper dentro de stepper.</span>
+    </div>
+  </div>
+
+  <h2>Guidelines que valem para os três</h2>
+  <div class="card pad">
+    <div class="prosbox" style="grid-template-columns:1fr 1fr">
+      <ul class="clean">
+        <li><b>Destaque o step atual</b> e marque os concluídos (✓) — orientação básica de wizard (NN/g).</li>
+        <li><b>Poucos campos por step</b> + validação inline; menos erro, menos abandono.</li>
+        <li><b>Criação = linear</b> (não deixa pular à frente). <b>Edição = editável</b> (pula à vontade).</li>
+      </ul>
+      <ul class="clean">
+        <li><b>Marque steps opcionais</b> — ex.: Seguro, se nem sempre entra no fluxo.</li>
+        <li><b>Numerado + rótulo</b> curto. Pontos/dots só quando há poucos steps.</li>
+        <li><b>Resumo por seção</b> no acordeão — sem isso vira só uma sanfona vazia.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="mini-label">Fontes</span>
+    <div class="chipline">
+      <a href="https://www.nngroup.com/articles/wizards/">NN/g — Wizards: Definition &amp; Design Recommendations</a> ·
+      <a href="https://m1.material.io/components/steppers.html">Material Design — Steppers</a> ·
+      <a href="https://www.eleken.co/blog-posts/stepper-ui-examples">Eleken — 32 Stepper UI Examples</a> ·
+      <a href="https://blog.logrocket.com/ux-design/progressive-disclosure-ux-types-use-cases/">LogRocket — Progressive Disclosure</a> ·
+      <a href="https://www.uxpin.com/studio/blog/what-is-progressive-disclosure/">UXPin — Progressive Disclosure</a>
+    </div>
+    <p style="margin-top:14px" class="kbd">Protótipos acima são interativos — clique nos steps / seções. Feito para o Design System GoodStorage.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var STEPS = [
+    {t:'Locatário', fields:[['Tipo (PF/PJ)','Razão social / Nome'],['CNPJ / CPF','Data de fundação'],['E-mail','Telefone / WhatsApp'],['CEP','Endereço']], sum:'Marina Alves Comércio Ltda · PJ'},
+    {t:'Orçamento', fields:[['Código do orçamento','Unidade de negócio'],['Produto','Valor base'],['Cupom de entrada','Cupom promocional'],['Desconto','Acréscimos']], sum:'ORC-4821 · R$ 890/mês'},
+    {t:'Seguro', fields:[['Apólice','Valor declarado']], sum:'MAPFRE · interna'},
+    {t:'Contrato', fields:[['Prazo de vigência','Início do prazo locatício'],['Promessa de pagamento (PJ)','']], sum:'12 meses · início 01/09'}
+  ];
+  function fieldsHTML(step, ro){
+    var h='';
+    step.fields.forEach(function(pair){
+      h+='<div class="fgrid">';
+      pair.forEach(function(f){ if(!f){h+='<div></div>';return;} h+='<div class="field"><label>'+f+'</label><div class="inp"></div></div>'; });
+      h+='</div>';
+    });
+    return h;
+  }
+
+  /* ---------- Horizontal ---------- */
+  (function(){
+    var root=document.getElementById('mockH'); var cur=0;
+    var stepsEl=root.querySelector('[data-steps]'), panel=root.querySelector('[data-panel]');
+    function render(){
+      var h='';
+      STEPS.forEach(function(s,i){
+        var cls=i===cur?'is-active':(i<cur?'is-done':'');
+        h+='<div class="hstep '+cls+'" data-i="'+i+'"><span class="hstep__n">'+(i<cur?'✓':(i+1))+'</span><span class="hstep__t">'+s.t+'</span></div>';
+        if(i<STEPS.length-1) h+='<div class="hbar '+(i<cur?'is-done':'')+'"></div>';
+      });
+      stepsEl.innerHTML=h;
+      panel.innerHTML='<div class="mini-label" style="margin-bottom:10px">Step '+(cur+1)+' · '+STEPS[cur].t+'</div>'+fieldsHTML(STEPS[cur]);
+    }
+    stepsEl.addEventListener('click',function(e){var s=e.target.closest('[data-i]');if(!s)return;cur=+s.getAttribute('data-i');render();});
+    root.querySelector('[data-next]').addEventListener('click',function(){if(cur<STEPS.length-1){cur++;render();}});
+    root.querySelector('[data-prev]').addEventListener('click',function(){if(cur>0){cur--;render();}});
+    render();
+  })();
+
+  /* ---------- Vertical ---------- */
+  (function(){
+    var root=document.getElementById('mockV'); var cur=1;
+    var stepsEl=root.querySelector('[data-steps]'), panel=root.querySelector('[data-panel]');
+    function render(){
+      var h='';
+      STEPS.forEach(function(s,i){
+        var cls=i===cur?'is-active':(i<cur?'is-done':'');
+        h+='<div class="vstep '+cls+'" data-i="'+i+'"><span class="vstep__n">'+(i<cur?'✓':(i+1))+'</span><span class="vstep__t">'+s.t+'</span></div>';
+      });
+      stepsEl.innerHTML=h;
+      panel.innerHTML='<div class="mini-label" style="margin-bottom:10px">'+STEPS[cur].t+'</div>'+fieldsHTML(STEPS[cur]);
+    }
+    stepsEl.addEventListener('click',function(e){var s=e.target.closest('[data-i]');if(!s)return;cur=+s.getAttribute('data-i');render();});
+    root.querySelector('[data-next]').addEventListener('click',function(){if(cur<STEPS.length-1){cur++;render();}});
+    root.querySelector('[data-prev]').addEventListener('click',function(){if(cur>0){cur--;render();}});
+    render();
+  })();
+
+  /* ---------- Accordion ---------- */
+  (function(){
+    var root=document.getElementById('mockC'); var open=0;
+    var accEl=root.querySelector('[data-acc]');
+    function render(){
+      var h='';
+      STEPS.forEach(function(s,i){
+        var isOpen=i===open, done=i<open;
+        h+='<div class="accitem '+(isOpen?'is-open':'')+' '+(done?'is-done':'')+'" data-i="'+i+'">'+
+             '<div class="acchead">'+
+               '<span class="acc__n">'+(done?'✓':(i+1))+'</span>'+
+               '<span class="acc__t">'+s.t+'</span>'+
+               (isOpen?'<span class="editpill">editando</span>':'<span class="acc__sum">'+s.sum+'</span>')+
+               '<span class="acc__chev">▾</span>'+
+             '</div>'+
+             '<div class="accbody">'+fieldsHTML(s)+'</div>'+
+           '</div>';
+      });
+      accEl.innerHTML=h;
+    }
+    accEl.addEventListener('click',function(e){var it=e.target.closest('[data-i]');if(!it)return;var i=+it.getAttribute('data-i');open=(open===i?-1:i);render();});
+    render();
+  })();
+})();
+</script>
+</body>
+</html>
