@@ -499,7 +499,7 @@
     var total = parseInt(root.getAttribute('data-ds-total') || (info && (info.textContent.match(/de\s+([\d.]+)/) || [])[1] || '0').replace(/\./g, ''), 10) || 0;
     var size = parseInt(root.getAttribute('data-ds-page-size') || (sizeEl && sizeEl.textContent) || '20', 10) || 20;
     var page = parseInt(root.getAttribute('data-ds-page') || '1', 10) || 1;
-    var sizes = [10, 20, 50, 100];
+    var sizes = [20, 50, 100];
 
     function pages() { return Math.max(1, Math.ceil(total / size)); }
     function windowed() {
@@ -518,13 +518,14 @@
       if (info) {
         var from = total ? (page - 1) * size + 1 : 0;
         var to = Math.min(page * size, total);
+        var opts = sizes.map(function (s) { return '<div class="select__item' + (s === size ? ' select__item--active' : '') + '" data-value="' + s + '"><p class="select__item-text">' + s + '</p></div>'; }).join('');
         info.innerHTML =
-          '<span class="pagination__select" role="button" tabindex="0">' + size + ' <span class="pagination__select-icon"><svg><use href="#ico-arrow-down-s"/></svg></span></span>' +
+          '<div class="select pagination__pagesize" data-ds="select" data-ds-float>' +
+            '<div class="select__field"><p class="select__value select__value--filled">' + size + '</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>' +
+            '<div class="select__dropdown select__dropdown--no-title"><div class="select__list">' + opts + '</div></div>' +
+          '</div>' +
           '<span>' + from + ' - ' + to + ' <span style="color:var(--content-text)">de ' + total + '</span></span>';
-        info.querySelector('.pagination__select').addEventListener('click', function () {
-          size = sizes[(sizes.indexOf(size) + 1) % sizes.length];
-          page = 1; render(); emit(root, 'pagesize', { size: size });
-        });
+        init(info);
       }
       nav.innerHTML =
         '<button class="pagination__navbtn" data-go="first" ' + (page === 1 ? 'disabled' : '') + ' aria-label="Primeira"><svg><use href="#ico-arrow-left-double"/></svg></button>' +
@@ -545,6 +546,12 @@
       });
     }
     function go(n) { n = Math.min(Math.max(1, n), pages()); if (n === page) return; page = n; render(); emit(root, 'page', { page: page, size: size }); }
+    root.addEventListener('ds:change', function (e) {
+      var sel = e.target && e.target.closest ? e.target.closest('.pagination__pagesize') : null;
+      if (!sel) return;
+      var v = parseInt((($('.select__value', sel) || {}).textContent || '').trim(), 10);
+      if (v && v !== size) { size = v; page = 1; render(); emit(root, 'pagesize', { size: v }); }
+    });
     render();
   });
 
@@ -580,7 +587,7 @@
       });
     });
     var collapse = $('.sidebar__collapse', root);
-    if (collapse) collapse.addEventListener('click', function () { root.classList.toggle('sidebar--rail'); });
+    if (collapse) collapse.addEventListener('click', function () { var railed = root.classList.toggle('sidebar--rail'); collapse.setAttribute('aria-label', railed ? 'Expandir menu' : 'Colapsar menu'); });
   });
 
   /* ==================================================================
@@ -690,6 +697,137 @@
   });
 
   /* ==================================================================
+     STEPPER (horizontal) — trilha de etapas + troca de painel.
+     Markup: .stepper[data-ds="stepper"] > .stepper__track > .stepper__step
+     (cada step com data-panel="<id>") e .stepper__panels > .stepper__panel#<id>.
+     data-ds-linear = wizard (não pula para steps à frente do já alcançado).
+     Botões opcionais [data-stepper-prev] / [data-stepper-next].
+     Emite ds:step { index, id }. Expõe root.__dsGo(i) para controle externo.
+     ================================================================== */
+  register('stepper', function (root) {
+    var steps = $all('.stepper__step', root);
+    var panels = $all('.stepper__panel', root);
+    if (!steps.length) return;
+    var linear = root.hasAttribute('data-ds-linear');
+    var maxReached = 0;
+    function panelFor(step, i) {
+      var id = step.getAttribute('data-panel');
+      return id ? document.getElementById(id) : panels[i];
+    }
+    function go(i) {
+      if (i < 0 || i >= steps.length) return;
+      steps.forEach(function (s, k) {
+        s.classList.toggle('stepper__step--active', k === i);
+        s.classList.toggle('stepper__step--done', k !== i && (k < i || s.getAttribute('data-done') === 'true'));
+      });
+      panels.forEach(function (p) { p.classList.remove('is-active'); });
+      var pn = panelFor(steps[i], i);
+      if (pn) pn.classList.add('is-active');
+      if (i > maxReached) maxReached = i;
+      if (linear) steps.forEach(function (s, k) { s.setAttribute('aria-disabled', k > maxReached ? 'true' : 'false'); });
+      root.__dsStep = i;
+      emit(root, 'step', { index: i, id: steps[i].getAttribute('data-panel') || '' });
+    }
+    steps.forEach(function (s, i) {
+      s.addEventListener('click', function () {
+        if (linear && i > maxReached) return; // não pula à frente no wizard
+        go(i);
+      });
+    });
+    // liga TODOS os botões avançar/voltar (ex.: um por painel de step)
+    $all('[data-stepper-next]', root).forEach(function (btn) { btn.addEventListener('click', function () { go((root.__dsStep || 0) + 1); }); });
+    $all('[data-stepper-prev]', root).forEach(function (btn) { btn.addEventListener('click', function () { go((root.__dsStep || 0) - 1); }); });
+    // estado inicial: usa o step marcado como --active no markup, senão o 0
+    var initial = 0;
+    steps.forEach(function (s, k) { if (s.classList.contains('stepper__step--active')) initial = k; });
+    go(initial);
+    root.__dsGo = go;
+  });
+
+  /* ==================================================================
+     UPLOAD — envio de arquivo (estado vazio <-> chip do arquivo).
+     Markup: .upload[data-ds="upload"] > .upload__empty (label .btn com
+     .upload__input type=file) + .upload__file (.upload__file-name +
+     .upload__remove). Pré-preenchido: coloque o nome em .upload__file-name.
+     .upload--readonly esconde o remover. Emite ds:upload {name} / ds:remove.
+     ================================================================== */
+  register('upload', function (root) {
+    var input = $('.upload__input', root);
+    var empty = $('.upload__empty', root);
+    var file = $('.upload__file', root);
+    var nameEl = $('.upload__file-name', root);
+    var remove = $('.upload__remove', root);
+    var ro = root.classList.contains('upload--readonly');
+    function showFile(name) { if (nameEl) nameEl.textContent = name; if (empty) empty.hidden = true; if (file) file.hidden = false; }
+    function showEmpty() { if (empty) empty.hidden = false; if (file) file.hidden = true; if (input) input.value = ''; }
+    var preset = nameEl && nameEl.textContent.trim();
+    if (ro) { if (file) file.hidden = !preset; if (empty) empty.hidden = true; return; }
+    if (preset) showFile(nameEl.textContent.trim()); else showEmpty();
+    if (input) input.addEventListener('change', function () { var f = input.files && input.files[0]; if (f) { showFile(f.name); emit(root, 'upload', { name: f.name }); } });
+    if (remove) remove.addEventListener('click', function () { showEmpty(); emit(root, 'remove', {}); });
+  });
+
+  /* ==================================================================
+     UPLOAD (UploadFile) — upload de múltiplos arquivos com lista,
+     seleção (checkbox circular), "Selecionar todas", exclusão por
+     linha / em lote e estados de erro (limite de tamanho).
+     Markup: .upload[data-ds="upload"] com .upload__input (file),
+     .upload__count, .upload__list, botão [data-up-del-selected].
+     Atributos: data-up-max (bytes, default 5MB), data-up-errmsg.
+     Emite ds:change { count }.
+     ================================================================== */
+  register('upload', function (root) {
+    var input = $('.upload__input', root);
+    var list = $('.upload__list', root);
+    if (!list) return;
+    var countEl = $('.upload__count', root);
+    var delSelBtn = $('[data-up-del-selected]', root);
+    var maxBytes = parseInt(root.getAttribute('data-up-max') || '5242880', 10);
+    var errMsg = root.getAttribute('data-up-errmsg') || 'Tamanho excede 5mb.';
+    function esc(v){ var d=document.createElement('div'); d.textContent=v==null?'':v; return d.innerHTML; }
+    function dataRows(){ return $all('.upload__row', list).filter(function(r){ return !r.classList.contains('upload__row--head'); }); }
+    function checkUi(){ return '<span class="upload__check-ui"><svg><use href="#ico-check"></use></svg></span>'; }
+    function headHtml(){ return '<div class="upload__row upload__row--head"><label class="upload__check"><input type="checkbox" class="upload__check-input" data-up-all>'+checkUi()+'</label><span class="upload__all">Selecionar todas</span></div>'; }
+    function rowHtml(name, err){
+      return '<div class="upload__row'+(err?' upload__row--error':'')+'">'
+        + '<label class="upload__check"><input type="checkbox" class="upload__check-input">'+checkUi()+'</label>'
+        + '<div class="upload__file"><span class="upload__name">'+esc(name)+'</span>'+(err?'<span class="upload__row-err">'+esc(err)+'</span>':'')+'</div>'
+        + '<button type="button" class="upload__del" aria-label="Excluir arquivo"><svg><use href="#ico-trash"></use></svg></button>'
+        + '</div>';
+    }
+    function ensureHead(){ if (dataRows().length && !$('.upload__row--head', list)) list.insertAdjacentHTML('afterbegin', headHtml()); }
+    function syncAll(){ var all=$('[data-up-all]', list); if(!all)return; var rows=dataRows(); var ck=rows.filter(function(r){ var c=$('.upload__check-input', r); return c&&c.checked; }); all.checked = rows.length>0 && ck.length===rows.length; }
+    function refresh(){
+      var rows=dataRows();
+      if (countEl) countEl.textContent='('+rows.length+')';
+      if (!rows.length) { list.innerHTML=''; root.classList.remove('is-error'); }
+      else ensureHead();
+      root.classList.toggle('is-error', !!$('.upload__row--error', list));
+      syncAll();
+    }
+    function addFiles(files){
+      Array.prototype.forEach.call(files, function(f){
+        var err = (f.size && f.size>maxBytes) ? errMsg : '';
+        list.insertAdjacentHTML('beforeend', rowHtml(f.name, err));
+      });
+      ensureHead(); refresh(); emit(root, 'change', { count: dataRows().length });
+    }
+    if (input) input.addEventListener('change', function(){ if (input.files && input.files.length) addFiles(input.files); input.value=''; });
+    root.addEventListener('click', function(e){
+      var del = e.target.closest ? e.target.closest('.upload__del') : null;
+      if (del) { var row=del.closest('.upload__row'); if(row){ row.remove(); refresh(); emit(root,'change',{count:dataRows().length}); } }
+    });
+    root.addEventListener('change', function(e){
+      var all = e.target.closest ? e.target.closest('[data-up-all]') : null;
+      if (all) { dataRows().forEach(function(r){ var c=$('.upload__check-input', r); if(c) c.checked=all.checked; }); return; }
+      var rc = e.target.closest ? e.target.closest('.upload__check-input') : null;
+      if (rc) syncAll();
+    });
+    if (delSelBtn) delSelBtn.addEventListener('click', function(){ dataRows().forEach(function(r){ var c=$('.upload__check-input', r); if(c&&c.checked) r.remove(); }); refresh(); emit(root,'change',{count:dataRows().length}); });
+    refresh();
+  });
+
+  /* ==================================================================
      BREADCRUMB — dropdown do "…"
      ================================================================== */
   register('breadcrumb', function (root) {
@@ -734,6 +872,47 @@
       init(node);
       emit(root, 'add', {});
     });
+  });
+
+  
+  /* --------------------------------------------------
+     docviewer — visualizador de documento (novo, ver design-system.md)
+     .docviewer[data-ds="docviewer"] com
+       .docviewer__canvas > .docviewer__scaler > .docviewer__sheet*
+     Barra: [data-dv-prev]/[data-dv-next] paginam; [data-dv-zin]/[data-dv-zout] dao zoom;
+     [data-dv-cur]/[data-dv-total]/[data-dv-zoom] refletem o estado;
+     [data-dv-download] emite ds:download {name}. Somente leitura. */
+  register('docviewer', function (root) {
+    var canvas = $('.docviewer__canvas', root);
+    var scaler = $('.docviewer__scaler', root) || canvas;
+    var sheets = $all('.docviewer__sheet', root);
+    var cur = $('[data-dv-cur]', root), tot = $('[data-dv-total]', root), zlab = $('[data-dv-zoom]', root);
+    var page = 1, zoom = 1;
+    if (tot) tot.textContent = sheets.length;
+    function top(s) { return s.offsetTop - 16; }
+    function goTo(n) {
+      n = Math.max(1, Math.min(sheets.length, n)); page = n;
+      if (cur) cur.textContent = n;
+      var s = sheets[n - 1]; if (s && canvas) canvas.scrollTo({ top: top(s), behavior: 'smooth' });
+    }
+    function setZoom(z) {
+      zoom = Math.max(0.5, Math.min(2, Math.round(z * 10) / 10));
+      if (scaler) scaler.style.transform = 'scale(' + zoom + ')';
+      if (zlab) zlab.textContent = Math.round(zoom * 100) + '%';
+    }
+    var pv = $('[data-dv-prev]', root), nx = $('[data-dv-next]', root),
+        zi = $('[data-dv-zin]', root), zo = $('[data-dv-zout]', root), dl = $('[data-dv-download]', root);
+    if (pv) pv.addEventListener('click', function () { goTo(page - 1); });
+    if (nx) nx.addEventListener('click', function () { goTo(page + 1); });
+    if (zi) zi.addEventListener('click', function () { setZoom(zoom + 0.1); });
+    if (zo) zo.addEventListener('click', function () { setZoom(zoom - 0.1); });
+    if (dl) dl.addEventListener('click', function () { emit(root, 'download', { name: root.getAttribute('data-doc-name') }); });
+    if (canvas) canvas.addEventListener('scroll', function () {
+      var best = 1, bd = 1e9;
+      sheets.forEach(function (s, i) { var d = Math.abs(top(s) - canvas.scrollTop); if (d < bd) { bd = d; best = i + 1; } });
+      if (best !== page) { page = best; if (cur) cur.textContent = best; }
+    });
+    setZoom(1);
   });
 
   /* -------------------------------------------------- boot */

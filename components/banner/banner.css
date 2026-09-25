@@ -79,3 +79,27 @@
   letter-spacing: 0;
   color: inherit;
 }
+
+/* ---- Subtítulo + lista (para banners com "o que acontece a seguir") ----
+   Herdam a cor do tipo (label-info/warning/error) via currentColor. */
+.banner__subtitle {
+  margin: 0;
+  font-family: var(--font-family-title-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: inherit;
+}
+.banner__list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  font-family: var(--font-family-title-text);
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: inherit;
+}
+.banner__list li { margin: 0; }
+.banner__list li b { font-weight: var(--font-weight-bold); }

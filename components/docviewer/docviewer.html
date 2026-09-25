@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Viewer — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="docviewer.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#eaeaea; color:#313131; }
+    .demo { max-width: 820px; margin: 0 0 40px; }
+    h2 { color:#1a1a1a; } p.lead { color:#666; font-size:13px; max-width:640px; }
+    #out { font-size:13px; color:#666; }
+  </style>
+</head>
+<body>
+  <!-- sprite de icones usados pela barra -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ri-arrow-left-s" viewBox="0 0 24 24"><path d="M14 8l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ri-arrow-right-s" viewBox="0 0 24 24"><path d="M10 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <h2>Document Viewer (docviewer)</h2>
+  <p class="lead">Visualizador de documento embutido, no padrao de leitores de PDF/boleto. Marque a raiz com
+    <code>data-ds="docviewer"</code>. O canvas tem <code>.docviewer__scaler</code> com N
+    <code>.docviewer__sheet</code> (folhas A4). A barra pagina (<code>[data-dv-prev]/[data-dv-next]</code>),
+    dá zoom (<code>[data-dv-zin]/[data-dv-zout]</code>) e baixa (<code>[data-dv-download]</code> emite <code>ds:download</code>).
+    Componente somente-leitura.</p>
+
+  <div class="demo">
+    <div class="docviewer" data-ds="docviewer" data-doc-name="documento-exemplo.pdf">
+      <div class="docviewer__bar">
+        <div class="docviewer__file">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 2h8l4 4v16H6z" stroke="#ff8400" stroke-width="1.6"/><path d="M14 2v4h4" stroke="#ff8400" stroke-width="1.6"/></svg>
+          <span class="docviewer__filename">documento-exemplo.pdf</span>
+        </div>
+        <div class="docviewer__nav">
+          <button type="button" class="docviewer__btn" data-dv-prev aria-label="Página anterior"><svg><use href="#ri-arrow-left-s"></use></svg></button>
+          <span class="docviewer__page"><span data-dv-cur>1</span> / <span data-dv-total>2</span></span>
+          <button type="button" class="docviewer__btn" data-dv-next aria-label="Próxima página"><svg><use href="#ri-arrow-right-s"></use></svg></button>
+          <span class="docviewer__sep"></span>
+          <button type="button" class="docviewer__btn" data-dv-zout aria-label="Reduzir zoom">&#8722;</button>
+          <span class="docviewer__zoom" data-dv-zoom>100%</span>
+          <button type="button" class="docviewer__btn" data-dv-zin aria-label="Ampliar zoom">+</button>
+        </div>
+        <div class="docviewer__act"><button type="button" class="docviewer__download" data-dv-download>Baixar</button></div>
+      </div>
+      <div class="docviewer__canvas">
+        <div class="docviewer__scaler">
+          <div class="docviewer__sheet"><div class="docpage"><h1>DOCUMENTO DE EXEMPLO</h1><div class="docpage__ref">Página 1</div><p>Conteúdo renderizado como uma folha A4 dentro do visualizador. Role para ver as demais páginas.</p></div><div class="docpage__pg">1 / 2</div></div>
+          <div class="docviewer__sheet"><div class="docpage"><h2>Segunda página</h2><p>O indicador de página acompanha a rolagem, e os botões de paginação levam à folha correspondente.</p></div><div class="docpage__pg">2 / 2</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p id="out">Último ds:download: —</p>
+
+  <script src="../../ds/ds.js" defer></script>
+  <script>
+    document.addEventListener('ds:download', function (e) {
+      document.getElementById('out').textContent = 'Último ds:download: ' + (e.detail && e.detail.name);
+    });
+  </script>
+</body>
+</html>

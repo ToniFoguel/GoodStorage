@@ -229,13 +229,14 @@
    ============================================================ */
 .sidebar--rail { width: 56px; }
 .sidebar--rail .sidebar__brand,
-.sidebar--rail .sidebar__collapse,
 .sidebar--rail .sidebar__group-title,
 .sidebar--rail .sidebar__chevron,
 .sidebar--rail .sidebar__item-label,
 .sidebar--rail .sidebar__userinfo { display: none; }
-.sidebar--rail .sidebar__headinner,
 .sidebar--rail .sidebar__user { justify-content: center; padding: var(--md); }
+/* Rail: mantém o botão de expandir visível (empilha logo + toggle) para reabrir */
+.sidebar--rail .sidebar__headinner { flex-direction: column; justify-content: center; gap: var(--sm); padding: var(--md) 0; }
+.sidebar--rail .sidebar__collapse { transform: scaleX(-1); }
 .sidebar--rail .sidebar__group-head,
 .sidebar--rail .sidebar__item { justify-content: center; }
 .sidebar--rail .sidebar__items { padding: var(--sm) 0; }

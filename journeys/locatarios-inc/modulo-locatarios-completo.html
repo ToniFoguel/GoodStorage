@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo Locatários — fluxo · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/card/card.css" />
+<link rel="stylesheet" href="../../components/checkbox-card/checkbox-card.css" />
+<link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
+<link rel="stylesheet" href="../../components/data-item/data-item.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/kpi/kpi.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/profile-hero/profile-hero.css" />
+<link rel="stylesheet" href="../../components/segmented/segmented.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/selfrow/selfrow.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="locatarios.css" />
+<style>
+  .uni-page { display: none; }
+  .uni-page.is-active { display: block; }
+  .uni-page .app { min-height: 100vh; }
+  .uni-page .sidebar { position: sticky; top: 0; align-self: flex-start; height: 100vh; }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+<symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+<symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+<symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+<symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+<symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+<symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+<symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+<symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+<symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+<symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+<symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+<symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+<symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+<symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+<symbol id="ri-arrow-left" viewBox="0 0 24 24" fill="currentColor"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></symbol>
+<symbol id="ri-pencil" viewBox="0 0 24 24"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+<symbol id="ri-lock" viewBox="0 0 24 24"><path d="M6 8V7a6 6 0 1 1 12 0v1h1a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h1zm2 0h8V7a4 4 0 1 0-8 0v1zm3 6.732V17h2v-2.268a2 2 0 1 0-2 0z"/></symbol>
+<symbol id="ri-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+<symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+<symbol id="ri-checkbox-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></symbol>
+<symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+<symbol id="ico-information" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+<symbol id="ico-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
+<symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+<symbol id="ico-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+<symbol id="ico-trash" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+<symbol id="ri-price-tag-3" viewBox="0 0 24 24"><path d="M10.9042 2.10025L20.8037 3.51446L22.2179 13.414L13.0255 22.6063C12.635 22.9969 12.0019 22.9969 11.6113 22.6063L1.71184 12.7069C1.32131 12.3163 1.32131 11.6832 1.71184 11.2926L10.9042 2.10025ZM13.7327 10.5855C14.5137 11.3666 15.78 11.3666 16.5611 10.5855C17.3421 9.80448 17.3421 8.53815 16.5611 7.7571C15.78 6.97606 14.5137 6.97606 13.7327 7.7571C12.9516 8.53815 12.9516 9.80448 13.7327 10.5855Z"/></symbol>
+<symbol id="ri-information" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+<symbol id="ri-arrow-right-s" viewBox="0 0 24 24"><path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></symbol>
+</svg>
+
+<!-- ===== Lista de locatários ===== -->
+<section class="uni-page is-active" id="uni-lista" data-title="Lista de locatários">
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Locatários</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Locatários <span class="pagehead__count">· 128 cadastrados</span></h1>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--primary" href="cadastro.html">Novo locatário<span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="input toolbar__search" data-ds="input">
+          <div class="input__field"><input class="input__control" placeholder="Pesquise por nome, e-mail, telefone ou nº do box" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+        </div>
+        <div class="dropdown toolbar__filter-dd" data-ds="dropdown">
+          <button class="btn btn--icon-border dropdown__trigger" aria-label="Filtrar por status" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-filter-3"/></svg></span></button>
+          <div class="dropdown__panel dropdown__panel--filter dropdown__panel--right" hidden>
+            <div class="fltfield">
+              <span class="fieldlbl">Status</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos os status</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
+                  <div class="select__item"><p class="select__item-text">Ativo</p></div>
+                  <div class="select__item"><p class="select__item-text">Inadimplente</p></div>
+                  <div class="select__item"><p class="select__item-text">Blacklist</p></div>
+                  <div class="select__item"><p class="select__item-text">Move-out avisado</p></div>
+                  <div class="select__item"><p class="select__item-text">Inativo</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="fltfield">
+              <span class="fieldlbl">Tipo de pessoa</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Física</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Jurídica</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="dropdown__clean"><button type="button" class="btn btn--ghost" style="width:100%">Limpar filtro</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table ltable" data-ds="table">
+        <div class="table__header">
+          <button class="table__th"><span class="table__th-label">Locatário</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">E-mail</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Documento</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Box(es)</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Unidade</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Seguro</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+        </div>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Marina Alves Comércio</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">marina@alvescom.com.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">12.345.678/0001-90</p></div>
+          <div class="table__cell"><p class="table__cell-text">A-102, A-103</p></div>
+          <div class="table__cell"><p class="table__cell-text">Vila Leopoldina</p></div>
+          <div class="table__cell"><span class="badge badge--success">MAPFRE</span></div>
+          <div class="table__cell"><span class="badge badge--success">Ativo</span></div>
+        </a>
+
+        <a class="table__row table__row--alt" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Logística Contorno Ltda</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">contato@contorno.log.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">98.765.432/0001-10</p></div>
+          <div class="table__cell"><p class="table__cell-text">G-14</p></div>
+          <div class="table__cell"><p class="table__cell-text">Guarulhos</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Sem seguro</span></div>
+          <div class="table__cell"><span class="badge badge--yellow">Inadimplente</span></div>
+        </a>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Studio Prisma Arquitetura</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">financeiro@studioprisma.com</p></div>
+          <div class="table__cell"><p class="table__cell-text">045.678.912-33</p></div>
+          <div class="table__cell"><p class="table__cell-text">O-07</p></div>
+          <div class="table__cell"><p class="table__cell-text">Faria Lima</p></div>
+          <div class="table__cell"><span class="badge badge--success">MAPFRE</span></div>
+          <div class="table__cell"><span class="badge badge--outline">Move-out avisado</span></div>
+        </a>
+
+        <a class="table__row table__row--alt" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Comercial Dez Irmãos</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">compras@dezirmaos.com.br</p></div>
+          <div class="table__cell"><p class="table__cell-text">33.444.555/0001-77</p></div>
+          <div class="table__cell"><p class="table__cell-text">B-21, B-22</p></div>
+          <div class="table__cell"><p class="table__cell-text">Barra Funda</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Seguro próprio</span></div>
+          <div class="table__cell"><span class="badge badge--destructive">Blacklist</span></div>
+        </a>
+
+        <a class="table__row" href="perfil.html">
+          <div class="table__cell"><span class="cl-name">Ateliê Norte</span></div>
+          <div class="table__cell"><p class="table__cell-text cl-mail">ana@atelienorte.com</p></div>
+          <div class="table__cell"><p class="table__cell-text">071.222.333-44</p></div>
+          <div class="table__cell"><p class="table__cell-text">—</p></div>
+          <div class="table__cell"><p class="table__cell-text">Tatuapé</p></div>
+          <div class="table__cell"><span class="badge badge--outline">Sem seguro</span></div>
+          <div class="table__cell"><span class="badge badge--outline">Inativo</span></div>
+        </a>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Perfil 360 ===== -->
+<section class="uni-page" id="uni-perfil" data-title="Perfil 360">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Marina Duarte</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text"><h1 class="pagehead__title title-h1">Perfil 360</h1></div>
+        <div class="pagehead__actions">
+          <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
+          <button class="btn btn--outline" data-ds-open="perfil__modalOcorrencia">Nova ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ri-add"/></svg></span></button>
+          <button class="btn btn--primary" data-ds-open="perfil__modalTransferencia">Transferir box</button>
+          <div class="dropdown" data-ds="dropdown" style="position:relative">
+            <button class="btn btn--icon-border dropdown__trigger" aria-label="Ações do cadastro" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-more-2"/></svg></span></button>
+            <div class="dropdown__panel dropdown__panel--menu dropdown__panel--right" hidden>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalInativar"><p class="dropdown__nav-text">Inativar locatário</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalBlacklist"><p class="dropdown__nav-text">Bloquear / gerenciar restrições</p></div>
+              <div class="dropdown__item dropdown__item--nav" data-ds-open="perfil__modalExcluir"><p class="dropdown__nav-text">Excluir cadastro</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero do perfil (componente profile-hero) -->
+      <section class="section">
+        <div class="section__body">
+          <div class="profile-hero">
+            <div class="avatar avatar--text"><p class="avatar__label text-label-regular">MD</p></div>
+            <div class="profile-hero__meta">
+              <p class="profile-hero__name">Marina Duarte</p>
+              <p class="profile-hero__sub">PF · •••.456.789-00 · cliente desde mar/2021 · Lapa 0</p>
+              <div class="profile-hero__flags">
+                <span class="badge badge--secondary">Ativo</span>
+                <span class="badge badge--secondary-icon"><span class="badge__icon badge__icon--sm"><svg><use href="#ri-checkbox-circle"/></svg></span>Sempre adimplente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPIs (componente kpi) -->
+      <div class="kpis" style="margin-bottom:var(--xl)">
+        <div class="kpi"><p class="kpi__label">Tempo de casa</p><p class="kpi__value">4a 5m</p></div>
+        <div class="kpi"><p class="kpi__label">Boxes ativos</p><p class="kpi__value">1</p></div>
+        <div class="kpi"><p class="kpi__label">Adimplência</p><p class="kpi__value">100%</p></div>
+        <div class="kpi"><p class="kpi__label">Seguro</p><p class="kpi__value kpi__value--sm">MAPFRE · R$ 1.500</p></div>
+      </div>
+
+      <!-- Abas do perfil (segmented + painéis) -->
+      <div class="tabbar">
+        <div class="segmented" data-ds="segmented">
+          <button class="segmented__item segmented__item--active" data-value="ident" data-tab="perfil__tab-ident">Identificação</button>
+          <button class="segmented__item" data-value="boxes" data-tab="perfil__tab-boxes">Boxes &amp; contratos</button>
+          <button class="segmented__item" data-value="financeiro" data-tab="perfil__tab-financeiro">Financeiro</button>
+          <button class="segmented__item" data-value="docs" data-tab="perfil__tab-docs">Documentos</button>
+          <button class="segmented__item" data-value="seguro" data-tab="perfil__tab-seguro">Seguro</button>
+          <button class="segmented__item" data-value="restricoes" data-tab="perfil__tab-restricoes">Blacklist/Restrições</button>
+          <button class="segmented__item" data-value="hist" data-tab="perfil__tab-hist">Histórico</button>
+        </div>
+      </div>
+
+      <!-- Painel: Identificação -->
+      <div class="tabpanel is-active" id="perfil__tab-ident">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Dados cadastrais</h2></div><a class="btn btn--icon-border" href="cadastro.html" aria-label="Editar"><span class="btn__icon btn__icon--lg"><svg><use href="#ri-pencil"/></svg></span></a></div>
+          <div class="section__body"><dl class="dados">
+            <div class="data-item"><p class="data-item__label">Nome</p><p class="data-item__value">Marina Duarte</p></div>
+            <div class="data-item"><p class="data-item__label">CPF</p><p class="data-item__value">•••.456.789-00</p></div>
+            <div class="data-item"><p class="data-item__label">Data de nascimento</p><p class="data-item__value">02/09/1988</p></div>
+            <div class="data-item"><p class="data-item__label">Nacionalidade</p><p class="data-item__value">Brasileira</p></div>
+            <div class="data-item"><p class="data-item__label">Cliente desde</p><p class="data-item__value">mar/2021</p></div>
+            <div class="data-item"><p class="data-item__label">Tipo</p><span class="badge badge--default">Pessoa Física</span></div>
+          </dl></div>
+        </section>
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Contatos</h2></div></div>
+          <div class="section__body">
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ico-information"/></svg></span><div><p class="ocard__title">Marina Duarte · Principal</p><p class="cl-mail">marina.duarte@email.com · (11) 98888-1200</p></div></div></div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">3</span><h2 class="section__title">Endereços</h2></div></div>
+          <div class="section__body">
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Cobrança</p><p class="cl-mail">Rua Guaicurus, 340 · Lapa · São Paulo/SP · 05033-001</p></div></div></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel: Boxes & contratos -->
+      <div class="tabpanel" id="perfil__tab-boxes">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Boxes &amp; contratos</h2></div><span class="section__pill">1 ativo(s) · 1 encerrado(s)</span></div>
+          <div class="section__body">
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Box B-214 · 4 m²</p><p class="cl-mail">Contrato CT-3391 · desde 03/2021</p></div></div><span class="badge badge--success">Ativo</span></div>
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-archive"/></svg></span><div><p class="ocard__title">Box B-102 · 2 m²</p><p class="cl-mail">Contrato CT-2210 · encerrado em 02/2021</p></div></div><span class="badge badge--outline">Encerrado</span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel: Financeiro -->
+      <div class="tabpanel" id="perfil__tab-financeiro">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Financeiro (agregado)</h2></div><span class="badge badge--success">Sem atrasos</span></div>
+          <div class="section__body">
+            <dl class="dados">
+              <div class="data-item"><p class="data-item__label">Forma de cobrança</p><p class="data-item__value">Cartão de crédito · recorrência</p></div>
+              <div class="data-item"><p class="data-item__label">Situação</p><p class="data-item__value">Em dia · próxima 05/09</p></div>
+            </dl>
+            <p class="cl-mail">Somente leitura — dado de propriedade do módulo de Contratos.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel: Documentos -->
+      <div class="tabpanel" id="perfil__tab-docs">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentos</h2></div><button class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Enviar documento</button></div>
+          <div class="section__body">
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-file-text"/></svg></span><div><p class="ocard__title">RG.pdf</p><p class="cl-mail">v1 · enviado em 04/03/2021</p></div></div><span class="badge badge--outline">Válido</span></div>
+            <p class="cl-mail">Aceitos: PNG, JPG, JPEG, WEBP, PDF · até 5 MB por arquivo.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel: Seguro -->
+      <div class="tabpanel" id="perfil__tab-seguro">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Seguro vigente</h2></div><button class="btn btn--outline" data-ds-open="perfil__modalSeguro">Trocar seguro</button></div>
+          <div class="section__body"><dl class="dados">
+            <div class="data-item"><p class="data-item__label">Modalidade</p><span class="badge badge--success">MAPFRE (parceira)</span></div>
+            <div class="data-item"><p class="data-item__label">Plano / cobertura</p><p class="data-item__value">Essencial · até R$ 1.500</p></div>
+            <div class="data-item"><p class="data-item__label">Valor declarado dos bens</p><p class="data-item__value">R$ 1.500,00</p></div>
+            <div class="data-item"><p class="data-item__label">Vínculo</p><p class="data-item__value">Box B-214</p></div>
+          </dl></div>
+        </section>
+      </div>
+
+      <!-- Painel: Blacklist / Restrições -->
+      <div class="tabpanel" id="perfil__tab-restricoes">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Blacklist / Restrições</h2></div><button class="btn btn--destructive" data-ds-open="perfil__modalBlacklist">Bloquear locatário</button></div>
+          <div class="section__body">
+            <div class="empty">
+              <div class="empty__inner"><div class="empty__heading">
+                <span class="empty__icon"><svg><use href="#ri-lock"/></svg></span>
+                <p class="empty__title">Nenhuma restrição ativa</p>
+                <p class="cl-mail">Uma restrição bloqueia o acesso físico (biometria facial) da pessoa — não impede novo contrato.</p>
+              </div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel: Histórico -->
+      <div class="tabpanel" id="perfil__tab-hist">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico do locatário</h2></div><button class="btn btn--outline" data-ds-open="perfil__modalOcorrencia">Nova ocorrência</button></div>
+          <div class="section__body">
+            <div class="hist">
+              <div class="hist-item"><span class="hist-ico ok"><svg><use href="#ico-circle-check"/></svg></span><div class="hist-body"><div class="hist-top"><b>Pagamento confirmado</b><span class="hist-when">05/08/2026 08:30</span></div><p class="hist-meta">Mensalidade Box B-214</p></div></div>
+              <div class="hist-item"><span class="hist-ico"><svg><use href="#ri-file-text"/></svg></span><div class="hist-body"><div class="hist-top"><b>Documento enviado · RG</b><span class="hist-when">04/03/2021 10:05</span></div><p class="hist-meta">Por Carol Ferreira</p></div></div>
+              <div class="hist-item"><span class="hist-ico"><svg><use href="#ico-alert"/></svg></span><div class="hist-body"><div class="hist-top"><b>Move-in Box B-214</b><span class="hist-when">03/03/2021 14:10</span></div><p class="hist-meta">Contrato CT-3391</p></div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Inativar locatário -->
+<div class="modal confirm-modal" id="perfil__modalInativar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Inativar locatário</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <p class="cl-mail">Não é permitido inativar com contrato ativo ou pendência financeira aberta. Os dados não são apagados e a reativação reconstitui todo o histórico.</p>
+    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: sem contrato ativo há 8 meses, sem interação recente."></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalInativar'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalInativar'))">Inativar</button></div>
+</div>
+
+<!-- MODAL: Blacklist / Restrições (abas Incluir/Remover + campos) -->
+<div class="modal confirm-modal" id="perfil__modalBlacklist" data-ds="modal" style="max-width:640px">
+  <div class="modal__header"><h2 class="modal__title">Blacklist / Restrições</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="tabbar">
+      <div class="segmented" data-ds="segmented">
+        <button class="segmented__item segmented__item--active" data-value="incluir" data-tab="perfil__bl-incluir">Incluir restrição</button>
+        <button class="segmented__item" data-value="remover" data-tab="perfil__bl-remover">Remover restrição</button>
+      </div>
+    </div>
+
+    <div class="tabpanel is-active" id="perfil__bl-incluir">
+      <div class="banner banner--error"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Ação sensível</p><p class="banner__text">O bloqueio é registrado com responsável, data e motivo. A remoção exige nova solicitação e aprovação.</p></div></div>
+      <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Também sinalizar locatários correlacionados</p><p class="cl-mail">Além de bloquear o acesso facial desta pessoa, sinaliza contatos vinculados — evita uso de "laranja".</p></span></label>
+      <div class="formgrid">
+        <div class="input">
+          <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
+          <div class="select" data-ds="select" data-ds-float>
+            <div class="select__field"><p class="select__value select__value--filled">Ocorrência policial</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+            <div class="select__dropdown"><div class="select__list">
+              <div class="select__item select__item--active"><p class="select__item-text">Ocorrência policial</p></div>
+              <div class="select__item"><p class="select__item-text">Fraude / documento falso</p></div>
+              <div class="select__item"><p class="select__item-text">Comportamento de risco</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="input input--readonly"><div class="input__label"><p>Faciais vinculadas a bloquear</p></div><div class="input__field"><input class="input__control" value="2 de 4 cadastradas" readonly /></div></div>
+        <div class="input full"><div class="input__label"><p>Detalhe / referência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Nº do B.O., contexto, etc."></textarea></div></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="perfil__bl-remover">
+      <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-lock"/></svg></span><div><p class="ocard__title">Restrição ativa desde 03/02/2023</p><p class="cl-mail">Motivo: ocorrência policial · registrada por Kelly Rocha</p></div></div><span class="badge badge--destructive">Ativa</span></div>
+      <div class="formgrid">
+        <div class="input full"><div class="input__label"><p>Motivo da remoção</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Justifique a remoção — o histórico original permanece imutável."></textarea></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalBlacklist'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalBlacklist'))">Bloquear locatário</button></div>
+</div>
+
+<!-- MODAL: Excluir cadastro -->
+<div class="modal confirm-modal" id="perfil__modalExcluir" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Excluir cadastro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Exclusão lógica, nunca física</p><p class="banner__text">O registro deixa de ser operável mas permanece auditável. Dados sob obrigação legal de retenção não são removidos. Bloqueada se houver vínculos ativos.</p></div></div>
+    <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Justifique a exclusão lógica do cadastro."></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Cancelar</button><button class="btn btn--destructive" onclick="DS.closeModal(document.getElementById('modalExcluir'))">Excluir logicamente</button></div>
+</div>
+
+<!-- MODAL: Registrar ocorrência -->
+<div class="modal confirm-modal" id="perfil__modalOcorrencia" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Registrar ocorrência</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input">
+        <div class="input__label"><p>Tipo de ocorrência</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value select__value--filled">Quebra de cadeado</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item select__item--active"><p class="select__item-text">Quebra de cadeado</p></div>
+            <div class="select__item"><p class="select__item-text">Sinistro</p></div>
+            <div class="select__item"><p class="select__item-text">Arrombamento</p></div>
+            <div class="select__item"><p class="select__item-text">Reclamação / atendimento</p></div>
+            <div class="select__item"><p class="select__item-text">Aviso de move-out</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input">
+        <div class="input__label"><p>Box relacionado</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">—</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">—</p></div>
+            <div class="select__item"><p class="select__item-text">B-214 · 4 m²</p></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo — vira registro rastreável (quem/quando/por quê)."></textarea></div><p class="input__help">Motivo é obrigatório em qualquer movimentação (rastreabilidade).</p></div>
+      <div class="input full"><div class="input__label"><p>Anexos</p></div>
+        <button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo</button>
+        <div class="taglist" style="margin-top:var(--md)"><span class="chip">boletim-ocorrencia.pdf</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalOcorrencia'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalOcorrencia'))">Registrar ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"/></svg></span></button></div>
+</div>
+
+<!-- MODAL: Transferência de box -->
+<div class="modal confirm-modal" id="perfil__modalTransferencia" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Transferência de box</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="formgrid">
+      <div class="input input--readonly"><div class="input__label"><p>Box atual</p></div><div class="input__field"><input class="input__control" value="B-214 · 4 m² (Médio)" readonly /></div></div>
+      <div class="input">
+        <div class="input__label"><p>Novo box</p><p class="input__req">*</p></div>
+        <div class="select" data-ds="select" data-ds-float>
+          <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+          <div class="select__dropdown"><div class="select__list">
+            <div class="select__item"><p class="select__item-text">B-307 · Pequeno (2 m²)</p></div>
+            <div class="select__item"><p class="select__item-text">B-321 · Grande (10 m²)</p></div>
+          </div></div>
+        </div>
+        <p class="input__help">Só é permitido mover para a categoria imediatamente adjacente.</p>
+      </div>
+      <div class="input full"><div class="input__label"><p>Motivo da transferência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: upsell, retenção, necessidade do cliente…"></textarea></div></div>
+    </div>
+    <p class="section__title" style="margin:var(--sm) 0 0">Impactos</p>
+    <dl class="dados">
+      <div class="data-item"><p class="data-item__label">Nova capa de contrato</p><span class="badge badge--yellow">Será gerada</span></div>
+      <div class="data-item"><p class="data-item__label">Seguro</p><span class="badge badge--yellow">Novo vínculo + valor declarado</span></div>
+    </dl>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalTransferencia'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalTransferencia'))">Gerar transferência</button></div>
+</div>
+
+<!-- MODAL: Trocar / registrar seguro -->
+<div class="modal confirm-modal" id="perfil__modalSeguro" data-ds="modal" style="max-width:600px">
+  <div class="modal__header"><h2 class="modal__title">Trocar / registrar seguro</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <span class="fieldlbl">Modalidade *</span>
+    <div class="tabbar">
+      <div class="segmented" data-ds="segmented">
+        <button class="segmented__item segmented__item--active" data-value="parceira" data-tab="perfil__mseg-parceira">Parceira (MAPFRE)</button>
+        <button class="segmented__item" data-value="proprio" data-tab="perfil__mseg-proprio">Próprio</button>
+        <button class="segmented__item" data-value="sem" data-tab="perfil__mseg-sem">Sem seguro</button>
+      </div>
+    </div>
+    <div class="tabpanel is-active" id="perfil__mseg-parceira">
+      <div class="formgrid">
+        <div class="input"><div class="input__label"><p>Plano</p></div><div class="input__field"><select class="input__control"><option>Cobertura R$ 1.500</option><option>Cobertura R$ 3.000</option><option>Cobertura R$ 5.000</option></select></div></div>
+        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+      </div>
+    </div>
+    <div class="tabpanel" id="perfil__mseg-proprio">
+      <div class="formgrid">
+        <div class="input"><div class="input__label"><p>Seguradora</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome da seguradora" /></div></div>
+        <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+        <div class="input"><div class="input__label"><p>Vencimento da apólice</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+      </div>
+    </div>
+    <div class="tabpanel" id="perfil__mseg-sem">
+      <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Contratação de seguro é obrigatória</p><p class="banner__text">Ao confirmar, o locatário assume total responsabilidade por perdas/danos aos bens armazenados.</p></div></div>
+      <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Declaro que fui informado da obrigatoriedade de seguro e assumo a responsabilidade por não possuir cobertura vigente.</p></span></label>
+    </div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalSeguro'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(document.getElementById('modalSeguro'))">Salvar e gerar capa</button></div>
+</div>
+</section>
+
+<!-- ===== Novo / editar cadastro ===== -->
+<section class="uni-page" id="uni-cadastro" data-title="Novo / editar cadastro">
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Novo locatário</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Novo locatário</h1>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--ghost" href="lista.html">Cancelar</a>
+          <a class="btn btn--primary" href="perfil.html">Salvar cadastro</a>
+        </div>
+      </div>
+
+      <!-- Tipo de pessoa (abas via segmented) -->
+      <div class="tabbar">
+        <div class="segmented" data-ds="segmented">
+          <button class="segmented__item" data-value="PF" data-tab="cadastro__tab-pf">Pessoa Física</button>
+          <button class="segmented__item segmented__item--active" data-value="PJ" data-tab="cadastro__tab-pj">Pessoa Jurídica</button>
+        </div>
+      </div>
+
+      <!-- Painel Pessoa Física -->
+      <div class="tabpanel" id="cadastro__tab-pf">
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Identificação (Pessoa Física)</h2></div></div>
+          <div class="section__body"><div class="formgrid">
+            <div class="input full"><div class="input__label"><p>Nome do locatário</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome completo" /></div></div>
+            <div class="input"><div class="input__label"><p>Nacionalidade</p></div><div class="input__field"><select class="input__control"><option>Brasileira</option><option>Estrangeira</option></select></div></div>
+            <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
+            <div class="input"><div class="input__label"><p>RNE</p></div><div class="input__field"><input class="input__control" placeholder="Registro Nacional de Estrangeiro" /></div><p class="input__help">Para locatário estrangeiro — mantido em campo separado do CPF (a pessoa pode ter os dois).</p></div>
+            <div class="input"><div class="input__label"><p>Data de nascimento</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div><p class="input__help">O locatário deve ser maior de 18 anos.</p></div>
+            <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone da pessoa</p></div><div class="input__field"><input class="input__control" placeholder="(11) 90000-0000" /></div><p class="input__help">Telefone do próprio locatário — distinto dos contatos.</p></div>
+            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Pessoa contribuinte do IBS e da CBS</p></span></label></div>
+          </div></div>
+        </section>
+
+        <!-- PF também pode ter procurador / representante legal -->
+        <section class="section">
+          <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Procurador / representante legal</h2></div><span class="section__pill">opcional</span></div>
+          <div class="section__body">
+            <div class="repeater" data-ds="repeater">
+              <div class="repeater__items">
+                <div class="listrow repeater__item">
+                  <div class="reprow reprow--2">
+                    <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome de quem assina pelo locatário" /></div></div>
+                    <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
+                    <button type="button" class="icon-btn" data-repeat-remove aria-label="Remover"><svg><use href="#ico-trash"/></svg></button>
+                  </div>
+                </div>
+              </div>
+              <template class="repeater__template">
+                <div class="listrow repeater__item">
+                  <div class="reprow reprow--2">
+                    <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome de quem assina pelo locatário" /></div></div>
+                    <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
+                    <button type="button" class="icon-btn" data-repeat-remove aria-label="Remover"><svg><use href="#ico-trash"/></svg></button>
+                  </div>
+                </div>
+              </template>
+              <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar procurador / representante</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Painel Pessoa Jurídica -->
+      <div class="tabpanel is-active" id="cadastro__tab-pj">
+      <!-- 1. Identificação (PJ) -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Identificação (Pessoa Jurídica)</h2></div></div>
+        <div class="section__body">
+          <div class="formgrid">
+            <div class="input" data-ds="input" data-ds-mask="cnpj"><div class="input__label"><p>CNPJ</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="00.000.000/0000-00" /></div></div>
+            <div class="input"><div class="input__label"><p>Razão social</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Preenchido via consulta do CNPJ" /></div></div>
+            <div class="input"><div class="input__label"><p>Nome fantasia</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Data de fundação</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Natureza jurídica</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Porte</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Inscrição estadual</p></div><div class="input__field"><input class="input__control" /></div></div>
+            <div class="input"><div class="input__label"><p>Inscrição municipal</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" /></div><p class="input__help">Obrigatória, mas não bloqueia o preenchimento.</p></div>
+            <div class="full"><label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Contribuinte de ICMS</p><p class="cl-mail">Relevante para a reforma tributária (IBS/CBS).</p></span></label></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Representantes -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Representantes e procuradores</h2></div></div>
+        <div class="section__body">
+          <div class="repeater repeater--rep" data-ds="repeater">
+            <div class="repeater__items">
+              <div class="listrow repcard repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="reprow reprow--3">
+                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" value="045.678.912-33" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                </div>
+                <div class="repdoc">
+                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
+                  <p class="cl-mail">Anexe a ata / contrato social que comprova que esta pessoa é representante ou procuradora da empresa.</p>
+                  <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
+                </div>
+              </div>
+            </div>
+            <template class="repeater__template">
+              <div class="listrow repcard repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Representante <span class="rep-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir representante"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="reprow reprow--3">
+                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="cpf"><div class="input__label"><p>CPF</p></div><div class="input__field"><input class="input__control" placeholder="000.000.000-00" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Legal</option><option>Procurador</option></select></div></div>
+                </div>
+                <div class="repdoc">
+                  <div class="listrow__head"><span class="fieldlbl">Documento comprobatório</span></div>
+                  <p class="cl-mail">Anexe a ata / contrato social que comprova que esta pessoa é representante ou procuradora da empresa.</p>
+                  <div><button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar documento</button></div>
+                </div>
+              </div>
+            </template>
+            <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar representante / procurador</button>
+          </div>
+        </div>
+      </section>
+      </div><!-- /tab-pj -->
+
+      <!-- 3. Contatos -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">3</span><h2 class="section__title">Contatos</h2></div></div>
+        <div class="section__body">
+          <div class="repeater" data-ds="repeater">
+            <div class="repeater__items">
+              <div class="listrow repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Contato 1 (principal)</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
+                <div class="formgrid">
+                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" value="Marina Alves" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo de uso</p></div><div class="input__field"><select class="input__control"><option>Principal</option><option>Cobrança</option><option>Operacional</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control" value="marina@alvescom.com.br" placeholder="nome@email.com" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" value="(11) 98888-1200" /></div></div>
+                  <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
+                </div>
+                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="cadastro__emailAssin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para assinatura</p></span></label>
+                <div class="input full" data-toggle="cadastro__emailAssin" hidden><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="cadastro__emailLogin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para o login do "Meu Espaço"</p></span></label>
+                <div class="input full" data-toggle="cadastro__emailLogin" hidden><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+              </div>
+            </div>
+            <template class="repeater__template">
+              <div class="listrow repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Contato adicional</span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir contato"><svg><use href="#ico-trash"/></svg></button></div>
+                <p class="cl-mail">O contato precisa de ao menos uma informação: e-mail ou telefone.</p>
+                <div class="formgrid">
+                  <div class="input"><div class="input__label"><p>Nome</p></div><div class="input__field"><input class="input__control" placeholder="Nome do contato" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo de uso</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Operacional</option><option>Principal</option></select></div></div>
+                  <div class="input"><div class="input__label"><p>E-mail principal</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+                  <div class="input" data-ds="input" data-ds-mask="phone"><div class="input__label"><p>Telefone / WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="(00) 00000-0000" /></div></div>
+                  <div class="input"><div class="input__label"><p>Usuário do WhatsApp</p></div><div class="input__field"><input class="input__control" placeholder="@usuario" /></div><p class="input__help">Agora desvinculado do número do telefone.</p></div>
+                </div>
+                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="cadastro__emailAssin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para assinatura</p></span></label>
+                <div class="input full" data-toggle="cadastro__emailAssin" hidden><div class="input__label"><p>E-mail para assinatura</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+                <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" data-ds-toggle="cadastro__emailLogin" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Usar o e-mail principal para o login do "Meu Espaço"</p></span></label>
+                <div class="input full" data-toggle="cadastro__emailLogin" hidden><div class="input__label"><p>E-mail de login (Meu Espaço)</p></div><div class="input__field"><input class="input__control" placeholder="nome@email.com" /></div></div>
+              </div>
+            </template>
+            <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar contato</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Endereços -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">4</span><h2 class="section__title">Endereços</h2></div></div>
+        <div class="section__body">
+          <div class="repeater repeater--addr" data-ds="repeater">
+            <div class="repeater__items">
+              <div class="listrow repcard repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="formgrid">
+                  <div class="input"><div class="input__label"><p>CEP</p></div><div class="input__field"><input class="input__control" value="05305-000" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input full"><div class="input__label"><p>Logradouro</p></div><div class="input__field"><input class="input__control" value="Av. Imperatriz Leopoldina" /></div></div>
+                  <div class="input"><div class="input__label"><p>Número</p></div><div class="input__field"><input class="input__control" value="1200" /></div></div>
+                  <div class="input"><div class="input__label"><p>Bairro</p></div><div class="input__field"><input class="input__control" value="Vila Leopoldina" /></div></div>
+                  <div class="input"><div class="input__label"><p>Cidade</p></div><div class="input__field"><input class="input__control" value="São Paulo" /></div></div>
+                  <div class="input"><div class="input__label"><p>UF</p></div><div class="input__field"><input class="input__control" value="SP" /></div></div>
+                </div>
+              </div>
+            </div>
+            <template class="repeater__template">
+              <div class="listrow repcard repeater__item">
+                <div class="listrow__head"><span class="fieldlbl">Endereço <span class="addr-n"></span></span><button type="button" class="icon-btn" data-repeat-remove aria-label="Excluir endereço"><svg><use href="#ico-trash"/></svg></button></div>
+                <div class="formgrid">
+                  <div class="input"><div class="input__label"><p>CEP</p></div><div class="input__field"><input class="input__control" placeholder="00000-000" /></div></div>
+                  <div class="input"><div class="input__label"><p>Tipo</p></div><div class="input__field"><select class="input__control"><option>Cobrança</option><option>Comercial</option><option>Residencial</option></select></div></div>
+                  <div class="input full"><div class="input__label"><p>Logradouro</p></div><div class="input__field"><input class="input__control" placeholder="Rua / avenida" /></div></div>
+                  <div class="input"><div class="input__label"><p>Número</p></div><div class="input__field"><input class="input__control" placeholder="Nº" /></div></div>
+                  <div class="input"><div class="input__label"><p>Bairro</p></div><div class="input__field"><input class="input__control" placeholder="Bairro" /></div></div>
+                  <div class="input"><div class="input__label"><p>Cidade</p></div><div class="input__field"><input class="input__control" placeholder="Cidade" /></div></div>
+                  <div class="input"><div class="input__label"><p>UF</p></div><div class="input__field"><input class="input__control" placeholder="UF" /></div></div>
+                </div>
+              </div>
+            </template>
+            <button type="button" class="btn btn--outline" data-repeat-add><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"/></svg></span>Adicionar endereço</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. LGPD (consentimentos) -->
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">5</span><h2 class="section__title">Privacidade e consentimentos (LGPD)</h2></div></div>
+        <div class="section__body">
+          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Execução de contrato (base legal obrigatória)</p><p class="checkbox-card__desc">Não revogável enquanto houver contrato vigente — RN01/E01 de F-LOC-33.</p></span></label>
+          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" checked /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Comunicações transacionais (cobrança, avisos de contrato)</p></span></label>
+          <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Comunicações de marketing e campanhas</p><p class="checkbox-card__desc">Opt-out não bloqueia comunicações transacionais obrigatórias (RN01 de F-LOC-26).</p></span></label>
+        </div>
+      </section>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Transferência de box ===== -->
+<section class="uni-page" id="uni-transferencia" data-title="Transferência de box">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="perfil.html">Marina Alves Comércio</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Transferência</span>
+      </nav>
+    </div>
+    <div class="content">
+      <a class="backlink" href="perfil.html"><svg><use href="#ri-arrow-left"/></svg>Voltar para o perfil</a>
+      <div class="pagehead"><div class="pagehead__text"><h1 class="pagehead__title title-h1">Transferência de box</h1></div></div>
+
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">1</span><h2 class="section__title">Origem e destino</h2></div></div>
+        <div class="section__body"><div class="formgrid">
+          <div class="input input--readonly"><div class="input__label"><p>Box atual</p></div><div class="input__field"><input class="input__control" value="A-102 · 5 m² (Médio)" readonly /></div></div>
+          <div class="input"><div class="input__label"><p>Novo box</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option>Selecionar…</option><option>B-307 · Pequeno (2 m²)</option><option>B-321 · Grande (10 m²)</option></select></div><p class="input__help">Só é permitido mover para a categoria imediatamente adjacente.</p></div>
+          <div class="input full"><div class="input__label"><p>Motivo da transferência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Ex.: upsell, retenção, necessidade do cliente…"></textarea></div></div>
+        </div></div>
+      </section>
+
+      <section class="section">
+        <div class="section__head"><div class="section__headleft"><span class="section__num">2</span><h2 class="section__title">Impactos</h2></div></div>
+        <div class="section__body"><dl class="dados">
+          <div class="data-item"><p class="data-item__label">Nova capa de contrato</p><span class="badge badge--yellow">Será gerada</span></div>
+          <div class="data-item"><p class="data-item__label">Seguro</p><span class="badge badge--yellow">Novo vínculo + valor declarado</span></div>
+        </dl></div>
+      </section>
+
+      <div class="actions actions--end">
+        <a class="btn btn--ghost" href="perfil.html">Cancelar</a>
+        <a class="btn btn--primary" href="perfil.html">Gerar transferência</a>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Blacklist / restrições ===== -->
+<section class="uni-page" id="uni-blacklist" data-title="Blacklist / restrições">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="perfil.html">Marina Alves Comércio</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Blacklist / Restrições</span>
+      </nav>
+    </div>
+    <div class="content">
+      <a class="backlink" href="perfil.html"><svg><use href="#ri-arrow-left"/></svg>Voltar para o perfil</a>
+      <div class="pagehead"><div class="pagehead__text"><h1 class="pagehead__title title-h1">Blacklist / Restrições</h1></div></div>
+
+      <div class="tabbar">
+        <div class="segmented" data-ds="segmented">
+          <button class="segmented__item segmented__item--active" data-value="incluir" data-tab="blacklist__bl-incluir">Incluir restrição</button>
+          <button class="segmented__item" data-value="remover" data-tab="blacklist__bl-remover">Solicitar remoção</button>
+        </div>
+      </div>
+
+      <!-- Incluir restrição -->
+      <div class="tabpanel is-active" id="blacklist__bl-incluir">
+        <section class="section">
+          <div class="section__body">
+            <div class="banner banner--error"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Ação sensível</p><p class="banner__text">O bloqueio é registrado com responsável, data e motivo. A remoção exige nova solicitação e aprovação.</p></div></div>
+
+            <!-- Efeito da restrição: opção aditiva (era um 2º segmented) -> checkbox -->
+            <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Também sinalizar locatários correlacionados</p><p class="cl-mail">Além de bloquear o acesso facial desta pessoa, sinaliza contatos vinculados — evita uso de "laranja" para acessar a loja.</p></span></label>
+
+            <div class="formgrid">
+              <div class="input">
+                <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
+                <div class="select" data-ds="select">
+                  <div class="select__field"><p class="select__value select__value--filled">Ocorrência policial</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                  <div class="select__dropdown"><div class="select__list">
+                    <div class="select__item select__item--active"><p class="select__item-text">Ocorrência policial</p></div>
+                    <div class="select__item"><p class="select__item-text">Fraude / documento falso</p></div>
+                    <div class="select__item"><p class="select__item-text">Comportamento de risco</p></div>
+                  </div></div>
+                </div>
+              </div>
+              <div class="input input--readonly"><div class="input__label"><p>Faciais vinculadas a bloquear</p></div><div class="input__field"><input class="input__control" value="2 de 4 cadastradas" readonly /></div><p class="input__help">Evita uso de "laranja" para acessar a loja.</p></div>
+              <div class="input full"><div class="input__label"><p>Detalhe / referência</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Nº do B.O., contexto, etc."></textarea></div></div>
+            </div>
+          </div>
+        </section>
+        <div class="actions actions--end">
+          <a class="btn btn--ghost" href="perfil.html">Cancelar</a>
+          <a class="btn btn--destructive" href="perfil.html">Bloquear locatário</a>
+        </div>
+      </div>
+
+      <!-- Remover restrição -->
+      <div class="tabpanel" id="blacklist__bl-remover">
+        <section class="section">
+          <div class="section__body">
+            <div class="bxcard"><div class="bxcard__l"><span class="bxthumb"><svg><use href="#ri-lock"/></svg></span><div><p class="ocard__title">Restrição ativa desde 03/02/2023</p><p class="cl-mail">Motivo: ocorrência policial · registrada por Kelly Rocha</p></div></div><span class="badge badge--destructive">Ativa</span></div>
+            <div class="formgrid">
+              <div class="input full"><div class="input__label"><p>Motivo da remoção</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Justifique a remoção da restrição — pode exigir aprovação adicional."></textarea></div><p class="input__help">O histórico da restrição original permanece imutável — a remoção cria um novo registro, não uma edição.</p></div>
+            </div>
+          </div>
+        </section>
+        <div class="actions actions--end">
+          <a class="btn btn--ghost" href="perfil.html">Cancelar</a>
+          <a class="btn btn--primary" href="perfil.html">Solicitar remoção</a>
+        </div>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Seguro ===== -->
+<section class="uni-page" id="uni-seguro" data-title="Seguro">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="perfil.html">Marina Alves Comércio</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Seguro</span>
+      </nav>
+    </div>
+    <div class="content">
+      <a class="backlink" href="perfil.html"><svg><use href="#ri-arrow-left"/></svg>Voltar para o perfil</a>
+      <div class="pagehead"><div class="pagehead__text"><h1 class="pagehead__title title-h1">Trocar / registrar seguro</h1></div></div>
+
+      <section class="section">
+        <div class="section__body">
+          <span class="fieldlbl">Modalidade *</span>
+          <div class="tabbar" style="margin-top:var(--sm)">
+            <div class="segmented" data-ds="segmented">
+              <button class="segmented__item segmented__item--active" data-value="parceira" data-tab="seguro__seg-parceira">Seguro parceira (MAPFRE)</button>
+              <button class="segmented__item" data-value="proprio" data-tab="seguro__seg-proprio">Seguro próprio</button>
+              <button class="segmented__item" data-value="sem" data-tab="seguro__seg-sem">Sem seguro (exceção)</button>
+            </div>
+          </div>
+
+          <!-- MAPFRE (parceira) -->
+          <div class="tabpanel is-active" id="seguro__seg-parceira">
+            <div class="formgrid">
+              <div class="input"><div class="input__label"><p>Plano</p></div><div class="input__field"><select class="input__control"><option>Cobertura R$ 1.500</option><option>Cobertura R$ 3.000</option><option>Cobertura R$ 5.000</option></select></div></div>
+              <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div><p class="input__help">Deve casar com o valor da cobertura escolhida.</p></div>
+            </div>
+          </div>
+
+          <!-- Seguro próprio -->
+          <div class="tabpanel" id="seguro__seg-proprio">
+            <div class="formgrid">
+              <div class="input"><div class="input__label"><p>Seguradora</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="Nome da seguradora" /></div></div>
+              <div class="input"><div class="input__label"><p>Valor declarado dos bens</p><p class="input__req">*</p></div><div class="input__field"><input class="input__control" placeholder="R$ 0,00" /></div></div>
+              <div class="input"><div class="input__label"><p>Vencimento da apólice</p><p class="input__req">*</p></div><div class="input__field"><input type="date" class="input__control" /></div><p class="input__help">Gera alerta antes de vencer.</p></div>
+            </div>
+          </div>
+
+          <!-- Sem seguro (exceção) -->
+          <div class="tabpanel" id="seguro__seg-sem">
+            <div class="banner banner--warning"><span class="banner__icon"><svg><use href="#ri-error-warning"/></svg></span><div class="banner__content"><p class="banner__title">Contratação de seguro é obrigatória</p><p class="banner__text">Ao confirmar, o locatário assume total responsabilidade por eventuais perdas/danos aos bens armazenados.</p></div></div>
+            <label class="checkbox-card"><input type="checkbox" class="checkbox-card__input" /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="checkbox-card__content"><p class="checkbox-card__title">Declaro que fui informado da obrigatoriedade de seguro e assumo a responsabilidade por não possuir cobertura vigente.</p></span></label>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions actions--end">
+        <a class="btn btn--ghost" href="perfil.html">Cancelar</a>
+        <a class="btn btn--primary" href="perfil.html">Salvar e gerar capa</a>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Registrar ocorrência ===== -->
+<section class="uni-page" id="uni-ocorrencia" data-title="Registrar ocorrência">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="perfil.html">Marina Alves Comércio</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Nova ocorrência</span>
+      </nav>
+    </div>
+    <div class="content">
+      <a class="backlink" href="perfil.html"><svg><use href="#ri-arrow-left"/></svg>Voltar para o perfil</a>
+      <div class="pagehead"><div class="pagehead__text"><h1 class="pagehead__title title-h1">Registrar ocorrência</h1></div></div>
+
+      <section class="section">
+        <div class="section__body">
+          <div class="formgrid">
+            <div class="input"><div class="input__label"><p>Tipo de ocorrência</p><p class="input__req">*</p></div><div class="input__field"><select class="input__control"><option>Quebra de cadeado</option><option>Sinistro</option><option>Arrombamento</option><option>Reclamação / atendimento</option><option>Aviso de move-out</option></select></div></div>
+            <div class="input"><div class="input__label"><p>Box relacionado</p></div><div class="input__field"><select class="input__control"><option>—</option><option>A-102 · 5 m²</option><option>A-103 · 5 m²</option></select></div></div>
+            <div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo — vira registro rastreável (quem/quando/por quê)."></textarea></div><p class="input__help">Motivo é obrigatório em qualquer movimentação (rastreabilidade).</p></div>
+            <div class="input full"><div class="input__label"><p>Anexos</p></div>
+              <button type="button" class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"/></svg></span>Anexar arquivo</button>
+              <div class="taglist" style="margin-top:var(--md)"><span class="chip">boletim-ocorrencia.pdf</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions actions--end">
+        <a class="btn btn--ghost" href="perfil.html">Cancelar</a>
+        <a class="btn btn--primary" href="perfil.html">Registrar ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"/></svg></span></a>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== Meu Espaço ===== -->
+<section class="uni-page" id="uni-meu-espaco" data-title="Meu Espaço">
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Meu Espaço</span>
+      </nav>
+    </div>
+    <div class="content">
+      <div class="pagehead"><div class="pagehead__text"><h1 class="pagehead__title title-h1">Meu Espaço <span class="badge badge--default">Portal do locatário</span></h1></div></div>
+
+      <div class="phone">
+        <div class="phone__bar"><span>Meu Espaço</span><span>Marina D.</span></div>
+        <div class="phone__body">
+          <div class="card card--mobile"><div class="card__slot">
+            <p class="ocard__title">Box B-214 · Lapa 0</p>
+            <p class="cl-mail">Mensalidade em dia · próxima 05/09</p>
+            <div class="taglist" style="margin-top:var(--md)"><span class="badge badge--secondary">Ativo</span><span class="badge badge--success">Seguro MAPFRE</span></div>
+          </div></div>
+          <a class="selfrow"><svg><use href="#ri-price-tag-3"/></svg><div><p class="selfrow__t">Trocar forma de pagamento</p><p class="selfrow__d">Cartão · boleto · PIX</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+          <a class="selfrow"><svg><use href="#ri-file-text"/></svg><div><p class="selfrow__t">Avisar move-out</p><p class="selfrow__d">Aviso prévio de 15 dias</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+          <a class="selfrow"><svg><use href="#ri-archive"/></svg><div><p class="selfrow__t">Solicitar troca de box</p><p class="selfrow__d">Sujeito às travas de categoria</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+          <a class="selfrow"><svg><use href="#ri-information"/></svg><div><p class="selfrow__t">Falar com a loja</p><p class="selfrow__d">Canal interno (sem expor telefone/e-mail)</p></div><span class="chev"><svg><use href="#ri-arrow-right-s"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<script src="../../ds/ds.js" defer></script>
+<script>
+(function () {
+  var slugs = ['lista','perfil','cadastro','transferencia','blacklist','seguro','ocorrencia','meu-espaco'];
+  function show(slug) {
+    var target = document.getElementById('uni-' + slug);
+    if (!target) return;
+    var pages = document.querySelectorAll('.uni-page');
+    for (var i = 0; i < pages.length; i++) pages[i].classList.toggle('is-active', pages[i] === target);
+    window.scrollTo(0, 0);
+    try { history.replaceState(null, '', '#' + slug); } catch (e) {}
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;
+    var m = (a.getAttribute('href') || '').match(/^([a-z-]+)\.html/);
+    if (m && slugs.indexOf(m[1]) >= 0) { e.preventDefault(); show(m[1]); }
+  });
+  var start = (location.hash || '').replace('#', '');
+  show(slugs.indexOf(start) >= 0 ? start : 'lista');
+})();
+</script>
+</body>
+</html>

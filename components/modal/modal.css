@@ -73,6 +73,7 @@
 
 /* ---- Footer — borda superior, gap 10, pt lg (12) / pb xl (16) / px xl */
 .modal__footer {
+  justify-content: flex-end;
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;

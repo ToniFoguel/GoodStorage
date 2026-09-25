@@ -1,0 +1,78 @@
+/* ============================================================
+   Componente: Document Viewer (docviewer) — novo (ver design-system.md)
+   Visualizador de documento embutido: barra escura (arquivo /
+   paginacao / zoom / baixar) + canvas com as folhas renderizadas,
+   no padrao de leitores de PDF / boleto. So exibe (nao edita).
+   Runtime: data-ds="docviewer" (ds:download). Chrome usa tokens do DS.
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.docviewer{
+  box-sizing:border-box; width:100%;
+  border:var(--thin) solid var(--border-default);
+  border-radius:var(--radius-md); overflow:hidden;
+  font-family:var(--font-family-title-text);
+}
+/* Barra de ferramentas (escura) */
+.docviewer__bar{
+  background:var(--background-bg-alt); color:var(--content-title-inverse);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:var(--lg); padding:var(--md) var(--lg);
+}
+.docviewer__file{ display:flex; align-items:center; gap:var(--md); min-width:0;
+  font-size:var(--font-size-label); color:var(--content-text-inverse); }
+.docviewer__file svg{ flex:none; width:16px; height:16px; }
+.docviewer__filename{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px; }
+.docviewer__nav{ display:flex; align-items:center; gap:var(--md); }
+.docviewer__btn{
+  appearance:none; border:0; background:transparent; color:var(--content-text-inverse);
+  width:30px; height:30px; border-radius:var(--rounded-sm);
+  display:inline-grid; place-items:center; cursor:pointer; font-size:17px; line-height:1;
+}
+.docviewer__btn svg{ width:18px; height:18px; }
+.docviewer__btn:hover{ background:rgba(255,255,255,.12); color:var(--content-title-inverse); }
+.docviewer__page,.docviewer__zoom{ font-size:var(--font-size-label); color:var(--content-text-inverse); text-align:center; }
+.docviewer__page{ min-width:52px; } .docviewer__zoom{ min-width:46px; }
+.docviewer__sep{ width:1px; height:20px; background:rgba(255,255,255,.18); }
+.docviewer__download{
+  appearance:none; display:flex; align-items:center; gap:var(--sm);
+  border:var(--thin) solid rgba(255,255,255,.28); background:transparent; color:var(--content-title-inverse);
+  font-family:var(--font-family-title-text); font-size:var(--font-size-label); font-weight:var(--font-weight-bold);
+  padding:var(--sm) var(--lg); border-radius:var(--rounded-sm); cursor:pointer;
+}
+.docviewer__download svg{ width:15px; height:15px; }
+.docviewer__download:hover{ background:rgba(255,255,255,.12); }
+/* Canvas + folhas */
+.docviewer__canvas{ background:#4c4f52; max-height:560px; overflow:auto; padding:var(--2xl) 0 var(--3xl); }
+.docviewer__scaler{ transform-origin:top center; transition:transform .12s ease; }
+.docviewer__sheet{
+  background:var(--background-bg-main); width:640px; max-width:calc(100% - 48px);
+  margin:0 auto var(--2xl); box-shadow:0 4px 16px rgba(0,0,0,.35);
+  padding:48px 56px; position:relative;
+}
+/* Conteudo do documento (arquivo gerado — tipografia propria) */
+.docpage{ font-family:"Times New Roman",Georgia,serif; color:#111; font-size:12.5px; line-height:1.55; }
+.docpage__brand{ display:flex; align-items:center; justify-content:space-between;
+  border-bottom:2px solid var(--background-primary); padding-bottom:14px; margin-bottom:22px; }
+.docpage__logo{ display:flex; align-items:center; gap:10px; }
+.docpage__logo-txt{ font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold);
+  font-size:17px; color:var(--content-title); letter-spacing:.3px; }
+.docpage__logo-txt b{ color:var(--content-primary); }
+.docpage__meta{ text-align:right; font-family:var(--font-family-title-text); font-size:10px; color:#666; line-height:1.5; }
+.docpage__meta b{ color:var(--content-title); }
+.docpage h1{ font-family:var(--font-family-title-text); text-align:center; font-size:15px; letter-spacing:.4px; margin:0 0 4px; color:var(--content-title); }
+.docpage__ref{ text-align:center; font-family:var(--font-family-title-text); font-size:10.5px; color:#777; margin-bottom:22px; }
+.docpage h2{ font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; margin:18px 0 6px; }
+.docpage p{ margin:0 0 10px; text-align:justify; }
+.docpage__party{ background:var(--background-bg-aux); border-left:3px solid var(--background-secondary); padding:10px 14px; margin:0 0 14px; font-size:12px; }
+.docpage ol{ margin:0 0 10px; padding-left:20px; } .docpage ol li{ margin:0 0 6px; text-align:justify; }
+.docpage__sign{ margin-top:34px; display:flex; gap:40px; }
+.docpage__sign div{ flex:1; text-align:center; }
+.docpage__sign .line{ border-top:1px solid #333; margin-bottom:6px; padding-top:6px; }
+.docpage__sign .who{ font-size:11px; font-weight:700; } .docpage__sign .role{ font-size:10px; color:#666; }
+.docpage__pg{ position:absolute; bottom:20px; right:56px; font-family:var(--font-family-title-text); font-size:10.5px; color:#888; }
+.docpage__wm{ position:absolute; bottom:20px; left:56px; font-family:var(--font-family-title-text); font-size:9px; color:#b8b8b8; letter-spacing:.3px; }
+.docpage__stamp{ position:absolute; top:16px; left:56px; transform:rotate(-6deg);
+  border:2px solid var(--background-primary); color:var(--content-primary);
+  font-family:var(--font-family-title-text); font-weight:700; font-size:11px; letter-spacing:1px; padding:4px 10px; border-radius:4px; opacity:.85; }
+.docviewer--readonly .docviewer__download{ display:flex; }
+@media (max-width:640px){ .docviewer__filename{max-width:120px;} .docviewer__sheet{padding:32px 28px;} }

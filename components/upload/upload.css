@@ -1,0 +1,91 @@
+/* ============================================================
+   Componente: Upload (UploadFile) — novo (ver design-system.md)
+   Figma: node 421:2542 (Componentes - TARS)
+   Upload de múltiplos arquivos: cabeçalho (título + contador +
+   ações "Adicionar arquivo"/"Excluir selecionadas"), texto de
+   ajuda, e lista de arquivos com seleção (checkbox circular),
+   "Selecionar todas", exclusão por linha e estados de erro.
+   Runtime: data-ds="upload" (ds:change). Depende de:
+   ../../tokens/tokens.css e do componente Button (btn).
+   ============================================================ */
+.upload {
+  box-sizing: border-box;
+  width: 100%;
+  font-family: var(--font-family-title-text);
+}
+
+/* Cabeçalho */
+.upload__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--md);
+  flex-wrap: wrap;
+}
+.upload__title {
+  margin: 0;
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  font-weight: var(--font-weight-bold);
+  color: var(--content-title);
+}
+.upload__count { margin-left: var(--sm); color: var(--background-tertiary); font-weight: var(--font-weight-bold); } /* Figma Content/tertiary #6c6cff — DS sem token de texto ⚠️ */
+.upload__actions { display: flex; gap: var(--md); }
+
+/* Ajuda */
+.upload__hint {
+  margin: var(--md) 0 0;
+  font-size: var(--font-size-paragraph);
+  line-height: var(--line-hight-paragraph);
+  color: var(--content-text);
+}
+
+/* Lista */
+.upload__list { margin-top: var(--xl); border: var(--thin) solid var(--border-default); }
+.upload__list:empty { display: none; }
+.upload__row {
+  display: flex;
+  align-items: center;
+  gap: var(--lg);
+  padding: var(--lg) var(--xl);
+  border-bottom: var(--thin) solid var(--border-default);
+}
+.upload__row:last-child { border-bottom: 0; }
+.upload__row--head { background: var(--background-bg-aux); }
+.upload__all { font-weight: var(--font-weight-bold); color: var(--content-title); font-size: var(--font-size-paragraph); }
+
+.upload__file { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.upload__name { font-size: var(--font-size-paragraph); line-height: var(--line-hight-paragraph); color: var(--content-text); word-break: break-word; }
+
+/* Checkbox circular (multi-seleção) */
+.upload__check { display: inline-flex; flex: none; position: relative; cursor: pointer; }
+.upload__check-input { position: absolute; opacity: 0; width: 0; height: 0; }
+.upload__check-ui {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: var(--stroke-2) solid var(--border-default);
+  background: var(--background-bg-main);
+  display: grid; place-items: center;
+}
+.upload__check-ui svg { width: 12px; height: 12px; color: var(--content-title-inverse); opacity: 0; }
+.upload__check-input:checked + .upload__check-ui { background: var(--background-primary); border-color: var(--background-primary); }
+.upload__check-input:checked + .upload__check-ui svg { opacity: 1; }
+.upload__check-input:focus-visible + .upload__check-ui { outline: var(--stroke-2) solid var(--background-primary); outline-offset: 2px; }
+
+/* Lixeira por linha */
+.upload__del { flex: none; display: inline-grid; place-items: center; width: 32px; height: 32px; border: 0; background: none; cursor: pointer; color: var(--border-icon); }
+.upload__del svg { width: var(--xl); height: var(--xl); }
+
+/* Erro */
+.upload__row--error { border: var(--thin) solid var(--border-error); }
+.upload__row--error .upload__name { color: var(--content-label-error); }
+.upload__row-err { font-size: var(--font-size-label); line-height: var(--line-hight-label); color: var(--content-label-error); margin-top: var(--sm); }
+.upload__error { display: none; margin-top: var(--md); font-size: var(--font-size-paragraph); color: var(--content-label-error); }
+.upload.is-error .upload__error { display: block; }
+
+/* Somente leitura (ex.: Exibição de contrato) — sem imputar/excluir */
+.upload--readonly .upload__actions,
+.upload--readonly .upload__check,
+.upload--readonly .upload__del,
+.upload--readonly .upload__row--head { display: none; }
+.upload__empty { display: none; margin-top: var(--md); color: var(--content-disable); font-size: var(--font-size-paragraph); }
+.upload--readonly .upload__list:empty + .upload__empty { display: block; }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="upload.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style> body{ font-family:var(--font-family-title-text); padding:40px; background:#fff; color:#313131; } .demo{ max-width:920px; margin:0 0 48px; } .demo>small{ display:block; font-size:11px; color:#999; margin-bottom:12px; } #out{ font-size:13px; color:#666; } </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ico-upload" viewBox="0 0 24 24"><path d="M4 19h16v2H4v-2zm9-12.828V17h-2V6.172l-5.364 5.364-1.414-1.415L12 2.343l7.778 7.778-1.414 1.415L13 6.172z"/></symbol>
+    <symbol id="ico-trash" viewBox="0 0 24 24"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  </svg>
+
+  <h2>Upload (UploadFile)</h2>
+  <p style="color:#666;font-size:13px;max-width:640px">
+    Upload de múltiplos arquivos. Marque a raiz com <code>data-ds="upload"</code>. O botão
+    "Adicionar arquivo" é um <code>&lt;label&gt;</code> com o <code>.upload__input</code> (file) dentro.
+    O runtime monta a lista, o contador, a seleção (checkbox circular), "Selecionar todas",
+    exclusão por linha/em lote e marca erro por tamanho (<code>data-up-max</code>, <code>data-up-errmsg</code>).
+    Dispara <code>ds:change</code>.
+  </p>
+
+  <!-- Default (vazio) -->
+  <div class="demo">
+    <small>Default — vazio (adicione arquivos)</small>
+    <div class="upload" data-ds="upload" data-up-errmsg="Tamanho excede 5mb.">
+      <div class="upload__head">
+        <p class="upload__title">Adicionar arquivo <span class="upload__count">(0)</span></p>
+        <div class="upload__actions">
+          <label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"></use></svg></span>Adicionar arquivo<input type="file" class="upload__input" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
+          <button type="button" class="btn btn--outline" data-up-del-selected><span class="btn__icon btn__icon--sm"><svg><use href="#ico-trash"></use></svg></span>Excluir selecionadas</button>
+        </div>
+      </div>
+      <p class="upload__hint">O arquivo deve ser no formato PNG, JPG/JPEG ou WebP, com no máximo 5mb.</p>
+      <div class="upload__list"></div>
+      <p class="upload__error">Tamanho excede 5mb.</p>
+    </div>
+  </div>
+
+  <!-- Fill (com arquivos, um em erro) -->
+  <div class="demo">
+    <small>Fill — com arquivos (a última linha em erro)</small>
+    <div class="upload is-error" data-ds="upload" data-up-errmsg="Tamanho excede 5mb.">
+      <div class="upload__head">
+        <p class="upload__title">Adicionar arquivo <span class="upload__count">(3)</span></p>
+        <div class="upload__actions">
+          <label class="btn btn--outline"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"></use></svg></span>Adicionar arquivo<input type="file" class="upload__input" multiple hidden></label>
+          <button type="button" class="btn btn--outline" data-up-del-selected><span class="btn__icon btn__icon--sm"><svg><use href="#ico-trash"></use></svg></span>Excluir selecionadas</button>
+        </div>
+      </div>
+      <p class="upload__hint">O arquivo deve ser no formato PNG, JPG/JPEG ou WebP, com no máximo 5mb.</p>
+      <div class="upload__list">
+        <div class="upload__row upload__row--head"><label class="upload__check"><input type="checkbox" class="upload__check-input" data-up-all><span class="upload__check-ui"><svg><use href="#ico-check"></use></svg></span></label><span class="upload__all">Selecionar todas</span></div>
+        <div class="upload__row"><label class="upload__check"><input type="checkbox" class="upload__check-input" checked><span class="upload__check-ui"><svg><use href="#ico-check"></use></svg></span></label><div class="upload__file"><span class="upload__name">apolice-frente.png</span></div><button type="button" class="upload__del" aria-label="Excluir arquivo"><svg><use href="#ico-trash"></use></svg></button></div>
+        <div class="upload__row"><label class="upload__check"><input type="checkbox" class="upload__check-input"><span class="upload__check-ui"><svg><use href="#ico-check"></use></svg></span></label><div class="upload__file"><span class="upload__name">apolice-verso.png</span></div><button type="button" class="upload__del" aria-label="Excluir arquivo"><svg><use href="#ico-trash"></use></svg></button></div>
+        <div class="upload__row upload__row--error"><label class="upload__check"><input type="checkbox" class="upload__check-input"><span class="upload__check-ui"><svg><use href="#ico-check"></use></svg></span></label><div class="upload__file"><span class="upload__name">contrato.pdf</span><span class="upload__row-err">Tamanho excede 5mb.</span></div><button type="button" class="upload__del" aria-label="Excluir arquivo"><svg><use href="#ico-trash"></use></svg></button></div>
+      </div>
+      <p class="upload__error">Tamanho excede 5mb.</p>
+    </div>
+  </div>
+
+  <p id="out">Último ds:change: —</p>
+
+  <script src="../../ds/ds.js" defer></script>
+  <script>
+    document.addEventListener('ds:change', function(e){
+      if (e.target.classList.contains('upload')) document.getElementById('out').textContent = 'Último ds:change: ' + e.detail.count + ' arquivo(s)';
+    });
+  </script>
+</body>
+</html>

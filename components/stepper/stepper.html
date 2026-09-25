@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stepper — DS estudo</title>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="../input/input.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="stepper.css" />
+  <link rel="stylesheet" href="../../ds/ds.css" />
+  <style>
+    body { font-family: var(--font-family-title-text); padding: 40px; background:#fff; color:#313131; }
+    .demo { max-width: 720px; margin: 0 0 48px; }
+    .demo > small { display:block; font-size:11px; color:#999; margin-bottom:12px; }
+    .fgrid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .fgrid .full { grid-column:1 / -1; }
+    #out { font-size:13px; color:#666; }
+  </style>
+</head>
+<body>
+  <!-- sprite de ícones (check do step concluído) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ico-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <h2>Stepper (horizontal)</h2>
+  <p style="color:#666;font-size:13px;max-width:560px">
+    Trilha de etapas no topo; só o painel do step ativo aparece. Marque a raiz com
+    <code>data-ds="stepper"</code>. Cada <code>.stepper__step</code> aponta um
+    <code>data-panel="&lt;id&gt;"</code>; o runtime alterna o painel e dispara
+    <code>ds:step</code>. Concluído = marcador com check; ativo = marcador com número.
+    Use <code>data-ds-linear</code> para o modo wizard (não pula para etapas à frente).
+  </p>
+
+  <!-- ============ WIZARD (linear) ============ -->
+  <div class="demo">
+    <small>Modo wizard (data-ds-linear) — avança por Voltar/Avançar; não pula à frente</small>
+    <div class="stepper" data-ds="stepper" data-ds-linear>
+      <ol class="stepper__track">
+        <button type="button" class="stepper__step stepper__step--active" data-panel="w1" aria-label="Locatário">
+          <span class="stepper__marker"><span class="stepper__num">1</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Locatário</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="w2" aria-label="Orçamento">
+          <span class="stepper__marker"><span class="stepper__num">2</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Orçamento</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="w3" aria-label="Seguro">
+          <span class="stepper__marker"><span class="stepper__num">3</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Seguro</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="w4" aria-label="Contrato">
+          <span class="stepper__marker"><span class="stepper__num">4</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Contrato</span>
+        </button>
+      </ol>
+      <div class="stepper__panels">
+        <section class="stepper__panel is-active" id="w1">
+          <div class="fgrid">
+            <div class="input" data-ds="input"><label class="input__label">Razão social</label><div class="input__field"><input class="input__control" value="Marina Alves Comércio Ltda"></div></div>
+            <div class="input" data-ds="input"><label class="input__label">CNPJ</label><div class="input__field"><input class="input__control" value="12.345.678/0001-90"></div></div>
+          </div>
+        </section>
+        <section class="stepper__panel" id="w2">
+          <div class="fgrid">
+            <div class="input" data-ds="input"><label class="input__label">Código do orçamento</label><div class="input__field"><input class="input__control" value="ORC-4821"></div></div>
+            <div class="input" data-ds="input"><label class="input__label">Valor base</label><div class="input__field"><input class="input__control" value="R$ 890,00"></div></div>
+          </div>
+        </section>
+        <section class="stepper__panel" id="w3">
+          <div class="fgrid"><div class="input" data-ds="input"><label class="input__label">Apólice</label><div class="input__field"><input class="input__control" value="MAPFRE — interna"></div></div></div>
+        </section>
+        <section class="stepper__panel" id="w4">
+          <div class="fgrid">
+            <div class="input" data-ds="input"><label class="input__label">Prazo de vigência</label><div class="input__field"><input class="input__control" value="12 meses"></div></div>
+            <div class="input" data-ds="input"><label class="input__label">Início do prazo locatício</label><div class="input__field"><input class="input__control" value="01/09/2026"></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="stepper__actions">
+        <button type="button" class="btn btn--outline" data-stepper-prev>Voltar</button>
+        <button type="button" class="btn btn--primary" data-stepper-next>Avançar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NAVEGÁVEL (livre) ============ -->
+  <div class="demo">
+    <small>Modo navegável (sem data-ds-linear) — clica em qualquer etapa (ex.: Exibição/Edição)</small>
+    <div class="stepper" data-ds="stepper">
+      <ol class="stepper__track">
+        <button type="button" class="stepper__step stepper__step--active" data-panel="n1" aria-label="Locatário">
+          <span class="stepper__marker"><span class="stepper__num">1</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Locatário</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="n2" aria-label="Orçamento">
+          <span class="stepper__marker"><span class="stepper__num">2</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Orçamento</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="n3" aria-label="Seguro">
+          <span class="stepper__marker"><span class="stepper__num">3</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Seguro</span>
+        </button>
+        <button type="button" class="stepper__step" data-panel="n4" aria-label="Contrato">
+          <span class="stepper__marker"><span class="stepper__num">4</span><svg class="stepper__check"><use href="#ico-check"></use></svg></span>
+          <span class="stepper__label">Contrato</span>
+        </button>
+      </ol>
+      <div class="stepper__panels">
+        <section class="stepper__panel is-active" id="n1"><div class="fgrid"><div class="input input--readonly" data-ds="input"><label class="input__label">Razão social</label><div class="input__field"><input class="input__control" value="Marina Alves Comércio Ltda" readonly></div></div></div></section>
+        <section class="stepper__panel" id="n2"><div class="fgrid"><div class="input input--readonly" data-ds="input"><label class="input__label">Valor base</label><div class="input__field"><input class="input__control" value="R$ 890,00" readonly></div></div></div></section>
+        <section class="stepper__panel" id="n3"><div class="fgrid"><div class="input input--readonly" data-ds="input"><label class="input__label">Apólice</label><div class="input__field"><input class="input__control" value="MAPFRE — interna" readonly></div></div></div></section>
+        <section class="stepper__panel" id="n4"><div class="fgrid"><div class="input input--readonly" data-ds="input"><label class="input__label">Prazo de vigência</label><div class="input__field"><input class="input__control" value="12 meses" readonly></div></div></div></section>
+      </div>
+    </div>
+  </div>
+
+  <p id="out">Último ds:step: —</p>
+
+  <script src="../../ds/ds.js" defer></script>
+  <script>
+    document.addEventListener('ds:step', function (e) {
+      if (e.target.classList.contains('stepper')) {
+        document.getElementById('out').textContent = 'Último ds:step: index ' + e.detail.index + ' (' + e.detail.id + ')';
+      }
+    });
+  </script>
+</body>
+</html>

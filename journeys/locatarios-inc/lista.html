@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Locatários — Gestão (layout base) · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/table/table.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<link rel="stylesheet" href="locatarios.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4ZM11 9H13V17H11V9ZM15 12H17V17H15V12ZM7 14H9V17H7V14Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-search" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></symbol>
+  <symbol id="ico-plus" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="currentColor"><path d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ico-filter-3" viewBox="0 0 24 24" fill="currentColor"><path d="M6.17 18a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2v-2h4.17zm6-7a3.001 3.001 0 0 1 5.66 0H22v2h-4.17a3.001 3.001 0 0 1-5.66 0H2v-2h10.17zm-6-7a3.001 3.001 0 0 1 5.66 0H22v2H11.83a3.001 3.001 0 0 1-5.66 0H2V4h4.17z"/></symbol>
+  <symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+</svg>
+
+<div class="app">
+
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Locatários</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Locatários</h1>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--primary" href="cadastro.html">Novo locatário<span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="input toolbar__search" data-ds="input">
+          <div class="input__field"><input class="input__control" placeholder="Pesquisar por ID, locatário, razão social, CNPJ e CPF" autocomplete="off" /><span class="input__icon input__icon--sm"><svg><use href="#ri-search"/></svg></span></div>
+        </div>
+        <div class="dropdown toolbar__filter-dd" data-ds="dropdown">
+          <button class="btn btn--icon-border dropdown__trigger" aria-label="Filtrar por status" aria-haspopup="true" aria-expanded="false"><span class="btn__icon btn__icon--lg"><svg><use href="#ico-filter-3"/></svg></span></button>
+          <div class="dropdown__panel dropdown__panel--filter dropdown__panel--right" hidden>
+            <div class="fltfield">
+              <span class="fieldlbl">Status</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos os status</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
+                  <div class="select__item"><p class="select__item-text">Ativo</p></div>
+                  <div class="select__item"><p class="select__item-text">Em análise</p></div>
+                  <div class="select__item"><p class="select__item-text">Validação manual</p></div>
+                  <div class="select__item"><p class="select__item-text">Pendente de documentação</p></div>
+                  <div class="select__item"><p class="select__item-text">Inativo</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="fltfield">
+              <span class="fieldlbl">Tipo de pessoa</span>
+              <div class="select" data-ds="select" data-ds-float>
+                <div class="select__field"><p class="select__value select__value--filled">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"/></svg></span></div>
+                <div class="select__dropdown"><div class="select__list">
+                  <div class="select__item select__item--active"><p class="select__item-text">Todos</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Física</p></div>
+                  <div class="select__item"><p class="select__item-text">Pessoa Jurídica</p></div>
+                </div></div>
+              </div>
+            </div>
+            <div class="dropdown__clean"><button type="button" class="btn btn--ghost" style="width:100%">Limpar filtro</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table ltable">
+        <div class="table__header">
+          <button class="table__th"><span class="table__th-label">Código</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Locatário</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Tipo</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">CPF/CNPJ</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <button class="table__th"><span class="table__th-label">Status</span><span class="table__sort"><svg><use href="#ico-arrow-up"/></svg></span></button>
+          <span class="table__th table__th--action" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="ltempty" id="ltEmpty" hidden><p class="cl-mail" id="ltEmptyMsg">Nenhum resultado encontrado</p></div>
+
+      <div class="tablepager" id="ltPager">
+        <div class="tablepager__left">
+          <select class="input__control tablepager__size" id="ltPageSize"><option>20</option><option>50</option><option>100</option></select>
+          <span class="tablepager__range" id="ltRange">0 – 0 de 0</span>
+        </div>
+        <div class="tablepager__pages" id="ltPages"></div>
+      </div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+<script src="locatarios-data.js"></script>
+<script>
+  (function () {
+    var t = document.querySelector('.ltable'); if (!t || !window.LOCATARIOS) return;
+    var badgeMap = {'Ativo':'badge--secondary','Em análise':'badge--success','Validação manual':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline'};
+    var STATUS_SHORT = {'Pendente de documentação':'Pendente doc.','Validação manual':'Validação manual'};
+    function seg(s){ return s === 'MAPFRE' ? 'badge--success' : 'badge--outline'; }
+    function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
+    function norm(s){ return String(s==null?'':s).toLowerCase(); }
+
+    // Código do locatário (ID) formatado
+    function codigo(id) { return 'LOC-' + ('000000' + id).slice(-6); }
+    // Dados de cada linha + texto pesquisável (ID, código, locatário/razão, CNPJ/CPF)
+    var rows = Object.keys(window.LOCATARIOS).map(function (id) {
+      var l = window.LOCATARIOS[id];
+      var cod = codigo(id);
+      var search = [id, cod, l.nome, l.docNum].map(norm).join(' ');
+      return { id: id, codigo: cod, nome: l.nome, tipo: l.tipo, docNum: l.docNum, status: l.status, search: search };
+    });
+
+    var fields = ['codigo','nome','tipo','docNum','status'];
+    var state = { query: '', fStatus: '', fTipo: '', sortField: null, sortDir: 1, pageSize: 20, page: 1 };
+
+    function apply() {
+      var out = rows.filter(function (r) {
+        if (state.fStatus && r.status !== state.fStatus) return false;
+        if (state.fTipo && r.tipo !== state.fTipo) return false;
+        if (state.query && state.query.length >= 3 && r.search.indexOf(state.query) < 0) return false;
+        return true;
+      });
+      if (state.sortField) {
+        out.sort(function (a, b) {
+          var x = norm(a[state.sortField]), y = norm(b[state.sortField]);
+          return x < y ? -state.sortDir : x > y ? state.sortDir : 0;
+        });
+      }
+      return out;
+    }
+
+    function render() {
+      Array.prototype.forEach.call(t.querySelectorAll('.table__row'), function (n) { n.remove(); });
+      var empty = document.getElementById('ltEmpty');
+      var emptyMsg = document.getElementById('ltEmptyMsg');
+      var pager = document.getElementById('ltPager');
+      if (!rows.length) { if (empty) { empty.hidden = false; emptyMsg.textContent = 'Nenhum locatário cadastrado'; } if (pager) pager.hidden = true; return; }
+      var data = apply();
+      if (!data.length) { if (empty) { empty.hidden = false; emptyMsg.textContent = 'Nenhum resultado encontrado'; } if (pager) pager.hidden = true; return; }
+      if (empty) empty.hidden = true;
+      if (pager) pager.hidden = false;
+      var totalPages = Math.max(1, Math.ceil(data.length / state.pageSize));
+      if (state.page > totalPages) state.page = totalPages;
+      var start = (state.page - 1) * state.pageSize;
+      var pageRows = data.slice(start, start + state.pageSize);
+      var html = '';
+      pageRows.forEach(function (r, idx) {
+        var alt = ((start + idx) % 2 === 1) ? ' table__row--alt' : '';
+        html += '<div class="table__row' + alt + '" data-href="perfil.html?id=' + r.id + '">'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.codigo) + '</p></div>'
+          + '<div class="table__cell"><span class="cl-name">' + esc(r.nome) + '</span></div>'
+          + '<div class="table__cell"><span class="badge badge--outline">' + esc(r.tipo) + '</span></div>'
+          + '<div class="table__cell"><p class="table__cell-text">' + esc(r.docNum) + '</p></div>'
+          + '<div class="table__cell"><span class="badge ' + (badgeMap[r.status] || 'badge--outline') + '">' + esc(STATUS_SHORT[r.status] || r.status) + '</span></div>'
+          + '<div class="table__cell table__cell--action"><div class="rowmenu"><button type="button" class="table__kebab" data-rowmenu aria-label="Ações"><svg><use href="#ri-more-2"/></svg></button><div class="rowmenu__panel" hidden><a class="rowmenu__item" href="cadastro.html?editar=1&id=' + r.id + '">Editar</a></div></div></div>'
+          + '</div>';
+      });
+      t.insertAdjacentHTML('beforeend', html);
+      renderPager(data.length, totalPages, start);
+    }
+
+    // Lista de páginas com reticências (ex.: 1 2 … 20 21)
+    function pageList(cur, total) {
+      if (total <= 7) { var a = []; for (var i = 1; i <= total; i++) a.push(i); return a; }
+      var set = {};
+      [1, 2, total - 1, total, cur - 1, cur, cur + 1].forEach(function (p) { if (p >= 1 && p <= total) set[p] = 1; });
+      var arr = Object.keys(set).map(Number).sort(function (x, y) { return x - y; });
+      var out = [], prev = 0;
+      arr.forEach(function (p) { if (prev && p - prev > 1) out.push('...'); out.push(p); prev = p; });
+      return out;
+    }
+    function renderPager(total, totalPages, start) {
+      var range = document.getElementById('ltRange');
+      if (range) { var end = Math.min(start + state.pageSize, total); range.textContent = (total === 0 ? 0 : start + 1) + ' – ' + end + ' de ' + total; }
+      var pg = document.getElementById('ltPages'); if (!pg) return;
+      function nav(label, page, disabled) { return '<button type="button" class="tablepager__btn tablepager__btn--nav" data-page="' + page + '"' + (disabled ? ' disabled' : '') + '>' + label + '</button>'; }
+      var h = '';
+      h += nav('«', 1, state.page <= 1);
+      h += nav('‹', state.page - 1, state.page <= 1);
+      pageList(state.page, totalPages).forEach(function (p) {
+        if (p === '...') h += '<span class="tablepager__ellipsis">…</span>';
+        else h += '<button type="button" class="tablepager__btn' + (p === state.page ? ' tablepager__btn--active' : '') + '" data-page="' + p + '">' + p + '</button>';
+      });
+      h += nav('›', state.page + 1, state.page >= totalPages);
+      h += nav('»', totalPages, state.page >= totalPages);
+      pg.innerHTML = h;
+    }
+
+    // RN3/RN3.1 — Busca parcial (>=3 caracteres), gatilho Enter ou clique no ícone
+    var searchInput = document.querySelector('.toolbar__search .input__control');
+    var searchIcon = document.querySelector('.toolbar__search .input__icon');
+    function doSearch() { state.query = norm(searchInput ? searchInput.value.trim() : ''); state.page = 1; render(); }
+    if (searchInput) searchInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+    if (searchIcon) { searchIcon.style.cursor = 'pointer'; searchIcon.addEventListener('click', doSearch); }
+
+    // RN4/RN5/RN10 — Filtros (Status + Tipo) dinâmicos
+    var selects = document.querySelectorAll('.toolbar__filter-dd .select');
+    if (selects[0]) selects[0].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fStatus = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
+    if (selects[1]) selects[1].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fTipo = /todos/i.test(txt) ? '' : (/f[ií]sica/i.test(txt) ? 'PF' : /jur[ií]dica/i.test(txt) ? 'PJ' : ''); state.page = 1; render(); });
+
+    // RN6 — Limpar filtro
+    var clean = document.querySelector('.dropdown__clean .btn');
+    if (clean) clean.addEventListener('click', function () {
+      state.query = ''; state.fStatus = ''; state.fTipo = ''; state.page = 1;
+      if (searchInput) searchInput.value = '';
+      Array.prototype.forEach.call(document.querySelectorAll('.toolbar__filter-dd .select'), function (sel, i) {
+        var val = sel.querySelector('.select__value'); if (val) val.textContent = i === 0 ? 'Todos os status' : 'Todos';
+        Array.prototype.forEach.call(sel.querySelectorAll('.select__item'), function (it, idx) { it.classList.toggle('select__item--active', idx === 0); });
+      });
+      render();
+    });
+
+    // RN15 — Ordenação por coluna (asc/desc)
+    var ths = t.querySelectorAll('.table__header .table__th');
+    Array.prototype.forEach.call(ths, function (th, idx) {
+      th.addEventListener('click', function () {
+        var f = fields[idx]; if (!f) return; // coluna de ação não ordena
+        if (state.sortField === f) state.sortDir = -state.sortDir; else { state.sortField = f; state.sortDir = 1; }
+        state.page = 1;
+        Array.prototype.forEach.call(ths, function (o) { o.classList.remove('table__th--asc', 'table__th--desc'); });
+        th.classList.add(state.sortDir === 1 ? 'table__th--asc' : 'table__th--desc');
+        render();
+      });
+    });
+
+    // RN14 — Paginação
+    var pageSize = document.getElementById('ltPageSize');
+    if (pageSize) pageSize.addEventListener('change', function () { state.pageSize = parseInt(this.value, 10) || 20; state.page = 1; render(); });
+    var pgEl = document.getElementById('ltPages');
+    if (pgEl) pgEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-page]'); if (!b || b.disabled) return;
+      var p = parseInt(b.getAttribute('data-page'), 10);
+      if (!isNaN(p) && p !== state.page) { state.page = p; render(); }
+    });
+
+    // Navegação da linha (vai pra Exibição) + kebab (dropdown -> Editar)
+    t.addEventListener('click', function (e) {
+      var kebab = e.target.closest('[data-rowmenu]');
+      if (kebab) {
+        e.preventDefault(); e.stopPropagation();
+        var panel = kebab.parentNode.querySelector('.rowmenu__panel');
+        var isOpen = panel && !panel.hidden;
+        document.querySelectorAll('.rowmenu__panel').forEach(function (p) { p.hidden = true; });
+        if (panel) panel.hidden = isOpen;
+        return;
+      }
+      if (e.target.closest('.rowmenu__panel')) return; // clique no item do menu segue o link
+      var row = e.target.closest('.table__row[data-href]');
+      if (row) location.href = row.getAttribute('data-href');
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.rowmenu')) document.querySelectorAll('.rowmenu__panel').forEach(function (p) { p.hidden = true; });
+    });
+
+    render();
+  })();
+</script>
+</body>
+</html>

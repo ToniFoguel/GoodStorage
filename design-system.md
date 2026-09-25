@@ -61,7 +61,7 @@ principal" esconde o campo de e-mail alternativo. Estado inicial aplicado no ini
 
 Componentes **com runtime** (precisam de `data-ds` + `ds/ds.js`): select,
 dropdown, modal, lightbox, datepicker, collapsible, input, pagination, search,
-sidebar, table, segmented, breadcrumb, repeater.
+sidebar, table, segmented, stepper, upload, breadcrumb, repeater.
 Componentes **estáticos** (só HTML+CSS): avatar, badge, banner, button, card,
 checkbox-card, data-item, empty-state, footer, header, kpi, profile-hero,
 progress, product-card, scrollbar, selfrow.
@@ -100,6 +100,8 @@ progress, product-card, scrollbar, selfrow.
 | Segmented | ✅ | `change` | `components/segmented/segmented.html` | (a formalizar) |
 | Select | ✅ | `change` | `components/select/select.html` | 1:6664 |
 | Sidebar | ✅ | `navigate` | `components/sidebar/sidebar.html` | 46:118032 |
+| Stepper ⚠️ | ✅ | `step` | `components/stepper/stepper.html` | (a formalizar) |
+| Upload ⚠️ | ✅ | `change` | `components/upload/upload.html` | 421:2542 |
 | Table | ✅ | `sort`, `action`, `select` | `components/table/table.html` | 1:1354 |
 
 ---
@@ -206,6 +208,24 @@ Campo de busca com filtro. Eventos `ds:search`, `ds:filter`.
 Opções mutuamente exclusivas; ativo `.segmented__item--active` (`primary` + `title-inverse`). Item por `data-value`. Evento `ds:change`. Altura 32.
 **Abas:** se os itens tiverem `data-tab="<id>"` apontando para um `.tabpanel` (id correspondente), clicar troca o painel visível (`.tabpanel.is-active`). Opt-in e retrocompatível — sem `data-tab` funciona como seletor simples.
 
+### Stepper — `data-ds="stepper"` ⚠️
+Trilha de etapas horizontal; só o painel do step ativo aparece. Marcador concluído = `primary` + check; ativo = `primary` + número; a seguir = contorno `border-default`. Em telas estreitas (≤640px) somem os rótulos, ficam só os marcadores.
+**Anatomia:** `.stepper` › `.stepper__track` › `.stepper__step` (com `data-panel="<id>"`) › `.stepper__marker` (`.stepper__num` / `.stepper__check`) + `.stepper__label`; `.stepper__panels` › `.stepper__panel#<id>` (`.is-active`). Ações opcionais `.stepper__actions` com `[data-stepper-prev]` / `[data-stepper-next]`.
+**Estados:** `.stepper__step--active`, `.stepper__step--done`, `[aria-disabled="true"]` (bloqueado no modo linear).
+**Runtime:** evento `ds:step { index, id }`. `data-ds-linear` = modo wizard (não pula para steps à frente do já alcançado; marca concluídos com check). Sem ele = navegável (clica em qualquer etapa; ex.: Exibição/Edição). Expõe `root.__dsGo(i)` para pulo programático.
+**Tokens:** marcador/conector ativo-concluído → `background-primary`; a seguir → `border-default` + `content-disable`; rótulo ativo → `content-title` bold; espessura do conector → `--stroke-2`; espaçamentos → `--md/--lg/--xl/--2xl`.
+**Exemplo:** `components/stepper/stepper.html`
+
+### Upload (UploadFile) — `data-ds="upload"` ⚠️
+Upload de múltiplos arquivos (Figma node 421:2542). Cabeçalho com título + contador `(N)` e ações “Adicionar arquivo” / “Excluir selecionadas”; texto de ajuda; e lista de arquivos com seleção (checkbox circular, laranja quando marcado), “Selecionar todas”, exclusão por linha e estado de erro por tamanho.
+**Anatomia:** `.upload` › `.upload__head` (`.upload__title` + `.upload__count`, `.upload__actions` com dois `btn btn--outline`) + `.upload__hint` + `.upload__list` (`.upload__row--head` com `[data-up-all]`; `.upload__row` › `.upload__check` [`.upload__check-input`+`.upload__check-ui`] + `.upload__file` [`.upload__name` (+`.upload__row-err`)] + `.upload__del`) + `.upload__error`.
+**Gatilho de arquivo:** o botão “Adicionar arquivo” é um `<label>` com o `<input type="file" class="upload__input">` dentro (múltiplo por padrão). “Excluir selecionadas” usa `[data-up-del-selected]`.
+**Estados:** `.upload__row--error` (linha) + `.upload.is-error` (mensagem geral); checkbox marcado = `primary`.
+**Somente leitura:** `.upload--readonly` esconde ações, checkboxes, “selecionar todas” e exclusão (ex.: Exibição de contrato — só vê os arquivos); vazio mostra `.upload__empty`.
+**Runtime:** monta linhas, contador, seleção/“selecionar todas”, exclusão por linha/lote e marca erro quando `file.size > data-up-max` (default 5MB; mensagem em `data-up-errmsg`). Evento `ds:change { count }`.
+**Tokens:** texto `content-text`/`content-title`; contador `background-tertiary` (#6c6cff — DS sem token de *texto* tertiary ⚠️); bordas `border-default`; selecionado `background-primary`; erro `content-label-error`/`border-error`; espaçamentos `--md/--lg/--xl`; fundo do head `background-bg-aux`.
+**Exemplo:** `components/upload/upload.html`
+
 ### Select — `data-ds="select"`
 Estados: `.select--disable | --error | --readonly`. `.select__field--tags` (multi), `.select__value--filled`, `.select__item--active`, `.select__dropdown--no-title`. Evento `ds:change`.
 Atributos: `data-ds-search` (busca/typeahead por nome), `data-ds-multi` (tags). **`data-ds-float`** ⚠️: renderiza o dropdown `position:fixed` (escapa de containers com overflow, ex.: célula de tabela rolável); fecha ao rolar/redimensionar. Usado nas colunas de cupom/campanha da Consulta.
@@ -243,6 +263,8 @@ Montadas só com componentes + tokens existentes:
 | Cor âmbar (badge `--warning` / "aprovação") | Sem token nomeado | Adicionar `Status/warning` |
 | Tint de linha selecionada (Table Seleção) | Sem token exato | Adicionar `Background/primary-subtle` |
 | Table variante Seleção / SegmentedControl | Usados em código, node Figma a formalizar | Criar/nomear no Figma |
+| Stepper (horizontal) | Criado em código (Sprint 11), sem node no Figma | Formalizar node + definir cor do estado “concluído” (hoje reusa `primary`; DS não tem token de sucesso) |
+| Upload (UploadFile) | Implementado do Figma 421:2542 | Falta token de **texto** tertiary (contador usa `background-tertiary`); confirmar checkbox circular como componente próprio |
 
 ---
 
@@ -257,3 +279,53 @@ Montadas só com componentes + tokens existentes:
 **Tokens:** <papéis> → `<token>`.
 **Exemplo:** `components/<nome>/<nome>.html`
 ```
+
+
+## Document Viewer (`docviewer`)
+
+Visualizador de documento embutido, no padrão de leitores de PDF/boleto: barra escura (nome do arquivo, paginação, zoom, baixar) sobre um *canvas* que renderiza as folhas do documento. Componente **somente leitura** — exibe, não edita. Usado no fluxo de Contratos (step 5 — "Contrato"), onde mostra o contrato gerado.
+
+**Arquivos:** `components/docviewer/docviewer.css`, `components/docviewer/docviewer.html`.
+
+**Markup**
+
+```html
+<div class="docviewer" data-ds="docviewer" data-doc-name="contrato.pdf">
+  <div class="docviewer__bar">
+    <div class="docviewer__file">…<span class="docviewer__filename">contrato.pdf</span></div>
+    <div class="docviewer__nav">
+      <button class="docviewer__btn" data-dv-prev>‹</button>
+      <span class="docviewer__page"><span data-dv-cur>1</span> / <span data-dv-total>3</span></span>
+      <button class="docviewer__btn" data-dv-next>›</button>
+      <span class="docviewer__sep"></span>
+      <button class="docviewer__btn" data-dv-zout>−</button>
+      <span class="docviewer__zoom" data-dv-zoom>100%</span>
+      <button class="docviewer__btn" data-dv-zin>+</button>
+    </div>
+    <button class="docviewer__download" data-dv-download>Baixar</button>
+  </div>
+  <div class="docviewer__canvas">
+    <div class="docviewer__scaler">
+      <div class="docviewer__sheet"><!-- folha 1 --></div>
+      <div class="docviewer__sheet"><!-- folha 2 --></div>
+    </div>
+  </div>
+</div>
+```
+
+**Estrutura**
+
+- `.docviewer` (raiz, `data-ds="docviewer"`, `data-doc-name` = nome exibido/emitido no evento).
+- `.docviewer__bar` — barra escura (`Background/bg-alt`): `.docviewer__file` (ícone + `.docviewer__filename`), `.docviewer__nav` (paginação + zoom) e `.docviewer__download`.
+- `.docviewer__canvas` — área rolável (fundo escuro) com `.docviewer__scaler` (recebe o `scale()` do zoom) contendo as `.docviewer__sheet` (folhas A4).
+- Conteúdo do documento usa as classes `.docpage*` (cabeçalho com marca, `h1`/`h2`, `.docpage__party`, `.docpage__sign`, `.docpage__pg`, `.docpage__wm`, `.docpage__stamp`).
+
+**Hooks de runtime:** `data-dv-prev`, `data-dv-next`, `data-dv-zin`, `data-dv-zout`, `data-dv-cur`, `data-dv-total`, `data-dv-zoom`, `data-dv-download`.
+
+**Runtime:** `data-ds="docviewer"`. Paginação rola até a folha e o indicador acompanha a rolagem; zoom aplica `scale()` de 50% a 200% em passos de 10%. `[data-dv-download]` dispara **`ds:download`** com `{ name }` (não baixa arquivo — cabe à aplicação tratar). Modificador `.docviewer--readonly` reservado para estados futuros.
+
+> **Stepper — rótulo ao lado; concluído em verde (Background/secondary) + check + conector verde; ativo em laranja. Modificador `.stepper--readonly` (exibição): navegação sem progresso — etapas concluídas ficam neutras, só a ativa destaca. Remova as `.stepper__actions` quando for só navegação.**
+
+> **Banner** — além de `.banner__title` e `.banner__text`, aceita `.banner__subtitle` (subtítulo em negrito) e `.banner__list` (lista com bullets) para reunir aviso + "o que acontece a seguir" num único informativo.
+
+> **Stepper** — um step com `data-done="true"` já nasce concluído (verde), mesmo sem ter sido percorrido (ex.: edição de registro com campos já preenchidos). O step ativo continua em destaque (laranja).

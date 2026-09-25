@@ -1,0 +1,125 @@
+/* ============================================================
+   Componente: Stepper (horizontal) — rótulo AO LADO do marcador
+   Trilha entre as etapas; só o painel do step ativo aparece.
+   Concluído = marcador VERDE (Background/secondary) + check + conector
+   verde. Ativo = marcador LARANJA (Background/primary) + número.
+   A seguir = contorno cinza.
+   Modificador .stepper--readonly (exibição): navegação sem progresso —
+   etapas concluídas ficam neutras (sem verde/check); só a ativa destaca.
+   Runtime: data-ds="stepper" (ds:step). Modo wizard: data-ds-linear.
+   Depende de: ../../tokens/tokens.css
+   ============================================================ */
+.stepper { box-sizing: border-box; width: 100%; }
+
+/* Trilha */
+.stepper__track {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--xl);
+  list-style: none;
+}
+.stepper__step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-title-text);
+  text-align: left;
+}
+.stepper__step:last-child { flex: 0 0 auto; }
+
+/* Marcador (círculo) */
+.stepper__marker {
+  position: relative;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--background-bg-main);
+  border: var(--stroke-2) solid var(--border-default);
+  color: var(--content-disable);
+}
+.stepper__num { font-size: var(--font-size-label); line-height: 1; font-weight: var(--font-weight-bold); }
+.stepper__check { display: none; width: 15px; height: 15px; }
+.stepper__label {
+  font-size: var(--font-size-label);
+  line-height: var(--line-hight-label);
+  font-weight: var(--font-weight-medium);
+  color: var(--content-disable);
+  white-space: nowrap;
+}
+
+/* Conector entre steps */
+.stepper__step:not(:last-child)::after {
+  content: "";
+  flex: 1 1 auto;
+  height: var(--stroke-2);
+  min-width: var(--xl);
+  margin: 0 var(--lg);
+  background: var(--border-default);
+}
+
+.stepper__step:hover:not(.stepper__step--active) .stepper__label { color: var(--content-title); }
+
+/* Estado: Ativo (laranja) */
+.stepper__step--active .stepper__marker {
+  background: var(--background-primary);
+  border-color: var(--background-primary);
+  color: var(--content-title-inverse);
+}
+.stepper__step--active .stepper__label { color: var(--content-title); font-weight: var(--font-weight-bold); }
+
+/* Estado: Concluído (verde) */
+.stepper__step--done .stepper__marker {
+  background: var(--background-secondary);
+  border-color: var(--background-secondary);
+  color: var(--content-title);
+}
+.stepper__step--done .stepper__num { display: none; }
+.stepper__step--done .stepper__check { display: block; }
+.stepper__step--done .stepper__label { color: var(--content-text); }
+.stepper__step--done::after { background: var(--background-secondary); }
+
+/* Estado: Bloqueado (wizard, steps à frente) */
+.stepper__step[aria-disabled="true"] { cursor: not-allowed; }
+.stepper__step[aria-disabled="true"]:hover .stepper__label { color: var(--content-disable); }
+
+/* Modificador: Somente leitura / navegação (exibição) — sem progresso verde */
+.stepper--readonly .stepper__step--done .stepper__marker {
+  background: var(--background-bg-main);
+  border-color: var(--border-default);
+  color: var(--content-disable);
+}
+.stepper--readonly .stepper__step--done .stepper__num { display: block; }
+.stepper--readonly .stepper__step--done .stepper__check { display: none; }
+.stepper--readonly .stepper__step--done .stepper__label { color: var(--content-disable); }
+.stepper--readonly .stepper__step--done::after { background: var(--border-default); }
+
+/* Painéis: só o ativo aparece */
+.stepper__panels { margin-top: var(--2xl); }
+.stepper__panel { display: none; }
+.stepper__panel.is-active { display: block; }
+
+/* Ações (wizard: Voltar / Avançar) */
+.stepper__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--md);
+  margin-top: var(--2xl);
+}
+
+/* Responsivo: em telas estreitas some o rótulo, ficam só os marcadores */
+@media (max-width: 640px) {
+  .stepper__label { display: none; }
+  .stepper__step:not(:last-child)::after { margin: 0 var(--sm); }
+}

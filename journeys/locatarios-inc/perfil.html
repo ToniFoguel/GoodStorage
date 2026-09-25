@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exibição do locatário · GoodStorage</title>
+<link rel="stylesheet" href="../../tokens/tokens.css" />
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link rel="stylesheet" href="../../components/avatar/avatar.css" />
+<link rel="stylesheet" href="../../components/breadcrumb/breadcrumb.css" />
+<link rel="stylesheet" href="../../components/badge/badge.css" />
+<link rel="stylesheet" href="../../components/button/button.css" />
+<link rel="stylesheet" href="../../components/banner/banner.css" />
+<link rel="stylesheet" href="../../components/data-item/data-item.css" />
+<link rel="stylesheet" href="../../components/input/input.css" />
+<link rel="stylesheet" href="../../components/select/select.css" />
+<link rel="stylesheet" href="../../components/checkbox-card/checkbox-card.css" />
+<link rel="stylesheet" href="../../components/collapsible/collapsible.css" />
+<link rel="stylesheet" href="../../components/segmented/segmented.css" />
+<link rel="stylesheet" href="../../components/dropdown/dropdown.css" />
+<link rel="stylesheet" href="../../components/kpi/kpi.css" />
+<link rel="stylesheet" href="../../components/profile-hero/profile-hero.css" />
+<link rel="stylesheet" href="../../components/modal/modal.css" />
+<link rel="stylesheet" href="../../components/tabs/tabs.css" />
+<link rel="stylesheet" href="../../ds/ds.css" />
+<style>/* abas removidas: mostra o conteúdo de todas as seções */ .content .tabpanel { display: block; }</style>
+<link rel="stylesheet" href="locatarios.css" />
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ri-arrow-left-double" viewBox="0 0 24 24"><path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"/></symbol>
+  <symbol id="ri-arrow-up-s" viewBox="0 0 24 24"><path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"/></symbol>
+  <symbol id="ri-arrow-left" viewBox="0 0 24 24" fill="currentColor"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></symbol>
+  <symbol id="ri-folder-chart" viewBox="0 0 24 24"><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM4 5V19H20V7H11.5858L9.58579 5H4Z"/></symbol>
+  <symbol id="ri-team" viewBox="0 0 24 24"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2Z"/></symbol>
+  <symbol id="ri-file-text" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"/></symbol>
+  <symbol id="ri-error-warning" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+  <symbol id="ri-archive" viewBox="0 0 24 24"><path d="M3 10H2V4.00293C2 3.44903 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.43788 22 4.00293V10H21V20.0015C21 20.553 20.5551 21 20.0066 21H3.9934C3.44476 21 3 20.5525 3 20.0015V10ZM19 10H5V19H19V10ZM4 5V8H20V5H4ZM9 12H15V14H9V12Z"/></symbol>
+  <symbol id="ri-equalizer-3" viewBox="0 0 24 24"><path d="M7 3V6H3V8H7V11H9V3H7ZM11 8H21V6H11V8ZM17 13V16H21V18H17V21H15V13H17ZM13 18H3V16H13V18Z"/></symbol>
+  <symbol id="ri-pencil" viewBox="0 0 24 24"><path d="M6.414 16 16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></symbol>
+  <symbol id="ri-lock" viewBox="0 0 24 24"><path d="M6 8V7a6 6 0 1 1 12 0v1h1a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h1zm2 0h8V7a4 4 0 1 0-8 0v1zm3 6.732V17h2v-2.268a2 2 0 1 0-2 0z"/></symbol>
+  <symbol id="ri-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ri-more-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+  <symbol id="ri-checkbox-circle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></symbol>
+  <symbol id="ico-upload" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10v7h-2v-7H6l6-6 6 6h-5zM4 19h16v2H4v-2z"/></symbol>
+  <symbol id="ico-add" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol>
+  <symbol id="ico-trash" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></symbol>
+  <symbol id="ico-information" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></symbol>
+  <symbol id="ico-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="ico-alert" viewBox="0 0 24 24" fill="currentColor"><path d="M12.866 3l9.526 16.5a1 1 0 0 1-.866 1.5H2.474a1 1 0 0 1-.866-1.5L11.134 3a1 1 0 0 1 1.732 0zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></symbol>
+  <symbol id="ico-close" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.586l4.95-4.95 1.414 1.414L13.414 12l4.95 4.95-1.414 1.414L12 13.414l-4.95 4.95-1.414-1.414L10.586 12 5.636 7.05 7.05 5.636z"/></symbol>
+  <symbol id="ico-arrow-down-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 13.1714 16.9495 8.22168 18.3637 9.63589 11.9997 15.9999 5.63574 9.63589 7.04996 8.22168z"/></symbol>
+  <symbol id="ico-arrow-up-s" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.8284 7.04996 15.7782 5.63574 14.364 11.9997 8 18.3637 14.364 16.9495 15.7782z"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" data-ds="sidebar">
+    <div class="sidebar__header"><div class="sidebar__headinner">
+      <span class="sidebar__logo"><img src="../../assets/logo-goodstorage-mark.svg" alt="GoodStorage" /></span>
+      <p class="sidebar__brand">GoodStorage</p>
+      <button class="sidebar__collapse" aria-label="Colapsar"><svg><use href="#ri-arrow-left-double"/></svg></button>
+    </div></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"/></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items">
+          <a class="sidebar__item sidebar__item--active" href="lista.html"><span class="sidebar__item-icon"><svg><use href="#ri-team"/></svg></span><span class="sidebar__item-label">Locatários</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"/></svg></span><span class="sidebar__item-label">Contratos</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-error-warning"/></svg></span><span class="sidebar__item-label">Inadimplência</span></a>
+          <a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-archive"/></svg></span><span class="sidebar__item-label">Espaços / Boxes</span></a>
+        </div>
+      </div>
+      <div class="sidebar__group">
+        <button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__group-title">Configurações</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"/></svg></span></button>
+        <div class="sidebar__items"><a class="sidebar__item"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"/></svg></span><span class="sidebar__item-label">Alçadas e regras</span></a></div>
+      </div>
+    </nav>
+    <div class="sidebar__footer"><div class="sidebar__user">
+      <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+      <div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+    </div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span class="breadcrumb__item">Operação</span><span class="breadcrumb__sep">/</span>
+        <a class="breadcrumb__item" href="lista.html">Locatários</a><span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__item breadcrumb__item--current">Exibição</span>
+      </nav>
+    </div>
+
+    <div class="content">
+      <div class="pagehead">
+        <div class="pagehead__text">
+          <h1 class="pagehead__title title-h1">Exibição</h1>
+        </div>
+        <div class="pagehead__actions">
+          <a class="btn btn--outline" href="lista.html"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-arrow-left"/></svg></span>Voltar</a>
+          <button type="button" class="btn btn--secondary" id="btnAprovar" hidden>Aprovar</button>
+          <button type="button" class="btn btn--destructive" id="btnReprovar" hidden>Reprovar</button>
+          <a class="btn btn--primary" href="cadastro.html?editar=1"><span class="btn__icon btn__icon--sm"><svg><use href="#ri-pencil"/></svg></span>Editar</a>
+        </div>
+      </div>
+
+      <div class="tabs" id="perfilTabs">
+        <button type="button" class="tabs__item tabs__item--active" data-tab-target="tabDados">Dados cadastrais</button>
+        <button type="button" class="tabs__item" data-tab-target="tabValidacoes">Validações</button>
+      </div>
+      <div class="tabs__panel is-active" id="tabDados"><div id="exibicaoBody"></div></div>
+      <div class="tabs__panel" id="tabValidacoes"><div id="validacoesBody"></div></div>
+
+      <div class="footer"><img src="../../assets/logo-goodstorage.svg" alt="GoodStorage · espaços inteligentes" /></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal confirm-modal" id="modalAprovar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Aprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Motivo da aprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da aprovação"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalAprovar'))">Cancelar</button><button class="btn btn--secondary" id="btnConfirmAprovar">Aprovar</button></div>
+</div>
+
+<div class="modal confirm-modal" id="modalReprovar" data-ds="modal" style="max-width:480px">
+  <div class="modal__header"><h2 class="modal__title">Reprovar documentação</h2><button class="modal__close" aria-label="Fechar"><svg><use href="#ico-close"/></svg></button></div>
+  <div class="modal__content">
+    <div class="input full"><div class="input__label"><p>Motivo da reprovação</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo da reprovação"></textarea></div></div>
+  </div>
+  <div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(document.getElementById('modalReprovar'))">Cancelar</button><button class="btn btn--destructive" id="btnConfirmReprovar">Reprovar</button></div>
+</div>
+
+<script src="../../ds/ds.js" defer></script>
+<script src="locatarios-data.js"></script>
+<script>
+  (function () {
+    var box = document.getElementById('exibicaoBody'); if (!box) return;
+    var stored = null;
+    var id = (location.search.match(/[?&]id=([^&]+)/) || [])[1];
+    if (id && window.LOCATARIOS && window.LOCATARIOS[id]) stored = window.LOCATARIOS[id];
+    else { try { stored = JSON.parse(localStorage.getItem('locatarioCadastro') || 'null'); } catch (e) {} }
+    if ((!stored || !stored.dados || !stored.dados.length) && window.LOCATARIOS) stored = window.LOCATARIOS['1']; // nunca vazio
+    function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
+    if (!stored || !stored.dados || !stored.dados.length) {
+      box.innerHTML = '<section class="section"><div class="section__body"><p class="cl-mail">Nenhum locat\u00e1rio cadastrado ainda. Cadastre um locat\u00e1rio para ver os dados aqui.</p></div></section>';
+      return;
+    }
+
+    // Status do locatario (modelo IdWall). A validacao manual e POR DOCUMENTO.
+    var STATUS_BADGE = {
+      'Ativo': 'badge--secondary',
+      'Em an\u00e1lise': 'badge--success',
+      'Valida\u00e7\u00e3o manual': 'badge--yellow',
+      'Pendente de documenta\u00e7\u00e3o': 'badge--yellow', 'Pendente': 'badge--yellow',
+      'Inativo': 'badge--outline'
+    };
+    var cpfResolvido = null; // null | 'Aprovado' | 'Reprovado' \u2014 valida\u00e7\u00e3o manual do documento
+    var docLabel = stored.tipo === 'PF' ? 'CPF' : 'CNPJ'; // CPF p/ PF, CNPJ p/ PJ
+    var stBadge = document.getElementById('statusBadge');
+    var btnAp = document.getElementById('btnAprovar'); if (btnAp) btnAp.hidden = true;  // valida\u00e7\u00e3o agora \u00e9 por documento
+    var btnRe = document.getElementById('btnReprovar'); if (btnRe) btnRe.hidden = true;
+    function setStatus(s) {
+      if (stBadge) { stBadge.textContent = s || '\u2014'; stBadge.className = 'badge ' + (STATUS_BADGE[s] || 'badge--outline'); }
+    }
+    var editLink = document.querySelector('.pagehead__actions a[href^="cadastro.html"]');
+    if (editLink && id) editLink.setAttribute('href', 'cadastro.html?editar=1&id=' + id);
+
+    // Copia mutavel dos documentos + estado por documento (IdWall)
+    var docs = (stored.docs || []).map(function (d) { var c = {}; for (var k in d) c[k] = d[k]; return c; });
+    function docStatusOf(d) {
+      if (d.status) return d.status;
+      if (d.motivo) return 'Reprovado';
+      if (stored.status === 'Em an\u00e1lise') return 'Em an\u00e1lise';
+      if (stored.status === 'Valida\u00e7\u00e3o manual') return 'Valida\u00e7\u00e3o manual';
+      return 'Aprovado';
+    }
+    function deriveStatus() {
+      // Validação manual do CPF (PF): enquanto não aprovada, o locatário fica pendente
+      if (stored.cpfManual && cpfResolvido !== 'Aprovado') {
+        return cpfResolvido === 'Reprovado' ? 'Pendente de documentação' : 'Validação manual';
+      }
+      if (stored.status === 'Inativo') return 'Inativo';
+      if (!docs.length) return 'Pendente de documenta\u00e7\u00e3o';
+      var rep = false, man = false, ana = false;
+      docs.forEach(function (d) { var s = docStatusOf(d); if (s === 'Reprovado') rep = true; else if (s === 'Valida\u00e7\u00e3o manual') man = true; else if (s === 'Em an\u00e1lise') ana = true; });
+      if (rep) return 'Pendente de documenta\u00e7\u00e3o';
+      if (man) return 'Valida\u00e7\u00e3o manual';
+      if (ana) return 'Em an\u00e1lise';
+      return 'Ativo';
+    }
+    // Validação manual POR DOCUMENTO: Aprovar/Reprovar em cada documento "Validação manual"
+    var pendingDocIdx = null, cpfMode = null;
+    function setModalTitle(id, txt) { var m = document.getElementById(id); var t = m && m.querySelector('.modal__title'); if (t) t.textContent = txt; }
+    box.addEventListener('click', function (e) {
+      var apCpf = e.target.closest && e.target.closest('[data-cpf-ap]');
+      var reCpf = e.target.closest && e.target.closest('[data-cpf-re]');
+      if (apCpf) { cpfMode = 'ap'; setModalTitle('modalAprovar', 'Aprovar validação do ' + docLabel); DS.openModal('modalAprovar'); return; }
+      if (reCpf) { cpfMode = 're'; setModalTitle('modalReprovar', 'Reprovar validação do ' + docLabel); DS.openModal('modalReprovar'); return; }
+      var ap = e.target.closest && e.target.closest('[data-doc-ap]');
+      var re = e.target.closest && e.target.closest('[data-doc-re]');
+      if (ap) { cpfMode = null; setModalTitle('modalAprovar', 'Aprovar documentação'); pendingDocIdx = +ap.getAttribute('data-doc-ap'); DS.openModal('modalAprovar'); }
+      else if (re) { cpfMode = null; setModalTitle('modalReprovar', 'Reprovar documentação'); pendingDocIdx = +re.getAttribute('data-doc-re'); DS.openModal('modalReprovar'); }
+    });
+    var btnConfAp = document.getElementById('btnConfirmAprovar');
+    if (btnConfAp) btnConfAp.addEventListener('click', function () {
+      var m = document.getElementById('modalAprovar');
+      if (cpfMode === 'ap') { cpfResolvido = 'Aprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); renderPendingBanner(); cpfMode = null; return; }
+      var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
+      if (d) { d.status = 'Aprovado'; d.motivo = ''; }
+      DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Ativo
+      pendingDocIdx = null;
+    });
+    var btnConfRe = document.getElementById('btnConfirmReprovar');
+    if (btnConfRe) btnConfRe.addEventListener('click', function () {
+      var m = document.getElementById('modalReprovar');
+      var mo = m.querySelector('textarea');
+      if (!mo || !mo.value.trim()) { if (mo) { var inp = mo.closest('.input'); if (inp) inp.classList.add('input--error'); } return; } // reprovar exige justificativa
+      if (cpfMode === 're') { cpfResolvido = 'Reprovado'; DS.closeModal(m); setStatus(deriveStatus()); renderCpfInline(); renderPendingBanner(); cpfMode = null; return; }
+      var d = (pendingDocIdx != null) ? docs[pendingDocIdx] : null;
+      if (d) { d.status = 'Reprovado'; d.motivo = mo.value.trim(); }
+      DS.closeModal(m); refreshDocs(); // recalcula o status do locatário -> Pendente de documentação
+      pendingDocIdx = null;
+    });
+    var nome = '';
+    stored.dados.forEach(function (sec) { (sec.items || []).forEach(function (it) { if (!nome && /nome|raz[\u00e3a]o/i.test(it.label)) nome = it.value; }); });
+    // breadcrumb permanece "Exibição" (não usa o nome do locatário)
+    function escAttr(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+    // Mesma diagramação do cadastro
+    function gridClass(title) {
+      if (title === 'Identificação') return stored.tipo === 'PF' ? 'formgrid formgrid--4' : 'formgrid';
+      return 'formgrid formgrid--4'; // Endereço, Contatos
+    }
+    function span(label) {
+      if (['Logradouro', 'Complemento'].indexOf(label) >= 0) return ' col-3';
+      return ['Nome do locatário', 'Nome'].indexOf(label) >= 0 ? ' col-2' : '';
+    }
+    function inputRO(label, value, cls) {
+      return '<div class="input' + (cls || '') + '"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div></div>';
+    }
+    var QUAL_OPTS = ['Administrador', 'Sócio', 'Sócio-Administrador', 'Diretor', 'Presidente', 'Procurador'];
+    function selectRO(label, value) {
+      var opts = QUAL_OPTS.slice();
+      if (value && opts.indexOf(value) < 0) opts.unshift(value);
+      var o = opts.map(function (op) { return '<option' + (op === value ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
+      return '<div class="input"><div class="input__label"><p>' + esc(label) + '</p></div><div class="input__field is-readonly"><select class="input__control" disabled>' + o + '</select></div></div>';
+    }
+    // Documento (PF) read-only — fiel ao combofield do cadastro (select + input), ambos read-only
+    function docComboRO(value, tipo, extra) {
+      tipo = tipo || 'CPF';
+      var opts = ['CPF', 'RG', 'CNH', 'CIN', 'RNE', 'Passaporte', 'Carteira de classe'];
+      if (opts.indexOf(tipo) < 0) opts.unshift(tipo);
+      var o = opts.map(function (op) { return '<option' + (op === tipo ? ' selected' : '') + '>' + esc(op) + '</option>'; }).join('');
+      return '<div class="input col-2"><div class="input__label"><p>Documento</p></div>'
+        + '<div class="combofield is-readonly"><select class="combofield__pre" disabled>' + o + '</select><input class="combofield__val" value="' + escAttr(value) + '" readonly /></div>'
+        + (extra || '') + '</div>';
+    }
+    function mailRO(label, value, usarPrincipal) {
+      return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
+        + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
+        + '<label class="checkbox-card mailflag" style="pointer-events:none"><input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (usarPrincipal ? ' checked' : '') + ' /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Usar o e-mail principal</span></label></div>';
+    }
+    function mailFlagRO(label, value, assina) {
+      return '<div class="input mailrow"><div class="input__label"><p>' + esc(label) + '</p></div>'
+        + '<div class="input__field is-readonly"><input class="input__control" value="' + escAttr(value) + '" readonly /></div>'
+        + '<label class="checkbox-card mailflag" style="pointer-events:none"><input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (assina ? ' checked' : '') + ' /><span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span><span class="mailflag__label">Pode assinar documentos</span></label></div>';
+    }
+    function checkRO(label, checked) {
+      return '<div class="full"><label class="checkbox-card" style="pointer-events:none">'
+        + '<input type="checkbox" class="checkbox-card__input" tabindex="-1"' + (checked ? ' checked' : '') + ' />'
+        + '<span class="checkbox-card__box"><svg class="checkbox-card__check"><use href="#ico-check"/></svg></span>'
+        + '<span class="checkbox-card__content"><p class="checkbox-card__title">' + esc(label) + '</p></span></label></div>';
+    }
+    function docBadge(d) {
+      var s = docStatusOf(d);
+      if (s === 'Reprovado') return '<span class="badge badge--destructive">Reprovado</span>';
+      if (s === 'Pendente') return '<span class="badge badge--yellow">Pendente</span>';
+      if (s === 'Em análise') return '<span class="badge badge--yellow">Em análise</span>';
+      if (s === 'Validação manual') return '<span class="badge badge--yellow">Validação manual</span>';
+      return '<span class="badge badge--success">Aprovado</span>';
+    }
+    function docsBodyHtml() {
+      var h = '';
+      if (!docs.length) h += '<p class="cl-mail">Aguardando envio de documentos (pendente de documentação).</p>';
+      h += '<div class="docgrid">';
+      docs.forEach(function (d, i) {
+        var actions = ''; // exibição é só leitura — Aprovar/Reprovar é feito na Edição
+        h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(d.label) + (d.opcional ? '' : ' <span class="fieldlbl-req">*</span>') + '</span>' + docBadge(d) + '</div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(d.file) + '</span></div>'
+          + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(d.emissao || '15/01/2026') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(d.validade || '—') + '</p></div></dl>'
+          + (d.motivo ? '<p class="formerror">' + esc(d.motivo) + '</p>' : '') + actions + '</div>';
+      });
+      h += '</div>'; // fecha docgrid dos obrigatórios
+      // Outros documentos (opcional) — segmentado dos obrigatórios
+      h += '<div class="docsep"></div><div class="listrow__head"><span class="fieldlbl">Outros documentos</span><span class="badge badge--outline">Opcional</span></div>';
+      var outros = stored.outros || [];
+      if (outros.length) {
+        h += '<div class="docgrid">';
+        outros.forEach(function (o) {
+          h += '<div class="listrow"><div class="listrow__head"><span class="fieldlbl">' + esc(o.nome) + '</span></div>'
+            + '<div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(o.file) + '</span></div>'
+            + '<dl class="dados docmeta"><div class="data-item"><p class="data-item__label">Data de emissão</p><p class="data-item__value">' + esc(o.emissao || '—') + '</p></div><div class="data-item"><p class="data-item__label">Data de validade</p><p class="data-item__value">' + esc(o.validade || '—') + '</p></div></dl>'
+            + '</div>';
+        });
+        h += '</div>';
+      } else {
+        h += '<p class="cl-mail">Nenhum documento complementar enviado.</p>';
+      }
+      return h;
+    }
+    function docsSectionHtml() {
+      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Documentações</h2></div></div><div class="section__body" id="docsBody">' + docsBodyHtml() + '</div></section>';
+    }
+    function refreshDocs() { var b = document.getElementById('docsBody'); if (b) b.innerHTML = docsBodyHtml(); setStatus(deriveStatus()); if (typeof renderPendingBanner === 'function') renderPendingBanner(); }
+    // Aba "Validações": log das integrações (Serpro, IdWall, etc.)
+    function valBadge(sName) {
+      var cls = /reprov|irregular|falh|erro|indispon/i.test(sName) ? 'badge--destructive'
+        : /regular|aprov|conclu|sucesso/i.test(sName) ? 'badge--success' : 'badge--yellow';
+      return '<span class="badge ' + cls + '">' + esc(sName) + '</span>';
+    }
+    function validacoesRows() {
+      if (stored.validacoes && stored.validacoes.length) return stored.validacoes;
+      var st = stored.status;
+      var idwall = st === 'Ativo' ? 'Aprovado' : st === 'Pendente de documentação' ? 'Reprovado' : st === 'Validação manual' ? 'Necessita validação humana' : st === 'Em análise' ? 'Em análise' : 'Aprovado';
+      var serpro = stored.tipo === 'PF' ? 'Serpro — Consulta CPF' : 'Serpro — Consulta CNPJ v2';
+      return [
+        { origem: serpro, data: '05/08/2026', hora: '09:41', status: 'Regular' },
+        { origem: 'IdWall — Validação documental', data: '05/08/2026', hora: '09:42', status: idwall }
+      ];
+    }
+    function validacoesSectionHtml() {
+      var rows = validacoesRows();
+      var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Validações</h2></div></div><div class="section__body">';
+      h += '<div class="rf-wrap"><table class="rftable"><thead><tr><th>Integração</th><th>Data</th><th>Hora</th><th>Status</th></tr></thead><tbody>';
+      rows.forEach(function (r) { h += '<tr><td>' + esc(r.origem) + '</td><td>' + esc(r.data) + '</td><td>' + esc(r.hora) + '</td><td>' + esc(r.status) + '</td></tr>'; });
+      return h + '</tbody></table></div></div></section>';
+    }
+    // Aba "Histórico": linha do tempo dos eventos do locatário
+    function historicoSectionHtml() {
+      var ev = [];
+      ev.push({ ok: true, t: 'Locatário cadastrado', when: '05/08/2026', meta: 'Cadastro criado no sistema.' });
+      validacoesRows().forEach(function (r) {
+        var okv = /regular|aprov|conclu|sucesso/i.test(r.status);
+        ev.push({ ok: okv, t: r.origem, when: (r.data + (r.hora && r.hora !== '—' ? ' · ' + r.hora : '')), meta: 'Retorno: ' + r.status });
+      });
+      if (stored.decisao) { var d = stored.decisao; ev.push({ ok: d.tipo === 'Aprovado', t: 'Documentação ' + String(d.tipo || '').toLowerCase(), when: d.data || '', meta: (d.motivo || '') + (d.por ? ' · ' + d.por : '') }); }
+      ev.push({ ok: deriveStatus() === 'Ativo', t: 'Status atual: ' + deriveStatus(), when: '', meta: '' });
+      var h = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico</h2></div></div><div class="section__body"><div class="hist">';
+      ev.forEach(function (e) {
+        h += '<div class="hist-item"><div class="hist-ico' + (e.ok ? ' ok' : '') + '"><svg><use href="#' + (e.ok ? 'ico-circle-check' : 'ri-file-text') + '"/></svg></div>'
+          + '<div class="hist-body"><div class="hist-top"><b>' + esc(e.t) + '</b>' + (e.when ? '<span class="hist-when">' + esc(e.when) + '</span>' : '') + '</div>'
+          + (e.meta ? '<p class="hist-meta">' + esc(e.meta) + '</p>' : '') + '</div></div>';
+      });
+      return h + '</div></div></section>';
+    }
+    function decisaoHtml(d) {
+      if (!d) return '<p class="cl-mail">Aguardando decisão (aprovação/reprovação).</p>';
+      var cls = d.tipo === 'Reprovado' ? 'badge--destructive' : 'badge--success';
+      return '<dl class="dados">'
+        + '<div class="data-item"><p class="data-item__label">Decisão</p><span class="badge ' + cls + '">' + esc(d.tipo) + '</span></div>'
+        + '<div class="data-item"><p class="data-item__label">Data</p><p class="data-item__value">' + esc(d.data) + '</p></div>'
+        + '<div class="data-item"><p class="data-item__label">Responsável</p><p class="data-item__value">' + esc(d.por || '—') + '</p></div>'
+        + (d.doc ? '<div class="data-item"><p class="data-item__label">Documento</p><p class="data-item__value">' + esc(d.doc) + '</p></div>' : '')
+        + '</dl>'
+        + '<div class="listrow" style="margin-top:var(--md)"><div class="listrow__head"><span class="fieldlbl">Justificativa</span></div><p class="cl-mail">' + esc(d.motivo) + '</p></div>';
+    }
+    function updateDecisao(d) { var b = document.getElementById('decisaoBody'); if (b) b.innerHTML = decisaoHtml(d); }
+    function fmtDate(v) { if (!v) return new Date().toLocaleDateString('pt-BR'); var p = String(v).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : v; }
+    // RN-ED1: mesma seção "Dados do cadastro" do cadastro/edição, aqui somente leitura
+    function metaSectionHtml() {
+      var cod = stored.codigo || ('LOC-' + ('000000' + (id || 1)).slice(-6));
+      return '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Dados do cadastro</h2></div><span class="section__pill">somente leitura</span></div>'
+        + '<div class="section__body"><div class="formgrid formgrid--4">'
+        + inputRO('Código do locatário', cod) + inputRO('Data do cadastro', stored.dataCadastro || '12/03/2024 09:41')
+        + inputRO('Usuário de cadastro', stored.usuarioCadastro || 'Carol Ferreira') + inputRO('Status de integração Oracle', stored.oracle || 'Pendente')
+        + '</div></div></section>';
+    }
+    // "Outros documentos" (PF) read-only: mesmos checkboxes do cadastro; marcado + campo com o número
+    var DOCTYPES = [['RG', 'RG', 'Número do RG'], ['CNH', 'CNH', 'Número da CNH'], ['CIN', 'CIN', 'Número da CIN'], ['RNE', 'RNE', 'Número do RNE'], ['Passaporte', 'Passaporte', 'Número do passaporte'], ['Classe', 'Carteira de classe (CRM, CRF, CRP…)', 'Carteira de classe']];
+    function outrosDocsRO(tipo, numero) {
+      var d = null; DOCTYPES.forEach(function (x) { if (x[0] === tipo) d = x; });
+      var nome = d ? d[1] : (tipo || '—');
+      var numLabel = d ? d[2] : 'Número do documento';
+      return '<div class="input col-2"><div class="input__label"><p>Outros documentos</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(nome) + '" readonly /></div></div>'
+        + '<div class="input"><div class="input__label"><p>' + esc(numLabel) + '</p></div><div class="input__field is-readonly"><input class="input__control" value="' + escAttr(numero) + '" readonly /></div></div>';
+    }
+    var byT = {};
+    stored.dados.forEach(function (sec) { byT[sec.title] = sec; });
+    // Ordem fixa das seções (Documentações renderizada por último, fora deste laço)
+    var ORDER = ['Identificação', 'Endereço', 'Sócios', 'Representantes', 'Contatos'];
+    // Seção própria "Tipo de locatário" (topo), espelhando o cadastro
+    var html = '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipo de locatário</h2></div></div><div class="section__body"><div class="formgrid formgrid--4">' + inputRO('Tipo de locatário', stored.tipo === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica') + '</div></div></section>';
+    ORDER.forEach(function (t) {
+      var sec = byT[t]; if (!sec) return;
+      var titleDisplay = (sec.title === 'Endereços') ? 'Endereço' : sec.title;
+      html += '<section class="section"><div class="section__head"><div class="section__headleft"><h2 class="section__title">' + esc(titleDisplay) + '</h2></div></div><div class="section__body">';
+      if (sec.reps) {
+        // Representantes: cards read-only (Nome / CPF / Qualificação), como no cadastro
+        sec.reps.forEach(function (r, idx) {
+          var repBadge = r.doc ? '<span class="badge badge--success">Documento anexado</span>' : '<span class="badge badge--yellow">Documentação pendente</span>';
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Representante ' + (idx + 1) + '</span>' + repBadge + '</div><div class="reprow reprow--4">'
+                + inputRO('Nome', r.nome) + inputRO('CPF', r.cpf) + selectRO('Qualificação', r.cargo || r.qualificacao) + inputRO('Sócio associado', r.socio || '—')
+                + '</div>'
+                + (r.doc ? '<div class="repdoc"><div class="listrow__head"><span class="fieldlbl">Documento de identificação</span></div><div class="docfile"><span class="docfile__ico"><svg><use href="#ri-file-text"/></svg></span><span class="docfile__name">' + esc(r.doc) + '</span></div></div>' : '')
+                + '</div>';
+        });
+      } else if (sec.quadro) {
+        // Quadro de sócios e administradores: cards read-only (Nome/CPF/Tipo/Qualificação/Data de inclusão/País)
+        html += '<span class="fieldlbl">Quadro de sócios e administradores</span>';
+        sec.quadro.forEach(function (s, idx) {
+          html += '<div class="listrow repcard"><div class="listrow__head"><span class="fieldlbl">Sócio ' + (idx + 1) + '</span></div><div class="reprow reprow--4">'
+                + inputRO('Nome', s.nome) + inputRO('CPF', s.cpf) + inputRO('Tipo', s.tipo)
+                + selectRO('Qualificação', s.qualificacao) + inputRO('Data de inclusão', s.dataInclusao) + inputRO('País', s.pais) + inputRO('Possui procurador', s.procurador || '—')
+                + '</div></div>';
+        });
+      } else {
+        var isCard = (sec.title === 'Contatos' || sec.title === 'Endereço');
+        if (isCard) html += '<div class="listrow repcard is-principal"><div class="listrow__head"><span class="prin"><span class="prin__badge badge badge--default">Principal</span></span></div>';
+        html += '<div class="' + gridClass(sec.title) + '">';
+        var items = sec.items;
+        if (sec.title === 'Identificação' && stored.tipo === 'PF') { // mesma ordem do cadastro: Documento, Data de nascimento, Nacionalidade, Nome, Outros documentos, e-mails, IBS
+          var ordPF = ['CPF', 'Data de nascimento', 'Nacionalidade', 'Nome do locatário', 'Tipo de documento', 'Número do documento', 'E-mail principal', 'E-mail de assinatura de contrato', 'E-mail de login do Meu Espaço', 'Pessoa contribuinte do IBS e da CBS'];
+          items = items.slice().sort(function (a, b) { var ia = ordPF.indexOf(a.label); var ib = ordPF.indexOf(b.label); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+        }
+        items.forEach(function (it) {
+          if (it.check) html += checkRO(it.label, it.checked);
+          else if (it.mail) html += mailRO(it.label, it.value, it.usarPrincipal);
+          else if (it.assina !== undefined) html += mailFlagRO(it.label, it.value, it.assina !== false);
+          else if (it.label === 'Tipo de documento') {
+            var num = '';
+            sec.items.forEach(function (x) { if (x.label === 'Número do documento') num = x.value; });
+            html += outrosDocsRO(it.value, num);
+          }
+          else if (it.label === 'Número do documento') { /* já exibido no bloco Outros documentos */ }
+          else if (it.label === 'CPF' && stored.tipo === 'PF') html += docComboRO(it.value, 'CPF');
+          else if (it.label === 'CNPJ' && stored.tipo === 'PF') html += inputRO('CNPJ', it.value, ' col-2'); // contribuinte IBS/CBS: CNPJ abaixo do checkbox
+          else html += inputRO(it.label, it.value, span(it.label));
+        });
+        html += '</div>';
+        if (isCard) html += '</div>';
+      }
+      html += '</div></section>';
+    });
+
+    html += docsSectionHtml(); // Documentações
+    // Validações não fica mais em "Dados cadastrais" — vai para a aba Histórico
+    box.innerHTML = html;
+    setStatus(deriveStatus()); // status do locatário derivado dos documentos
+
+    // Aba Histórico + troca de abas (Dados cadastrais / Histórico)
+    var valBox = document.getElementById('validacoesBody'); if (valBox) valBox.innerHTML = validacoesSectionHtml();
+    document.querySelectorAll('#perfilTabs .tabs__item').forEach(function (t) {
+      t.addEventListener('click', function () {
+        document.querySelectorAll('#perfilTabs .tabs__item').forEach(function (x) { x.classList.remove('tabs__item--active'); });
+        t.classList.add('tabs__item--active');
+        document.querySelectorAll('.tabs__panel').forEach(function (p) { p.classList.remove('is-active'); });
+        var tgt = document.getElementById(t.getAttribute('data-tab-target')); if (tgt) tgt.classList.add('is-active');
+      });
+    });
+
+    // Validação manual do CPF/CNPJ: botões Aprovar/Reprovar dentro do próprio campo
+    function renderCpfInline() {
+      var slot = document.getElementById('cpfInlineSlot'); if (!slot) return;
+      if (!cpfResolvido) {
+        slot.innerHTML = '<button type="button" class="btn btn--secondary" data-cpf-ap>Aprovar</button><button type="button" class="btn btn--destructive" data-cpf-re>Reprovar</button>';
+      } else {
+        var ok = cpfResolvido === 'Aprovado';
+        slot.innerHTML = '<span class="cpfacts__done"><svg class="cpfacts__ico"><use href="#' + (ok ? 'ico-circle-check' : 'ico-alert') + '"/></svg>' + docLabel + ' ' + (ok ? 'aprovado' : 'reprovado') + '</span>';
+      }
+    }
+    // Banner amarelo no topo: lista, em passos, todas as aprovações pendentes (CPF + documentos)
+    function pendingItems() {
+      var items = [];
+      if (stored.cpfManual && !cpfResolvido) items.push('Aprovar validação do ' + (stored.tipo === 'PF' ? 'CPF' : 'CNPJ'));
+      docs.forEach(function (d) { if (docStatusOf(d) === 'Validação manual' && !/CNPJ/i.test(d.label)) items.push('Aprovar documento: ' + d.label); }); // CNPJ não entra na aprovação manual
+      return items;
+    }
+    function renderPendingBanner() {
+      var old = document.getElementById('pendBanner'); if (old) old.remove();
+      var items = pendingItems(); if (!items.length) return;
+      var b = document.createElement('div');
+      b.id = 'pendBanner';
+      b.className = 'banner banner--warning';
+      b.style.marginBottom = 'var(--xl)';
+      var lis = items.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+      b.innerHTML = '<span class="banner__icon"><svg><use href="#ico-alert"/></svg></span><div class="banner__content"><p class="banner__title">Ações pendentes de validação</p><ol class="pendlist">' + lis + '</ol></div>';
+      box.insertBefore(b, box.firstChild);
+    }
+    renderCpfInline();
+    renderPendingBanner();
+
+    // Colapsáveis (componente do DS): seções recolhidas por padrão, exceto Documentações
+    document.querySelectorAll('#exibicaoBody > section.section').forEach(function (sec) {
+      var head = sec.querySelector(':scope > .section__head');
+      var body = sec.querySelector(':scope > .section__body');
+      if (!head || !body) return;
+      var tt = sec.querySelector('.section__title'); tt = tt ? tt.textContent.trim() : '';
+      var pill = sec.querySelector('.section__pill');
+      var open = /Document|Represent/i.test(tt) || (stored.cpfManual && !cpfResolvido && /Identifica/i.test(tt)); // docs/reps + Identificação quando há validação manual pendente
+      var wrap = document.createElement('div');
+      wrap.className = 'collapsible' + (open ? ' is-open' : '');
+      wrap.setAttribute('data-ds', 'collapsible'); // componente Collapsible do DS trata o clique
+      wrap.innerHTML = '<button class="collapsible__header" type="button" aria-expanded="' + (open ? 'true' : 'false') + '"><h3 class="collapsible__title">' + esc(tt) + '</h3>' + (pill ? pill.outerHTML : '') + '<span class="collapsible__icon collapsible__icon--up"><svg><use href="#ico-arrow-up-s"/></svg></span><span class="collapsible__icon collapsible__icon--down"><svg><use href="#ico-arrow-down-s"/></svg></span></button><div class="collapsible__content"><div class="collapsible__slot"></div></div>';
+      wrap.querySelector('.collapsible__slot').appendChild(body);
+      head.remove();
+      sec.appendChild(wrap);
+    });
+    if (window.DS && DS.init) DS.init(document); // garante o bind do DS nos colapsáveis recém-criados
+  })();
+</script>
+</body>
+</html>
