@@ -1858,13 +1858,8 @@ a.breadcrumb__item::after {
 .rf-goto{ display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: var(--thin) solid var(--border-default); background: var(--background-bg-main); color: var(--content-text); cursor: pointer; }
 .rf-goto:hover{ background: var(--background-bg-aux); }
 .rf-goto svg{ width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
-/* Aprovação — distribuição de largura das colunas por conteúdo */
-#apr-lista .table__th:nth-child(1), #apr-lista .table__cell:nth-child(1){ flex-grow: .8; }
-#apr-lista .table__th:nth-child(2), #apr-lista .table__cell:nth-child(2){ flex-grow: 1.2; }
-#apr-lista .table__th:nth-child(3), #apr-lista .table__cell:nth-child(3){ flex-grow: 1.5; }
-#apr-lista .table__th:nth-child(4), #apr-lista .table__cell:nth-child(4){ flex-grow: 1.1; }
-#apr-lista .table__th:nth-child(5), #apr-lista .table__cell:nth-child(5){ flex-grow: .5; }
-#apr-lista .table__th:nth-child(6), #apr-lista .table__cell:nth-child(6){ flex-grow: 1.4; }
+/* Aprovação — colunas com a mesma largura */
+#apr-lista .table__th, #apr-lista .table__cell{ flex: 1 1 0; }
 .select__list { display: flex; flex-direction: column; flex: 1 0 0; min-width: 0; }
 
 /* SelectItem — p md (8), rounded radius-sm, w-full */
