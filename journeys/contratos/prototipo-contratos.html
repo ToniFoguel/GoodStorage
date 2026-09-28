@@ -1853,6 +1853,7 @@ a.breadcrumb__item::after {
   z-index: 10;
 }
 .select__dropdown--no-title { top: 40px; }
+.toolbar__filter-dd .select:not([data-ds-float]) .select__dropdown{ top: calc(100% + 4px); left: 0; right: 0; max-height: 264px; overflow-y: auto; }
 .select__list { display: flex; flex-direction: column; flex: 1 0 0; min-width: 0; }
 
 /* SelectItem — p md (8), rounded radius-sm, w-full */
@@ -5208,7 +5209,7 @@ a { text-decoration: none; color: inherit; }
 <div class="dropdown__panel dropdown__panel--filter dropdown__panel--right" hidden="">
 <div class="fltfield">
 <span class="fieldlbl">Status</span>
-<div class="select" data-ds="select" data-ds-float="">
+<div class="select" data-ds="select">
 <div class="select__field"><p class="select__value select__value--filled">Todos os status</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
 <div class="select__dropdown"><div class="select__list">
 <div class="select__item select__item--active"><p class="select__item-text">Todos os status</p></div>
@@ -5216,13 +5217,13 @@ a { text-decoration: none; color: inherit; }
 <div class="select__item"><p class="select__item-text">Em análise</p></div>
 <div class="select__item"><p class="select__item-text">Validação manual</p></div>
 <div class="select__item"><p class="select__item-text">Pendente de documentação</p></div>
-<div class="select__item"><p class="select__item-text">Inativo</p></div>
+<div class="select__item"><p class="select__item-text">Inativo</p></div><div class="select__item"><p class="select__item-text">Blacklist</p></div>
 </div></div>
 </div>
 </div>
 <div class="fltfield">
 <span class="fieldlbl">Tipo de pessoa</span>
-<div class="select" data-ds="select" data-ds-float="">
+<div class="select" data-ds="select">
 <div class="select__field"><p class="select__value select__value--filled">Todos</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
 <div class="select__dropdown"><div class="select__list">
 <div class="select__item select__item--active"><p class="select__item-text">Todos</p></div>
@@ -6890,7 +6891,7 @@ window.LOCATARIOS = {
   "1": {
     "nome": "Marina Alves Comércio Ltda",
     "tipo": "PJ",
-    "status": "Ativo",
+    "status": "Blacklist",
     "contratoAtivo": true,
     "email": "marina@alvescom.com.br",
     "docNum": "12.345.678/0001-90",
@@ -8655,7 +8656,7 @@ window.LOCATARIOS = {
   "12": {
     "nome": "Carlos Eduardo Ramos",
     "tipo": "PF",
-    "status": "Em análise",
+    "status": "Blacklist",
     "email": "carlos.ramos@email.com",
     "docNum": "512.667.900-31",
     "boxes": "S-07",
@@ -9984,7 +9985,7 @@ window.LOCATARIOS = {
   "20": {
     "nome": "Everest Holding Ltda",
     "tipo": "PJ",
-    "status": "Inativo",
+    "status": "Blacklist",
     "email": "contato@everest.com.br",
     "docNum": "56.889.243/0001-76",
     "boxes": "SO-01",
@@ -10184,7 +10185,8 @@ window.LOCATARIOS = {
 try{
   (function () {
     var t = document.querySelector('.ltable'); if (!t || !window.LOCATARIOS) return;
-    var badgeMap = {'Ativo':'badge--secondary','Em análise':'badge--success','Validação manual':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline'};
+    var page = t.closest('.uni-page') || document;
+    var badgeMap = {'Ativo':'badge--secondary','Em análise':'badge--success','Validação manual':'badge--yellow','Pendente de documentação':'badge--yellow','Inativo':'badge--outline','Blacklist':'badge--destructive'};
     var STATUS_SHORT = {'Pendente de documentação':'Pendente doc.','Validação manual':'Validação manual'};
     function seg(s){ return s === 'MAPFRE' ? 'badge--success' : 'badge--outline'; }
     function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
@@ -10279,23 +10281,23 @@ try{
     }
 
     // RN3/RN3.1 — Busca parcial (>=3 caracteres), gatilho Enter ou clique no ícone
-    var searchInput = document.querySelector('.toolbar__search .input__control');
-    var searchIcon = document.querySelector('.toolbar__search .input__icon');
+    var searchInput = page.querySelector('.toolbar__search .input__control');
+    var searchIcon = page.querySelector('.toolbar__search .input__icon');
     function doSearch() { state.query = norm(searchInput ? searchInput.value.trim() : ''); state.page = 1; render(); }
     if (searchInput) searchInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
     if (searchIcon) { searchIcon.style.cursor = 'pointer'; searchIcon.addEventListener('click', doSearch); }
 
     // RN4/RN5/RN10 — Filtros (Status + Tipo) dinâmicos
-    var selects = document.querySelectorAll('.toolbar__filter-dd .select');
-    if (selects[0]) selects[0].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fStatus = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
-    if (selects[1]) selects[1].addEventListener('click', function (e) { var it = e.target.closest('.select__item'); if (!it) return; var txt = it.textContent.trim(); state.fTipo = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
+    var selects = page.querySelectorAll('.toolbar__filter-dd .select');
+    if (selects[0]) selects[0].addEventListener('ds:change', function (e) { var txt = ((e.detail && e.detail.value) || '').trim(); state.fStatus = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
+    if (selects[1]) selects[1].addEventListener('ds:change', function (e) { var txt = ((e.detail && e.detail.value) || '').trim(); state.fTipo = /todos/i.test(txt) ? '' : txt; state.page = 1; render(); });
 
     // RN6 — Limpar filtro
-    var clean = document.querySelector('.dropdown__clean .btn');
+    var clean = page.querySelector('.dropdown__clean .btn');
     if (clean) clean.addEventListener('click', function () {
       state.query = ''; state.fStatus = ''; state.fTipo = ''; state.page = 1;
       if (searchInput) searchInput.value = '';
-      Array.prototype.forEach.call(document.querySelectorAll('.toolbar__filter-dd .select'), function (sel, i) {
+      Array.prototype.forEach.call(page.querySelectorAll('.toolbar__filter-dd .select'), function (sel, i) {
         var val = sel.querySelector('.select__value'); if (val) val.textContent = i === 0 ? 'Todos os status' : 'Todos';
         Array.prototype.forEach.call(sel.querySelectorAll('.select__item'), function (it, idx) { it.classList.toggle('select__item--active', idx === 0); });
       });
