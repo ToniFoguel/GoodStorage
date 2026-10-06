@@ -2683,6 +2683,17 @@ a.breadcrumb__item::after {
 .hist-dash{ color:var(--content-disable); }
 .hist-count{ font-size:var(--font-size-label); color:var(--content-disable); }
 .hist-table .table__th{ cursor:default; }
+/* Exibição: steps viram seções colapsáveis */
+#con-perfil:not(.is-editing) .stepper__track{ display:none; }
+#con-perfil:not(.is-editing) .stepper__panels{ margin-top:0; display:flex; flex-direction:column; gap:var(--md); }
+#con-perfil:not(.is-editing) .stepper__panel{ display:block; }
+#con-perfil:not(.is-editing) .section__head.pcollapse__toggle{ cursor:pointer; user-select:none; }
+.pcollapse__chev{ display:none; margin-left:auto; align-items:center; color:var(--content-text); transition:transform .2s; }
+#con-perfil:not(.is-editing) .section__head.pcollapse__toggle .pcollapse__chev{ display:inline-flex; }
+.pcollapse__chev svg{ width:20px; height:20px; }
+.stepper__panel.is-collapsed .pcollapse__chev{ transform:rotate(-90deg); }
+#con-perfil:not(.is-editing) .stepper__panel.is-collapsed .section__body{ display:none; }
+#con-perfil:not(.is-editing) .stepper__panel.is-collapsed > section.section:not(:first-of-type){ display:none; }
 @keyframes gsbtnspin{ to{ transform:rotate(360deg); } }
 .orc-pc__radio{ flex:none; display:inline-flex; align-items:center; }
 .orc-pc__radio input{ appearance:none; -webkit-appearance:none; box-sizing:border-box; width:20px; height:20px; margin:0; padding:0; border:2px solid var(--border-default); border-radius:50%; background:var(--background-bg-main); cursor:pointer; position:relative; transition:border-color .12s; }
@@ -11730,7 +11741,7 @@ document.addEventListener('ds:action', function(e){
   function applyPerfilMinuta(){
     var pg=perfil(); if(!pg) return;
     var isM=window.__conProd==='minuta';
-    var step=pg.querySelector('.con-perfil-minuta-step'); if(step) step.style.display=isM?'':'none';
+    var step=pg.querySelector('.con-perfil-minuta-step'); if(step) step.style.display=isM?'':'none';var mpan=pg.querySelector('#perfil-step-minuta'); if(mpan) mpan.style.display=isM?'':'none';
     var st=pg.querySelector('.stepper[data-ds="stepper"]'); renumber(st);
     if(st && st.__dsGo) st.__dsGo(0);
   }
@@ -11775,6 +11786,23 @@ document.addEventListener('ds:action', function(e){
     setTimeout(applyState,0);
   });
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",function(){setTimeout(applyState,0);}); else setTimeout(applyState,0);
+})();</script>
+<script>/* contratos exibição: steps como seções colapsáveis */
+(function(){
+  function setup(){
+    var pg=document.getElementById("con-perfil"); if(!pg) return;
+    var panels=pg.querySelectorAll(".stepper__panels > .stepper__panel");
+    panels.forEach(function(panel,idx){
+      var head=panel.querySelector(":scope > section.section > .section__head"); if(!head||head.__pc) return;
+      head.__pc=1; head.classList.add("pcollapse__toggle");
+      var chev=document.createElement("span"); chev.className="pcollapse__chev";
+      chev.innerHTML="<svg><use href=\"#ico-arrow-down-s\"></use></svg>";
+      head.appendChild(chev);
+      head.addEventListener("click",function(){ if(pg.classList.contains("is-editing")) return; panel.classList.toggle("is-collapsed"); });
+      if(idx>0) panel.classList.add("is-collapsed");
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",setup); else setup();
 })();</script>
 </body>
 </html>
