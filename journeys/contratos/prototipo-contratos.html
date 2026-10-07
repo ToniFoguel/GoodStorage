@@ -2721,6 +2721,42 @@ a.breadcrumb__item::after {
 .lc-optdoc{ border-top:var(--thin) solid var(--border-default); margin-top:var(--md); padding-top:var(--md); }
 @media (max-width:760px){ .lc-docgrid{ grid-template-columns:1fr; } }
 .calendar__day--disabled{ opacity:.32; pointer-events:none; cursor:not-allowed; text-decoration:line-through; }
+/* ===== Administrativo — Parâmetros ===== */
+.prm-badge{ display:inline-flex; align-items:center; gap:var(--sm); padding:var(--sm) var(--md); border:var(--thin) solid var(--border-default); border-radius:999px; font-size:var(--font-size-label); color:var(--content-text); background:var(--background-bg-aux); white-space:nowrap; }
+.prm-badge__icon{ display:inline-flex; color:var(--content-disable); }
+.prm-badge__icon svg{ width:14px; height:14px; }
+.prm-sub{ font-size:var(--font-size-label); color:var(--content-disable); margin-top:2px; }
+.prm-matrix-wrap{ overflow-x:auto; }
+.prm-matrix table{ width:100%; border-collapse:collapse; min-width:720px; }
+.prm-matrix th,.prm-matrix td{ text-align:left; padding:var(--md) var(--lg); border-bottom:var(--thin) solid var(--border-default); vertical-align:middle; }
+.prm-matrix thead th{ font-size:var(--font-size-label); color:var(--content-disable); font-weight:var(--font-weight-regular); white-space:nowrap; background:var(--background-bg-aux); }
+.prm-matrix thead th:first-child{ position:sticky; left:0; }
+.prm-matrix tbody th{ font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-label); white-space:nowrap; }
+.prm-matrix tbody th .prm-unit{ color:var(--content-disable); font-weight:var(--font-weight-regular); }
+.prm-matrix tbody tr:hover th,.prm-matrix tbody tr:hover td{ background:var(--background-bg-main); }
+.prm-cell{ display:inline-flex; align-items:center; justify-content:space-between; gap:var(--md); width:100%; min-width:120px; padding:var(--sm) var(--md); border:var(--thin) solid transparent; border-radius:var(--sm); background:none; cursor:pointer; font-size:var(--font-size-paragraph); color:var(--content-text); text-align:left; }
+.prm-cell:hover{ background:var(--background-bg-aux); border-color:var(--border-default); }
+.prm-cell__edit{ opacity:0; color:var(--content-primary); display:inline-flex; flex:0 0 auto; transition:opacity .15s; }
+.prm-cell:hover .prm-cell__edit,.prm-cell:focus-visible .prm-cell__edit{ opacity:1; }
+.prm-cell__edit svg{ width:14px; height:14px; }
+.prm-hist table{ width:100%; border-collapse:collapse; }
+.prm-hist th,.prm-hist td{ text-align:left; padding:var(--md) var(--lg); border-bottom:var(--thin) solid var(--border-default); font-size:var(--font-size-label); }
+.prm-hist thead th{ color:var(--content-disable); font-weight:var(--font-weight-regular); white-space:nowrap; }
+.prm-hist td{ color:var(--content-text); }
+.prm-hist__empty{ padding:var(--lg); color:var(--content-disable); font-size:var(--font-size-label); }
+.prm-chg{ display:inline-flex; align-items:center; gap:var(--sm); }
+.prm-chg__old{ color:var(--content-disable); text-decoration:line-through; }
+.prm-chg__arrow{ color:var(--content-disable); display:inline-flex; }
+.prm-chg__arrow svg{ width:14px; height:14px; }
+.prm-chg__new{ font-weight:var(--font-weight-bold); color:var(--content-title); }
+.prm-edit-ctx{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--md); }
+.prm-edit-ctx__item{ display:flex; flex-direction:column; gap:2px; padding:var(--md); background:var(--background-bg-aux); border-radius:var(--sm); }
+.prm-edit-ctx__lbl{ font-size:var(--font-size-label); color:var(--content-disable); }
+.prm-edit-ctx__val{ font-weight:var(--font-weight-bold); color:var(--content-title); }
+.prm-err{ color:#c0392b; font-size:var(--font-size-label); margin-top:var(--sm); }
+.prm-hist--modal table{ font-size:var(--font-size-label); }
+.prm-hist--modal th,.prm-hist--modal td{ padding:var(--sm) var(--md); }
+
 .conf-block{ border:var(--thin) solid var(--border-default); margin-bottom:var(--md); }
 .conf-block__head{ width:100%; display:flex; align-items:center; gap:var(--md); padding:var(--lg); background:none; border:0; cursor:pointer; text-align:left; font-family:var(--font-family-title-text); }
 .conf-block__num{ flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--background-bg-aux); color:var(--content-title); display:inline-grid; place-items:center; font-weight:var(--font-weight-bold); font-size:var(--font-size-label); }
@@ -3610,7 +3646,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3639,7 +3680,56 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 </div>
-</section><section class="uni-page" data-title="Lista de contratos" id="bl-lista">
+</section>
+<section class="uni-page" data-title="Parâmetros do módulo" id="con-admin-param">
+<div class="app">
+<aside class="sidebar" data-ds="sidebar">
+<div class="sidebar__header"><div class="sidebar__headinner">
+<span class="sidebar__logo" data-logo-mark=""></span>
+<p class="sidebar__brand">GoodStorage</p>
+<button aria-label="Colapsar" class="sidebar__collapse"><svg><use href="#ri-arrow-left-double"></use></svg></button>
+</div></div>
+<nav class="sidebar__nav">
+<div class="sidebar__group">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ri-folder-chart"></use></svg></span><span class="sidebar__group-title">Operação</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items"><a class="sidebar__item" href="mod:uni-lista"><span class="sidebar__item-icon"><svg><use href="#ri-team"></use></svg></span><span class="sidebar__item-label">Locatários</span></a><a class="sidebar__item" href="mod:con-lista"><span class="sidebar__item-icon"><svg><use href="#ri-file-text"></use></svg></span><span class="sidebar__item-label">Contratos</span></a><a class="sidebar__item" href="mod:bl-lista"><span class="sidebar__item-icon"><svg><use href="#ico-alert"></use></svg></span><span class="sidebar__item-label">Blacklist</span></a></div>
+</div>
+<div class="sidebar__group">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-workflow-tree"></use></svg></span><span class="sidebar__group-title">Workflow</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:wf-lista"><span class="sidebar__item-icon"><svg><use href="#ico-flow"></use></svg></span><span class="sidebar__item-label">Workflows</span></a>
+<a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
+</div>
+</div>
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item sidebar__item--active" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
+</nav>
+<div class="sidebar__footer"><div class="sidebar__user">
+<div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
+<div class="sidebar__userinfo"><p class="sidebar__user-name">Carol Ferreira</p><p class="sidebar__user-mail">Regional · Alçada total</p></div>
+</div></div>
+</aside>
+<div class="main">
+<div class="page-header"><nav aria-label="Trilha" class="breadcrumb">
+<span class="breadcrumb__item">Administrativo</span><span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"></use></svg></span>
+<span class="breadcrumb__item breadcrumb__item--current">Parâmetros</span>
+</nav><div class="page-header__bar"><h1 class="page-header__title">Parâmetros do módulo</h1><div class="pagehead__actions">
+<span class="prm-badge"><span class="prm-badge__icon"><svg><use href="#ri-lock"></use></svg></span>Acesso restrito ao administrador do módulo</span>
+</div></div></div>
+<div class="content">
+<div class="banner banner--info" style="margin-bottom:var(--lg)"><span class="banner__icon"><svg><use href="#ico-information"></use></svg></span><div class="banner__content"><p class="banner__title">Alterações valem para novos contratos</p><p class="banner__text">Ao alterar um parâmetro, o novo valor passa a valer apenas para os contratos criados a partir da alteração. Contratos já existentes não são afetados.</p></div></div>
+<section class="section card card--desktop" style="margin-bottom:var(--lg)"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Parâmetros por modalidade</h2><p class="prm-sub">Valor atual de cada parâmetro em cada modalidade. Clique em um valor para alterá-lo.</p></div></div><div class="section__body"><div class="prm-matrix-wrap"><div class="prm-matrix" id="prm-matrix-mount"></div></div></div></section>
+<section class="section card card--desktop"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico de alterações</h2><p class="prm-sub">Alterações recentes, com valor anterior, novo valor, autor e data.</p></div></div><div class="section__body"><div class="prm-hist" id="prm-hist-mount"></div></div></section>
+</div>
+</div>
+</div>
+<div class="modal confirm-modal" data-ds="modal" id="con__modalParam" style="max-width:640px"><div class="modal__header"><h2 class="modal__title">Alterar parâmetro</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div><div class="modal__content"><div class="prm-edit-ctx"><div class="prm-edit-ctx__item"><span class="prm-edit-ctx__lbl">Parâmetro</span><span class="prm-edit-ctx__val" id="prm-e-param">—</span></div><div class="prm-edit-ctx__item"><span class="prm-edit-ctx__lbl">Modalidade</span><span class="prm-edit-ctx__val" id="prm-e-mod">—</span></div><div class="prm-edit-ctx__item"><span class="prm-edit-ctx__lbl">Valor atual</span><span class="prm-edit-ctx__val" id="prm-e-cur">—</span></div></div><div class="input" style="margin-top:var(--lg)"><div class="input__label"><p>Novo valor</p><p class="input__req">*</p></div><div id="prm-e-fieldmount"></div><p class="input__help" id="prm-e-hint"></p><p class="prm-err" id="prm-e-err" hidden="">Valor inválido.</p></div><div class="banner banner--warning" style="margin-top:var(--lg)"><span class="banner__icon"><svg><use href="#ri-error-warning"></use></svg></span><div class="banner__content"><p class="banner__title">O novo valor vale só para novos contratos</p><p class="banner__text">A alteração passa a valer para os contratos criados a partir de agora. Contratos vigentes não são afetados.</p></div></div><div class="prm-hist prm-hist--modal" style="margin-top:var(--lg)"><p class="prm-sub" style="margin-bottom:var(--sm)">Histórico deste parâmetro</p><div id="prm-e-hist"></div></div></div><div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" id="prm-e-save" type="button">Salvar alteração</button></div></div>
+</section>
+<section class="uni-page" data-title="Lista de contratos" id="bl-lista">
 <div class="app">
 <aside class="sidebar" data-ds="sidebar">
 <div class="sidebar__header"><div class="sidebar__headinner">
@@ -3659,7 +3749,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3705,7 +3800,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3737,7 +3837,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3769,7 +3874,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3802,7 +3912,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3842,7 +3957,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3874,7 +3994,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3907,7 +4032,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item sidebar__item--active" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3947,7 +4077,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item sidebar__item--active" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -3983,7 +4118,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4023,7 +4163,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4064,7 +4209,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4193,7 +4343,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4279,7 +4434,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4391,7 +4551,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4488,7 +4653,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -4609,7 +4779,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -5205,7 +5380,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -5301,7 +5481,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -5377,7 +5562,12 @@ a { text-decoration: none; color: inherit; }
 <a class="sidebar__item" href="mod:apr-lista"><span class="sidebar__item-icon"><svg><use href="#ico-check-double"></use></svg></span><span class="sidebar__item-label">Aprovação</span></a>
 </div>
 </div>
-
+<div class="sidebar__group" data-admin-nav="">
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<div class="sidebar__items">
+<a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a>
+</div>
+</div>
 </nav>
 <div class="sidebar__footer"><div class="sidebar__user">
 <div class="avatar avatar--text" style="flex-shrink:0"><p class="avatar__label text-label-regular">CF</p></div>
@@ -12169,6 +12359,105 @@ document.addEventListener('ds:action', function(e){
   document.addEventListener('click',function(e){
     if(e.target.closest && e.target.closest('#con-novo [data-stepper-next], #con-novo [data-stepper-prev], #con-novo .stepper__step')) setTimeout(syncConf,30);
   },true);
+})();</script>
+<script>/* Administrativo — Parâmetros do módulo (RN1..RN5) */
+(function(){
+  var MODS=[{k:'self',l:'Self Storage'},{k:'flexm',l:'Galpões Flexíveis mensal'},{k:'flexa',l:'Galpões Flexíveis anual'},{k:'urb',l:'Galpões Urbanos'}];
+  var PARAMS=[
+    {k:'reserva',l:'Prazo da Reserva',unit:'dias',type:'int',v:{self:'7',flexm:'7',flexa:'10',urb:'15'}},
+    {k:'aviso',l:'Prazo de aviso de saída',unit:'dias',type:'int',v:{self:'30',flexm:'30',flexa:'60',urb:'90'}},
+    {k:'reaj',l:'Antecedência de reajuste',unit:'dias',type:'int',v:{self:'30',flexm:'60',flexa:'90',urb:'120'}},
+    {k:'carencia',l:'Carência de move-in',unit:'dias',type:'int',v:{self:'0',flexm:'5',flexa:'10',urb:'15'}},
+    {k:'versao',l:'Versão do contrato',type:'list',opts:['v1','v2','v3','v3 (Negociado)'],v:{self:'v3',flexm:'v3',flexa:'v3',urb:'v3 (Negociado)'}},
+    {k:'fat',l:'Tipo de faturamento',type:'list',opts:['Pré-pago','Pós-pago'],v:{self:'Pré-pago',flexm:'Pré-pago',flexa:'Pré-pago',urb:'Pós-pago'}},
+    {k:'cobr',l:'Forma de cobrança',type:'list',opts:['Boleto','Cartão de crédito','PIX','Débito automático'],v:{self:'Boleto',flexm:'Boleto',flexa:'Débito automático',urb:'Boleto'}}
+  ];
+  var HIST=[
+    {p:'aviso',m:'urb',prev:'60',next:'90',who:'Carol Ferreira',when:'02/10/2026 14:22'},
+    {p:'reserva',m:'self',prev:'5',next:'7',who:'Rafael Dias',when:'28/09/2026 09:10'},
+    {p:'cobr',m:'flexa',prev:'Boleto',next:'Débito automático',who:'Carol Ferreira',when:'20/09/2026 16:48'}
+  ];
+  var USER='Carol Ferreira';
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function pById(k){ for(var i=0;i<PARAMS.length;i++) if(PARAMS[i].k===k) return PARAMS[i]; }
+  function mById(k){ for(var i=0;i<MODS.length;i++) if(MODS[i].k===k) return MODS[i]; }
+  function nowStr(){ var d=new Date(); function z(n){return (n<10?'0':'')+n;} return z(d.getDate())+'/'+z(d.getMonth()+1)+'/'+d.getFullYear()+' '+z(d.getHours())+':'+z(d.getMinutes()); }
+  var ARROW='<span class="prm-chg__arrow"><svg><use href="#ico-arrow-right-s"></use></svg></span>';
+  function chg(prev,next){ return '<span class="prm-chg"><span class="prm-chg__old">'+esc(prev)+'</span>'+ARROW+'<span class="prm-chg__new">'+esc(next)+'</span></span>'; }
+
+  function renderMatrix(){
+    var mount=document.getElementById('prm-matrix-mount'); if(!mount) return;
+    var th='<thead><tr><th>Parâmetro</th>'+MODS.map(function(m){return '<th>'+esc(m.l)+'</th>';}).join('')+'</tr></thead>';
+    var tb='<tbody>'+PARAMS.map(function(p){
+      var row='<tr><th>'+esc(p.l)+(p.unit?' <span class="prm-unit">('+esc(p.unit)+')</span>':'')+'</th>';
+      row+=MODS.map(function(m){
+        return '<td><button class="prm-cell" type="button" data-p="'+p.k+'" data-m="'+m.k+'"><span class="prm-cell__val">'+esc(p.v[m.k])+'</span><span class="prm-cell__edit"><svg><use href="#ico-pencil"></use></svg></span></button></td>';
+      }).join('');
+      return row+'</tr>';
+    }).join('')+'</tbody>';
+    mount.innerHTML='<table>'+th+tb+'</table>';
+  }
+  function histRows(list){
+    if(!list.length) return '<p class="prm-hist__empty">Sem alterações registradas.</p>';
+    var rows=list.map(function(e){ var p=pById(e.p),m=mById(e.m);
+      return '<tr><td>'+esc(p?p.l:e.p)+'</td><td>'+esc(m?m.l:e.m)+'</td><td>'+esc(e.prev)+'</td><td>'+esc(e.next)+'</td><td>'+esc(e.who)+'</td><td>'+esc(e.when)+'</td></tr>'; }).join('');
+    return '<table><thead><tr><th>Parâmetro</th><th>Modalidade</th><th>Valor anterior</th><th>Novo valor</th><th>Alterado por</th><th>Quando</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  function renderHist(){ var mount=document.getElementById('prm-hist-mount'); if(mount) mount.innerHTML=histRows(HIST); }
+
+  // ---- Edição ----
+  var cur={p:null,m:null};
+  function dsSelect(opts,val){
+    var items=opts.map(function(o){return '<div class="select__item'+(o===val?' select__item--active':'')+'"><p class="select__item-text">'+esc(o)+'</p></div>';}).join('');
+    return '<div class="input__field" style="border:0;padding:0;background:none"><div class="select" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value select__value--filled">'+esc(val)+'</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown select__dropdown--no-title"><div class="select__list">'+items+'</div></div></div></div>';
+  }
+  function openEdit(pk,mk){
+    var p=pById(pk),m=mById(mk); if(!p||!m) return; cur={p:pk,m:mk};
+    var val=p.v[mk];
+    document.getElementById('prm-e-param').textContent=p.l+(p.unit?' ('+p.unit+')':'');
+    document.getElementById('prm-e-mod').textContent=m.l;
+    document.getElementById('prm-e-cur').textContent=val;
+    var fm=document.getElementById('prm-e-fieldmount');
+    if(p.type==='int'){ fm.innerHTML='<div class="input__field"><input class="input__control" id="prm-e-input" type="number" min="0" step="1" value="'+esc(val)+'"></div>';
+      document.getElementById('prm-e-hint').textContent='Aceita apenas número inteiro igual ou maior que zero.'; }
+    else { fm.innerHTML=dsSelect(p.opts,val); document.getElementById('prm-e-hint').textContent='Selecione uma das opções disponíveis.'; }
+    var err=document.getElementById('prm-e-err'); err.hidden=true;
+    var mine=HIST.filter(function(e){return e.p===pk&&e.m===mk;});
+    document.getElementById('prm-e-hist').innerHTML=histRows(mine);
+    if(window.DS&&DS.refresh) DS.refresh();
+    if(window.DS&&DS.openModal) DS.openModal('con__modalParam');
+  }
+  function save(){
+    var p=pById(cur.p),m=mById(cur.m); if(!p||!m) return;
+    var err=document.getElementById('prm-e-err'); var newVal;
+    if(p.type==='int'){ var raw=(document.getElementById('prm-e-input').value||'').trim();
+      if(!/^\d+$/.test(raw)){ err.textContent='Informe um número inteiro igual ou maior que zero.'; err.hidden=false; return; }
+      newVal=String(parseInt(raw,10)); }
+    else { var v=document.querySelector('#prm-e-fieldmount .select__value'); newVal=v?v.textContent.trim():'';
+      if(p.opts.indexOf(newVal)<0){ err.textContent='Selecione uma opção válida.'; err.hidden=false; return; } }
+    var prev=p.v[cur.m];
+    if(newVal!==prev){ p.v[cur.m]=newVal; HIST.unshift({p:cur.p,m:cur.m,prev:prev,next:newVal,who:USER,when:nowStr()}); renderMatrix(); renderHist(); }
+    if(window.DS&&DS.closeModal){ var md=document.getElementById('con__modalParam'); DS.closeModal(md); }
+  }
+  document.addEventListener('click',function(e){
+    if(!e.target.closest) return;
+    var c=e.target.closest('#con-admin-param .prm-cell'); if(c){ openEdit(c.getAttribute('data-p'),c.getAttribute('data-m')); return; }
+    var s=e.target.closest('#prm-e-save'); if(s){ save(); return; }
+  });
+
+  // ---- Fallback: injeta o grupo Administrativo em sidebars sem Workflow ----
+  function injectNav(){
+    var GRP='<div class="sidebar__group" data-admin-nav=""><button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button><div class="sidebar__items"><a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a></div></div>';
+    [].forEach.call(document.querySelectorAll('.uni-page'),function(pg){
+      var nav=pg.querySelector('.sidebar__nav'); if(!nav||nav.querySelector('[data-admin-nav]')) return;
+      nav.insertAdjacentHTML('beforeend',GRP);
+      var head=nav.querySelector('[data-admin-nav] .sidebar__group-head');
+      if(head) head.addEventListener('click',function(){ var g=head.closest('.sidebar__group'); if(g) g.classList.toggle('is-collapsed'); });
+      if(pg.id==='con-admin-param'){ var it=nav.querySelector('[data-admin-nav] .sidebar__item'); if(it) it.classList.add('sidebar__item--active'); }
+    });
+  }
+  function init(){ renderMatrix(); renderHist(); injectNav(); }
+  if(document.readyState!=='loading') setTimeout(init,40); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,40); });
 })();</script>
 </body>
 </html>
