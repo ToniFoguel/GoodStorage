@@ -2702,11 +2702,14 @@ a.breadcrumb__item::after {
 .nl-doc{ display:flex; align-items:center; justify-content:space-between; gap:var(--md); padding:var(--md); border:var(--thin) solid var(--border-default); border-radius:6px; }
 .nl-doc__name{ font-family:var(--font-family-title-text); color:var(--content-title); font-size:var(--font-size-paragraph); }
 #con__modalNovoLoc .modal__content > *{ flex:0 0 auto; }
-.nl-card{ border:var(--thin) solid var(--border-default); border-radius:8px; padding:var(--lg); margin-top:var(--sm); }
+.nl-card{ border:var(--thin) solid var(--border-default); padding:var(--lg); margin-top:var(--sm); }
 .nl-card--plain{ } 
 .nl-pbadge{ display:inline-block; background:#ff8400; color:#fff; font-size:var(--font-size-label); font-weight:var(--font-weight-bold); padding:2px 10px; border-radius:4px; margin-bottom:var(--md); }
 .nl-subtitle{ margin:0 0 var(--md); font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); }
-.nl-add{ display:flex; margin:var(--md) auto 0; }
+.nl-add{ display:inline-flex; margin:var(--md) 0 0; }
+.nl-card__head{ display:flex; align-items:center; justify-content:space-between; gap:var(--md); margin-bottom:var(--md); }
+.nl-card__tag{ font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-label); }
+.nl-card__rm{ width:36px; height:36px; }
 .nl-chk{ display:inline-flex; align-items:center; gap:var(--sm); cursor:pointer; }
 .nl-chk__label{ font-family:var(--font-family-title-text); font-size:var(--font-size-paragraph); color:var(--content-text); }
 .nl-chk__label--b{ font-weight:var(--font-weight-bold); color:var(--content-title); }
@@ -11924,6 +11927,28 @@ document.addEventListener('ds:action', function(e){
     if(row){var href=row.getAttribute("href")||"";var id=href.indexOf("elabora")>=0?"con-elaboracao":(href.indexOf("perfil")>=0?"con-perfil":null);if(id)setTimeout(function(){reset(id);},0);return;}
     var ed=e.target.closest?e.target.closest("#con-perfil [data-edit-start]"):null;
     if(ed)setTimeout(function(){reset("con-perfil");},0);
+  });
+})();</script>
+<script>/* Modal cadastrar locatário: adicionar card de endereço/contato (e sócio/representante) */
+(function(){
+  document.addEventListener("click",function(e){
+    var add=e.target.closest?e.target.closest(".nl-add"):null; if(!add) return;
+    var block=add.closest(".nl-block"); if(!block) return;
+    var cards=block.querySelectorAll(".nl-card"); if(!cards.length) return;
+    var clone=cards[cards.length-1].cloneNode(true);
+    var pb=clone.querySelector(".nl-pbadge"); if(pb) pb.parentNode.removeChild(pb);
+    var oh=clone.querySelector(".nl-card__head"); if(oh) oh.parentNode.removeChild(oh);
+    clone.querySelectorAll("input.input__control").forEach(function(i){ i.value=""; });
+    var sec=block.querySelector(".nl-sec"); var name=sec?sec.textContent.trim():"";
+    var head=document.createElement("div"); head.className="nl-card__head";
+    head.innerHTML='<span class="nl-card__tag">'+name+'</span><button aria-label="Excluir" class="icon-btn nl-card__rm" type="button"><svg><use href="#ico-trash"></use></svg></button>';
+    clone.insertBefore(head,clone.firstChild);
+    add.parentNode.insertBefore(clone,add);
+    if(window.DS&&DS.refresh) DS.refresh();
+  });
+  document.addEventListener("click",function(e){
+    var rm=e.target.closest?e.target.closest(".nl-card__rm"):null; if(!rm) return;
+    var c=rm.closest(".nl-card"); if(c) c.parentNode.removeChild(c);
   });
 })();</script>
 </body>
