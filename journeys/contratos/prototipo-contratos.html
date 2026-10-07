@@ -11744,8 +11744,8 @@ document.addEventListener('ds:action', function(e){
     var projBlock=wrap.querySelector('.js-orc-proj-block'), proj=wrap.querySelector('.js-orc-proj');
     var projHtml=proj12(list);
     if(proj){ proj.innerHTML=projHtml; if(projBlock) projBlock.hidden=false; }
-    var ps=page.querySelector('.js-orc-proj-seg'), psb=page.querySelector('.js-orc-proj-seg-block');
-    if(ps){ ps.innerHTML=projHtml; if(psb) psb.hidden=false; }
+    window.__orcList=list;
+    var psb=page.querySelector('.js-orc-proj-seg-block'); if(psb) psb.hidden=true;
   };
 })();</script>
 <script>/* Novo contrato > Locatário: select carrega card de dados + documentos */
@@ -12058,19 +12058,31 @@ document.addEventListener('ds:action', function(e){
     var c=rm.closest(".nl-card"); if(c) c.parentNode.removeChild(c);
   });
 })();</script>
-<script>/* contratos: garante a projeção de 12 meses no step de Seguro */
+<script>/* contratos Seguro: projeção estimada aparece/muda conforme a apólice selecionada */
 (function(){
-  function syncSeg(){
-    var pg=document.getElementById("con-novo"); if(!pg) return;
-    var ps=pg.querySelector("#novo-step-3 .js-orc-proj-seg"); if(!ps) return;
-    var psb=pg.querySelector("#novo-step-3 .js-orc-proj-seg-block");
-    var orcProj=pg.querySelector("#novo-step-2 .js-orc-proj");
-    if(orcProj && orcProj.innerHTML && orcProj.innerHTML.trim()){ ps.innerHTML=orcProj.innerHTML; if(psb) psb.hidden=false; }
+  var PREM={'MAPFRE':60,'Porto Seguro':95,'Allianz':130,'Bradesco':75};
+  function pnum(s){ s=String(s==null?'':s).replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.'); var n=parseFloat(s); return isNaN(n)?0:n; }
+  function fbr(n){ return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function baseMonths(){ var list=window.__orcList||[]; var mo=[]; for(var m=1;m<=12;m++){ var v=0; list.forEach(function(p){ var mv=(m===1)?pnum(p.m1v):(m===2)?pnum(p.m2v):pnum(p.apos); v+=mv; }); mo.push(v);} return mo; }
+  function psb(){ return document.querySelector('#con-novo #novo-step-3 .js-orc-proj-seg-block'); }
+  function psEl(){ return document.querySelector('#con-novo #novo-step-3 .js-orc-proj-seg'); }
+  function hideSeg(){ var b=psb(); if(b) b.hidden=true; }
+  function renderSeg(premium){ var ps=psEl(), b=psb(); if(!ps) return; var mo=baseMonths(); if(!mo.length){ if(b) b.hidden=true; return; }
+    var total=0, hh='<div class="orc-proj__grid">';
+    for(var i=0;i<12;i++){ var v=mo[i]+premium; total+=v; hh+='<div class="orc-proj__cell"><span class="orc-proj__m">Mês '+(i+1)+'</span><span class="orc-proj__v">'+fbr(v)+'</span></div>'; }
+    hh+='</div><div class="orc-proj__total"><span>Total estimado (12 meses) — com seguro</span><b>'+fbr(total)+'</b></div>';
+    ps.innerHTML=hh; if(b) b.hidden=false;
   }
-  document.addEventListener("click",function(e){
-    if(!e.target.closest) return;
-    if(e.target.closest("#con-novo [data-stepper-next], #con-novo [data-stepper-prev], #con-novo .stepper__step, #novo-step-2 .orc-bcard")){ setTimeout(syncSeg,20); }
+  document.addEventListener('click',function(e){
+    var it=e.target.closest?e.target.closest('#novo-seg-interna .select__item'):null; if(!it) return;
+    var nm=(it.textContent||'').split('·')[0].trim(); setTimeout(function(){ renderSeg(PREM[nm]||80); },0);
   },true);
+  function extCob(){ var ext=document.querySelector('#con-novo #novo-seg-externa'); if(!ext) return null; var inp=null; ext.querySelectorAll('.input').forEach(function(f){ var l=f.querySelector('.input__label p'); if(l&&/cobertura/i.test(l.textContent)) inp=f.querySelector('input'); }); return inp; }
+  document.addEventListener('input',function(e){
+    if(!e.target.closest || !e.target.closest('#novo-seg-externa')) return;
+    var c=extCob(); if(!c) return; var val=pnum(c.value); if(val>0) renderSeg(val*0.01); else hideSeg();
+  });
+  document.addEventListener('ds:change',function(e){ if(e.target&&e.target.closest&&e.target.closest('#novo-step-3 .js-seg-select')) hideSeg(); });
 })();</script>
 <script>/* contratos etapa 6: vigência e faturamento por produto (RN4/RN5/RN7) */
 (function(){
