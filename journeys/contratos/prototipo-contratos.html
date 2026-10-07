@@ -12055,5 +12055,19 @@ document.addEventListener('ds:action', function(e){
     var c=rm.closest(".nl-card"); if(c) c.parentNode.removeChild(c);
   });
 })();</script>
+<script>/* contratos: garante a projeção de 12 meses no step de Seguro */
+(function(){
+  function syncSeg(){
+    var pg=document.getElementById("con-novo"); if(!pg) return;
+    var ps=pg.querySelector("#novo-step-3 .js-orc-proj-seg"); if(!ps) return;
+    var psb=pg.querySelector("#novo-step-3 .js-orc-proj-seg-block");
+    var orcProj=pg.querySelector("#novo-step-2 .js-orc-proj");
+    if(orcProj && orcProj.innerHTML && orcProj.innerHTML.trim()){ ps.innerHTML=orcProj.innerHTML; if(psb) psb.hidden=false; }
+  }
+  document.addEventListener("click",function(e){
+    if(!e.target.closest) return;
+    if(e.target.closest("#con-novo [data-stepper-next], #con-novo [data-stepper-prev], #con-novo .stepper__step, #novo-step-2 .orc-bcard")){ setTimeout(syncSeg,20); }
+  },true);
+})();</script>
 </body>
 </html>
