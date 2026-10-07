@@ -2712,6 +2712,8 @@ a.breadcrumb__item::after {
 .lc-badge{ align-self:flex-start; margin-bottom:var(--md); }
 .lc-doccard__title{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--md); margin-bottom:var(--sm); }
 .lc-doccard__dd{ min-width:120px; }
+.lc-filebox__status{ flex:0 0 auto; }
+.lc-doccard--opt .lc-filebox{ margin-top:0; }
 .lc-docrow{ border-top:var(--thin) dashed var(--border-default); margin-top:var(--md); padding-top:var(--md); }
 .lc-docrow__head{ display:flex; align-items:center; justify-content:space-between; gap:var(--md); margin-bottom:var(--sm); }
 .lc-docrow__dd{ min-width:120px; }
@@ -11779,7 +11781,8 @@ document.addEventListener('ds:action', function(e){
   function _addr(a,principal){ return '<div class="lc-card'+(principal?' lc-card--pri':'')+'">'+(principal?'<span class="nl-pbadge">Principal</span>':'')+'<div class="formgrid formgrid--4">'+_ro('CEP',a.cep)+_ro('Logradouro',a.log,'col-3')+_ro('Número de endereço',a.num)+_ro('Complemento',a.compl,'col-3')+_ro('País',a.pais)+_ro('Estado',a.estado)+_ro('Cidade',a.cidade,'col-2')+'</div></div>'; }
   function _dd(val){ return '<div class="select lc-dd" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value select__value--filled">'+esc(val)+'</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown select__dropdown--no-title"><div class="select__list"><div class="select__item select__item--active"><p class="select__item-text">'+esc(val)+'</p></div><div class="select__item"><p class="select__item-text">RG</p></div><div class="select__item"><p class="select__item-text">Passaporte</p></div></div></div></div>'; }
   function _file(name,trash){ return '<div class="lc-filebox"><span class="lc-filebox__name">'+esc(name)+'</span><button class="icon-btn lc-filebox__btn" type="button">'+(trash?'<svg><use href="#ico-trash"></use></svg>':DLSVG)+'</button></div>'; }
-  function _doccard(status,title,file,d0,d1,dd){ return '<div class="lc-doccard"><span class="badge badge--secondary lc-badge">'+status+'</span><div class="lc-doccard__title"><h4 class="nl-subtitle" style="margin:0">'+title+'</h4>'+(dd?'<div class="lc-doccard__dd">'+_dd(dd)+'</div>':'')+'</div>'+_file(file)+'<div class="formgrid formgrid--4" style="margin-top:var(--md)">'+_ro('Data de emissão',d0,'col-2')+_ro('Data de validade',d1,'col-2')+'</div></div>'; }
+  function _docbox(file,status){ return '<div class="lc-filebox"><span class="lc-filebox__name">'+esc(file)+'</span><span class="badge badge--secondary lc-filebox__status">'+(status||'Aprovado')+'</span></div>'; }
+  function _doccard(status,title,file){ return '<div class="lc-doccard"><h4 class="nl-subtitle" style="margin:0 0 var(--sm)">'+title+'</h4>'+_docbox(file,status)+'</div>'; }
   function _contCard(c){ return '<div class="lc-card lc-card--pri"><span class="nl-pbadge">Principal</span><div class="formgrid formgrid--4">'+_ro('Nome',c.nome,'col-2',true)+_ro('Responsabilidade',c.resp,'',true)+_ro('Telefone/WhatsApp',c.tel,'',true)+_ro('Email',c.email,'col-2',true)+_ro('Usuário do WhatsApp',c.user,'col-2')+'</div><div class="full" style="margin-top:var(--md)">'+_chk('Pode assinar documento',true)+'</div></div>'; }
   window.__buildExib=function(key,t){
     function idv(l){var a=t.ident||[];for(var i=0;i<a.length;i++)if(a[i][0]===l)return a[i][1];return '';}
@@ -11813,31 +11816,33 @@ document.addEventListener('ds:action', function(e){
     var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',pais:'Brasil',estado:'São Paulo',cidade:'São Paulo'};
     out+=_sect('Endereço',_addr(a1,true)+_addr(a2,false)+LOC_AREP);
     if(isPJ){
-      var soc='<p class="nl-subtitle">Sócio 1</p><div class="formgrid formgrid--4">'
+      var soc='<div class="lc-card"><p class="nl-subtitle">Sócio 1</p><div class="formgrid formgrid--4">'
         +_ro('Nome','Jorge Augusto','col-2',true)+_ro('CPF','234.567.890-89','',true)+_ro('Tipo de sócio','Pessoa Jurídica','',true)
-        +_ro('Qualificação','Administrador','',true)+_ro('Data de inclusão','25/06/2025')+_ro('País','Brasil')+_ro('Possui representante/procurador','Sim')+'</div>';
+        +_ro('Qualificação','Administrador','',true)+_ro('Data de inclusão','25/06/2025')+_ro('País','Brasil')+_ro('Possui representante/procurador','Sim')+'</div></div>';
       out+=_sect('Sócios',soc);
-      var rp='<p class="nl-subtitle">Representante/procurador 1</p><div class="formgrid formgrid--4">'
+      var rp='<div class="lc-card"><p class="nl-subtitle">Representante/procurador 1</p><div class="formgrid formgrid--4">'
         +_ro('Nome','Leonardo Freitas','col-2',true)+_ro('CPF','234.567.890-89','',true)+_ro('Qualificação','Administrador')
         +'<div class="input col-2"><div class="input__label"><p>Sócio vinculado</p></div><div class="input__field lc-tags"><span class="nl-pbadge">João da Silva Mendes</span><span class="nl-pbadge">Osvaldo Cruz</span></div></div>'
         +_ro('Email',email,'col-2')+_ro('Data de nascimento','25/06/2025')+'</div>'
-        +'<div class="lc-docrow"><div class="lc-docrow__head"><h4 class="nl-subtitle" style="margin:0">Documento de identificação</h4><div class="lc-docrow__dd">'+_dd('CNH')+'</div></div>'+_file('rg-frente.png',true)+'<div class="formgrid formgrid--4" style="margin-top:var(--md)">'+_ro('Data de emissão','25/06/2025','col-2')+_ro('Data de validade','25/06/2025','col-2')+'</div></div>';
+        +'<div class="lc-docrow"><h4 class="nl-subtitle" style="margin:0 0 var(--sm)">Documento de identificação</h4>'+_docbox('rg-frente.png','Aprovado')+'</div></div>';
       out+=_sect('Representante/procurador',rp);
     }
     var contName=isPJ?'André Toni':nome;
     out+=_sect('Contato',_contCard({nome:contName,resp:'Responsabilidade',tel:ctv('Telefone')||'(15) 99345-8956',email:email,user:ctv('Usuário do WhatsApp')||'@usuario'})+LOC_CREP);
+    var optcard='<div class="lc-doccard lc-doccard--opt"><p class="nl-subtitle" style="margin:0 0 var(--sm)">Documento opcional</p><div class="formgrid formgrid--4" style="margin-bottom:var(--sm)">'+_ro('Identificação do documento','Contrato de locação','full')+'</div>'+_docbox('contrato.png','Aprovado')+'</div>';
     var dg='<div class="lc-docgrid">';
     if(isPJ){
-      dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png','25/06/2025','25/06/2025')
-        +_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png','25/06/2025','25/06/2025')
-        +_doccard('Aprovado','Ato societário','ato-societario.png','25/06/2025','25/06/2025')
-        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png','25/06/2025','25/06/2025');
+      dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')
+        +_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')
+        +_doccard('Aprovado','Ato societário','ato-societario.png')
+        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png')
+        +optcard;
     } else {
-      dg+=_doccard('Aprovado','Documento com foto','ato-societario.png','25/06/2025','25/06/2025','CNH')
-        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png','25/06/2025','25/06/2025');
+      dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')
+        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png')
+        +optcard;
     }
     dg+='</div>';
-    dg+='<div class="lc-optdoc"><div class="formgrid formgrid--4">'+_ro('Identificação do documento','Contrato de locação','col-2')+'</div><p class="nl-subtitle" style="margin:var(--md) 0 var(--sm)">Documento opcional</p>'+_file('contrato.png')+'<div class="formgrid formgrid--4" style="margin-top:var(--md)">'+_ro('Data de emissão','25/06/2025','col-2')+_ro('Data de validade','25/06/2025','col-2')+'</div></div>';
     out+=_sect('Documentações',dg);
     return out;
   };
