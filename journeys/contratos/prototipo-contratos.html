@@ -2671,6 +2671,8 @@ a.breadcrumb__item::after {
 .docusign-card__head .badge{ margin-left:auto; flex-shrink:0; }
 .docusign-card__text{ margin:0; padding:var(--lg) var(--xl) 0; color:var(--content-text); max-width:78ch; font-size:var(--font-size-label); }
 .docusign-card__actions{ display:flex; gap:var(--md); padding:var(--lg) var(--xl) var(--xl); }
+.orc-pc--reserved{ opacity:.55; pointer-events:none; }
+.orc-pc__tag{ display:inline-flex; align-items:center; padding:2px 10px; border-radius:999px; background:var(--background-bg-aux); color:var(--content-disable); border:var(--thin) solid var(--border-default); font-size:var(--font-size-label); white-space:nowrap; }
 .minuta-clauses{ display:flex; flex-direction:column; gap:var(--lg); margin-top:var(--lg); }
 .minuta-clauses textarea.input__control{ resize:vertical; min-height:72px; }
 .stepper__step--lastv{ flex:0 0 auto !important; }
@@ -11960,7 +11962,7 @@ document.addEventListener('ds:action', function(e){
   var DATA={
     'ORC-4821':[
       {un:'Barra Funda',end:'R. Barão de Limeira, 540',prod:'Box M (5 m²)',dims:'5m² · A: 2,40m × L: 2,10m × P: 2,00m',base:'R$ 1.100,00',m2:'R$ 220,00 m²',acr:'+ R$ 0,00',acrM2:'R$ 220,00 m²',d1:'-15%',d1M2:'R$ 187,00 m²',d1per:'01/09/2026 até 31/10/2026',d2:'',cupom:'BEMVINDO10',promoDe:'R$ 1.100,00',m1p:'-20%',m1v:'R$ 880,00 /mês',m2p:'-20%',m2v:'R$ 880,00 /mês',apos:'R$ 1.100,00 /mês'},
-      {un:'Barra Funda',end:'R. Barão de Limeira, 540',prod:'Sala Flex 18m²',dims:'18m² · A: 3,50m × L: 4,0m × P: 5,0m',base:'R$ 780,00',m2:'R$ 98,89 m²',acr:'+ R$ 1,00',acrM2:'R$ 99,89 m²',d1:'-15%',d1M2:'R$ 84,06 m²',d1per:'01/02/2025 até 30/06/2025',d2:'-37%',d2M2:'R$ 47,88 m²',d2per:'01/02/2025 até 30/06/2025',cupom:'Sem cupom',promoDe:'R$ 780,00',m1p:'-20%',m1v:'R$ 632,00 /mês',m2p:'-20%',m2v:'R$ 632,00 /mês',apos:'R$ 780,00 /mês',aprov:'Desconto acumulado de 97.5% acima da alcada deste produto (21%).',justif:'O gerente endoidou, e está dando promoções a perder de vista.'}
+      {un:'Barra Funda',end:'R. Barão de Limeira, 540',prod:'Sala Flex 18m²',reserved:true,dims:'18m² · A: 3,50m × L: 4,0m × P: 5,0m',base:'R$ 780,00',m2:'R$ 98,89 m²',acr:'+ R$ 1,00',acrM2:'R$ 99,89 m²',d1:'-15%',d1M2:'R$ 84,06 m²',d1per:'01/02/2025 até 30/06/2025',d2:'-37%',d2M2:'R$ 47,88 m²',d2per:'01/02/2025 até 30/06/2025',cupom:'Sem cupom',promoDe:'R$ 780,00',m1p:'-20%',m1v:'R$ 632,00 /mês',m2p:'-20%',m2v:'R$ 632,00 /mês',apos:'R$ 780,00 /mês',aprov:'Desconto acumulado de 97.5% acima da alcada deste produto (21%).',justif:'O gerente endoidou, e está dando promoções a perder de vista.'}
     ],
     'ORC-4822':[
       {un:'Vila Olímpia',end:'R. Fidêncio Ramos, 300',prod:'Galpão - Módulo 50 m²',dims:'50m² · A: 6,00m × L: 5,0m × P: 10,0m',base:'R$ 4.500,00',m2:'R$ 90,00 m²',acr:'+ R$ 0,00',acrM2:'R$ 90,00 m²',d1:'-10%',d1M2:'R$ 81,00 m²',d1per:'01/09/2026 até 31/12/2026',d2:'',cupom:'PARCEIRO25',promoDe:'R$ 4.500,00',m1p:'-15%',m1v:'R$ 3.825,00 /mês',m2p:'-15%',m2v:'R$ 3.825,00 /mês',apos:'R$ 4.500,00 /mês'}
@@ -11976,8 +11978,8 @@ document.addEventListener('ds:action', function(e){
   };
   function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function card(p){
-    var h='<label class="orc-pc">';
-    h+='<div class="orc-pc__head"><div><span class="orc-pc__lbl">Unidade</span><p class="orc-pc__val">'+esc(p.un)+'</p><p class="orc-pc__sub">'+esc(p.end)+'</p></div><span class="orc-pc__radio"><input type="radio" name="orcProd" value="'+esc(p.prod)+'" data-prodtype="'+(/galp|office/i.test(p.prod)?'minuta':'simple')+'"'+(p.unif?' data-unif="1"':'')+'></span></div>';
+    var h='<label class="orc-pc'+(p.reserved?' orc-pc--reserved':'')+'">';
+    h+='<div class="orc-pc__head"><div><span class="orc-pc__lbl">Unidade</span><p class="orc-pc__val">'+esc(p.un)+'</p><p class="orc-pc__sub">'+esc(p.end)+'</p></div>'+(p.reserved?'<span class="orc-pc__tag">Reservado</span>':'<span class="orc-pc__radio"><input type="radio" name="orcProd" value="'+esc(p.prod)+'" data-prodtype="'+(/galp|office/i.test(p.prod)?'minuta':'simple')+'"'+(p.unif?' data-unif="1"':'')+'></span>')+'</div>';
     h+='<hr class="orc-pc__sep"><span class="orc-pc__lbl">Produto</span><p class="orc-pc__val">'+esc(p.prod)+'</p><p class="orc-pc__sub">'+esc(p.dims)+'</p>';
     h+='<hr class="orc-pc__sep"><span class="orc-pc__lbl">Valor</span>';
     h+='<div class="orc-pc__line"><span>De: '+esc(p.base)+'</span><b>'+esc(p.m2)+'</b></div>';
