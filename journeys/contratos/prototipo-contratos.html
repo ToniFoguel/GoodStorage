@@ -5076,41 +5076,7 @@ a { text-decoration: none; color: inherit; }
      ================================================================ -->
 <!-- ============ MODAIS DO PERFIL 360 (Self Storage + UI) ============ -->
 <!-- MODAL: Nova ocorrência (F-CON-45) -->
-<div class="modal confirm-modal" data-ds="modal" id="perfil__modalOcorrencia" style="max-width:600px">
-<div class="modal__header"><h2 class="modal__title">Registrar ocorrência</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div>
-<div class="modal__content">
-<div class="formgrid">
-<div class="input">
-<div class="input__label"><p>Tipo de ocorrência</p><p class="input__req">*</p></div>
-<div class="select" data-ds="select" data-ds-float="">
-<div class="select__field"><p class="select__value select__value--filled">Quebra de cadeado</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
-<div class="select__dropdown"><div class="select__list">
-<div class="select__item select__item--active"><p class="select__item-text">Quebra de cadeado</p></div>
-<div class="select__item"><p class="select__item-text">Sinistro</p></div>
-<div class="select__item"><p class="select__item-text">Arrombamento</p></div>
-<div class="select__item"><p class="select__item-text">Reclamação / atendimento</p></div>
-<div class="select__item"><p class="select__item-text">Falha de sincronização financeira</p></div>
-</div></div>
-</div>
-</div>
-<div class="input">
-<div class="input__label"><p>Espaço relacionado</p></div>
-<div class="select" data-ds="select" data-ds-float="">
-<div class="select__field"><p class="select__value select__value--filled">A-102</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
-<div class="select__dropdown"><div class="select__list">
-<div class="select__item select__item--active"><p class="select__item-text">A-102</p></div>
-<div class="select__item"><p class="select__item-text">A-103</p></div>
-</div></div>
-</div>
-</div>
-<div class="input full"><div class="input__label"><p>Motivo</p><p class="input__req">*</p></div><div class="input__field"><textarea class="input__control" placeholder="Descreva o motivo — vira registro rastreável (quem/quando/por quê)."></textarea></div><p class="input__help">Motivo é obrigatório em qualquer movimentação (rastreabilidade).</p></div>
-<div class="input full"><div class="input__label"><p>Anexos</p></div>
-<button class="btn btn--outline" type="button"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-upload"></use></svg></span>Anexar arquivo</button>
-</div>
-</div>
-</div>
-<div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Registrar ocorrência<span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"></use></svg></span></button></div>
-</div>
+<div class="modal confirm-modal" data-ds="modal" id="perfil__modalOcorrencia" style="max-width:660px"><div class="modal__header"><h2 class="modal__title">Registrar ocorrência</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div><div class="modal__content"><div class="banner banner--info" style="margin-bottom:var(--lg)"><span class="banner__icon"><svg><use href="#ico-information"></use></svg></span><div class="banner__content"><p class="banner__text">A ocorrência não é editada nem excluída após o registro. Para corrigir, registre uma nova ocorrência vinculada à anterior. Ela entra na linha do tempo do contrato e no histórico do locatário.</p></div></div><label style="display:flex;gap:var(--sm);align-items:center;cursor:pointer;margin-bottom:var(--md)"><input type="checkbox" class="js-oc-corrige"/> <span>Esta ocorrência corrige uma anterior</span></label><div class="js-oc-vinc-wrap" hidden style="margin-bottom:var(--md)"><div class="input full"><div class="input__label"><p>Ocorrência vinculada</p><p class="input__req">*</p></div><div class="select js-oc-vinc" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">OC-104 · Operacional · 02/10/2026</p></div><div class="select__item"><p class="select__item-text">OC-101 · Comercial · 20/09/2026</p></div><div class="select__item"><p class="select__item-text">OC-098 · Financeira · 05/09/2026</p></div></div></div></div></div></div><div class="formgrid grid2"><div class="input"><div class="input__label"><p>Tipo</p><p class="input__req">*</p></div><div class="select js-oc-tipo" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">Operacional</p></div><div class="select__item"><p class="select__item-text">Comercial</p></div><div class="select__item"><p class="select__item-text">Jurídica</p></div><div class="select__item"><p class="select__item-text">Recuperação de crédito</p></div><div class="select__item"><p class="select__item-text">Financeira</p></div><div class="select__item"><p class="select__item-text">Sinistro</p></div></div></div></div></div><div class="input"><div class="input__label"><p>Subtipo</p><p class="input__req">*</p></div><div class="select js-oc-sub" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item" data-tipo="operacional" hidden=""><p class="select__item-text">Quebra de cadeado</p></div><div class="select__item" data-tipo="operacional" hidden=""><p class="select__item-text">Arrombamento</p></div><div class="select__item" data-tipo="operacional" hidden=""><p class="select__item-text">Falha de acesso</p></div><div class="select__item" data-tipo="operacional" hidden=""><p class="select__item-text">Manutenção preventiva</p></div><div class="select__item" data-tipo="comercial" hidden=""><p class="select__item-text">Reclamação de reajuste</p></div><div class="select__item" data-tipo="comercial" hidden=""><p class="select__item-text">Reclamação de atendimento</p></div><div class="select__item" data-tipo="comercial" hidden=""><p class="select__item-text">Renegociação solicitada</p></div><div class="select__item" data-tipo="comercial" hidden=""><p class="select__item-text">Upgrade / downgrade de espaço</p></div><div class="select__item" data-tipo="juridica" hidden=""><p class="select__item-text">Notificação extrajudicial</p></div><div class="select__item" data-tipo="juridica" hidden=""><p class="select__item-text">Processo judicial</p></div><div class="select__item" data-tipo="juridica" hidden=""><p class="select__item-text">Descumprimento contratual</p></div><div class="select__item" data-tipo="recuperacao" hidden=""><p class="select__item-text">Acordo de parcelamento</p></div><div class="select__item" data-tipo="recuperacao" hidden=""><p class="select__item-text">Negativação</p></div><div class="select__item" data-tipo="recuperacao" hidden=""><p class="select__item-text">Cobrança terceirizada</p></div><div class="select__item" data-tipo="financeira" hidden=""><p class="select__item-text">Falha de sincronização financeira</p></div><div class="select__item" data-tipo="financeira" hidden=""><p class="select__item-text">Divergência de cobrança</p></div><div class="select__item" data-tipo="financeira" hidden=""><p class="select__item-text">Estorno</p></div><div class="select__item" data-tipo="sinistro" hidden=""><p class="select__item-text">Incêndio</p></div><div class="select__item" data-tipo="sinistro" hidden=""><p class="select__item-text">Alagamento</p></div><div class="select__item" data-tipo="sinistro" hidden=""><p class="select__item-text">Roubo / furto</p></div><div class="select__item" data-tipo="sinistro" hidden=""><p class="select__item-text">Dano a terceiros</p></div></div></div></div></div><div class="input input--readonly"><div class="input__label"><p>Data e hora do registro</p></div><div class="input__field"><input class="input__control js-oc-data" readonly value="14/10/2026 · 15:30"/></div></div><div class="input"><div class="input__label"><p>Origem</p><p class="input__req">*</p></div><div class="select js-oc-origem" data-ds="select" data-ds-float=""><div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="select__dropdown"><div class="select__list"><div class="select__item"><p class="select__item-text">Loja</p></div><div class="select__item"><p class="select__item-text">Atendimento (SAC / CRM)</p></div><div class="select__item"><p class="select__item-text">Meu Espaço</p></div><div class="select__item"><p class="select__item-text">Sistema</p></div></div></div></div></div><div class="input input--readonly"><div class="input__label"><p>Quem registrou</p></div><div class="input__field"><input class="input__control js-oc-autor" readonly value="Carol Ferreira"/></div></div></div><div class="input full"><div class="input__label"><p>Descrição</p><p class="input__req">*</p></div><div class="input__field" style="height:auto;align-items:stretch"><textarea class="input__control js-oc-desc" rows="3" style="resize:vertical;min-height:84px;font-family:inherit" placeholder="Descreva a ocorrência."></textarea></div></div><div class="anexo-block"><div class="anexo-block__head"><p class="anexo-block__title">Anexos</p><span class="anexo-block__opt" style="color:var(--content-text);font-size:var(--font-size-support)">Opcional</span></div><div class="js-oc-anexo-list anexo-list"></div><button type="button" class="btn btn--outline btn--sm js-oc-anexo-add"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"></use></svg></span>Anexar arquivo</button></div><div class="banner banner--warning js-oc-sinistro" hidden style="margin-top:var(--lg)"><span class="banner__icon"><svg><use href="#ri-error-warning"></use></svg></span><div class="banner__content"><p class="banner__title">Registro de sinistro</p><p class="banner__text">O registro de sinistro não aciona Seguros nem Precificação, e não suspende nem rescinde o contrato. Se a suspensão ou rescisão for necessária, a mudança de estado é feita manualmente por uma pessoa.</p></div></div><div class="banner banner--info js-oc-reajuste" hidden style="margin-top:var(--lg)"><span class="banner__icon"><svg><use href="#ico-information"></use></svg></span><div class="banner__content"><p class="banner__text">Reclamação de reajuste é uma ocorrência Comercial e não bloqueia o faturamento.</p></div></div></div><div class="modal__footer"><button class="btn btn--ghost" onclick="DS.closeModal(this.closest('.modal'))">Cancelar</button><button class="btn btn--primary js-oc-ok" disabled onclick="window.__ocRegistrar&&window.__ocRegistrar()">Registrar ocorrência</button></div></div><div class="modal confirm-modal" data-ds="modal" id="perfil__modalOcorrenciaOk" style="max-width:460px"><div class="modal__header"><h2 class="modal__title">Ocorrência registrada</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div><div class="modal__content"><div class="savemsg savemsg--center savemsg--ok"><span class="savemsg__icon savemsg__icon--sq"><svg><use href="#ico-check"></use></svg></span><p class="savemsg__title">Ocorrência registrada</p><p class="savemsg__text">O registro é definitivo — não pode ser editado nem excluído. A ocorrência aparece na linha do tempo do contrato e no histórico do locatário.</p></div></div><div class="modal__footer modal__footer--equal"><button class="btn btn--primary" onclick="DS.closeModal(this.closest('.modal'))">Entendi</button></div></div>
 <!-- MODAL: Registrar vistoria (F-CON-39/44) -->
 <div class="modal confirm-modal" data-ds="modal" id="perfil__modalVistoria" style="max-width:600px">
 <div class="modal__header"><h2 class="modal__title">Registrar vistoria</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div>
@@ -13036,6 +13002,75 @@ document.addEventListener('ds:action', function(e){
     if(window.DS) DS.closeModal(m);
   };
   document.addEventListener('input',function(e){ var t=e.target; if(t.classList&&t.classList.contains('js-desccancel-mot')){ var m=t.closest('.modal'); var ok=m.querySelector('.js-desccancel-ok'); if(ok) ok.disabled=(t.value.trim().length<5); } });
+})();</script>
+<script>/* contratos: registrar ocorrencia (tipos/subtipos + origem + avisos) */
+(function(){
+  function M(){ return document.getElementById('perfil__modalOcorrencia'); }
+  function selText(sel){ var v=sel.querySelector('.select__value'); return v?v.textContent.trim():''; }
+  function filled(sel){ var t=selText(sel); return t && !/^Selecionar/.test(t); }
+  function resetSel(sel){ if(!sel) return; [].forEach.call(sel.querySelectorAll('.select__item'),function(it){ it.classList.remove('select__item--active'); var c=it.querySelector('.select__item-check'); if(c) c.remove(); }); var v=sel.querySelector('.select__value'); if(v){ v.textContent='Selecionar…'; v.classList.remove('select__value--filled'); } }
+  function now(){ var d=new Date(); function z(x){return(x<10?'0':'')+x;} return z(d.getDate())+'/'+z(d.getMonth()+1)+'/'+d.getFullYear()+' · '+z(d.getHours())+':'+z(d.getMinutes()); }
+
+  function fillData(){ var m=M(); if(!m) return; var d=m.querySelector('.js-oc-data'); if(d) d.value=now(); }
+  document.addEventListener('click',function(e){ var t=e.target.closest?e.target.closest('[data-ds-open="perfil__modalOcorrencia"]'):null; if(t) setTimeout(fillData,0); }, true);
+
+  function tipoKey(txt){ txt=(txt||'').toLowerCase();
+    if(txt.indexOf('operacional')>-1) return 'operacional';
+    if(txt.indexOf('comercial')>-1) return 'comercial';
+    if(txt.indexOf('jur')>-1) return 'juridica';
+    if(txt.indexOf('crédito')>-1||txt.indexOf('credito')>-1||txt.indexOf('recupera')>-1) return 'recuperacao';
+    if(txt.indexOf('financeira')>-1) return 'financeira';
+    if(txt.indexOf('sinistro')>-1) return 'sinistro';
+    return ''; }
+
+  function check(){ var m=M(); if(!m) return; var ok=m.querySelector('.js-oc-ok'); if(!ok) return;
+    var tipoOk=filled(m.querySelector('.js-oc-tipo')), subOk=filled(m.querySelector('.js-oc-sub')), origOk=filled(m.querySelector('.js-oc-origem'));
+    var desc=m.querySelector('.js-oc-desc'); var descOk=desc&&desc.value.trim().length>=3;
+    ok.disabled=!(tipoOk&&subOk&&origOk&&descOk);
+  }
+
+  document.addEventListener('ds:change',function(e){
+    var m=M(); if(!m) return; var sel=e.target.closest?e.target.closest('.select'):null; if(!sel||!m.contains(sel)) return;
+    if(sel.classList.contains('js-oc-tipo')){
+      var key=tipoKey(selText(sel));
+      var sub=m.querySelector('.js-oc-sub');
+      [].forEach.call(sub.querySelectorAll('.select__item'),function(it){ it.hidden=(it.getAttribute('data-tipo')!==key); });
+      resetSel(sub);
+      m.querySelector('.js-oc-sinistro').hidden=(key!=='sinistro');
+      m.querySelector('.js-oc-reajuste').hidden=true;
+    }
+    if(sel.classList.contains('js-oc-sub')){
+      m.querySelector('.js-oc-reajuste').hidden=!/reclamação de reajuste/i.test(selText(sel));
+    }
+    check();
+  });
+  document.addEventListener('input',function(e){ if(e.target.classList&&e.target.classList.contains('js-oc-desc')) check(); });
+
+  /* corrige ocorrencia anterior */
+  document.addEventListener('change',function(e){ var t=e.target; if(t.classList&&t.classList.contains('js-oc-corrige')){ var w=M().querySelector('.js-oc-vinc-wrap'); if(w) w.hidden=!t.checked; } });
+
+  /* anexos */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('.js-oc-anexo-add'):null; if(!a) return;
+    var list=M().querySelector('.js-oc-anexo-list'); if(!list) return;
+    var n=list.children.length+1; var chip=document.createElement('span'); chip.className='anexo-chip';
+    chip.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 12l6-6a3 3 0 0 1 4 4l-7 7a5 5 0 0 1-7-7l7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>anexo-'+n+'.pdf<button type="button" class="anexo-chip__x" aria-label="Remover">×</button>';
+    chip.querySelector('.anexo-chip__x').addEventListener('click',function(){ chip.remove(); });
+    list.appendChild(chip);
+  });
+
+  window.__ocRegistrar=function(){
+    var m=M(); var ok=m.querySelector('.js-oc-ok'); if(ok&&ok.disabled) return;
+    if(window.DS) DS.closeModal(m);
+    if(window.DS) DS.openModal('perfil__modalOcorrenciaOk');
+    /* reset basico */
+    resetSel(m.querySelector('.js-oc-tipo')); resetSel(m.querySelector('.js-oc-sub')); resetSel(m.querySelector('.js-oc-origem'));
+    var d=m.querySelector('.js-oc-desc'); if(d) d.value='';
+    var al=m.querySelector('.js-oc-anexo-list'); if(al) al.innerHTML='';
+    m.querySelector('.js-oc-sinistro').hidden=true; m.querySelector('.js-oc-reajuste').hidden=true;
+    var cc=m.querySelector('.js-oc-corrige'); if(cc){ cc.checked=false; var w=m.querySelector('.js-oc-vinc-wrap'); if(w) w.hidden=true; }
+    check();
+  };
 })();</script>
 </body>
 </html>
