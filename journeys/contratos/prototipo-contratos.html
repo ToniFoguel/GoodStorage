@@ -12575,6 +12575,7 @@ document.addEventListener('ds:action', function(e){
   function applyState(){
     var pg=document.getElementById("con-perfil"); if(!pg) return;
     var est=window.__conEstado||"Move-in", sts=window.__conStatus||"Ativo", term=terminal(est);
+    [].forEach.call(pg.querySelectorAll(".dropdown__item--nav[data-estado-show]"),function(it){var allowed=it.getAttribute("data-estado-show").split(",").map(function(s){return s.trim();});it.style.display=(allowed.indexOf(est)===-1)?"none":"";});
     var sb=pg.querySelector(".js-con-status-badge"); if(sb){sb.textContent=sts;sb.className="badge js-con-status-badge "+(ST[sts]||"badge--outline");}
     var eb=pg.querySelector(".js-con-estado-badge"); if(eb){eb.textContent=est;eb.className="badge js-con-estado-badge "+(ES[est]||"badge--outline");}
     var _eL=(est||"").toLowerCase(); var _isMove=(_eL==="move-in"||_eL==="pré-move-in"||_eL==="pre-move-in"); var fat=pg.querySelector(".js-con-fatura"); if(fat){ fat.hidden=!_isMove; } [].forEach.call(pg.querySelectorAll(".js-con-assinatura"),function(ab){ if(_eL==="reserva"){ ab.textContent="Aguardando assinatura"; ab.className="badge badge--yellow js-con-assinatura"; } else { ab.textContent="Assinado"; ab.className="badge badge--secondary js-con-assinatura"; } });
