@@ -2748,6 +2748,10 @@ a.breadcrumb__item::after {
 .orc-pc--reserved{ opacity:.55; pointer-events:none; }
 .orc-pc__tag{ display:inline-flex; align-items:center; padding:2px 10px; border-radius:999px; background:var(--background-bg-aux); color:var(--content-disable); border:var(--thin) solid var(--border-default); font-size:var(--font-size-label); white-space:nowrap; }
 /* ===== Bloco de Fatura (exibição de contrato) ===== */
+.mo-saida{ margin-top:var(--lg); padding-top:var(--lg); border-top:1px solid var(--border-default); }
+.mo-saida .section__title{ margin:0 0 var(--sm); }
+.mo-saida__ctx-line{ margin:var(--sm) 0 0; color:var(--content-text); font-size:var(--font-size-support); }
+.mo-saida__hint{ margin:var(--sm) 0 0; color:var(--content-text); font-size:var(--font-size-support); }
 .conp-fatform{ display:flex; flex-direction:column; gap:var(--lg); }
 .conp-fatform .fltfield{ display:flex; flex-direction:column; gap:var(--sm); }
 .conp-fatform .fltfield .select{ width:100%; }
@@ -5438,9 +5442,36 @@ a { text-decoration: none; color: inherit; }
 <div class="input__label"><p>Descrição do motivo</p></div>
 <div class="input__field" style="height:auto;align-items:stretch"><textarea class="input__control" rows="3" style="resize:vertical;min-height:72px" placeholder="Detalhe o motivo da saída"></textarea></div>
 </div>
+</div>
+<div class="mo-saida js-mo-saida" data-modalidade="Self Storage" data-prazo="30" data-dia-limite="2026-11-20" data-fim-atual="2026-12-20" data-fim-seguinte="2027-01-20">
+<p class="section__title">Data prevista de saída</p>
+<p class="mo-saida__ctx-line js-mo-ctx-calc">Período atual encerra em <b>20/12/2026</b> · Prazo de aviso: <b>30 dias</b> · Dia limite para aviso: <b>20/11/2026</b></p>
+<p class="mo-saida__ctx-line js-mo-ctx-urb" hidden>Prazo de aviso: <b>30 dias</b> · Data mínima de saída: <b class="js-mo-min">—</b></p>
+<div class="js-mo-calc">
+<div class="formgrid formgrid--4" style="margin-top:var(--md)">
 <div class="input col-2">
-<div class="input__label"><p>Data de saída desejada</p><p class="input__req">*</p></div>
-<div class="input__field"><input class="input__control" type="date"/></div>
+<div class="input__label"><p>Data do registro do aviso</p><p class="input__req">*</p></div>
+<div class="input__field"><input class="input__control js-mo-aviso" type="date" value="2026-10-16"/></div>
+</div>
+<div class="input col-2">
+<div class="input__label"><p>Data prevista de saída (calculada)</p></div>
+<div class="input__field"><input class="input__control js-mo-prevista-calc" type="text" value="20/12/2026" readonly/></div>
+</div>
+</div>
+<div class="banner banner--info js-mo-renov" hidden style="margin-top:var(--md)"><span class="banner__icon"><svg><use href="#ico-information"></use></svg></span><div class="banner__content"><p class="banner__title">O contrato será renovado por mais um período</p><p class="banner__text js-mo-renov-text">O aviso foi registrado após o dia limite. A data prevista de saída passa a ser o fim do período seguinte.</p></div></div>
+</div>
+<div class="js-mo-urb" hidden>
+<div class="formgrid formgrid--4" style="margin-top:var(--md)">
+<div class="input col-2">
+<div class="input__label"><p>Data do registro do aviso</p><p class="input__req">*</p></div>
+<div class="input__field"><input class="input__control js-mo-aviso-urb" type="date" value="2026-10-16"/></div>
+</div>
+<div class="input col-2">
+<div class="input__label"><p>Data prevista de saída</p><p class="input__req">*</p></div>
+<div class="input__field"><input class="input__control js-mo-prevista-urb" type="date"/></div>
+</div>
+</div>
+<p class="mo-saida__hint">Não pode ser anterior à data mínima de saída.</p>
 </div>
 </div>
 </div>
@@ -13360,6 +13391,41 @@ document.addEventListener('ds:action', function(e){
     });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',apply); else apply();
+})();</script>
+<script>/* contratos: data prevista de saida no aviso de move-out (RN4/RN5/RN6) */
+(function(){
+  function p(n){return(n<10?"0":"")+n;}
+  function parse(v){ if(!v) return null; var a=v.split("-"); return new Date(+a[0],+a[1]-1,+a[2]); }
+  function fmt(d){ return p(d.getDate())+"/"+p(d.getMonth()+1)+"/"+d.getFullYear(); }
+  function iso(d){ return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
+  function addDays(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x; }
+  function setup(sec){
+    var modal=sec.getAttribute("data-modalidade")||"";
+    var prazo=parseInt(sec.getAttribute("data-prazo")||"0",10);
+    var lim=parse(sec.getAttribute("data-dia-limite"));
+    var fimA=parse(sec.getAttribute("data-fim-atual"));
+    var fimS=parse(sec.getAttribute("data-fim-seguinte"));
+    var isUrb=/Urbano/i.test(modal);
+    sec.querySelector(".js-mo-calc").hidden=isUrb;
+    sec.querySelector(".js-mo-urb").hidden=!isUrb;
+    sec.querySelector(".js-mo-ctx-calc").hidden=isUrb;
+    sec.querySelector(".js-mo-ctx-urb").hidden=!isUrb;
+    if(!isUrb){
+      var av=sec.querySelector(".js-mo-aviso"), out=sec.querySelector(".js-mo-prevista-calc"), ban=sec.querySelector(".js-mo-renov"), bt=sec.querySelector(".js-mo-renov-text");
+      function calc(){ var d=parse(av.value); if(!d){ out.value=""; ban.hidden=true; return; }
+        var renova=d.getTime()>lim.getTime(); var prev=renova?fimS:fimA; out.value=fmt(prev);
+        if(bt) bt.textContent="O aviso foi registrado após o dia limite ("+fmt(lim)+"). A data prevista de saída passa a ser o fim do período seguinte ("+fmt(fimS)+").";
+        ban.hidden=!renova; }
+      av.addEventListener("change",calc); calc();
+    } else {
+      var avu=sec.querySelector(".js-mo-aviso-urb"), prevU=sec.querySelector(".js-mo-prevista-urb"), minEl=sec.querySelector(".js-mo-min");
+      function calcU(){ var d=parse(avu.value); if(!d){ minEl.textContent="—"; prevU.removeAttribute("min"); return; }
+        var mn=addDays(d,prazo); minEl.textContent=fmt(mn); prevU.min=iso(mn); }
+      avu.addEventListener("change",calcU); calcU();
+    }
+  }
+  function init(){ [].slice.call(document.querySelectorAll(".js-mo-saida")).forEach(setup); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
 })();</script>
 </body>
 </html>
