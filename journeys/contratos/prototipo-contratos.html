@@ -5410,8 +5410,8 @@ a { text-decoration: none; color: inherit; }
 <div class="modal confirm-modal" data-ds="modal" id="perfil__modalAvisoMoveOut" style="max-width:600px">
 <div class="modal__header"><h2 class="modal__title">Registrar aviso de move-out</h2><button aria-label="Fechar" class="modal__close"><svg><use href="#ico-close"></use></svg></button></div>
 <div class="modal__content">
-<div class="formgrid">
-<div class="input full">
+<div class="formgrid formgrid--4">
+<div class="input col-2">
 <div class="input__label"><p>Motivo</p><p class="input__req">*</p></div>
 <div class="select" data-ds="select" data-ds-float="">
 <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
@@ -5423,15 +5423,7 @@ a { text-decoration: none; color: inherit; }
 </div></div>
 </div>
 </div>
-<div class="input full">
-<div class="input__label"><p>Descrição do motivo</p></div>
-<div class="input__field" style="height:auto;align-items:stretch"><textarea class="input__control" rows="3" style="resize:vertical;min-height:72px" placeholder="Detalhe o motivo da saída"></textarea></div>
-</div>
-<div class="input">
-<div class="input__label"><p>Data de saída desejada</p><p class="input__req">*</p></div>
-<div class="input__field"><input class="input__control" type="date"/></div>
-</div>
-<div class="input">
+<div class="input col-2">
 <div class="input__label"><p>Origem</p><p class="input__req">*</p></div>
 <div class="select" data-ds="select" data-ds-float="">
 <div class="select__field"><p class="select__value">Selecionar…</p><span class="select__icon"><svg><use href="#ico-arrow-down-s"></use></svg></span></div>
@@ -5441,6 +5433,14 @@ a { text-decoration: none; color: inherit; }
 <div class="select__item"><p class="select__item-text">E-mail</p></div>
 </div></div>
 </div>
+</div>
+<div class="input full">
+<div class="input__label"><p>Descrição do motivo</p></div>
+<div class="input__field" style="height:auto;align-items:stretch"><textarea class="input__control" rows="3" style="resize:vertical;min-height:72px" placeholder="Detalhe o motivo da saída"></textarea></div>
+</div>
+<div class="input col-2">
+<div class="input__label"><p>Data de saída desejada</p><p class="input__req">*</p></div>
+<div class="input__field"><input class="input__control" type="date"/></div>
 </div>
 </div>
 </div>
