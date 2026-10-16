@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campos faltantes · Edição de contrato</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#1a1a20; --muted:#5b5b66; --line:#e4e4ea;
+    --miss:#b3261e; --miss-bg:#fbe7e6; --accent:#4f46e5; --warn:#9a6b00; --warn-bg:#fdf3dd;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15151a; --card:#1e1e26; --ink:#f1f1f5; --muted:#a9a9b6; --line:#32323d;
+      --miss:#f5a6a0; --miss-bg:#3a1a18; --accent:#a5b4fc; --warn:#f0c674; --warn-bg:#352a12;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15151a; --card:#1e1e26; --ink:#f1f1f5; --muted:#a9a9b6; --line:#32323d;
+    --miss:#f5a6a0; --miss-bg:#3a1a18; --accent:#a5b4fc; --warn:#f0c674; --warn-bg:#352a12;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:32px 16px 72px}
+  header h1{margin:0 0 4px;font-size:26px;letter-spacing:-.01em}
+  header p{margin:0;color:var(--muted)}
+  .meta{margin-top:10px;font-size:13px;color:var(--muted)}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--miss-bg);color:var(--miss);margin:18px 0 6px}
+  .pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--miss)}
+  .cause{border:1px solid color-mix(in srgb,var(--warn) 45%,var(--line));background:var(--warn-bg);border-radius:12px;padding:14px 16px;margin:14px 0 24px}
+  .cause h3{margin:0 0 6px;font-size:14px;color:var(--warn);display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.03em}
+  .cause p{margin:0 0 8px;font-size:14px}
+  .cause p:last-child{margin-bottom:0}
+  section.rn{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px 12px;margin:0 0 22px}
+  section.rn > h2{font-size:17px;margin:16px 2px 2px;display:flex;gap:8px;align-items:baseline}
+  section.rn > h2 .code{color:var(--accent);font-weight:800}
+  section.rn > .desc{margin:0 2px 12px;color:var(--muted);font-size:13.5px}
+  table{width:100%;border-collapse:collapse;margin:4px 0 2px}
+  th,td{text-align:left;vertical-align:top;padding:12px 10px;border-top:1px solid var(--line);font-size:14px}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);border-top:0}
+  td.field{font-weight:600;width:26%}
+  td.type{width:20%;color:var(--muted)}
+  td.why{width:34%;color:var(--muted)}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap;background:var(--miss-bg);color:var(--miss)}
+  .tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--miss)}
+  .done{margin:6px 2px 0;color:var(--muted);font-size:13px}
+  footer{margin-top:4px;color:var(--muted);font-size:12.5px}
+  @media (max-width:640px){
+    td.field,td.type,td.why{width:auto} table,tbody,tr,td{display:block}
+    th{display:none} td{border-top:0;padding:2px 2px}
+    tr{border-top:1px solid var(--line);padding:12px 0;display:block}
+    td.field{margin-bottom:2px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Edição de contrato — campos faltantes (RN1)</h1>
+    <p>Campos editáveis previstos na história que ainda não existem na tela de edição — e por que faltam.</p>
+    <div class="meta">
+      Tela analisada: <b>Perfil do contrato → aba "Dados do contrato" → modo edição</b>.<br>
+      Escopo: apenas <b>RN1 — Campos editáveis</b>. RN2 (Garantia) e RN3 (forma de cobrança / dados do sistema) já estão contemplados no protótipo e saíram deste relatório.<br>
+      16/10/2026
+    </div>
+  </header>
+
+  <div class="cause">
+    <h3>Por que esses campos faltam</h3>
+    <p>Os 4 campos abaixo <b>não foram contemplados na história de cadastro de contrato</b>. Como eles não existem na etapa de cadastro, também não existem na edição: <b>não é possível editar um dado que não foi cadastrado antes.</b></p>
+    <p>Ou seja, a lacuna é de origem — ela nasce no cadastro. Para que esses campos apareçam (e sejam editáveis) na edição, eles precisam primeiro ser incluídos na história/tela de <b>cadastro</b> do contrato.</p>
+  </div>
+
+  <section class="rn">
+    <h2><span class="code">RN1</span> Campos editáveis — o que falta <small style="color:var(--muted);font-weight:400">(CA1, CA2)</small></h2>
+    <p class="desc">Precisam existir primeiro no cadastro para então aparecerem na edição.</p>
+    <span class="pill">4 campos faltando</span>
+    <table>
+      <thead><tr><th>Campo</th><th>Tipo esperado</th><th>Por que falta</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="field">Finalidade de uso</td><td class="type">Seleção / lista</td><td class="why">Não previsto na história de cadastro de contrato — sem origem no cadastro, não há o que editar.</td><td><span class="tag">Falta</span></td></tr>
+        <tr><td class="field">Segmento de negócio do locatário</td><td class="type">Seleção / lista</td><td class="why">Não previsto na história de cadastro de contrato — sem origem no cadastro, não há o que editar.</td><td><span class="tag">Falta</span></td></tr>
+        <tr><td class="field">Contrato auditado</td><td class="type">Sim / não</td><td class="why">Não previsto na história de cadastro de contrato — sem origem no cadastro, não há o que editar.</td><td><span class="tag">Falta</span></td></tr>
+        <tr><td class="field">Biometria cadastrada</td><td class="type">Sim / não</td><td class="why">Não previsto na história de cadastro de contrato — sem origem no cadastro, não há o que editar.</td><td><span class="tag">Falta</span></td></tr>
+      </tbody>
+    </table>
+    <p class="done">Demais pontos da RN1 (Observações e a edição dos dados já cadastrados) estão cobertos no protótipo.</p>
+  </section>
+
+  <footer>
+    Relatório de análise — foco na RN1. A correção de raiz depende de incluir esses campos na história de cadastro de contrato.
+  </footer>
+</div>
+</body>
+</html>
