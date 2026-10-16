@@ -12586,7 +12586,7 @@ document.addEventListener('ds:action', function(e){
       esel.classList.toggle("select--locked",term);
       var lk=esel.querySelector(".js-con-estado-lock"); if(lk) lk.hidden=!term;}
     var bn=pg.querySelector(".js-con-finalbanner"); if(bn) bn.hidden=!term;
-    var ed=pg.querySelector(".pagehead__actions [data-edit-start]"); if(ed){ed.disabled=term;ed.classList.toggle("is-locked",term);}
+    var ed=pg.querySelector(".pagehead__actions [data-edit-start]"); if(ed){ed.disabled=term;ed.hidden=term;ed.classList.toggle("is-locked",term);}
     var dd=pg.querySelector(".pagehead__actions .dropdown"); if(dd) dd.classList.toggle("is-locked",term);
   }
   window.__applyConState=applyState;
