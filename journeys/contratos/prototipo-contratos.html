@@ -3055,7 +3055,7 @@ a.breadcrumb__item::after {
 .loc-card .dados{ margin-top:0; }
 .loc-card__tag{ font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-label); }
 @media (max-width:640px){ .unifbox{ flex-direction:column; } .unifbox__arrows{ flex-direction:row; } }
-.nl-block{ margin-bottom:var(--lg); border:var(--thin) solid var(--border-default); background:var(--background-bg-main); padding:var(--xl); }.nl-block:last-child{ margin-bottom:0; }.nl-block .nl-card{ background:var(--background-bg-aux); }.lc-addr{ padding-top:var(--md); }.lc-addr:first-child{ padding-top:0; }.lc-addr + .lc-addr{ margin-top:var(--md); padding-top:var(--md); border-top:var(--thin) solid var(--border-default); }.lc-addr__tag{ margin:0 0 var(--sm); font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); font-size:var(--font-size-label); letter-spacing:.04em; text-transform:uppercase; color:var(--content-primary); }.lc-addr__tag--muted{ color:var(--content-text); opacity:.55; }.lc-addr__l1{ margin:0 0 2px; font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-paragraph); }.lc-addr__l2{ margin:0; color:var(--content-text); }.lc-card--addr{ margin-bottom:var(--md); }.lc-card--addr .dados{ margin:0; }
+.nl-block{ margin-bottom:var(--lg); border:var(--thin) solid var(--border-default); background:var(--background-bg-main); padding:var(--xl); }.nl-block:last-child{ margin-bottom:0; }.nl-block .nl-card{ background:var(--background-bg-aux); }.lc-addr{ padding-top:var(--md); }.lc-addr:first-child{ padding-top:0; }.lc-addr + .lc-addr{ margin-top:var(--md); padding-top:var(--md); border-top:var(--thin) solid var(--border-default); }.lc-addr__tag{ margin:0 0 var(--sm); font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); font-size:var(--font-size-label); letter-spacing:.04em; text-transform:uppercase; color:var(--content-primary); }.lc-addr__tag--muted{ color:var(--content-text); opacity:.55; }.lc-addr__l1{ margin:0 0 2px; font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-paragraph); }.lc-addr__l2{ margin:0; color:var(--content-text); }.lc-card--addr{ margin-bottom:var(--md); }.lc-card--addr .dados{ margin:0; }.dados.dados--4{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--lg) var(--xl); }.dados.dados--2{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--lg) var(--xl); }.dados.dados--1{ grid-template-columns:1fr; gap:var(--lg) var(--xl); }.lc-sect .data-item__label, .lc-sect .data-item__value{ overflow-wrap:anywhere; }.lc-cardgrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--md); }.lc-cardgrid .lc-card--addr{ margin-bottom:0; height:100%; }@media(max-width:860px){ .dados.dados--4{ grid-template-columns:repeat(2,minmax(0,1fr)); } .lc-cardgrid{ grid-template-columns:1fr; } }
 .nl-docs{ display:flex; flex-direction:column; gap:var(--sm); }
 .nl-doc{ display:flex; align-items:center; justify-content:space-between; gap:var(--md); padding:var(--md); border:var(--thin) solid var(--border-default); border-radius:6px; }
 .nl-doc__name{ font-family:var(--font-family-title-text); color:var(--content-title); font-size:var(--font-size-paragraph); }
@@ -12433,27 +12433,22 @@ document.addEventListener('ds:action', function(e){
     var doc=isPJ?idv('CNPJ'):idv('CPF');
     var email=ctv('E-mail')||'contato@email.com';
     function di(l,v){ v=(v==null||v==='')?'—':v; return '<div class="data-item"><p class="data-item__label">'+esc(l)+'</p><p class="data-item__value">'+esc(v)+'</p></div>'; }
-    function dlw(inner){ return '<dl class="dados">'+inner+'</dl>'; }
     function addr(a,principal){ var l1=esc(a.log+(a.num?(', '+a.num):'')); var p=[]; if(a.compl)p.push(a.compl); var loc=a.cidade||''; if(a.estado&&a.estado!==a.cidade)loc=(loc?loc+' · ':'')+a.estado; if(loc)p.push(loc); if(a.cep)p.push('CEP '+a.cep); return '<div class="lc-card lc-card--addr"><span class="nl-pbadge'+(principal?'':' nl-pbadge--alt')+'">'+(principal?'Principal':'Opcional')+'</span><p class="lc-addr__l1">'+l1+'</p><p class="lc-addr__l2">'+esc(p.join(' · '))+'</p></div>'; }
     var out='';
-    out+=_sect('Tipo de locatário',dlw(di('Tipo de locatário',isPJ?'Pessoa jurídica':'Pessoa física brasileira')));
     var id;
     if(isPJ){
-      id=di('CNPJ',doc)+di('Razão social',nome)+di('Inscrição municipal','545345')+di('Data de fundação',idv('Data de fundação')||'25/06/2015')+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
+      id=di('Razão social',nome)+di('Tipo de locatário','Pessoa jurídica')+di('CNPJ',doc)+di('Inscrição municipal',idv('Inscrição municipal')||'545345')+di('Data de fundação',idv('Data de fundação')||'—')+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
     } else {
-      id=di('CPF',doc)+di('Nome do locatário',nome)+di('Data de nascimento',idv('Data de nascimento')||'25/06/1998')+di('Outros documentos',idv('Outros documentos'))+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
+      id=di('Nome do locatário',nome)+di('Tipo de locatário','Pessoa física')+di('CPF',doc)+di('Data de nascimento',idv('Data de nascimento')||'—')+di('Outros documentos',idv('Outros documentos'))+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
     }
-    out+=_sect('Identificação',dlw(id));
+    out+=_sect('Identificação','<dl class="dados dados--4">'+id+'</dl>');
     var a1={cep:edv('CEP')||'12345-890',log:edv('Logradouro')||'Fradique Coutinho',num:edv('Número')||'1234',compl:edv('Complemento')||'Perto da padaria',estado:edv('Estado')||'São Paulo',cidade:edv('Cidade')||'São Paulo'};
     var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',estado:'São Paulo',cidade:'São Paulo'};
-    out+=_sect('Endereço',addr(a1,true)+addr(a2,false)+(noAdd?'':LOC_AREP));
-    out+=_sect('Contato','<div class="lc-card lc-card--addr"><span class="nl-pbadge">Principal</span>'+dlw(di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+di('Pode assinar documento','Sim'))+'</div>'+(noAdd?'':LOC_CREP));
+    out+=_sect('Endereço','<div class="lc-cardgrid">'+addr(a1,true)+addr(a2,false)+'</div>'+(noAdd?'':LOC_AREP));
+    out+=_sect('Contato','<div class="lc-cardgrid"><div class="lc-card lc-card--addr"><span class="nl-pbadge">Principal</span><dl class="dados dados--1">'+di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+di('Pode assinar documento','Sim')+'</dl></div></div>'+(noAdd?'':LOC_CREP));
     var dg='<div class="lc-docgrid">';
-    if(isPJ){
-      dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')+_doccard('Aprovado','Ato societário','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png');
-    } else {
-      dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png');
-    }
+    if(isPJ){ dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')+_doccard('Aprovado','Ato societário','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
+    else { dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
     dg+='</div>';
     out+=_sect('Documentações',dg);
     return out;
