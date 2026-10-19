@@ -12433,7 +12433,7 @@ document.addEventListener('ds:action', function(e){
     var doc=isPJ?idv('CNPJ'):idv('CPF');
     var email=ctv('E-mail')||'contato@email.com';
     function di(l,v){ v=(v==null||v==='')?'—':v; return '<div class="data-item"><p class="data-item__label">'+esc(l)+'</p><p class="data-item__value">'+esc(v)+'</p></div>'; }
-    function addr(a,principal){ var items=di('Logradouro',a.log)+di('Número',a.num)+di('Complemento',a.compl)+di('Bairro',a.bairro)+di('Cidade',a.cidade)+di('Estado',a.estado)+di('País',a.pais)+di('CEP',a.cep); return '<div class="lc-card lc-card--addr"><span class="nl-pbadge'+(principal?'':' nl-pbadge--alt')+'">'+(principal?'Principal':'Opcional')+'</span><dl class="dados dados--2">'+items+'</dl></div>'; }
+    function addr(a,principal){ var l1=esc(a.log+(a.num?(', '+a.num):'')); var p=[]; if(a.compl)p.push(a.compl); if(a.bairro)p.push(a.bairro); if(a.cidade)p.push(a.cidade); if(a.estado&&a.estado!==a.cidade)p.push(a.estado); if(a.pais)p.push(a.pais); if(a.cep)p.push('CEP '+a.cep); return '<div class="lc-card lc-card--addr"><span class="nl-pbadge'+(principal?'':' nl-pbadge--alt')+'">'+(principal?'Principal':'Opcional')+'</span><p class="lc-addr__l1">'+l1+'</p><p class="lc-addr__l2">'+esc(p.join(' · '))+'</p></div>'; }
     var out='';
     var id;
     if(isPJ){
@@ -12446,7 +12446,7 @@ document.addEventListener('ds:action', function(e){
     var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',bairro:'Centro',cidade:'São Paulo',estado:'SP',pais:'Brasil'};
     out+=_sect('Endereço','<div class="lc-cardgrid">'+addr(a1,true)+addr(a2,false)+'</div>'+(noAdd?'':LOC_AREP));
     var contName=isPJ?'André Toni':nome;
-    out+=_sect('Contato','<div class="lc-card lc-card--addr"><span class="nl-pbadge">Principal</span><dl class="dados dados--2">'+di('Nome',contName)+di('Responsabilidade','Financeiro')+di('E-mail',email)+di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+'</dl></div>'+(noAdd?'':LOC_CREP));
+    out+=_sect('Contato','<div class="lc-cardgrid"><div class="lc-card lc-card--addr"><span class="nl-pbadge">Principal</span><dl class="dados dados--2">'+di('Nome',contName)+di('Responsabilidade','Financeiro')+di('E-mail',email)+di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+'</dl></div></div>'+(noAdd?'':LOC_CREP));
     var dg='<div class="lc-docgrid">';
     if(isPJ){ dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')+_doccard('Aprovado','Ato societário','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
     else { dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
