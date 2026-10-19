@@ -3055,7 +3055,7 @@ a.breadcrumb__item::after {
 .loc-card .dados{ margin-top:0; }
 .loc-card__tag{ font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-label); }
 @media (max-width:640px){ .unifbox{ flex-direction:column; } .unifbox__arrows{ flex-direction:row; } }
-.nl-block{ margin-bottom:var(--lg); border:var(--thin) solid var(--border-default); background:var(--background-bg-main); padding:var(--xl); }.nl-block:last-child{ margin-bottom:0; }.nl-block .nl-card{ background:var(--background-bg-aux); }
+.nl-block{ margin-bottom:var(--lg); border:var(--thin) solid var(--border-default); background:var(--background-bg-main); padding:var(--xl); }.nl-block:last-child{ margin-bottom:0; }.nl-block .nl-card{ background:var(--background-bg-aux); }.lc-addr{ padding-top:var(--md); }.lc-addr:first-child{ padding-top:0; }.lc-addr + .lc-addr{ margin-top:var(--md); padding-top:var(--md); border-top:var(--thin) solid var(--border-default); }.lc-addr__tag{ margin:0 0 var(--sm); font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); font-size:var(--font-size-label); letter-spacing:.04em; text-transform:uppercase; color:var(--content-primary); }.lc-addr__tag--muted{ color:var(--content-text); opacity:.55; }.lc-addr__l1{ margin:0 0 2px; font-family:var(--font-family-title-text); font-weight:var(--font-weight-bold); color:var(--content-title); font-size:var(--font-size-paragraph); }.lc-addr__l2{ margin:0; color:var(--content-text); }
 .nl-docs{ display:flex; flex-direction:column; gap:var(--sm); }
 .nl-doc{ display:flex; align-items:center; justify-content:space-between; gap:var(--md); padding:var(--md); border:var(--thin) solid var(--border-default); border-radius:6px; }
 .nl-doc__name{ font-family:var(--font-family-title-text); color:var(--content-title); font-size:var(--font-size-paragraph); }
@@ -12432,55 +12432,27 @@ document.addEventListener('ds:action', function(e){
     var nome=isPJ?idv('Razão social'):(idv('Nome')||idv('Nome do locatário'));
     var doc=isPJ?idv('CNPJ'):idv('CPF');
     var email=ctv('E-mail')||'contato@email.com';
+    function di(l,v){ v=(v==null||v==='')?'—':v; return '<div class="data-item"><p class="data-item__label">'+esc(l)+'</p><p class="data-item__value">'+esc(v)+'</p></div>'; }
+    function dlw(inner){ return '<dl class="dados">'+inner+'</dl>'; }
+    function addr(a,principal){ var l1=esc(a.log+(a.num?(', '+a.num):'')); var p=[]; if(a.compl)p.push(a.compl); var loc=a.cidade||''; if(a.estado&&a.estado!==a.cidade)loc=(loc?loc+' · ':'')+a.estado; if(loc)p.push(loc); if(a.cep)p.push('CEP '+a.cep); return '<div class="lc-addr"><p class="lc-addr__tag'+(principal?'':' lc-addr__tag--muted')+'">'+(principal?'Principal':'Secundário')+'</p><p class="lc-addr__l1">'+l1+'</p><p class="lc-addr__l2">'+esc(p.join(' · '))+'</p></div>'; }
     var out='';
-    out+=_sect('Tipo de locatário','<div class="formgrid formgrid--4">'+_ro('Tipo de locatário',isPJ?'Pessoa jurídica':'Pessoa física brasileira','col-2')+'</div>');
-    var id='<div class="formgrid formgrid--4">';
+    out+=_sect('Tipo de locatário',dlw(di('Tipo de locatário',isPJ?'Pessoa jurídica':'Pessoa física brasileira')));
+    var id;
     if(isPJ){
-      id+=_ro('CNPJ',doc,'',true)+_ro('Razão social',nome,'col-2',true)+_ro('Natureza jurídica','Sociedade Ltda')
-        +_ro('Nome fantasia',nome.replace(/\s*Ltda\.?$/i,''),'col-2',true)+_ro('Porte','Demais')+_ro('Inscrição municipal','545345','',true)
-        +_ro('Inscrição estadual','545345')+_ro('Data de fundação',idv('Data de fundação')||'25/06/2025')+_ro('Email principal',email,'col-2',true)
-        +_ro('Email de assinatura de contratos',email,'col-2',true)+_ro('Email de login no Meu Espaço',email,'col-2',true)
-        +'<div class="col-2">'+_chk('Usar email principal',true)+'</div><div class="col-2">'+_chk('Usar email principal',true)+'</div>'
-        +'<div class="full">'+_chk('Pessoa contribuintes do IBS e da CBS',true,true)+'</div>';
+      id=di('CNPJ',doc)+di('Razão social',nome)+di('Inscrição municipal','545345')+di('Data de fundação',idv('Data de fundação')||'25/06/2015')+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
     } else {
-      id+=_ro('CPF',doc,'',true)+_ro('Data de nascimento',idv('Data de nascimento')||'25/06/1998')+_ro('Nome do locatário',nome,'col-2',true)
-        +_ro('Outros documentos','','col-2')+_ro('Email principal',email,'col-2',true)
-        +_ro('Email de assinatura de contratos',email,'col-2',true)+_ro('Email de login no Meu Espaço',email,'col-2',true)
-        +'<div class="col-2">'+_chk('Usar email principal',true)+'</div><div class="col-2">'+_chk('Usar email principal',true)+'</div>'
-        +'<div class="full">'+_chk('Pessoa contribuintes do IBS e da CBS',true,true)+'</div>'
-        +_ro('CNPJ','123.456.789/0001-00');
+      id=di('CPF',doc)+di('Nome do locatário',nome)+di('Data de nascimento',idv('Data de nascimento')||'25/06/1998')+di('Outros documentos',idv('Outros documentos'))+di('E-mail',email)+di('Contribuinte do IBS e da CBS','Sim');
     }
-    id+='</div>';
-    out+=_sect('Identificação',id);
-    var a1={cep:edv('CEP')||'12345-890',log:edv('Logradouro')||'Fradique Coutinho',num:edv('Número')||'1234',compl:edv('Complemento')||'Perto da padaria',pais:'Brasil',estado:edv('Estado')||'São Paulo',cidade:edv('Cidade')||'São Paulo'};
-    var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',pais:'Brasil',estado:'São Paulo',cidade:'São Paulo'};
-    out+=_sect('Endereço',_addr(a1,true)+_addr(a2,false)+(noAdd?'':LOC_AREP));
-    if(isPJ){
-      var soc='<div class="lc-card"><p class="nl-subtitle">Sócio 1</p><div class="formgrid formgrid--4">'
-        +_ro('Nome','Jorge Augusto','col-2',true)+_ro('CPF','234.567.890-89','',true)+_ro('Tipo de sócio','Pessoa Jurídica','',true)
-        +_ro('Qualificação','Administrador','',true)+_ro('Data de inclusão','25/06/2025')+_ro('País','Brasil')+_ro('Possui representante/procurador','Sim')+'</div></div>';
-      out+=_sect('Sócios',soc);
-      var rp='<div class="lc-card"><p class="nl-subtitle">Representante/procurador 1</p><div class="formgrid formgrid--4">'
-        +_ro('Nome','Leonardo Freitas','col-2',true)+_ro('CPF','234.567.890-89','',true)+_ro('Qualificação','Administrador')
-        +'<div class="input col-2"><div class="input__label"><p>Sócio vinculado</p></div><div class="input__field lc-tags"><span class="nl-pbadge">João da Silva Mendes</span><span class="nl-pbadge">Osvaldo Cruz</span></div></div>'
-        +_ro('Email',email,'col-2')+_ro('Data de nascimento','25/06/2025')+'</div>'
-        +'<div class="lc-docrow"><h4 class="nl-subtitle" style="margin:0 0 var(--sm)">Documento de identificação</h4>'+_docbox('rg-frente.png','Aprovado')+'</div></div>';
-      out+=_sect('Representante/procurador',rp);
-    }
-    var contName=isPJ?'André Toni':nome;
-    out+=_sect('Contato',_contCard({nome:contName,resp:'Responsabilidade',tel:ctv('Telefone')||'(15) 99345-8956',email:email,user:ctv('Usuário do WhatsApp')||'@usuario'})+(noAdd?'':LOC_CREP));
-    var optcard='<div class="lc-doccard lc-doccard--opt"><p class="nl-subtitle" style="margin:0 0 var(--sm)">Documento opcional</p><div class="formgrid formgrid--4" style="margin-bottom:var(--sm)">'+_ro('Identificação do documento','Contrato de locação','full')+'</div>'+_docbox('contrato.png','Aprovado')+'</div>';
+    out+=_sect('Identificação',dlw(id));
+    var a1={cep:edv('CEP')||'12345-890',log:edv('Logradouro')||'Fradique Coutinho',num:edv('Número')||'1234',compl:edv('Complemento')||'Perto da padaria',estado:edv('Estado')||'São Paulo',cidade:edv('Cidade')||'São Paulo'};
+    var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',estado:'São Paulo',cidade:'São Paulo'};
+    out+=_sect('Endereço',addr(a1,true)+addr(a2,false)+(noAdd?'':LOC_AREP));
+    out+=_sect('Contato',dlw(di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+di('Pode assinar documento','Sim'))+(noAdd?'':LOC_CREP));
     var dg='<div class="lc-docgrid">';
     if(isPJ){
-      dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')
-        +_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')
-        +_doccard('Aprovado','Ato societário','ato-societario.png')
-        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png')
-        +optcard;
+      dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')+_doccard('Aprovado','Ato societário','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png');
     } else {
-      dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')
-        +_doccard('Aprovado','Comprovante de endereço','conta-luz.png')
-        +optcard;
+      dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png');
     }
     dg+='</div>';
     out+=_sect('Documentações',dg);
