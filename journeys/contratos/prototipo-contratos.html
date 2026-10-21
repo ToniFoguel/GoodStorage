@@ -2963,6 +2963,26 @@ a.breadcrumb__item::after {
 .prm-hist thead th{ color:var(--content-disable); font-weight:var(--font-weight-regular); white-space:nowrap; }
 .prm-hist td{ color:var(--content-text); }
 .prm-hist__empty{ padding:var(--lg); color:var(--content-disable); font-size:var(--font-size-label); }
+/* Parametros: collapsible + historico filtros/paginacao */
+.prm-collapsible .section__head{ cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
+.prm-collapse-chev{ display:inline-flex; width:20px; height:20px; color:var(--content-text); transition:transform .15s; flex-shrink:0; }
+.prm-collapse-chev svg{ width:100%; height:100%; }
+.prm-collapsible.is-collapsed .prm-collapse-chev{ transform:rotate(-90deg); }
+.prm-collapsible.is-collapsed .section__body{ display:none; }
+.prm-hist-toolbar{ display:flex; gap:var(--lg); justify-content:flex-end; flex-wrap:wrap; margin-bottom:var(--lg); }
+.prm-hist-fld{ display:flex; flex-direction:column; gap:4px; min-width:208px; }
+.prm-hist-fld__lbl{ font-size:var(--font-size-label); color:var(--content-text); }
+.prm-hist-selwrap{ position:relative; }
+.prm-hist-selwrap select{ width:100%; height:36px; padding:0 32px 0 var(--lg); border:var(--border-width) solid var(--border-default); background:var(--background-bg-main); font-family:var(--font-family-title-text); font-size:var(--font-size-paragraph); color:var(--content-text); cursor:pointer; -webkit-appearance:none; -moz-appearance:none; appearance:none; border-radius:0; }
+.prm-hist-selchev{ position:absolute; right:10px; top:50%; transform:translateY(-50%); width:16px; height:16px; pointer-events:none; color:var(--border-icon); }
+.prm-hist-selchev svg{ width:100%; height:100%; }
+.prm-hist-pager{ display:flex; align-items:center; justify-content:space-between; margin-top:var(--lg); gap:var(--md); flex-wrap:wrap; }
+.prm-hist-pageinfo{ font-size:var(--font-size-label); color:var(--content-disable); }
+.prm-hist-pagenav{ display:flex; align-items:center; gap:var(--md); }
+.prm-hist-pgbtn{ display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border:var(--border-width) solid var(--border-default); background:var(--background-bg-main); cursor:pointer; color:var(--content-text); }
+.prm-hist-pgbtn:disabled{ opacity:.4; cursor:not-allowed; }
+.prm-hist-pgbtn svg{ width:16px; height:16px; }
+.prm-hist-pgnum{ font-size:var(--font-size-label); color:var(--content-text); }
 .prm-chg{ display:inline-flex; align-items:center; gap:var(--sm); }
 .prm-chg__old{ color:var(--content-disable); text-decoration:line-through; }
 .prm-chg__arrow{ color:var(--content-disable); display:inline-flex; }
@@ -4036,7 +4056,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4092,7 +4112,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4149,7 +4169,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4185,7 +4205,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item sidebar__item--active" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4198,14 +4218,14 @@ a { text-decoration: none; color: inherit; }
 </aside>
 <div class="main">
 <div class="page-header"><nav aria-label="Trilha" class="breadcrumb">
-<span class="breadcrumb__item">Administrativo</span><span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"></use></svg></span>
+<span class="breadcrumb__item">Parâmetros</span><span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"></use></svg></span>
 <span class="breadcrumb__item breadcrumb__item--current">Parâmetros</span>
 </nav><div class="page-header__bar"><h1 class="page-header__title">Parâmetros</h1><div class="pagehead__actions">
 <button class="btn btn--primary" id="prm-save-adjust" type="button"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-check"></use></svg></span>Salvar ajustes</button>
 </div></div></div>
 <div class="content">
 <p class="prm-note"><span class="prm-note__ico"><svg><use href="#ico-information"></use></svg></span>Alterações valem apenas para contratos criados a partir delas — contratos já existentes não são afetados.</p>
-<section class="section card card--desktop" style="margin-bottom:var(--lg)"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Parâmetros por modalidade</h2></div></div><div class="section__body"><div class="prm-matrix-wrap"><div class="prm-matrix" id="prm-matrix-mount"></div></div></div></section>
+<section class="section card card--desktop prm-collapsible" style="margin-bottom:var(--lg)"><div class="section__head prm-collapse-head"><div class="section__headleft"><h2 class="section__title">Parâmetros por modalidade</h2></div><span class="prm-collapse-chev"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="section__body"><div class="prm-matrix-wrap"><div class="prm-matrix" id="prm-matrix-mount"></div></div></div></section>
 <section class="section card card--desktop"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Histórico de alterações</h2></div></div><div class="section__body"><div class="prm-hist" id="prm-hist-mount"></div></div></section>
 </div>
 </div>
@@ -4236,7 +4256,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item sidebar__item--active" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4248,7 +4268,7 @@ a { text-decoration: none; color: inherit; }
 </div></div>
 </aside>
 <div class="main">
-<div class="page-header"><nav aria-label="Trilha" class="breadcrumb"> <span class="breadcrumb__item">Administrativo</span><span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"></use></svg></span> <span class="breadcrumb__item breadcrumb__item--current">Alterações de contrato</span> </nav><div class="page-header__bar"><h1 class="page-header__title">Catálogo de alterações contratuais</h1><div class="pagehead__actions">
+<div class="page-header"><nav aria-label="Trilha" class="breadcrumb"> <span class="breadcrumb__item">Parâmetros</span><span class="breadcrumb__sep"><svg><use href="#ico-chevron-right"></use></svg></span> <span class="breadcrumb__item breadcrumb__item--current">Alterações de contrato</span> </nav><div class="page-header__bar"><h1 class="page-header__title">Catálogo de alterações contratuais</h1><div class="pagehead__actions">
 <button class="btn btn--primary" type="button" data-ds-open="cat__modalTipo" onclick="catNovo()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-plus"></use></svg></span>Novo tipo de alteração</button>
 </div></div></div>
 <div class="content"><section class="section card card--desktop" style="margin-bottom:var(--lg)"><div class="section__head"><div class="section__headleft"><h2 class="section__title">Tipos de alteração</h2></div></div><div class="section__body" style="padding:var(--xl) 0 0"><div class="table cat-table" data-ds="table"><div class="table__header"><button class="table__th"><span class="table__th-label">Tipo</span></button><button class="table__th"><span class="table__th-label">Modalidades</span></button><button class="table__th"><span class="table__th-label">Formalização</span></button><button class="table__th"><span class="table__th-label">Aprovação</span></button><button class="table__th"><span class="table__th-label">Situação</span></button><button class="table__th" aria-label="Ações"><span class="table__th-label"></span></button></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Troca de espaço</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Todas</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Sim</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Troca de titularidade</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Todas</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Sim</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Troca de seguro ou de valor estimado dos bens guardados</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Todas</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Não</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Mudança de plano (mensal ↔ anual)</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Galpões Flexíveis</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Não</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Mudança do dia de vencimento</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Todas</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Não</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Valor fora do reajuste</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Todas</span></div></div><div class="table__cell"><span class="badge badge--outline">Nova capa</span></div><div class="table__cell"><p class="table__cell-text">Sim</p></div><div class="table__cell"><span class="badge badge--secondary">Ativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--destructive btn--sm cat-iconbtn" type="button" title="Desativar" aria-label="Desativar" data-ds-open="cat__modalDesativar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-minus-circle"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Carência de retenção (exemplo)</p></div><div class="table__cell"><div class="cat-mods"><span class="badge badge--outline">Galpões Urbanos</span></div></div><div class="table__cell"><span class="badge badge--outline">Capa de renegociação</span></div><div class="table__cell"><p class="table__cell-text">Não</p></div><div class="table__cell"><span class="badge badge--outline">Inativo</span></div><div class="table__cell"><div class="cat-acts"><button class="btn btn--secondary btn--sm cat-iconbtn" type="button" title="Ativar" aria-label="Ativar" data-ds-open="cat__modalAtivar"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-circle-check"></use></svg></span></button><button class="btn btn--outline btn--sm cat-iconbtn" type="button" title="Editar" aria-label="Editar" data-ds-open="cat__modalTipo" onclick="catEdit()"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-pencil"></use></svg></span></button></div></div></div></div></div></section><section class="section card card--desktop cat-collapse cat-collapse--closed"><div class="section__head cat-collapse__toggle" onclick="this.closest('.cat-collapse').classList.toggle('cat-collapse--closed')"><div class="section__headleft"><h2 class="section__title">Histórico de mudanças do catálogo</h2></div><span class="cat-collapse__chev"><svg><use href="#ico-arrow-down-s"></use></svg></span></div><div class="section__body" style="padding:0"><div class="table cat-histtable" data-ds="table"><div class="table__header"><button class="table__th"><span class="table__th-label">Tipo</span></button><button class="table__th"><span class="table__th-label">Campo</span></button><button class="table__th"><span class="table__th-label">Antes</span></button><button class="table__th"><span class="table__th-label">Depois</span></button><button class="table__th"><span class="table__th-label">Quem</span></button><button class="table__th"><span class="table__th-label">Quando</span></button></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Mudança do dia de vencimento</p></div><div class="table__cell"><p class="table__cell-text">Modalidades</p></div><div class="table__cell"><p class="table__cell-text">Self Storage</p></div><div class="table__cell"><p class="table__cell-text">Todas</p></div><div class="table__cell"><p class="table__cell-text">Carol Ferreira</p></div><div class="table__cell"><p class="table__cell-text">10/10/2026 · 14:20</p></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Carência de retenção (exemplo)</p></div><div class="table__cell"><p class="table__cell-text">Situação</p></div><div class="table__cell"><p class="table__cell-text">Ativo</p></div><div class="table__cell"><p class="table__cell-text">Inativo</p></div><div class="table__cell"><p class="table__cell-text">Rafael Dias</p></div><div class="table__cell"><p class="table__cell-text">02/10/2026 · 09:15</p></div></div><div class="table__row"><div class="table__cell"><p class="table__cell-text">Valor fora do reajuste</p></div><div class="table__cell"><p class="table__cell-text">Aprovação</p></div><div class="table__cell"><p class="table__cell-text">Não</p></div><div class="table__cell"><p class="table__cell-text">Sim · alçada do desconto</p></div><div class="table__cell"><p class="table__cell-text">Carol Ferreira</p></div><div class="table__cell"><p class="table__cell-text">28/09/2026 · 16:40</p></div></div></div></div></section></div><div class="footer" data-logo-full="" style="border-top:var(--thin) solid var(--border-default);border-bottom:var(--thin) solid var(--border-default);padding:var(--3xl) 0;margin-top:var(--3xl);"></div>
@@ -4280,7 +4300,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4335,7 +4355,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4376,7 +4396,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4417,7 +4437,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4459,7 +4479,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4508,7 +4528,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4549,7 +4569,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4591,7 +4611,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4640,7 +4660,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4685,7 +4705,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4734,7 +4754,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4784,7 +4804,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -4922,7 +4942,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -5017,7 +5037,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -5138,7 +5158,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -5244,7 +5264,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -5374,7 +5394,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -5987,7 +6007,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -6092,7 +6112,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -6177,7 +6197,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 </div>
 <div class="sidebar__group" data-admin-nav="">
-<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
+<button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button>
 <div class="sidebar__items">
 <a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a>
 </div>
@@ -13016,7 +13036,29 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
   var HIST=[
     {p:'aviso',m:'urb',prev:'60',next:'90',who:'Carol Ferreira',when:'02/10/2026 14:22'},
     {p:'reserva',m:'self',prev:'5',next:'7',who:'Rafael Dias',when:'28/09/2026 09:10'},
-    {p:'cobr',m:'flexa',prev:'Boleto',next:'Débito automático',who:'Carol Ferreira',when:'20/09/2026 16:48'}
+    {p:'cobr',m:'flexa',prev:'Boleto',next:'Débito automático',who:'Carol Ferreira',when:'20/09/2026 16:48'},
+    {p:'reserva',m:'self',prev:'30',next:'45',who:'Carol Ferreira',when:'18/09/2026 08:00'},
+    {p:'aviso',m:'flexm',prev:'7',next:'10',who:'Rafael Dias',when:'17/09/2026 09:07'},
+    {p:'reaj',m:'flexa',prev:'60',next:'90',who:'Ana Prado',when:'16/09/2026 10:14'},
+    {p:'carencia',m:'urb',prev:'5',next:'7',who:'Marcos Lima',when:'15/09/2026 11:21'},
+    {p:'versao',m:'self',prev:'v2',next:'v3',who:'Juliana Reis',when:'14/09/2026 12:28'},
+    {p:'reserva',m:'flexm',prev:'15',next:'30',who:'Carol Ferreira',when:'13/09/2026 13:35'},
+    {p:'aviso',m:'flexa',prev:'0',next:'5',who:'Rafael Dias',when:'12/09/2026 14:42'},
+    {p:'reaj',m:'urb',prev:'10',next:'15',who:'Ana Prado',when:'11/09/2026 15:49'},
+    {p:'carencia',m:'self',prev:'45',next:'60',who:'Marcos Lima',when:'10/09/2026 16:56'},
+    {p:'versao',m:'flexm',prev:'v1',next:'v2',who:'Juliana Reis',when:'09/09/2026 08:03'},
+    {p:'reserva',m:'flexa',prev:'30',next:'45',who:'Carol Ferreira',when:'08/09/2026 09:10'},
+    {p:'aviso',m:'urb',prev:'7',next:'10',who:'Rafael Dias',when:'07/09/2026 10:17'},
+    {p:'reaj',m:'self',prev:'60',next:'90',who:'Ana Prado',when:'06/09/2026 11:24'},
+    {p:'carencia',m:'flexm',prev:'5',next:'7',who:'Marcos Lima',when:'05/09/2026 12:31'},
+    {p:'versao',m:'flexa',prev:'v3',next:'v3 (Negociado)',who:'Juliana Reis',when:'04/09/2026 13:38'},
+    {p:'reserva',m:'urb',prev:'15',next:'30',who:'Carol Ferreira',when:'03/09/2026 14:45'},
+    {p:'aviso',m:'self',prev:'0',next:'5',who:'Rafael Dias',when:'02/09/2026 15:52'},
+    {p:'reaj',m:'flexm',prev:'10',next:'15',who:'Ana Prado',when:'01/09/2026 16:59'},
+    {p:'carencia',m:'flexa',prev:'45',next:'60',who:'Marcos Lima',when:'31/08/2026 08:06'},
+    {p:'versao',m:'urb',prev:'v2',next:'v3',who:'Juliana Reis',when:'30/08/2026 09:13'},
+    {p:'reserva',m:'self',prev:'30',next:'45',who:'Carol Ferreira',when:'29/08/2026 10:20'},
+    {p:'aviso',m:'flexm',prev:'7',next:'10',who:'Rafael Dias',when:'28/08/2026 11:27'}
   ];
   var USER='Carol Ferreira';
   function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -13049,7 +13091,24 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
       return '<tr><td>'+esc(p?p.l:e.p)+'</td><td>'+esc(m?m.l:e.m)+'</td><td>'+esc(e.prev)+'</td><td>'+esc(e.next)+'</td><td>'+esc(e.who)+'</td><td>'+esc(e.when)+'</td></tr>'; }).join('');
     return '<table><thead><tr><th>Parâmetro</th><th>Modalidade</th><th>Valor anterior</th><th>Novo valor</th><th>Alterado por</th><th>Quando</th></tr></thead><tbody>'+rows+'</tbody></table>';
   }
-  function renderHist(){ var mount=document.getElementById('prm-hist-mount'); if(mount) mount.innerHTML=histRows(HIST); }
+  var HIST_PAGE=1, HIST_PSIZE=20, HIST_FP='', HIST_FW='';
+  function _plabel(k){ var p=pById(k); return p?p.l:k; }
+  function histDistinct(field){ var seen={},out=[]; HIST.forEach(function(e){ var v=(field==='p')?_plabel(e.p):e.who; if(!seen[v]){seen[v]=1;out.push(v);} }); out.sort(); return out; }
+  function histFiltered(){ return HIST.filter(function(e){ if(HIST_FP && _plabel(e.p)!==HIST_FP) return false; if(HIST_FW && e.who!==HIST_FW) return false; return true; }); }
+  function renderHist(){ var mount=document.getElementById('prm-hist-mount'); if(!mount) return;
+    var fl=histFiltered(); var total=fl.length; var pages=Math.max(1,Math.ceil(total/HIST_PSIZE));
+    if(HIST_PAGE>pages)HIST_PAGE=pages; if(HIST_PAGE<1)HIST_PAGE=1;
+    var start=(HIST_PAGE-1)*HIST_PSIZE; var pageRows=fl.slice(start,start+HIST_PSIZE);
+    function opts(list,sel){ return '<option value="">Todos</option>'+list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+esc(v)+'</option>';}).join(''); }
+    var chev='<span class="prm-hist-selchev"><svg><use href="#ico-arrow-down-s"></use></svg></span>';
+    var tbar='<div class="prm-hist-toolbar"><div class="prm-hist-fld"><span class="prm-hist-fld__lbl">Tipo de parâmetro</span><div class="prm-hist-selwrap"><select class="prm-hist-fp">'+opts(histDistinct('p'),HIST_FP)+'</select>'+chev+'</div></div><div class="prm-hist-fld"><span class="prm-hist-fld__lbl">Alterado por</span><div class="prm-hist-selwrap"><select class="prm-hist-fw">'+opts(histDistinct('who'),HIST_FW)+'</select>'+chev+'</div></div></div>';
+    var table=total?histRows(pageRows):'<p class="prm-hist__empty">Nenhuma alteração encontrada para os filtros selecionados.</p>';
+    var from=total?start+1:0, to=Math.min(start+HIST_PSIZE,total);
+    var pager='<div class="prm-hist-pager"><span class="prm-hist-pageinfo">'+from+'–'+to+' de '+total+' alterações</span><div class="prm-hist-pagenav"><button type="button" class="prm-hist-pgbtn" data-pg="prev"'+(HIST_PAGE<=1?' disabled':'')+'><svg><use href="#ri-arrow-left-s"></use></svg></button><span class="prm-hist-pgnum">Página '+HIST_PAGE+' de '+pages+'</span><button type="button" class="prm-hist-pgbtn" data-pg="next"'+(HIST_PAGE>=pages?' disabled':'')+'><svg><use href="#ri-arrow-right-s"></use></svg></button></div></div>';
+    mount.innerHTML=tbar+table+pager;
+  }
+  document.addEventListener('change',function(e){ var t=e.target; if(!t||!t.classList)return; if(t.classList.contains('prm-hist-fp')){HIST_FP=t.value;HIST_PAGE=1;renderHist();} else if(t.classList.contains('prm-hist-fw')){HIST_FW=t.value;HIST_PAGE=1;renderHist();} });
+  document.addEventListener('click',function(e){ var b=e.target.closest?e.target.closest('.prm-hist-pgbtn'):null; if(b){ if(b.disabled)return; var d=b.getAttribute('data-pg'); if(d==='prev')HIST_PAGE--; else HIST_PAGE++; renderHist(); return; } var h=e.target.closest?e.target.closest('.prm-collapse-head'):null; if(h){ var s=h.closest('.prm-collapsible'); if(s) s.classList.toggle('is-collapsed'); } });
 
   // ---- Edição por coluna ----
   var editCol=null; var staged={};
@@ -13069,7 +13128,7 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
   document.addEventListener('mouseleave',function(e){ if(e.target&&e.target.id==='prm-matrix-mount') clearHover(); },true);
   // ---- Fallback: injeta o grupo Administrativo em sidebars sem Workflow ----
   function injectNav(){
-    var GRP='<div class="sidebar__group" data-admin-nav=""><button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Administrativo</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button><div class="sidebar__items"><a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a></div></div>';
+    var GRP='<div class="sidebar__group" data-admin-nav=""><button class="sidebar__group-head"><span class="sidebar__ico"><svg><use href="#ico-shield"></use></svg></span><span class="sidebar__group-title">Parâmetros</span><span class="sidebar__chevron"><svg><use href="#ri-arrow-up-s"></use></svg></span></button><div class="sidebar__items"><a class="sidebar__item" href="mod:con-admin-param"><span class="sidebar__item-icon"><svg><use href="#ri-equalizer-3"></use></svg></span><span class="sidebar__item-label">Parâmetros</span></a><a class="sidebar__item" href="mod:con-admin-catalogo"><span class="sidebar__item-icon"><svg><use href="#ico-swap"></use></svg></span><span class="sidebar__item-label">Alterações de contrato</span></a></div></div>';
     [].forEach.call(document.querySelectorAll('.uni-page'),function(pg){
       var nav=pg.querySelector('.sidebar__nav'); if(!nav||nav.querySelector('[data-admin-nav]')) return;
       nav.insertAdjacentHTML('beforeend',GRP);
