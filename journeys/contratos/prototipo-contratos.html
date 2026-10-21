@@ -2520,6 +2520,14 @@ a.breadcrumb__item::after {
 .radio-card__title{ font-weight:var(--font-weight-bold); color:var(--content-title); }
 .radio-card__desc{ color:var(--content-text); font-size:var(--font-size-support); }
 .js-adit-list .table__cell:last-child,.js-cap-list .table__cell:last-child,.js-desc-list .table__cell:last-child{ overflow:visible; white-space:normal; flex-wrap:wrap; gap:4px 8px; align-items:center; }
+/* Aditivos tab: espacamento interno das tabelas + header 2 linhas */
+#con__tab-aditivos .table__th,#con__tab-aditivos .table__cell{ padding-left:var(--xl); padding-right:var(--xl); }
+#con__tab-aditivos .table__th{ height:auto; min-height:44px; align-items:center; padding-top:var(--md); padding-bottom:var(--md); }
+#con__tab-aditivos .table__th-label{ white-space:normal; line-height:1.2; }
+#con__tab-aditivos .table__cell{ padding-top:var(--lg); padding-bottom:var(--lg); }
+/* Modal registrar aditivo: gap de 16px entre campos */
+#perfil__modalAditivoNovo .js-adit-form{ display:flex; flex-direction:column; gap:var(--xl); }
+#perfil__modalAditivoNovo .js-adit-form .grid2{ margin-bottom:0 !important; }
 .js-adit-list .cl-sub,.js-cap-list .cl-sub,.js-desc-list .cl-sub{ white-space:normal; }
 .anexo-block{ margin-top:var(--lg); }
 .anexo-block__head{ display:flex; align-items:center; gap:var(--sm); margin-bottom:var(--xs); }
