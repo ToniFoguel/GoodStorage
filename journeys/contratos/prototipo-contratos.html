@@ -3041,6 +3041,13 @@ a.breadcrumb__item::after {
 .js-loc-exib .lc-sect .lc-sect__head{ cursor:default; }
 .js-loc-exib .lc-sect .lc-sect__chev{ display:none; }
 .js-loc-exib .lc-sect.is-collapsed .lc-sect__body{ display:block; }
+.js-loc-exib .lc-table{ border:var(--thin) solid var(--border-default); border-radius:8px; overflow:hidden; margin-bottom:var(--md); }
+.js-loc-exib .lc-table:last-child{ margin-bottom:0; }
+.js-loc-exib .lc-table .table__row:last-child{ border-bottom:0; }
+.js-loc-exib .lc-table .table__th{ cursor:default; }
+.js-loc-exib .lc-addbtn{ margin-top:var(--md); }
+.js-loc-exib .lc-table--end .table__th:nth-child(3),.js-loc-exib .lc-table--end .table__cell:nth-child(3){ flex:1.7 1 0; }
+.js-loc-exib .lc-table--end .table__th:nth-child(5),.js-loc-exib .lc-table--end .table__cell:nth-child(5){ flex:1.5 1 0; }
 .conf-card .conf-block__head{ cursor:default; }
 .conf-card .conf-block__chev{ display:none; }
 .conf-block__head{ width:100%; display:flex; align-items:center; gap:var(--md); padding:var(--lg); background:none; border:0; cursor:pointer; text-align:left; font-family:var(--font-family-title-text); }
@@ -12626,14 +12633,26 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
     out+=_sect('Identificação','<dl class="dados dados--4">'+id+'</dl>');
     var a1={cep:edv('CEP')||'12345-890',log:edv('Logradouro')||'Fradique Coutinho',num:edv('Número')||'1234',compl:edv('Complemento')||'Perto da padaria',bairro:edv('Bairro')||'Pinheiros',cidade:edv('Cidade')||'São Paulo',estado:edv('Estado')||'SP',pais:edv('País')||'Brasil'};
     var a2={cep:'12345-890',log:'Republica',num:'1234',compl:'Perto da padaria',bairro:'Centro',cidade:'São Paulo',estado:'SP',pais:'Brasil'};
-    out+=_sect('Endereço','<div class="lc-cardgrid js-ender-grid">'+addr(a1,true)+addr(a2,false)+'</div>'+(noAdd?'':'<button class="btn btn--outline lc-addbtn" type="button" data-ds-open="con__modalAddEnder"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"></use></svg></span>Adicionar endereço</button>'));
-    if(isPJ){var soc='<div class="lc-card lc-card--addr"><dl class="dados dados--2">'+di('Nome','Jorge Augusto')+di('CPF','234.567.890-89')+di('Tipo de sócio','Pessoa Jurídica')+di('Qualificação','Administrador')+di('Data de inclusão','25/06/2025')+di('País','Brasil')+di('Possui representante/procurador','Sim')+'</dl></div>';out+=_sect('Sócios','<div class="lc-cardgrid js-socio-grid">'+soc+'</div>'+(noAdd?'':'<button class="btn btn--outline lc-addbtn" type="button" data-ds-open="con__modalAddSocio"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"></use></svg></span>Adicionar sócio</button>'));var rep='<div class="lc-card lc-card--addr"><dl class="dados dados--2">'+di('Nome','Leonardo Freitas')+di('CPF','234.567.890-89')+di('Qualificação','Administrador')+di('Sócio vinculado','João da Silva Mendes · Osvaldo Cruz')+di('E-mail',email)+di('Data de nascimento','25/06/2025')+'</dl></div>';out+=_sect('Representante/procurador','<div class="lc-cardgrid js-rep-grid">'+rep+'</div>'+(noAdd?'':'<button class="btn btn--outline lc-addbtn" type="button" data-ds-open="con__modalAddRep"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"></use></svg></span>Adicionar representante</button>'));}var contName=isPJ?'André Toni':nome;
-    out+=_sect('Contato','<div class="lc-cardgrid js-cont-grid"><div class="lc-card lc-card--addr"><span class="nl-pbadge">Principal</span><dl class="dados dados--2">'+di('Nome',contName)+di('Responsabilidade','Financeiro')+di('E-mail',email)+di('Telefone/WhatsApp',ctv('Telefone')||'(15) 99345-8956')+di('Usuário do WhatsApp',ctv('Usuário do WhatsApp')||'@usuario')+'</dl></div></div>'+(noAdd?'':'<button class="btn btn--outline lc-addbtn" type="button" data-ds-open="con__modalAddCont"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"></use></svg></span>Adicionar contato</button>'));
-    var dg='<div class="lc-docgrid">';
-    if(isPJ){ dg+=_doccard('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_doccard('Aprovado','Cartão de CNPJ','cartao-cnpj.png')+_doccard('Aprovado','Ato societário','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
-    else { dg+=_doccard('Aprovado','Documento com foto','ato-societario.png')+_doccard('Aprovado','Comprovante de endereço','conta-luz.png'); }
-    dg+='</div>';
-    out+=_sect('Documentações',dg);
+    function _th(c){ return '<div class="table__th"><span class="table__th-label">'+esc(c)+'</span></div>'; }
+      function _tc(v){ v=(v==null||v==='')?'\u2014':v; return '<div class="table__cell"><p class="table__cell-text">'+esc(v)+'</p></div>'; }
+      function _tcb(h){ return '<div class="table__cell table__cell--badge">'+h+'</div>'; }
+      function _bdg(txt,alt){ return '<span class="badge '+(alt?'badge--outline':'badge--secondary')+'">'+esc(txt)+'</span>'; }
+      function _tbl(cols,rows,cls,extra){ return '<div class="table lc-table'+(extra?(' '+extra):'')+'" data-ds="table"><div class="table__header">'+cols.map(_th).join('')+'</div><div class="lc-tbody'+(cls?(' '+cls):'')+'">'+rows+'</div></div>'; }
+      function _addb(modal,label){ return noAdd?'':'<button class="btn btn--outline lc-addbtn" type="button" data-ds-open="'+modal+'"><span class="btn__icon btn__icon--sm"><svg><use href="#ico-add"></use></svg></span>'+label+'</button>'; }
+      function _endRow(a,pri){ return '<div class="table__row">'+_tcb(_bdg(pri?'Principal':'Opcional',!pri))+_tc(a.cep)+_tc(a.log)+_tc(a.num)+_tc(a.compl)+_tc(a.bairro)+_tc(a.cidade)+_tc(a.estado)+'</div>'; }
+      out+=_sect('Endereço',_tbl(['Tipo','CEP','Logradouro','N\u00famero','Complemento','Bairro','Cidade','Estado'],_endRow(a1,true)+_endRow(a2,false),'js-ender-grid','lc-table--end')+_addb('con__modalAddEnder','Adicionar endere\u00e7o'));
+      if(isPJ){
+        var _socR='<div class="table__row">'+_tc('Jorge Augusto')+_tc('234.567.890-89')+_tc('Pessoa Jur\u00eddica')+_tc('Administrador')+_tc('25/06/2025')+_tc('Brasil')+_tc('Sim')+'</div>';
+        out+=_sect('S\u00f3cios',_tbl(['Nome','CPF','Tipo de s\u00f3cio','Qualifica\u00e7\u00e3o','Data de inclus\u00e3o','Pa\u00eds','Possui representante/procurador'],_socR,'js-socio-grid')+_addb('con__modalAddSocio','Adicionar s\u00f3cio'));
+        var _repR='<div class="table__row">'+_tc('Leonardo Freitas')+_tc('234.567.890-89')+_tc('Administrador')+_tc('Jo\u00e3o da Silva Mendes \u00b7 Osvaldo Cruz')+_tc(email)+_tc('25/06/2025')+'</div>';
+        out+=_sect('Representante/procurador',_tbl(['Nome','CPF','Qualifica\u00e7\u00e3o','S\u00f3cio vinculado','E-mail','Data de nascimento'],_repR,'js-rep-grid')+_addb('con__modalAddRep','Adicionar representante'));
+      }
+      var contName=isPJ?'Andr\u00e9 Toni':nome;
+      var _contR='<div class="table__row">'+_tcb(_bdg('Principal'))+_tc(contName)+_tc('Financeiro')+_tc(email)+_tc(ctv('Telefone')||'(15) 99345-8956')+_tc(ctv('Usu\u00e1rio do WhatsApp')||'@usuario')+'</div>';
+      out+=_sect('Contato',_tbl(['Tipo','Nome','Responsabilidade','E-mail','Telefone/WhatsApp','Usu\u00e1rio do WhatsApp'],_contR,'js-cont-grid')+_addb('con__modalAddCont','Adicionar contato'));
+      function _docRow(st,ti,fi){ return '<div class="table__row">'+_tc(ti)+_tc(fi)+_tcb(_bdg(st))+'</div>'; }
+      var _docR=isPJ?(_docRow('Aprovado','Contrato ou estatuto social consolidado','contrato.png')+_docRow('Aprovado','Cart\u00e3o de CNPJ','cartao-cnpj.png')+_docRow('Aprovado','Ato societ\u00e1rio','ato-societario.png')+_docRow('Aprovado','Comprovante de endere\u00e7o','conta-luz.png')):(_docRow('Aprovado','Documento com foto','ato-societario.png')+_docRow('Aprovado','Comprovante de endere\u00e7o','conta-luz.png'));
+      out+=_sect('Documenta\u00e7\u00f5es',_tbl(['Documento','Arquivo','Status'],_docR,''));
     return out;
   };
   window.__locExibFor=function(key,noAdd){ var t=DATA[key]; return t?window.__buildExib(key,t,noAdd):''; };
@@ -13642,16 +13661,17 @@ document.addEventListener('click',function(e){
   if(be){var m=document.getElementById('con__modalAddEnder');
     var a={cep:val(m,'.js-ae-cep'),log:val(m,'.js-ae-log'),num:val(m,'.js-ae-num'),compl:val(m,'.js-ae-compl'),pais:val(m,'.js-ae-pais'),estado:val(m,'.js-ae-estado'),cidade:val(m,'.js-ae-cidade')};
     if(!a.log&&!a.cep)a={cep:'01310-100',log:'Av. Paulista',num:'1000',compl:'Sala 12',pais:'Brasil',estado:'SP',cidade:'São Paulo'};
-    var l1=esc(a.log+(a.num?(', '+a.num):''));var p=[];if(a.compl)p.push(a.compl);if(a.cidade)p.push(a.cidade);if(a.estado&&a.estado!==a.cidade)p.push(a.estado);if(a.pais)p.push(a.pais);if(a.cep)p.push('CEP '+a.cep);
-    var card='<div class="lc-card lc-card--addr"><span class="nl-pbadge nl-pbadge--alt">Opcional</span><p class="lc-addr__l1">'+l1+'</p><p class="lc-addr__l2">'+esc(p.join(' · '))+'</p></div>';
+    function tcell(v){v=(v==null||v==='')?'—':v;return '<div class="table__cell"><p class="table__cell-text">'+esc(v)+'</p></div>';}
+    var card='<div class="table__row"><div class="table__cell table__cell--badge"><span class="badge badge--outline">Opcional</span></div>'+tcell(a.cep)+tcell(a.log)+tcell(a.num)+tcell(a.compl)+tcell(a.bairro)+tcell(a.cidade)+tcell(a.estado)+'</div>';
     var g=document.querySelector('.js-loc-exib .js-ender-grid');if(g)g.insertAdjacentHTML('beforeend',card);
     clr(m);if(window.DS&&DS.closeModal)DS.closeModal(m);return;}
   var bc=e.target.closest?e.target.closest('.js-cont-add'):null;
   if(bc){var m2=document.getElementById('con__modalAddCont');
     function di(l,v){v=(v==null||v==='')?'—':v;return '<div class="data-item"><p class="data-item__label">'+esc(l)+'</p><p class="data-item__value">'+esc(v)+'</p></div>';}
+    function di2(v){v=(v==null||v==='')?'—':v;return '<div class="table__cell"><p class="table__cell-text">'+esc(v)+'</p></div>';}
     var c={nome:val(m2,'.js-ac-nome'),resp:val(m2,'.js-ac-resp'),email:val(m2,'.js-ac-email'),tel:val(m2,'.js-ac-tel'),user:val(m2,'.js-ac-user')};
     if(!c.nome&&!c.email)c={nome:'Carla Souza',resp:'Operacional',email:'carla@email.com',tel:'(11) 97777-3030',user:'@carlasouza'};
-    var card2='<div class="lc-card lc-card--addr"><span class="nl-pbadge nl-pbadge--alt">Opcional</span><dl class="dados dados--2">'+di('Nome',c.nome)+di('Responsabilidade',c.resp)+di('E-mail',c.email)+di('Telefone/WhatsApp',c.tel)+di('Usuário do WhatsApp',c.user)+'</dl></div>';
+    var card2='<div class="table__row"><div class="table__cell table__cell--badge"><span class="badge badge--outline">Opcional</span></div>'+di2(c.nome)+di2(c.resp)+di2(c.email)+di2(c.tel)+di2(c.user)+'</div>';
     var g2=document.querySelector('.js-loc-exib .js-cont-grid');if(g2)g2.insertAdjacentHTML('beforeend',card2);
     clr(m2);if(window.DS&&DS.closeModal)DS.closeModal(m2);return;}
 });
@@ -13660,20 +13680,22 @@ function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'
 function val(m,s){var el=m.querySelector(s);return el?String(el.value||'').trim():'';}
 function clr(m){[].forEach.call(m.querySelectorAll('input'),function(i){i.value='';});}
 function di(l,v){v=(v==null||v==='')?'—':v;return '<div class="data-item"><p class="data-item__label">'+esc(l)+'</p><p class="data-item__value">'+esc(v)+'</p></div>';}
+function tcs(v){v=(v==null||v==='')?'—':v;return '<div class="table__cell"><p class="table__cell-text">'+esc(v)+'</p></div>';}
+function tcr(v){return tcs(v);}
 document.addEventListener('click',function(e){
   var bs=e.target.closest?e.target.closest('.js-socio-add'):null;
   if(bs){var m=document.getElementById('con__modalAddSocio');
     var c={nome:val(m,'.js-as-nome'),cpf:val(m,'.js-as-cpf'),tipo:val(m,'.js-as-tipo'),qual:val(m,'.js-as-qual'),data:val(m,'.js-as-data'),pais:val(m,'.js-as-pais'),rep:val(m,'.js-as-rep')};
     if(!c.nome)c={nome:'Marcos Lima',cpf:'345.678.901-23',tipo:'Pessoa física',qual:'Sócio',data:'10/01/2024',pais:'Brasil',rep:'Não'};
-    var g=document.querySelector('.js-loc-exib .js-socio-grid');var n=g?g.querySelectorAll('.lc-card').length+1:2;
-    var card='<div class="lc-card lc-card--addr"><span class="nl-pbadge">Sócio '+n+'</span><dl class="dados dados--2">'+di('Nome',c.nome)+di('CPF',c.cpf)+di('Tipo de sócio',c.tipo)+di('Qualificação',c.qual)+di('Data de inclusão',c.data)+di('País',c.pais)+di('Possui representante/procurador',c.rep)+'</dl></div>';
+    var g=document.querySelector('.js-loc-exib .js-socio-grid');
+    var card='<div class="table__row">'+tcs(c.nome)+tcs(c.cpf)+tcs(c.tipo)+tcs(c.qual)+tcs(c.data)+tcs(c.pais)+tcs(c.rep)+'</div>';
     if(g)g.insertAdjacentHTML('beforeend',card);clr(m);if(window.DS&&DS.closeModal)DS.closeModal(m);return;}
   var br=e.target.closest?e.target.closest('.js-rep-add'):null;
   if(br){var m2=document.getElementById('con__modalAddRep');
     var c2={nome:val(m2,'.js-ar-nome'),cpf:val(m2,'.js-ar-cpf'),qual:val(m2,'.js-ar-qual'),soc:val(m2,'.js-ar-soc'),email:val(m2,'.js-ar-email'),data:val(m2,'.js-ar-data')};
     if(!c2.nome)c2={nome:'Patrícia Nunes',cpf:'456.789.012-34',qual:'Procuradora',soc:'Jorge Augusto',email:'patricia@email.com',data:'03/09/1985'};
-    var g2=document.querySelector('.js-loc-exib .js-rep-grid');var n2=g2?g2.querySelectorAll('.lc-card').length+1:2;
-    var card2='<div class="lc-card lc-card--addr"><span class="nl-pbadge">Representante '+n2+'</span><dl class="dados dados--2">'+di('Nome',c2.nome)+di('CPF',c2.cpf)+di('Qualificação',c2.qual)+di('Sócio vinculado',c2.soc)+di('E-mail',c2.email)+di('Data de nascimento',c2.data)+'</dl></div>';
+    var g2=document.querySelector('.js-loc-exib .js-rep-grid');
+    var card2='<div class="table__row">'+tcr(c2.nome)+tcr(c2.cpf)+tcr(c2.qual)+tcr(c2.soc)+tcr(c2.email)+tcr(c2.data)+'</div>';
     if(g2)g2.insertAdjacentHTML('beforeend',card2);clr(m2);if(window.DS&&DS.closeModal)DS.closeModal(m2);return;}
 });
 })();</script><script>/* Processos vigentes: abrir processo preenchido ate o step atual */
