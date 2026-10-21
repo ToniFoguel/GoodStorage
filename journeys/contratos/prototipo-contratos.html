@@ -3044,7 +3044,8 @@ a.breadcrumb__item::after {
 .js-loc-exib .lc-table{ border:var(--thin) solid var(--border-default); border-radius:8px; overflow:hidden; margin-bottom:var(--md); }
 .js-loc-exib .lc-table:last-child{ margin-bottom:0; }
 .js-loc-exib .lc-table .table__row:last-child{ border-bottom:0; }
-.js-loc-exib .lc-table .table__th{ cursor:default; }
+.js-loc-exib .lc-table .table__th{ cursor:default; height:auto; min-height:40px; align-items:center; padding-top:var(--md); padding-bottom:var(--md); }
+.js-loc-exib .lc-table .table__th-label{ white-space:normal; line-height:1.2; overflow-wrap:anywhere; }
 .js-loc-exib .lc-addbtn{ margin-top:var(--md); }
 .js-loc-exib .lc-table--end .table__th:nth-child(3),.js-loc-exib .lc-table--end .table__cell:nth-child(3){ flex:1.7 1 0; }
 .js-loc-exib .lc-table--end .table__th:nth-child(5),.js-loc-exib .lc-table--end .table__cell:nth-child(5){ flex:1.5 1 0; }
@@ -12531,7 +12532,7 @@ document.addEventListener('ds:action', function(e){
   function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function card(p){
     var __um=!!window.__unifMode; var __canU=(p.unif!==undefined?!!p.unif:/box/i.test(p.prod)); var __dis=__um&&!p.reserved&&!__canU;
-    var h='<label class="orc-pc'+(p.reserved?' orc-pc--reserved':'')+(__dis?' orc-pc--disabled':'')+'">';var __sel=(p.reserved?'<span class="orc-pc__tag">Reservado</span>':'<span class="orc-pc__radio"><input type="'+(__um?'checkbox':'radio')+'" name="orcProd" value="'+esc(p.prod)+'" data-prodtype="'+(/galp|office/i.test(p.prod)?'minuta':'simple')+'"'+(__canU?' data-unif="1"':'')+(__dis?' disabled':'')+'></span>');h+='<div class="orc-pc__top">'+(p._orc?'<span class="orc-pc__orc">'+esc(p._orc)+(p._orcName?' · '+esc(p._orcName):'')+'</span>':'<span></span>')+__sel+'</div>';
+    var h='<label class="orc-pc'+(p.reserved?' orc-pc--reserved':'')+(__dis?' orc-pc--disabled':'')+'">';var __sel=(p.reserved?'<span class="orc-pc__tag">Expirado</span>':'<span class="orc-pc__radio"><input type="'+(__um?'checkbox':'radio')+'" name="orcProd" value="'+esc(p.prod)+'" data-prodtype="'+(/galp|office/i.test(p.prod)?'minuta':'simple')+'"'+(__canU?' data-unif="1"':'')+(__dis?' disabled':'')+'></span>');h+='<div class="orc-pc__top">'+(p._orc?'<span class="orc-pc__orc">'+esc(p._orc)+(p._orcName?' · '+esc(p._orcName):'')+'</span>':'<span></span>')+__sel+'</div>';
     h+='<div class="orc-pc__head"><div><span class="orc-pc__lbl">Unidade</span><p class="orc-pc__val">'+esc(p.un)+'</p><p class="orc-pc__sub">'+esc(p.end)+'</p></div></div>';
     h+='<hr class="orc-pc__sep"><span class="orc-pc__lbl">Produto</span><p class="orc-pc__val">'+esc(p.prod)+'</p><p class="orc-pc__sub">'+esc(p.dims)+'</p>';
     h+='<hr class="orc-pc__sep"><span class="orc-pc__lbl">Valor</span>';
