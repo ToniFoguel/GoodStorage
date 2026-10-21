@@ -13104,11 +13104,13 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
     var tbar='<div class="prm-hist-toolbar"><div class="prm-hist-fld"><span class="prm-hist-fld__lbl">Tipo de parâmetro</span><div class="prm-hist-selwrap"><select class="prm-hist-fp">'+opts(histDistinct('p'),HIST_FP)+'</select>'+chev+'</div></div><div class="prm-hist-fld"><span class="prm-hist-fld__lbl">Alterado por</span><div class="prm-hist-selwrap"><select class="prm-hist-fw">'+opts(histDistinct('who'),HIST_FW)+'</select>'+chev+'</div></div></div>';
     var table=total?histRows(pageRows):'<p class="prm-hist__empty">Nenhuma alteração encontrada para os filtros selecionados.</p>';
     var from=total?start+1:0, to=Math.min(start+HIST_PSIZE,total);
-    var pager='<div class="prm-hist-pager"><span class="prm-hist-pageinfo">'+from+'–'+to+' de '+total+' alterações</span><div class="prm-hist-pagenav"><button type="button" class="prm-hist-pgbtn" data-pg="prev"'+(HIST_PAGE<=1?' disabled':'')+'><svg><use href="#ri-arrow-left-s"></use></svg></button><span class="prm-hist-pgnum">Página '+HIST_PAGE+' de '+pages+'</span><button type="button" class="prm-hist-pgbtn" data-pg="next"'+(HIST_PAGE>=pages?' disabled':'')+'><svg><use href="#ri-arrow-right-s"></use></svg></button></div></div>';
-    mount.innerHTML=tbar+table+pager;
+    var pager='<div class="pagination prm-hist-pagination" data-ds="pagination" data-ds-page="'+HIST_PAGE+'" data-ds-page-size="'+HIST_PSIZE+'" data-ds-total="'+total+'"><div class="pagination__info"></div><div class="pagination__nav"></div></div>';
+    mount.innerHTML=tbar+table+pager; if(window.DS&&DS.refresh) DS.refresh();
   }
   document.addEventListener('change',function(e){ var t=e.target; if(!t||!t.classList)return; if(t.classList.contains('prm-hist-fp')){HIST_FP=t.value;HIST_PAGE=1;renderHist();} else if(t.classList.contains('prm-hist-fw')){HIST_FW=t.value;HIST_PAGE=1;renderHist();} });
-  document.addEventListener('click',function(e){ var b=e.target.closest?e.target.closest('.prm-hist-pgbtn'):null; if(b){ if(b.disabled)return; var d=b.getAttribute('data-pg'); if(d==='prev')HIST_PAGE--; else HIST_PAGE++; renderHist(); return; } var h=e.target.closest?e.target.closest('.prm-collapse-head'):null; if(h){ var s=h.closest('.prm-collapsible'); if(s) s.classList.toggle('is-collapsed'); } });
+  document.addEventListener('click',function(e){ var h=e.target.closest?e.target.closest('.prm-collapse-head'):null; if(h){ var s=h.closest('.prm-collapsible'); if(s) s.classList.toggle('is-collapsed'); } });
+  document.addEventListener('ds:page',function(e){ if(!e.target||!e.target.closest||!e.target.closest('#prm-hist-mount'))return; if(e.detail){ if(e.detail.page)HIST_PAGE=e.detail.page; if(e.detail.size)HIST_PSIZE=e.detail.size; } renderHist(); });
+  document.addEventListener('ds:pagesize',function(e){ if(!e.target||!e.target.closest||!e.target.closest('#prm-hist-mount'))return; if(e.detail&&e.detail.size){ HIST_PSIZE=e.detail.size; HIST_PAGE=1; } renderHist(); });
 
   // ---- Edição por coluna ----
   var editCol=null; var staged={};
