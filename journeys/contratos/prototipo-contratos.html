@@ -12643,9 +12643,9 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
       out+=_sect('Endereço',_tbl(['Tipo','CEP','Logradouro','N\u00famero','Complemento','Bairro','Cidade','Estado'],_endRow(a1,true)+_endRow(a2,false),'js-ender-grid','lc-table--end')+_addb('con__modalAddEnder','Adicionar endere\u00e7o'));
       if(isPJ){
         var _socR='<div class="table__row">'+_tc('Jorge Augusto')+_tc('234.567.890-89')+_tc('Pessoa Jur\u00eddica')+_tc('Administrador')+_tc('25/06/2025')+_tc('Brasil')+_tc('Sim')+'</div>';
-        out+=_sect('S\u00f3cios',_tbl(['Nome','CPF','Tipo de s\u00f3cio','Qualifica\u00e7\u00e3o','Data de inclus\u00e3o','Pa\u00eds','Possui representante/procurador'],_socR,'js-socio-grid')+_addb('con__modalAddSocio','Adicionar s\u00f3cio'));
+        out+=_sect('S\u00f3cios',_tbl(['Nome','CPF','Tipo de s\u00f3cio','Qualifica\u00e7\u00e3o','Data de inclus\u00e3o','Pa\u00eds','Possui representante/procurador'],_socR,'js-socio-grid'));
         var _repR='<div class="table__row">'+_tc('Leonardo Freitas')+_tc('234.567.890-89')+_tc('Administrador')+_tc('Jo\u00e3o da Silva Mendes \u00b7 Osvaldo Cruz')+_tc(email)+_tc('25/06/2025')+'</div>';
-        out+=_sect('Representante/procurador',_tbl(['Nome','CPF','Qualifica\u00e7\u00e3o','S\u00f3cio vinculado','E-mail','Data de nascimento'],_repR,'js-rep-grid')+_addb('con__modalAddRep','Adicionar representante'));
+        out+=_sect('Representante/procurador',_tbl(['Nome','CPF','Qualifica\u00e7\u00e3o','S\u00f3cio vinculado','E-mail','Data de nascimento'],_repR,'js-rep-grid'));
       }
       var contName=isPJ?'Andr\u00e9 Toni':nome;
       var _contR='<div class="table__row">'+_tcb(_bdg('Principal'))+_tc(contName)+_tc('Financeiro')+_tc(email)+_tc(ctv('Telefone')||'(15) 99345-8956')+_tc(ctv('Usu\u00e1rio do WhatsApp')||'@usuario')+'</div>';
