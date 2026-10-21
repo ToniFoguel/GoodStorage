@@ -12836,6 +12836,10 @@ var ORCNAMES={'ORC-4821':'Expansão Pinheiros','ORC-4990':'Botafogo Flex','ORC-4
     var bn=pg.querySelector(".js-con-finalbanner"); if(bn) bn.hidden=!term;
     var ed=pg.querySelector(".pagehead__actions [data-edit-start]"); if(ed){ed.disabled=term;ed.hidden=term;ed.classList.toggle("is-locked",term);}
     var dd=pg.querySelector(".pagehead__actions .dropdown"); if(dd) dd.classList.toggle("is-locked",term);
+    var _mv=(est==="Move-in");
+    var pa=pg.querySelector('.pagehead__actions [data-ds-open="perfil__modalPedidoAlteracao"]'); if(pa){ pa.hidden=term; }
+    var ra=pg.querySelector('[data-ds-open="perfil__modalAditivoNovo"]'); if(ra){ ra.hidden=!_mv; }
+    var rc=pg.querySelector('[data-ds-open="perfil__modalCapaReneg"]'); if(rc){ rc.hidden=!_mv; }
   }
   window.__applyConState=applyState;
   document.addEventListener("click",function(e){
